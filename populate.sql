@@ -62,7 +62,7 @@ insert into Event (eventId, userId, eventname, public, address, description, eve
 insert into Event (eventId, userId, eventname, public, address, description, eventPhoto, startDate, endDate) values (27, 30, 'Ratke-Conn', true, '5 Dovetail Park', 'Person boarding or alighting from bus injured in collision with fixed or stationary object', 'http://dummyimage.com/160x100.png/cc0000/ffffff', '2023-11-17', '2023-12-06');
 insert into Event (eventId, userId, eventname, public, address, description, eventPhoto, startDate, endDate) values (28, 2, 'Green, Walter and Boyle', true, '81 Upham Road', 'Displaced supracondylar fracture with intracondylar extension of lower end of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with malunion', 'http://dummyimage.com/159x100.png/dddddd/000000', '2022-11-11', '2022-11-21');
 insert into Event (eventId, userId, eventname, public, address, description, eventPhoto, startDate, endDate) values (29, 13, 'Sauer, Gerlach and Kiehn', true, '002 Lindbergh Center', 'Asphyxiation due to plastic bag, accidental, sequela', 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-12-01', '2023-12-15');
-insert into Event (eventId, userId, eventname, public, address, description, eventCancelled, eventPhoto, startDate, endDate) values (30, 17, 'Graham-Lemke', true, '7585 Oriole Terrace', 'Flaccid hemiplegia', false, 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-01-06', '2023-01-08');
+insert into Event (eventId, userId, eventname, public, address, description, eventCanceled, eventPhoto, startDate, endDate) values (30, 17, 'Graham-Lemke', true, '7585 Oriole Terrace', 'Flaccid hemiplegia', false, 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-01-06', '2023-01-08');
 
 -- Attendee --
 
@@ -196,12 +196,12 @@ insert into OrganizerRequest (organizerRequestId, requesterId) values (10, 8);
 
 -- Notification --
 
-insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (1, 6, 30, 1, 9, 8, 9, CURRENT_TIMESTAMP, 'EventChange', false);
+insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (1, 5, 30, 1, 9, 8, 9, CURRENT_TIMESTAMP, 'EventChange', false);
 insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (2, 1, 27, 4, 8, 6, 7, CURRENT_TIMESTAMP, 'JoinRequestReviewed', true);
 insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (3, 8, 28, 8, 8, 2, 4,CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
 insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (4, 9, 1, 8, 9, 5, 2, CURRENT_TIMESTAMP, 'InviteReceived', true);
 insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (5, 4, 7, 9, 7, 3, 7, CURRENT_TIMESTAMP, 'InviteAccepted', false);
-insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (6, 6, 22, 5, 4, 7, 9, CURRENT_TIMESTAMP, 'NewPoll', false);
+insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (6, 3, 22, 5, 4, 7, 9, CURRENT_TIMESTAMP, 'NewPoll', false);
 insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (7, 5, 13, 6, 4, 4, 10, CURRENT_TIMESTAMP, 'NewInvitation', true);
 
 -- Vote --
