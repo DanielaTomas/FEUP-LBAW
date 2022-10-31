@@ -164,7 +164,7 @@ CREATE FUNCTION insert_attendee_invitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF (NEW.invitationStatus && NEW.inviteeId NOT IN (SELECT Attendee.attendeeId FROM Attendee
-    WHERE Attendee.eventId==NEW.eventId)) THEN
+    WHERE Attendee.eventId=NEW.eventId)) THEN
         INSERT INTO Attendee(attendeeId,eventId)
         VALUES (NEW.inviteeId,NEW.eventId);
     END IF;
@@ -182,7 +182,7 @@ CREATE FUNCTION insert_attendee_request() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF (NEW.requestStatus && NEW.requesterId NOT IN (SELECT Attendee.attendeeId FROM Attendee
-    WHERE Attendee.eventId==NEW.requesterId)) THEN
+    WHERE Attendee.eventId=NEW.requesterId)) THEN
         INSERT INTO Attendee(attendeeId,eventId)
         VALUES (NEW.requesterId,NEW.eventId);
     END IF;
@@ -203,7 +203,7 @@ BEGIN
     IF ((NEW.eventStart != OLD.eventStart) || (NEW.eventEnd != OLD.eventEnd)) THEN
         INSERT INTO Notification (receiverId,eventId,notificationDate,notificationType)
         SELECT userId,eventId, DATE('now'),'EventChange'
-        FROM Attendee WHERE NEW.eventId == Attendee.attendeeId;
+        FROM Attendee WHERE NEW.eventId = Attendee.attendeeId;
     END IF;
     RETURN NULL;
 END
@@ -237,8 +237,10 @@ CREATE TRIGGER notification_invite_accepted
 CREATE FUNCTION newInvitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    INSERT INTO Notification (receiverId,invitationId,notificationDate,notificationType)
-    VALUES(NEW.inviteeId,NEW.invitationId, DATE('now'),'NewInvitation');
+    IF (NEW.invitationStatus) THEN
+      INSERT INTO Notification (receiverId,invitationId,notificationDate,notificationType)
+      VALUES(NEW.inviteeId, NEW.invitationId, DATE('now'),'NewInvitation');
+    END IF;
     RETURN NULL;
 END
 $BODY$
@@ -304,8 +306,8 @@ CREATE FUNCTION newPoll() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     INSERT INTO Notification (receiverId,pollId,notificationDate,notificationType)
-    SELECT userId,NEW.pollId, DATE('now'),'NewPoll'
-    FROM Attendee WHERE NEW.eventId == Attendee.eventId;
+    SELECT attendeeId,NEW.pollId, DATE('now'),'NewPoll'
+    FROM Attendee WHERE NEW.eventId = Attendee.eventId;
     RETURN NULL;
 END
 $BODY$
@@ -323,7 +325,7 @@ BEGIN
     IF (NEW.requestStatus) THEN
         UPDATE Users 
         SET userType = 'Organizer'
-        WHERE NEW.requesterId==Users.userId;
+        WHERE NEW.requesterId=Users.userId;
     END IF;
     RETURN NULL;
 END
@@ -339,7 +341,7 @@ CREATE TRIGGER update_user_to_organization
 CREATE FUNCTION deleteUser() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.accountStatus=='Disabled') THEN
+    IF (NEW.accountStatus='Disabled') THEN
         DELETE FROM Atendee
         WHERE attendeeId = NEW.userId;
         
@@ -360,7 +362,7 @@ BEGIN
         password = 'Deleted',
         userPhoto = NULL,
         userTypes = NULL
-        WHERE NEW.userId==Users.userId;
+        WHERE NEW.userId=Users.userId;
 
 
     END IF;
@@ -379,7 +381,7 @@ CREATE TRIGGER user_deleted
 CREATE FUNCTION eventCancelled() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.eventCanceled ==TRUE) THEN
+    IF (NEW.eventCanceled =TRUE) THEN
         DELETE FROM Atendee
         WHERE eventId = NEW.eventId;
 
