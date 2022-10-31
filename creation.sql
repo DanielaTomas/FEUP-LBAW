@@ -28,7 +28,7 @@ CREATE TABLE Event(
     public BOOLEAN NOT NULL,
     address TEXT NOT NULL,
     description TEXT NOT NULL,
-    eventCanceled BOOLEAN NOT NULL DEFAULT TRUE,
+    eventCanceled BOOLEAN NOT NULL DEFAULT FALSE,
     eventPhoto TEXT NOT NULL,
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
