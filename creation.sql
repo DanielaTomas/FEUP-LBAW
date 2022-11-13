@@ -156,6 +156,9 @@ CREATE INDEX notification_receiver ON Notification USING hash (receiverId);
 ALTER TABLE Event ADD COLUMN tsvectors TSVECTOR; 
 CREATE INDEX event_search ON Event USING GIST (tsvectors);
 
+ALTER TABLE Users ADD COLUMN tsvectors TSVECTOR;
+CREATE INDEX user_search ON Users USING GIST (tsvectors);
+
 -----------------------------------------
 -- Triggers
 -----------------------------------------
@@ -431,3 +434,34 @@ CREATE TRIGGER event_search_update
   BEFORE INSERT OR UPDATE ON Event
   FOR EACH ROW
   EXECUTE PROCEDURE event_search_update();
+
+CREATE FUNCTION user_search_update() RETURNS TRIGGER AS
+$BODY$
+
+  IF TG_OP = 'INSERT' THEN
+    NEW.tsvectors = (
+      setweight(to_tsvector('english', NEW.username), 'A') ||
+      setweight(to_tsvector('english', NEW.name), 'B')
+    );
+  END IF;
+
+  IF TG_OP = 'UPDATE' THEN
+      IF (NEW.username <> OLD.username OR NEW.name <> OLD.name) THEN
+        NEW.tsvectors = (
+          setweight(to_tsvector('english', NEW.username), 'A') ||
+          setweight(to_tsvector('english', NEW.name), 'B')
+        );
+      END IF;
+  END IF;
+
+  RETURN NEW;
+END 
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER user_search_update
+  BEFORE INSERT OR UPDATE ON Users
+  FOR EACH ROW
+  EXECUTE PROCEDURE user_search_update();
+
