@@ -8,10 +8,11 @@ class Tag extends Model
 {
     public $timestamps  = false;
 
-    protected $table = 'tag';
+    protected $table = 'Tag';
+    protected $primaryKey = 'tagId';
 
     public function eventTags()
     {
-        return $this->belongsToMany(Event::class, 'event_tag', 'tag_id', 'event_id');
+        return $this->belongsToMany(Event::class, 'TagEvent', 'tagId','eventId');
     } 
 }

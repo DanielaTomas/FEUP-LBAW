@@ -9,32 +9,45 @@ class Event extends Model
   // Don't add create and update timestamps in database.
   public $timestamps  = false;
 
-  protected $table = 'event';
+  protected $table = 'Event';
+  protected $primaryKey = 'eventId';
 
-  protected $primaryKey = 'event_id';
+  protected $guarded = [
+    'isCancelled', 'public',
+  ];
 
-  
-  public function eventTags() {
-    return $this->belongsToMany(Tag::class, 'event_tag', 'event_id', 'tag_id');
+  protected $fillable = [
+    'address','description','eventPhoto','startDate','endDate'
+  ];
+
+
+  public function eventTags()
+  {
+    return $this->belongsToMany(Tag::class, 'TagEvent', 'eventId', 'tagId');
   }
 
-  public function eventCategories() {
-    return $this->belongsToMany(Tag::class, 'event_category', 'event_id', 'category_id');
+  public function eventCategories()
+  {
+    return $this->belongsToMany(Category::class, 'CategoryEvent', 'eventId', 'categoryId');
   }
 
-  public function comments() {
-    return $this->hasMany(Comment::class, 'event_id');
+  public function comments()
+  {
+    return $this->hasMany(Comment::class, 'eventId');
   }
 
-  public function polls() {
-    return $this->hasMany(Poll::class, 'event_id');
+  public function polls()
+  {
+    return $this->hasMany(Poll::class, 'eventId');
   }
 
-  public function organizer() {
-    return $this->belongsTo(User::class);
+  public function organizer()
+  {
+    return $this->belongsTo(User::class,'organizerId');
   }
 
-  public function eventAtendees() {
-    return $this->belongsToMany(User::class, 'user_event', 'user_id', 'event_id');
+  public function eventAtendees()
+  {
+    return $this->belongsToMany(User::class, 'Attendee','eventId','attendeeId');
   }
 }

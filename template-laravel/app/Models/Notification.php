@@ -8,16 +8,9 @@ class Notification extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'notification';
+    protected $table = 'Notification';
 
-    /**
-     * The attributes that are not mass assignable.
-     *
-     * @var array
-     */
-    protected $guarded = [
-        'is_read', 'date',
-    ];
+    protected $primaryKey = 'notificationId';
 
     public function receiver() {
         return $this->belongsTo(User::class);

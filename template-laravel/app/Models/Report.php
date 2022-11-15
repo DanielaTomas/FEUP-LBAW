@@ -8,7 +8,8 @@ class Report extends Model
 {
     public $timestamps  = false;
 
-    protected $table = 'report';
+    protected $table = 'Report';
+    protected $primaryKey = 'reportId';
 
     /**
      * The attributes that aren't mass assignable.
@@ -16,14 +17,14 @@ class Report extends Model
      * @var array
      */
     protected $guarded = [
-        'is_closed',
+        'status',
     ];
 
     function reported() {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class,'eventId');
     }
 
     function reporter() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'reporterId');
     }
 }
