@@ -12,7 +12,39 @@ class Notification extends Model
 
     protected $primaryKey = 'notificationId';
 
-    public function receiver() {
-        return $this->belongsTo(User::class);
+    public function receiver() 
+    {
+        return $this->belongsTo(User::class, 'receiverId');
     }
+
+    public function event() 
+    {
+        return $this->belongsTo(Event::class, 'eventId');
+    }
+
+    public function poll() 
+    {
+        return $this->belongsTo(Poll::class, 'pollId');
+    }
+
+    public function join_request() 
+    {
+        return $this->belongsTo(JoinRequest::class ,'joinRequestId');
+    }
+
+    public function organizer_request() 
+    {
+        return $this->belongsTo(OrganizerRequest::class, 'organizerRequestId');
+    }
+
+    public function invitation_accepted() 
+    {
+        return $this->belongsTo(Invitation::class, 'invitationId', 'inviterId');
+    }
+
+    public function invitation_received() 
+    {
+        return $this->belongsTo(Invitation::class, 'invitationId', 'inviteeId');
+    }
+
 }

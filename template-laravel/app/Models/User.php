@@ -33,4 +33,18 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function comments() {
+        return $this->hasMany(Comment::class, 'authorId');
+    }
+
+    public function votes()
+    {
+        return $this->belongsToMany(Comment::class, 'Vote', 'voterId', 'commentId');
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'reporterId');
+    }
+
 }

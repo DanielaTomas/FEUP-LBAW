@@ -43,11 +43,21 @@ class Event extends Model
 
   public function organizer()
   {
-    return $this->belongsTo(User::class,'organizerId');
+    return $this->belongsTo(User::class,'userId');
   }
 
   public function eventAtendees()
   {
     return $this->belongsToMany(User::class, 'Attendee','eventId','attendeeId');
+  }
+
+  public function reports()
+  {
+    return $this->hasMany(Report::class, 'reporterId');
+  }
+
+  public function notifications()
+  {
+    return $this->hasMany(Notification::class, 'eventId');
   }
 }
