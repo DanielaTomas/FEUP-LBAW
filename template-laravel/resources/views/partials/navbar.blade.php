@@ -6,8 +6,8 @@
             <a id="aboutUs" href="{{ url('/aboutUs') }}">about us</a>
             @if (Auth::check())
             <a id="myEvents" href="{{ url('/myEvents') }}">my Events</a>
-            <i class="fa-solid fa-bell"></i>
-            <i class="fa-solid fa-user"></i>
+            <button><i class="fa-solid fa-bell"></i></button>
+            <a id="profile" href="{{ url('/profile') }}"><i class="fa-solid fa-user"></i></a>
             @else
             <a id="myEvents" href="{{ url('/') }}">my Events</a>
             <a id="signIn" href="{{ url('/signIn') }}">signIn</a>

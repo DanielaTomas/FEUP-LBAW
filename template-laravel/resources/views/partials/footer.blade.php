@@ -3,9 +3,9 @@
         <h2> Follow us on our socials!</h2>
     </div>
     <div>
-        <i class="fa-brands fa-facebook"></i>
-        <i class="fa-brands fa-twitter"></i>
-        <i class="fa-brands fa-instagram"></i>
+        <button><i class="fa-brands fa-facebook"></i></button>
+        <button><i class="fa-brands fa-twitter"></i></button>
+        <button><i class="fa-brands fa-instagram"></i></button>
     </div>
     <div>
         <a id="faqs" href="{{ url('/faqs') }}">faqs</a>

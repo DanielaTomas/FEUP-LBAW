@@ -1,13 +1,5 @@
-<article class="eventcard" data-id="">
-    <!-- add event id-->
+<article class="eventcard" data-id=""> <!-- add event id-->
     <section id="eventImage">
-        <div>
-            <button><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div>
-            <button><i class="fa-solid fa-bell"></i></button>
-            <button><i class="fa-solid fa-lock"></i></button>
-        </div>
     </section>
     <section id=eventCardLower>
         <section id="eventCardLowerLeft">
@@ -20,6 +12,7 @@
             <p id=eventCardDescription> Sports </p>
             <p id=eventCardLocation> Location </p>
             <div id=eventCardTags> tag </div>
+            <button id="eventCardJoinRequest"> request to Join </button>
         </section>
     </section>
 </article>
