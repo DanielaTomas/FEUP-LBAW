@@ -18,7 +18,7 @@ class PollOption extends Model
 
     public function polls_options()
     {
-        return $this->belongsToMany(User::class, 'answer', 'userId', 'pollOptionId');
+        return $this->belongsToMany(User::class, 'Answer', 'userId', 'pollOptionId');
     }
 
     public function notifications()

@@ -48,12 +48,12 @@ class User extends Authenticatable
 
     public function votes()
     {
-        return $this->belongsToMany(Comment::class, 'vote', 'voterId', 'commentId');
+        return $this->belongsToMany(Comment::class, 'Vote', 'voterId', 'commentId')->withPivot('type');
     }
 
     public function polls_options()
     {
-        return $this->belongsToMany(PollOption::class, 'answer', 'userId', 'pollOptionId');
+        return $this->belongsToMany(PollOption::class, 'Answer', 'userId', 'pollOptionId');
     }
 
     public function reports()

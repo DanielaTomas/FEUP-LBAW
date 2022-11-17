@@ -23,12 +23,12 @@ class Event extends Model
 
   public function eventTags()
   {
-    return $this->belongsToMany(Tag::class, 'TagEvent', 'eventId', 'tagId');
+    return $this->belongsToMany(Tag::class, 'Event_Tag', 'eventId', 'tagId');
   }
 
   public function eventCategories()
   {
-    return $this->belongsToMany(Category::class, 'CategoryEvent', 'eventId', 'categoryId');
+    return $this->belongsToMany(Category::class, 'Event_Category', 'eventId', 'categoryId');
   }
 
   public function attendees()
@@ -49,11 +49,6 @@ class Event extends Model
   public function organizer()
   {
     return $this->belongsTo(User::class,'userId');
-  }
-
-  public function eventAtendees()
-  {
-    return $this->belongsToMany(User::class, 'Attendee','eventId','attendeeId');
   }
 
   public function reports()
