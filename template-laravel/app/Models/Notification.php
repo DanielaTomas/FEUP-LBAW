@@ -37,14 +37,8 @@ class Notification extends Model
         return $this->belongsTo(OrganizerRequest::class, 'organizerRequestId');
     }
 
-    public function invitation_accepted() 
+    public function invitation()
     {
-        return $this->belongsTo(Invitation::class, 'invitationId', 'inviterId');
+        return $this->belongsTo(Invitation::class, 'invitationId');
     }
-
-    public function invitation_received() 
-    {
-        return $this->belongsTo(Invitation::class, 'invitationId', 'inviteeId');
-    }
-
 }

@@ -22,17 +22,17 @@ CREATE TABLE Users(
 );
 
 CREATE TABLE Event(
-    eventId SERIAL PRIMARY KEY,
-    userId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-    eventName TEXT NOT NULL CONSTRAINT unique_eventName UNIQUE,
-    public BOOLEAN NOT NULL,
-    address TEXT NOT NULL,
-    description TEXT NOT NULL,
-    eventCanceled BOOLEAN NOT NULL DEFAULT FALSE,
-    eventPhoto TEXT NOT NULL,
-    startDate DATE NOT NULL,
-    endDate DATE NOT NULL,
-    CONSTRAINT end_after_start_ck CHECK (endDate > startDate)
+  eventId SERIAL PRIMARY KEY,
+  userId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
+  eventName TEXT NOT NULL CONSTRAINT unique_eventName UNIQUE,
+  public BOOLEAN NOT NULL,
+  address TEXT NOT NULL,
+  description TEXT NOT NULL,
+  eventCanceled BOOLEAN NOT NULL DEFAULT FALSE,
+  eventPhoto TEXT NOT NULL,
+  startDate DATE NOT NULL,
+  endDate DATE NOT NULL,
+  CONSTRAINT end_after_start_ck CHECK (endDate > startDate)
 );
 
 CREATE TABLE Attendee(
@@ -84,14 +84,14 @@ CREATE TABLE Comment(
 );
 
 CREATE TABLE JoinRequest(
-  JoinRequestId SERIAL PRIMARY KEY,
+  joinRequestId SERIAL PRIMARY KEY,
   requesterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
   eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
   requestStatus BOOLEAN
 );
 
 CREATE TABLE OrganizerRequest(
-  OrganizerRequestId SERIAL PRIMARY KEY,
+  organizerRequestId SERIAL PRIMARY KEY,
   requesterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
   requestStatus BOOLEAN
 );
@@ -118,6 +118,7 @@ CREATE TABLE Vote(
 
 CREATE TABLE PollOption(
   pollOptionId SERIAL NOT NULL,
+  pollId INTEGER REFERENCES Poll (pollId) ON UPDATE CASCADE ON DELETE CASCADE,
   optionContent TEXT NOT NULL
 );
 
