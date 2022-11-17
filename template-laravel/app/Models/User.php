@@ -53,7 +53,7 @@ class User extends Authenticatable
 
     public function polls_options()
     {
-        return $this->belongsToMany(PollOption::class, 'poll', 'userId', 'pollOptionId');
+        return $this->belongsToMany(PollOption::class, 'answer', 'userId', 'pollOptionId');
     }
 
     public function reports()
