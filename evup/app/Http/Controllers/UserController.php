@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
-use App\Models\Card;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Report;
@@ -134,7 +132,7 @@ class UserController extends Controller
       }
 
       $user->save();
-      
+
       return redirect("/user/${id}");
   }
 
