@@ -9,8 +9,8 @@ class Event extends Model
   // Don't add create and update timestamps in database.
   public $timestamps  = false;
 
-  protected $table = 'Event';
-  protected $primaryKey = 'eventId';
+  protected $table = 'event';
+  protected $primaryKey = 'eventid';
 
   protected $guarded = [
     'isCancelled', 'public',
@@ -23,7 +23,7 @@ class Event extends Model
 
   public function eventTags()
   {
-    return $this->belongsToMany(Tag::class, 'TagEvent', 'eventId', 'tagId');
+    return $this->belongsToMany(Tag::class);
   }
 
   public function eventCategories()

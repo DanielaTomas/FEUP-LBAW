@@ -8,8 +8,8 @@ class Tag extends Model
 {
     public $timestamps  = false;
 
-    protected $table = 'Tag';
-    protected $primaryKey = 'tagId';
+    protected $table = 'tag';
+    protected $primaryKey = 'tagid';
 
     public function eventTags()
     {

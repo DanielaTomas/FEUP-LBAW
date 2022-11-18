@@ -15,7 +15,7 @@
             </button>
         </div>
         <section id="homeEvents">
-            @include('partials.publicEventCard')
+            @each('partials.publicEventCard', $events, 'event')
         </section>
     </article>
 @endsection
