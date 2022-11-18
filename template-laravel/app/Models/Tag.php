@@ -13,6 +13,6 @@ class Tag extends Model
 
     public function eventTags()
     {
-        return $this->belongsToMany(Event::class, 'TagEvent', 'tagId','eventId');
+        return $this->belongsToMany(Event::class, 'Event_Tag', 'tagId','eventId');
     } 
 }

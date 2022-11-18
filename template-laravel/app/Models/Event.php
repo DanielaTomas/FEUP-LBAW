@@ -28,7 +28,12 @@ class Event extends Model
 
   public function eventCategories()
   {
-    return $this->belongsToMany(Category::class, 'CategoryEvent', 'eventId', 'categoryId');
+    return $this->belongsToMany(Category::class, 'Event_Category', 'eventId', 'categoryId');
+  }
+
+  public function attendees()
+  {
+    return $this->belongsToMany(User::class, 'Attendee', 'attendeeId', 'eventId');
   }
 
   public function comments()
@@ -43,11 +48,16 @@ class Event extends Model
 
   public function organizer()
   {
-    return $this->belongsTo(User::class,'organizerId');
+    return $this->belongsTo(User::class,'userId');
   }
 
-  public function eventAtendees()
+  public function reports()
   {
-    return $this->belongsToMany(User::class, 'Attendee','eventId','attendeeId');
+    return $this->hasMany(Report::class, 'reporterId');
+  }
+
+  public function notifications()
+  {
+    return $this->hasMany(Notification::class, 'eventId');
   }
 }
