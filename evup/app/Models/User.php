@@ -11,7 +11,9 @@ class User extends Authenticatable
 
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
-    protected $primaryKey = 'userid';
+
+    #protected $table = 'Users';
+    #protected $primaryKey = 'userId';
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','userPhoto'
+        'username', 'name', 'email', 'password','userPhoto'
     ];
 
     /**
@@ -28,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'accountStatus', 'userType', 'remember_token'
     ];
 
     public function cards() {
@@ -64,9 +66,31 @@ class User extends Authenticatable
         return $this->hasMany(User::class, 'inviterId');
     }
 
-    public function invites_receives()
+    public function invites_received()
     {
         return $this->hasMany(User::class, 'inviteeId');
     }
 
+    public function ordered_events()
+    {
+        return $this->events->map(function ($area) {
+            return [
+                'eventId' => $area->eventId,
+                'eventName' => $area->name,
+                'endDate' => $area->endDate,
+            ];
+        })->sortBy('endDate')->where('endDate', '<', date("Y-m-d H:i:s"));
+    }
+
+    public function ordered_invites()
+    {
+        return $this->invites_received->map(function ($area) {
+            return [
+                'invitationId' => $area->invitationId,
+                'inviterId' => $area->inviterId,
+                'eventId' => $area->eventId,
+                'invitationStatus' => $area->invitationStatus,
+            ];
+        })->sortBy('eventId')->where('invitationStatus', '!=', TRUE);
+    }
 }
