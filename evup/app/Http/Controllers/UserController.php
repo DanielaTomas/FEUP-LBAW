@@ -15,92 +15,156 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
   /**
-   * Creates a new item.
+   * Display the User profile.
    *
-   * @param  int  $card_id
-   * @param  Request request containing the description
-   * @return Response
+   * @param  int $id Id of the user
+   * @return View
    */
-  public function create(Request $request, $card_id)
+  public function show(int $id)
   {
-    $item = new Item();
-    $item->card_id = $card_id;
-    $this->authorize('create', $item);
-    $item->done = false;
-    $item->description = $request->input('description');
-    $item->save();
-    return $item;
+      $user = User::find($id);
+      if (is_null($user))
+          return abort(404, 'User not found, id: ' . $id);
+
+      $userInfo = [
+          'id' => $id,
+          'username' => $user->username,
+          'name' => $user->name,
+          'email' => $user->email,
+          'userPhoto' => $user->userPhoto,
+          'accountStatus' => $user->accountStatus,
+          'userType' => $user->userType,
+      ];
+
+      $ordered_events = $user->ordered_events();
+      $ordered_invites = $user->ordered_invites();
+      $isOrganizer = 'Organizer' == $userInfo['userType'];
+
+      return view('pages.user.profile', [
+          'user' => $userInfo,
+          'events' => $ordered_events,
+          'invites' => $ordered_invites,
+          'isOrganizer' => $isOrganizer,
+      ]);
   }
 
-    /**
-     * Updates the state of an individual item.
-     *
-     * @param  int  $id
-     * @param  Request request containing the new state
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-      $item = Item::find($id);
-      $this->authorize('update', $item);
-      $item->done = $request->input('done');
-      $item->save();
-      return $item;
-    }
+  /**
+   * Show the form for editing the user profile.
+   *
+   * @param  int $id Id of the user
+   * @return View
+   */
+  public function edit(int $id)
+  {
+      $user = User::find($id);
+      if (is_null($user))
+          return abort(404, 'User not found, id: ' . $id);
 
+      $this->authorize('update', $user);
 
-    /**
-     * Display the User profile.
-     *
-     * @param  int $id Id of the user
-     * @return View
-     */
-    public function show(int $id)
-    {
-        $user = User::find($id);
-        if (is_null($user))
-            return abort(404, 'User not found, id: ' . $id);
+      $userInfo = [
+        'id' => $id,
+        'username' => $user->username,
+        'name' => $user->name,
+        'email' => $user->email,
+        'userPhoto' => $user->userPhoto,
+        'accountStatus' => $user->accountStatus,
+        'userType' => $user->userType,
+    ];
 
-        $userInfo = [
-            'id' => $id,
-            'username' => $user->username,
-            'name' => $user->name,
-            'email' => $user->email,
-            'userPhoto' => $user->userPhoto,
-            'accountStatus' => $user->accountStatus,
-            'userType' => $user->userType,
-        ];
+    $ordered_events = $user->ordered_events();
+    $ordered_invites = $user->ordered_invites();
+    $isOrganizer = 'Organizer' == $userInfo['userType'];
 
-        $isOrganizer = false;
-        if (Auth::check()) {
-            $isOrganizer = Auth::id() == $userInfo['id'];
-        }
+    return view('pages.user.profile', [
+        'user' => $userInfo,
+        'events' => $ordered_events,
+        'invites' => $ordered_invites,
+        'isOrganizer' => $isOrganizer,
+    ]);
+  }
 
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int $id Id of the user
+   * @return \Illuminate\Http\RedirectResponse
+   */
+  public function update(Request $request, int $id): RedirectResponse
+  {
+      $user = User::find($id);
+      if (is_null($user))
+          return redirect()->back()->withErrors(['user' => 'User not found, id: ' . $id]);
 
-        $ordered_events = $user->ordered_events();
-        $ordered_invites = $user->ordered_invites();
+      $this->authorize('update', $user);
 
+      $validator = Validator::make($request->all(), [
+          'name' => 'nullable|string|max:255',
+          'email' => 'nullable|string|email|max:255|unique:authenticated_user',
+          'password' => 'required_with:new_password,email|string|password',
+          'new_password' => 'nullable|string|min:6|confirmed',
+          'userPhoto' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
+      ]);
 
-        return view('pages.user.profile', [
-            'user' => $userInfo,
-            'events' => $ordered_events,
-            'invites' => $ordered_invites,
-            'isOrganizer' => $isOrganizer,
-        ]);
-    }
+      if ($validator->fails()) {
+          $errors = [];
+          foreach ($validator->errors()->messages() as $key => $value) {
+              $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+          }
 
-    /**
-     * Deletes an individual item.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function delete(Request $request, $id)
-    {
-      $item = Item::find($id);
-      $this->authorize('delete', $item);
-      $item->delete();
-      return $item;
-    }
+          // Go back to form and refill it
+          return redirect()->back()->withInput()->withErrors($errors);
+      }
+
+      if (isset($request->name)) $user->name = $request->name;
+      if (isset($request->email)) $user->email = $request->email;
+      if (isset($request->new_password)) $user->password = bcrypt($request->new_password);
+
+      if (isset($request->userPhoto)) {
+          $newuserPhoto = $request->userPhoto;
+          $olduserPhoto = $user->userPhoto;
+
+          $imgName = round(microtime(true)*1000) . '.' . $newuserPhoto->extension();
+          $newuserPhoto->storeAs('public/userPhotos', $imgName);
+          $user->userPhoto = $imgName;
+
+          if (!is_null($olduserPhoto))
+              Storage::delete('public/thumbnails/' . $olduserPhoto);
+      }
+
+      $user->save();
+      
+      return redirect("/user/${id}");
+  }
+
+  /**
+   * Deletes a user account.
+   *
+   * @param  Illuminate\Http\Request  $request
+   * @param int $id Id of the user
+   * @return \Illuminate\Http\RedirectResponse
+   */
+  public function delete(Request $request, int $id): RedirectResponse
+  {
+      $user = User::find($id);
+      if (is_null($user))
+          return redirect()->back()->withErrors(['user' => 'User not found, id: ' . $id]);
+
+      $this->authorize('delete', $user);
+
+      $validator = Validator::make($request->all(), [
+          'password' => 'required|string|password'
+      ]);
+
+      if ($validator->fails())
+          return redirect()->back()->withErrors($validator->errors());
+
+      $deleted = $user->delete();
+      if ($deleted)
+          return redirect('/');
+      else
+          return redirect()->back()->withErrors(['user' => 'Failed to delete user account. Try again later']);
+  }
 
 }
