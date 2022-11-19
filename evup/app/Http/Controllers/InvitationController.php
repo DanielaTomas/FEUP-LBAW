@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Invitition;
+use App\Models\Invitation;
 use App\Models\Event;
 
 use Illuminate\Http\Request;
@@ -15,13 +15,13 @@ class InvitationController extends Controller
 
      /**
      * Send invitation
-     * 
+     *
      * @param  Illuminate\Http\Request $request
      * @param int $id event id
      * @return \Illuminate\Http\Response
     */
     public function send(Request $request, $id){
-         
+
         $invite = new Invite();
         //$this->authorize('send', $id);
         $invite->eventid = $id;
@@ -50,13 +50,13 @@ class InvitationController extends Controller
 
     /**
    * Page with information about all the received invitations
-   * 
+   *
    * @return View
    */
     public function receivedInvitations() {
-         
+
         $this->authorize('receivedInvitations', User::class);
-        
+
         $invitationsInfo = Invitation::orderByDesc('invitationId')->get()
           ->map(function ($invitation) {
 
@@ -93,13 +93,13 @@ class InvitationController extends Controller
 
     /**
    * Page with information about all the invitations sent
-   * 
+   *
    * @return View
    */
     public function invitationsSent() {
-         
+
         $this->authorize('invitationsSent', User::class);
-        
+
         $invitationsInfo = Invitation::orderByDesc('invitationId')->get()
         ->map(function ($invitation) {
 
@@ -149,24 +149,24 @@ class InvitationController extends Controller
                 'msg' => 'Invitation not found, id: '.$id,
                 'errors' => ['invitation' => 'Invatiotion not found, id: '.$id]
             ], 404);
-  
+
         $this->authorize('acceptInvitation', $invitation);
-  
+
         if ($invitation->$invitationStatus)
             return response()->json([
                 'status' => 'OK',
                 'msg' => 'Invitation was already accepted',
             ], 200);
-  
+
         $invitation->invitationStatus = true;
         $invitation->save();
-  
+
         return response()->json([
             'status' => 'OK',
             'msg' => 'Invitation was successfully accepted',
         ], 200);
     }
-  
+
 
           /**
      * Update the specified resource in storage.
@@ -183,18 +183,18 @@ class InvitationController extends Controller
                 'msg' => 'Invitation not found, id: '.$id,
                 'errors' => ['invitation' => 'Invatiotion not found, id: '.$id]
             ], 404);
-  
+
         $this->authorize('declineInvitation', $invitation);
-  
+
         if ($invitation->$invitationStatus == false)
             return response()->json([
                 'status' => 'OK',
                 'msg' => 'Invitation was already declined',
             ], 200);
-  
+
         $invitation->invitationStatus = false;
         $invitation->save();
-  
+
         return response()->json([
             'status' => 'OK',
             'msg' => 'Invitation was successfully declined',
