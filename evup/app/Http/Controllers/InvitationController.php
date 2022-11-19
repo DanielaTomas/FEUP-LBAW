@@ -126,7 +126,7 @@ class InvitationController extends Controller
 
                 return [
                     'id' => $invation->id,
-                    'inviter' => $inviteeInfo,
+                    'invitee' => $inviteeInfo,
                     'event' => $eventInfo,
                 ];
         });
