@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Invitition;
 use App\Models\Event;
 
 use Illuminate\Http\Request;
@@ -36,7 +37,45 @@ class InvitationController extends Controller
 
         $invite->save();
 
-        return redirect()->route('event.show', $id);
+        return redirect()->route('pages.event.show', $id);
+    }
+
+    public function invitations() {
+         
+        $this->authorize('invitations', User::class);
+        
+        $invitationsInfo = Invitation::orderByDesc('invitationId')->get()
+          ->map(function ($invitation) {
+
+                $user = User::find($invitation->inviterId);
+                $inviterInfo = [
+                    'id' => $invitation->eventId,
+                    'username' => $user->username,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'userPhoto' => $user->userPhoto,
+                    'accountStatus' => $user->accountStatus,
+                    'userType' => $user->userType,
+                ];
+
+                $event = Event::find($invitation->eventId);
+                $eventInfo = [
+                    'id' => $invitation->eventId,
+                    'eventName' => $event->eventName,
+                    'public' => $event->public,
+                    'address' => $event->address,
+                    'description' => $event->description,
+                    'eventPhoto' => $event->eventPhoto,
+                ];
+
+                return [
+                    'id' => $invation->id,
+                    'inviter' => $inviterInfo,
+                    'event' => $eventInfo,
+                ];
+          });
+
+        return view('pages.invitations', ['invitation' => $invitationInfo]);
     }
 
 }
