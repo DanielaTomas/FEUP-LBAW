@@ -147,7 +147,7 @@ class InvitationController extends Controller
             return response()->json([
                 'status' => 'Not Found',
                 'msg' => 'Invitation not found, id: '.$id,
-                'errors' => ['invitation' => 'Invatiotion not found, id: '.$id]
+                'errors' => ['invitation' => 'Invitation not found, id: '.$id]
             ], 404);
 
         $this->authorize('acceptInvitation', $invitation);
