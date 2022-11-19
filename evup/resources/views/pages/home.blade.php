@@ -2,9 +2,10 @@
 
 @section('content')
     <section id="homeTop">
-        <div class="searchBar">
-            <input type="text" placeholder="Search..">
-        </div>
+        <form id="searchForm" class="d-flex flex-row align-items-center border"
+                    action="{{ route('search') }}">
+            <input type="search" name="search" id="publicSearch" class="form-control rounded" placeholder="Search..">
+        </form>
 
         <button id="dropdownDefault" data-dropdown-toggle="dropdown"
             class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -32,4 +33,5 @@
             @each('partials.publicEventCard', $events, 'event')
         </section>
     </article>
+  
 @endsection
