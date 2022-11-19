@@ -25,7 +25,7 @@ class EventController extends Controller
   {
     $search = $request->input('search');
     $events = Event::whereRaw('tsvectors @@ to_tsquery(\'english\', ?)', [$search])
-      ->get();
+      ->where('public','=',true)->get();
     return $events;
   }
 }
