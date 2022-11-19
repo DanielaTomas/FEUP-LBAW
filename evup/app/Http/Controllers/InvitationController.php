@@ -16,7 +16,7 @@ class InvitationController extends Controller
      /**
      * Send invitation
      * 
-     * @param  Illuminate\Http\Request  $request
+     * @param  Illuminate\Http\Request $request
      * @param int $id event id
      * @return \Illuminate\Http\Response
     */
@@ -49,13 +49,13 @@ class InvitationController extends Controller
 
 
     /**
-   * Page with information about all the invitations
+   * Page with information about all the received invitations
    * 
    * @return View
    */
-    public function invitations() {
+    public function receivedInvitations() {
          
-        $this->authorize('invitations', User::class);
+        $this->authorize('receivedInvitations', User::class);
         
         $invitationsInfo = Invitation::orderByDesc('invitationId')->get()
           ->map(function ($invitation) {
@@ -88,9 +88,51 @@ class InvitationController extends Controller
                 ];
           });
 
-        return view('pages.user.invitations', ['invitation' => $invitationInfo]);
+        return view('pages.user.receivedinvitations', ['invitations' => $invitationsInfo]);
     }
 
+    /**
+   * Page with information about all the invitations sent
+   * 
+   * @return View
+   */
+    public function invitationsSent() {
+         
+        $this->authorize('invitationsSent', User::class);
+        
+        $invitationsInfo = Invitation::orderByDesc('invitationId')->get()
+        ->map(function ($invitation) {
+
+                $user = User::find($invitation->inviteeId);
+                $inviteeInfo = [
+                    'id' => $invitation->eventId,
+                    'username' => $user->username,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'userPhoto' => $user->userPhoto,
+                    'accountStatus' => $user->accountStatus,
+                    'userType' => $user->userType,
+                ];
+
+                $event = Event::find($invitation->eventId);
+                $eventInfo = [
+                    'id' => $invitation->eventId,
+                    'eventName' => $event->eventName,
+                    'public' => $event->public,
+                    'address' => $event->address,
+                    'description' => $event->description,
+                    'eventPhoto' => $event->eventPhoto,
+                ];
+
+                return [
+                    'id' => $invation->id,
+                    'inviter' => $inviteeInfo,
+                    'event' => $eventInfo,
+                ];
+        });
+
+        return view('pages.user.invitationssent', ['invitations' => $invitatationsInfo]);
+    }
 
       /**
      * Update the specified resource in storage.
@@ -158,6 +200,5 @@ class InvitationController extends Controller
             'msg' => 'Invitation was successfully declined',
         ], 200);
     }
-
 
 }
