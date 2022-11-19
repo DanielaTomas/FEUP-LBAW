@@ -9,7 +9,7 @@
             @if (Auth::check())
                 <a class="hover:text-gray-200" href="{{ url('/myEvents') }}">my Events</a>
             @else
-                <a class="hover:text-gray-200" href="{{ url('/') }}">my Events</a>
+                <a class="hover:text-gray-200" href="{{ url('/login') }}">my Events</a>
             @endif
         </ul>
         <!-- Sign In / Register      -->

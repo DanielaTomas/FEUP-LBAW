@@ -28,7 +28,6 @@ class HomeController extends Controller
     $categories = CategoryController::getAllCategories();
     $tags = TagController::getAllTags();
     $events =  EventController::searchPublicEvents($request);
-
     return view('pages.home', ['events' => $events, 'tags' => $tags, 'categories' => $categories]);
   }
   

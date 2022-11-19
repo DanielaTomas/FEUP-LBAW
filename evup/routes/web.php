@@ -11,10 +11,8 @@
 |
 */
 // Home
-Route::get('/', 'Auth\LoginController@home');
-
-Route::get('home', 'HomeController@list');
-Route::get('home/search','HomeController@searchEvents')->name('search');
+Route::get('/', 'HomeController@list')->name('home');
+Route::get('search','HomeController@searchEvents')->name('search');
 
 // Cards
 Route::get('cards', 'CardController@list');
