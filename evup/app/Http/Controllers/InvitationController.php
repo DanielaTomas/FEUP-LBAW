@@ -13,8 +13,15 @@ use Illuminate\Support\Facades\Auth;
 class InvitationController extends Controller
 {
 
+     /**
+     * Send invitation
+     * 
+     * @param  Illuminate\Http\Request  $request
+     * @param int $id event id
+     * @return \Illuminate\Http\Response
+    */
     public function send(Request $request, $id){
-
+         
         $invite = new Invite();
         //$this->authorize('send', $id);
         $invite->eventid = $id;
@@ -40,10 +47,16 @@ class InvitationController extends Controller
         return redirect()->route('pages.event.show', $id);
     }
 
+
+    /**
+   * Page with information about all the invitations
+   * 
+   * @return View
+   */
     public function invitations() {
-
+         
         $this->authorize('invitations', User::class);
-
+        
         $invitationsInfo = Invitation::orderByDesc('invitationId')->get()
           ->map(function ($invitation) {
 
