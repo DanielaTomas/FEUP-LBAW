@@ -1,5 +1,5 @@
-<header>
-    <nav id="navbarContainer">
+<header >
+    <nav class="flex" id="navbarContainer">
         <a id="logo" href="{{ url('/') }}">EvUP</a>
         <div id="linksContainer">
             <a id="faqs" href="{{ url('/faqs') }}">faqs</a>

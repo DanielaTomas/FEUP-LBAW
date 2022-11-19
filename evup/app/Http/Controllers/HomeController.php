@@ -17,7 +17,8 @@ class HomeController extends Controller
    */
   public function list()
   {
+    $tags = TagController::getAllTags();
     $events = EventController::getPublicEvents();
-    return view('pages.home', ['events' => $events]);
+    return view('pages.home', ['events' => $events, 'tags' => $tags]);
   }
 }

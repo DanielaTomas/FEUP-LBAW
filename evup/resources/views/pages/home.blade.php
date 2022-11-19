@@ -10,9 +10,7 @@
     <article>
         <p id="homeTagHeader">Select your interests to get event suggestions based on what you love</p>
         <div id="homeTags">
-            <button id="homeTag">
-                <p> Tag </p>
-            </button>
+            @each('partials.tag', $tags, 'tag')
         </div>
         <section id="homeEvents">
             @each('partials.publicEventCard', $events, 'event')
