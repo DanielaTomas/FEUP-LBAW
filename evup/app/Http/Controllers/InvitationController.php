@@ -91,4 +91,73 @@ class InvitationController extends Controller
         return view('pages.user.invitations', ['invitation' => $invitationInfo]);
     }
 
+
+      /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id Id of the invitation
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function acceptInvitation(int $id)
+    {
+        $invitation = Invitation::find($id);
+        if (is_null($invitation))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'Invitation not found, id: '.$id,
+                'errors' => ['invitation' => 'Invatiotion not found, id: '.$id]
+            ], 404);
+  
+        $this->authorize('acceptInvitation', $invitation);
+  
+        if ($invitation->$invitationStatus)
+            return response()->json([
+                'status' => 'OK',
+                'msg' => 'Invitation was already accepted',
+            ], 200);
+  
+        $invitation->invitationStatus = true;
+        $invitation->save();
+  
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Invitation was successfully accepted',
+        ], 200);
+    }
+  
+
+          /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id Id of the invitation
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function declineInvitation(int $id)
+    {
+        $invitation = Invitation::find($id);
+        if (is_null($invitation))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'Invitation not found, id: '.$id,
+                'errors' => ['invitation' => 'Invatiotion not found, id: '.$id]
+            ], 404);
+  
+        $this->authorize('declineInvitation', $invitation);
+  
+        if ($invitation->$invitationStatus == false)
+            return response()->json([
+                'status' => 'OK',
+                'msg' => 'Invitation was already declined',
+            ], 200);
+  
+        $invitation->invitationStatus = false;
+        $invitation->save();
+  
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Invitation was successfully declined',
+        ], 200);
+    }
+
+
 }
