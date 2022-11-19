@@ -18,7 +18,7 @@ class EventController extends Controller
    */
   static function getPublicEvents()
   {
-    return Event::get();
+    return Event::where('public','=',true)->get();
   }
 
   public static function searchPublicEvents(Request $request)
