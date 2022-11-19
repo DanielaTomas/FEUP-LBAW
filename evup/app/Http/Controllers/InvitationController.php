@@ -14,7 +14,7 @@ class InvitationController extends Controller
 {
 
     public function send(Request $request, $id){
-         
+
         $invite = new Invite();
         //$this->authorize('send', $id);
         $invite->eventid = $id;
@@ -41,9 +41,9 @@ class InvitationController extends Controller
     }
 
     public function invitations() {
-         
+
         $this->authorize('invitations', User::class);
-        
+
         $invitationsInfo = Invitation::orderByDesc('invitationId')->get()
           ->map(function ($invitation) {
 
@@ -75,7 +75,7 @@ class InvitationController extends Controller
                 ];
           });
 
-        return view('pages.invitations', ['invitation' => $invitationInfo]);
+        return view('pages.user.invitations', ['invitation' => $invitationInfo]);
     }
 
 }
