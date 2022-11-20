@@ -67,7 +67,7 @@
         </div>
     @else
         <a class="hover:text-gray-200 font-semibold font-heading flex mr-6 p-4 self-center"
-            href="{{ url('/login') }}">sign In</a>
+            href="{{ url('/login') }}">signIn</a>
     @endif
 
 </nav>
