@@ -18,6 +18,19 @@ Route::get('search','HomeController@searchEvents')->name('search');
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
 
+// Admin
+Route::get('admin', 'AdminController@show')->name('admin');
+Route::get('admin/users', 'AdminController@users');
+//Route::get('admin/users/{id}/view', 'AdminController@view')->where(['id' => '[0-9]+']); Waiting for the profile to be finished
+//Route::get('admin/users/{id}/edit', 'AdminController@edit')->where(['id' => '[0-9]+']);
+Route::put('admin/users/{id}/ban', 'AdminController@banUser')->where(['id' => '[0-9]+']);
+Route::put('admin/users/{id}/unban', 'AdminController@unbanUser')->where(['id' => '[0-9]+']);
+Route::get('admin/reports', 'AdminController@reports');
+Route::put('admin/reports/{id}/close', 'AdminController@closeReport')->where(['id' => '[0-9]+']);
+Route::get('admin/organizer_requests', 'AdminController@organizer_requests');
+Route::put('admin/organizer_requests/{id}/close', 'AdminController@closeRequest')->where(['id' => '[0-9]+']);
+Route::put('admin/organizer_requests/{id}/accept', 'AdminController@acceptRequest')->where(['id' => '[0-9]+']);
+
 // API
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');

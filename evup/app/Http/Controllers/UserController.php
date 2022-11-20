@@ -7,39 +7,31 @@ use App\Models\Event;
 use App\Models\Report;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
   /**
    * Display the User profile.
    *
-   * @param  int $id Id of the user
    * @return View
    */
-  public function show(int $id)
+  public function show()
   {
-      $user = User::find($id);
+      $user = User::find(Auth::id());
       if (is_null($user))
-          return abort(404, 'User not found, id: ' . $id);
-
-      $userInfo = [
-          'id' => $id,
-          'username' => $user->username,
-          'name' => $user->name,
-          'email' => $user->email,
-          'userPhoto' => $user->userPhoto,
-          'accountStatus' => $user->accountStatus,
-          'userType' => $user->userType,
-      ];
+          return abort(404, 'User not found, id: ' . Auth::id());
 
       $ordered_events = $user->ordered_events();
       $ordered_invites = $user->ordered_invites();
-      $isOrganizer = 'Organizer' == $userInfo['userType'];
+      $isOrganizer = 'Organizer' == $user->userType;
 
       return view('pages.user.profile', [
-          'user' => $userInfo,
+          'user' => $user,
           'events' => $ordered_events,
           'invites' => $ordered_invites,
           'isOrganizer' => $isOrganizer,
@@ -60,22 +52,12 @@ class UserController extends Controller
 
       $this->authorize('update', $user);
 
-      $userInfo = [
-        'id' => $id,
-        'username' => $user->username,
-        'name' => $user->name,
-        'email' => $user->email,
-        'userPhoto' => $user->userPhoto,
-        'accountStatus' => $user->accountStatus,
-        'userType' => $user->userType,
-    ];
-
     $ordered_events = $user->ordered_events();
     $ordered_invites = $user->ordered_invites();
-    $isOrganizer = 'Organizer' == $userInfo['userType'];
+    $isOrganizer = 'Organizer' == $user->userType;
 
     return view('pages.user.profile', [
-        'user' => $userInfo,
+        'user' => $user,
         'events' => $ordered_events,
         'invites' => $ordered_invites,
         'isOrganizer' => $isOrganizer,
@@ -128,7 +110,7 @@ class UserController extends Controller
           $user->userPhoto = $imgName;
 
           if (!is_null($olduserPhoto))
-              Storage::delete('public/thumbnails/' . $olduserPhoto);
+              Storage::delete('public/userPhotos/' . $olduserPhoto);
       }
 
       $user->save();
