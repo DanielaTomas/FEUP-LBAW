@@ -34,3 +34,5 @@ Route::post('register', 'Auth\RegisterController@register');
 
 // Event
 Route::get('event/{id}','EventController@show');
+
+
