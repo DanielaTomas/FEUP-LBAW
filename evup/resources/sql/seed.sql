@@ -403,7 +403,7 @@ CREATE TRIGGER update_user_to_organization
 CREATE FUNCTION deleteUser() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.account_status='Disabled') THEN
+    IF (NEW.accountStatus='Disabled') THEN
         DELETE FROM Atendee
         WHERE attendeeId = NEW.userId;
         

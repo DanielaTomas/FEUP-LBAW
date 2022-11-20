@@ -8,7 +8,7 @@
 <div>
     <h2 class="text-2xl font-semibold leading-tight">Users</h2>
 </div>
-<div class="my-2 flex sm:flex-row flex-col">
+<div class="my-2 flex sm:flex-row flex-col justify-between">
     <div class="flex flex-row mb-1 sm:mb-0">
         <div class="relative">
             <select
@@ -80,5 +80,7 @@
         </div>
     </div>
 </div>
+
+@each('partials.admin.ban_modal', $users, 'user')
 
 @endsection

@@ -31,6 +31,27 @@ class AdminController extends UserController
         ]);
     }
 
+    /**
+   * Display the User profile.
+   *
+   * @return View
+   */
+    public function view($id)
+    {
+        $user = User::find($id);
+        if (is_null($user))
+            return abort(404, 'User not found, id: ' . Auth::id());
+
+        $ordered_events = $user->ordered_events();
+        $isOrganizer = 'Organizer' == $user->userType;
+
+        return view('pages.user.profile', [
+            'user' => $user,
+            'events' => $ordered_events,
+            'isOrganizer' => $isOrganizer,
+        ]);
+    }
+
 
     /**
      * Display the list of users
@@ -65,9 +86,9 @@ class AdminController extends UserController
               'errors' => ['user' => 'User not found, id: '.$id]
           ], 404);
 
-      $this->authorize('banUser', $user);
+      //$this->authorize('banUser', $user);
 
-      $user->accountStatus = 'Disabled';
+      $user->accountstatus = 'Blocked';
 
       $user->save();
 
@@ -94,9 +115,9 @@ class AdminController extends UserController
               'errors' => ['user' => 'User not found, id: '.$id]
           ], 404);
 
-      $this->authorize('banUser', $user);
+      //$this->authorize('banUser', $user);
 
-      $user->accountStatus = 'Active';
+      $user->accountstatus = 'Active';
 
       $user->save();
 
@@ -118,15 +139,15 @@ class AdminController extends UserController
       $reportsInfo = Report::orderByDesc('reportId')->get()
           ->map(function ($report) {
 
-                $reporter = User::find($report->reporterId);
-                $event = Event::find($report->eventId);
+                $reporter = User::find($report->reporterid);
+                $event = Event::find($report->eventid);
 
                 return [
                     'id' => $report->id,
                     'reporter' => $reporter,
                     'event' => $event,
                     'message' => $report->message,
-                    'reportStatus' => $report->reportStatus,
+                    'reportStatus' => $report->reportstatus,
                 ];
           });
 
@@ -153,13 +174,13 @@ class AdminController extends UserController
 
         $this->authorize('closeReport', $report);
 
-        if ($report->reportStatus)
+        if ($report->reportstatus)
             return response()->json([
                 'status' => 'OK',
                 'msg' => 'Report was already closed',
             ], 200);
 
-        $report->reportStatus = true;
+        $report->reportstatus = true;
         $report->save();
 
         return response()->json([
@@ -181,12 +202,12 @@ class AdminController extends UserController
       $requestsInfo = OrganizerRequest::orderByDesc('OrganizerRequestId')->get()
           ->map(function ($request) {
 
-                $requester = User::find($request->requesterId);
+                $requester = User::find($request->requesterid);
 
                 return [
                     'id' => $request->id,
                     'requester' => $requester,
-                    'requestStatus' => $request->requestStatus,
+                    'requestStatus' => $request->requeststatus,
                 ];
           });
 
@@ -219,7 +240,7 @@ class AdminController extends UserController
                 'msg' => 'Request was already closed',
             ], 200);
 
-        $request->requestStatus = false;
+        $request->requeststatus = false;
         $request->save();
 
         return response()->json([
@@ -247,13 +268,13 @@ class AdminController extends UserController
 
       $this->authorize('closereq$request', $request);
 
-      if ($request->requestStatus)
+      if ($request->requeststatus)
           return response()->json([
               'status' => 'OK',
               'msg' => 'Request was already accepted',
           ], 200);
 
-      $request->requestStatus = true;
+      $request->requeststatus = true;
       $request->save();
 
       return response()->json([
