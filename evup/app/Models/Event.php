@@ -23,12 +23,12 @@ class Event extends Model
 
   public function eventTags()
   {
-    return $this->belongsToMany(Tag::class);
+    return $this->belongsToMany(Tag::class,'event_tag','eventid','tagid');
   }
 
   public function eventCategories()
   {
-    return $this->belongsToMany(Category::class, 'Event_Category', 'eventId', 'categoryId');
+    return $this->belongsToMany(Category::class, 'event_category', 'eventid', 'categoryid');
   }
 
   public function attendees()

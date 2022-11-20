@@ -8,12 +8,12 @@ class Category extends Model
 {
     public $timestamps  = false;
 
-    protected $table = 'Category';
-    protected $primaryKey = 'categoryId';
+    protected $table = 'category';
+    protected $primaryKey = 'categoryid';
     
 
-    public function eventcategories()
-    {
-        return $this->belongsToMany(Event::class, 'Event_Category', 'categoryId', 'eventId');
-    } 
+    public function eventCategories()
+  {
+    return $this->belongsToMany(Event::class, 'event_category', 'categoryid', 'eventid');
+  }
 }

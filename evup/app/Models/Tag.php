@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Client\Request;
 
 class Tag extends Model
 {
@@ -13,6 +14,7 @@ class Tag extends Model
 
     public function eventTags()
     {
-        return $this->belongsToMany(Event::class, 'Event_Tag', 'tagId','eventId');
+        
+        return $this->belongsToMany(Event::class, 'event_tag', 'eventid','tagid');
     } 
 }
