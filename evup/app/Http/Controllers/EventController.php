@@ -28,4 +28,18 @@ class EventController extends Controller
       ->where('public','=',true)->get();
     return $events;
   }
+
+  public function show($id) 
+  {
+    $event = Event::find($id);
+
+    if(is_null($event))
+      return abort(404,'Event not found');
+
+    //$this->authorize('show',$event);
+    return view('pages.event',[
+      'event'=>$event,
+    ]);
+  }
+
 }

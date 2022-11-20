@@ -1,0 +1,1 @@
+<p id = "comment" data-id="{{ $comment->commentid }}"> {{ $comment->commentcontent }}</p>
