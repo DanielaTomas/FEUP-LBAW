@@ -38,7 +38,7 @@ class Event extends Model
 
   public function comments()
   {
-    return $this->hasMany(Comment::class, 'eventId');
+    return $this->hasMany(Comment::class, 'eventid');
   }
 
   public function polls()

@@ -10,8 +10,8 @@ class Comment extends Model
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
 
-    protected $table = 'Comment';
-    protected $primaryKey = 'commentId';
+    protected $table = 'comment';
+    protected $primaryKey = 'commentid';
 
 
     public function author() 

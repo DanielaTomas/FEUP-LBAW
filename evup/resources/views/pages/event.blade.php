@@ -23,13 +23,12 @@
             <div class="flex items-center">
                 <img class="w-6 h-6 rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg"/>
                 <p class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-800"> Username </p><br>
-                <p class="mb-4 text-2xl leading-none tracking-tight text-gray-800"> Date </p>
+                <p class="mb-4 text-2xl leading-none tracking-tight text-gray-800"> november 12, 2022 at 7:00 pm </p>
             </div>
             <div class="flex items-center">
                 <p>Comment</p>
-                <!--FIXME Comments <div id="eventCardComments">@each('partials.comment', $event->comments()->get(), 'comment')</div> -->
+                <div id="eventCardComments">@each('partials.comment', $event->comments()->get(), 'comment')</div>
             </div>
-        </td>
     </section>
 
     <section id=eventCardLower>
