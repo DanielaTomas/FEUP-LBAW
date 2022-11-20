@@ -16,7 +16,7 @@
             <div class="flex flex-column items-center mt-4 ">
                 <div class="w-1/2 text-gray-700"> {{ $event->address }} </div>
                 <div id=eventCardTags> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
-                <button id="eventCardJoinRequest"> request to Join </button>
+                <button id="eventCardJoinRequest"><a href="event/{{$event->eventid}}"> request to Join</a></button>
             </div>
         </div>
     </div>
