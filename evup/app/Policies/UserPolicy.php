@@ -17,6 +17,11 @@ class UserPolicy
         return $admin->usertype == 'Admin';
     }
 
+    public function users(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
     public function banUser(User $admin)
     {
         return $admin->usertype == 'Admin';
