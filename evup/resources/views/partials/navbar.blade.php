@@ -4,9 +4,9 @@
         <!-- Nav Links -->
         <ul class="hidden xl:flex px-4 mx-auto font-semibold font-heading space-x-12">
             @if (Auth::check())
-                @if (Auth::user()->usertype == 'Admin')
+                @if (Auth::user()->usertype === 'Admin')
                     <a class="hover:text-gray-200" href="{{ url('/admin') }}">admin Panel</a>
-                @elseif (Auth::user()->usertype != 'Admin')
+                @elseif (Auth::user()->usertype !== 'Admin')
                     <a class="hover:text-gray-200" href="{{ url('/myEvents') }}">my Events</a>
                 @endif
             @else
@@ -30,8 +30,13 @@
         class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
         <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
             @if (Auth::check())
-                <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    href="{{ url('/myEvents') }}">my Events</a>
+                @if (Auth::user()->usertype === 'Admin')
+                    <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        href="{{ url('/admin') }}">admin Panel</a>
+                @elseif (Auth::user()->usertype !== 'Admin')
+                    <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        href="{{ url('/myEvents') }}">my Events</a>
+                @endif
             @else
                 <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     href="{{ url('/login') }}">my Events</a>

@@ -2,8 +2,6 @@
 
 @section('content')
 
-<link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.4/dist/flowbite.min.css"/>
-<script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
 
 <div>
     <h2 class="text-2xl font-semibold leading-tight">Reports</h2>

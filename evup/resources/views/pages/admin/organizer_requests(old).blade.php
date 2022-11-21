@@ -2,9 +2,6 @@
 
 @section('content')
 
-<link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.4/dist/flowbite.min.css"/>
-<script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
-
 <div>
     <h2 class="text-2xl font-semibold leading-tight">Organizer Requests</h2>
 </div>
@@ -23,7 +20,7 @@
                 class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
                 <option>All</option>
                 <option>Active</option>
-                <option>Reviewd</option>
+                <option>Reviewed</option>
             </select>
         </div>
     </div>

@@ -50,9 +50,8 @@ class AdminController extends UserController
             $requester = User::find($request->requesterid);
 
             return [
-                'id' => $request->id,
+                'request' => $request,
                 'requester' => $requester,
-                'requeststatus' => $request->requeststatus,
             ];
         });
 
