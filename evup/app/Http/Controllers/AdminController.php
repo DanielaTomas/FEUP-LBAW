@@ -25,7 +25,7 @@ class AdminController extends UserController
         if (is_null($admin))
             return abort(404, 'User not found');
 
-        //$this->authorize('show', $admin);
+        $this->authorize('show', $admin);
         return view('pages.admin.panel',[
             'admin' => $admin,
         ]);
@@ -61,7 +61,7 @@ class AdminController extends UserController
     public function users()
     {
         $admin = User::find(Auth::id());
-        //$this->authorize('users', $admin);
+        $this->authorize('users', $admin);
         $users = User::get();
         return view('pages.admin.users',[
             'users' => $users,
@@ -86,7 +86,7 @@ class AdminController extends UserController
               'errors' => ['user' => 'User not found, id: '.$id]
           ], 404);
 
-      //$this->authorize('banUser', $user);
+      $this->authorize('banUser', $user);
 
       $user->accountstatus = 'Blocked';
 
@@ -115,7 +115,7 @@ class AdminController extends UserController
               'errors' => ['user' => 'User not found, id: '.$id]
           ], 404);
 
-      //$this->authorize('banUser', $user);
+      $this->authorize('banUser', $user);
 
       $user->accountstatus = 'Active';
 
