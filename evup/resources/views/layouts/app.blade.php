@@ -19,7 +19,6 @@
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
     <script type="text/javascript" src={{ asset('js/app.js') }} defer></script>
-    <script src="https://kit.fontawesome.com/e93bc86ff0.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -31,6 +30,7 @@
         @include('partials.footer')
     </main>
     <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <script type="text/javascript" src={{ asset('js/admin.tabs.js') }}></script>
     <script type="text/javascript" src={{ asset('js/admin.users.js') }}></script>
 </body>
 

@@ -47,7 +47,7 @@ class UserPolicy
         return $admin->usertype == 'Admin';
     }
 
-    public function closeRequest(User $admin)
+    public function denyRequest(User $admin)
     {
         return $admin->usertype == 'Admin';
     }

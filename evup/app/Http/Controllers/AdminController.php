@@ -19,15 +19,49 @@ class AdminController extends UserController
      *
      * @return View
      */
-    public function show()
+    public function show_panel()
     {
         $admin = User::find(Auth::id());
         if (is_null($admin))
             return abort(404, 'User not found');
 
+        $users = User::get();
+
+        $reports = Report::orderByDesc('reportid')->get()
+        ->map(function ($report) {
+
+            $reporter = Report::find($report->reportid)->reporter();
+            $reported = Report::find($report->reportid)->reported();
+            //$reporter = User::find($report->reporterid);
+            //$event = Event::find($report->eventid);
+
+            return [
+                'id' => $report->id,
+                'reporter' => $reporter,
+                'event' => $reported,
+                'message' => $report->message,
+                'reportstatus' => $report->reportstatus,
+            ];
+        });
+
+        $organizer_requests = OrganizerRequest::orderByDesc('organizerrequestid')->get()
+        ->map(function ($request) {
+
+            $requester = User::find($request->requesterid);
+
+            return [
+                'id' => $request->id,
+                'requester' => $requester,
+                'requeststatus' => $request->requeststatus,
+            ];
+        });
+
         $this->authorize('show', $admin);
         return view('pages.admin.panel',[
             'admin' => $admin,
+            'users' => $users,
+            'reports' => $reports,
+            'requests' => $organizer_requests,
         ]);
     }
 
@@ -43,7 +77,7 @@ class AdminController extends UserController
             return abort(404, 'User not found, id: ' . Auth::id());
 
         $ordered_events = $user->ordered_events();
-        $isOrganizer = 'Organizer' == $user->usertype;
+        $isorganizer = 'Organizer' == $user->usertype;
 
         return view('pages.user.profile', [
             'user' => $user,
@@ -151,14 +185,14 @@ class AdminController extends UserController
         ->map(function ($report) {
 
             $reporter = Report::find($report->reportid)->reporter();
-            $reporter = Report::find($report->reportid)->reported();
+            $reported = Report::find($report->reportid)->reported();
             //$reporter = User::find($report->reporterid);
             //$event = Event::find($report->eventid);
 
             return [
                 'id' => $report->id,
                 'reporter' => $reporter,
-                'event' => $event,
+                'event' => $reported,
                 'message' => $report->message,
                 'reportstatus' => $report->reportstatus,
             ];
@@ -218,15 +252,14 @@ class AdminController extends UserController
         return abort(404, 'User not found');
     $this->authorize('organizer_requests', $admin);
 
-    $requestsInfo = OrganizerRequest::orderByDesc('Organizerrequestid')->get()
+    $requestsInfo = OrganizerRequest::orderByDesc('organizerrequestid')->get()
         ->map(function ($request) {
 
             $requester = User::find($request->requesterid);
 
             return [
-                'id' => $request->id,
+                'request' => $request,
                 'requester' => $requester,
-                'requeststatus' => $request->requeststatus,
             ];
         });
 
@@ -241,7 +274,7 @@ class AdminController extends UserController
    * @param  int $id Id of the user
    * @return \Illuminate\Http\RedirectResponse
    */
-  public function closeRequest(int $id)
+  public function denyRequest(int $id)
     {
         $admin = User::find(Auth::id());
         if (is_null($admin))
@@ -251,10 +284,10 @@ class AdminController extends UserController
             return response()->json([
                 'status' => 'Not Found',
                 'msg' => 'Request not found, id: '.$id,
-                'errors' => ['req$request' => 'Request not found, id: '.$id]
+                'errors' => ['request' => 'Request not found, id: '.$id]
             ], 404);
 
-        $this->authorize('closeRequest', $admin);
+        $this->authorize('denyRequest', $admin);
 
         if ($request->requestStatus)
             return response()->json([
@@ -288,7 +321,7 @@ class AdminController extends UserController
         return response()->json([
             'status' => 'Not Found',
             'msg' => 'Request not found, id: '.$id,
-            'errors' => ['req$request' => 'Request not found, id: '.$id]
+            'errors' => ['request' => 'Request not found, id: '.$id]
         ], 404);
 
     $this->authorize('acceptRequest', $admin);

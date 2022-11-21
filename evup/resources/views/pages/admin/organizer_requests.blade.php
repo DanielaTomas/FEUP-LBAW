@@ -6,7 +6,7 @@
 <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
 
 <div>
-    <h2 class="text-2xl font-semibold leading-tight">Users</h2>
+    <h2 class="text-2xl font-semibold leading-tight">Organizer Requests</h2>
 </div>
 <div class="my-2 flex sm:flex-row flex-col justify-between">
     <div class="flex flex-row mb-1 sm:mb-0">
@@ -23,23 +23,9 @@
                 class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
                 <option>All</option>
                 <option>Active</option>
-                <option>Disabled</option>
-                <option>Blocked</option>
+                <option>Reviewd</option>
             </select>
         </div>
-    </div>
-    <!-- Flowbite Search component -->
-    <div class="max-w-2xl mx-auto">
-        <form action="{{ route('users_search') }}">   
-            <label for="user-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
-            <div class="relative">
-                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </div>
-                <input name="search" type="search" id="user-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search User" required>
-                <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-            </div>
-        </form>
     </div>
 </div>
 <div class="overflow-x-auto">
@@ -50,13 +36,12 @@
                     <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 px-6 text-left">User</th>
-                            <th class="py-3 px-6 text-center">Type</th>
                             <th class="py-3 px-6 text-center">Status</th>
                             <th class="py-3 px-6 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
-                        @each('partials.admin.user', $users, 'user')
+                        @each('partials.admin.organizer_request', $requests, 'request')
                     </tbody>
                 </table>
                 <div
@@ -79,7 +64,5 @@
         </div>
     </div>
 </div>
-
-@each('partials.admin.ban_modal', $users, 'user')
 
 @endsection
