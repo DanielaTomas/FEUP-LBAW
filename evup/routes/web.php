@@ -21,6 +21,7 @@ Route::get('cards/{id}', 'CardController@show');
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');
 Route::get('admin/users', 'AdminController@users');
+Route::get('admin/users/search', 'SearchController@searchUsers')->name('users_search');
 //Route::get('admin/users/{id}/view', 'AdminController@view')->where(['id' => '[0-9]+']); Waiting for the profile to be finished
 //Route::get('admin/users/{id}/edit', 'AdminController@edit')->where(['id' => '[0-9]+']);
 Route::put('admin/users/{id}/ban', 'AdminController@banUser')->where(['id' => '[0-9]+']);
