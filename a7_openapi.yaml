@@ -1,0 +1,1578 @@
+openapi: 3.0.0
+
+info:
+  version: "1.0"
+  title: "LBAW EVUP API"
+  description: "Web Resources Specification (A7) for EVUP"
+
+servers:
+  - url: lbaw2252.lbaw.fe.up.pt
+    description: Production server
+
+externalDocs:
+  description: Find more info here.
+  url: https://git.fe.up.pt/lbaw/lbaw2223/lbaw2252/-/wikis/home
+
+tags:
+  - name: "M01: Authentication"
+  - name: "M02: Profile and User Information"
+  - name: "M03: Events"
+  - name: "M04: Comments"
+  - name: "M05: Categories & Tags"
+  - name: "M06: Polls"
+  - name: "M07: User Administration"
+  - name: "M08: Static Pages"
+  - name: "M09: Notifications"
+
+paths:
+  # M01: Authentication
+  /login:
+    get:
+      operationId: R101
+      summary: "R101: Login Form"
+      description: "Provide form for authentication. Access: PUB"
+      tags:
+        - "M01: Authentication"
+
+      responses:
+        "200":
+          description: "Ok. Show Login form"
+
+    post:
+      operationId: R102
+      summary: "R102: Login action"
+      description: "Processes the login form submission. Access: PUB"
+      tags:
+        - "M01: Authentication"
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+              required:
+                - email
+                - password
+
+      responses:
+        "302":
+          description: "Redirect after processing the login credentials."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Successful login. Redirect to homepage."
+                  value: "/"
+                302Failure:
+                  description: "Failed login. Redirect to login form."
+                  value: "/login"
+
+  /logout:
+    get:
+      operationId: R103
+      summary: "R103: Logout action"
+      description: "Logout the current authenticated user. Access: USR"
+      tags:
+        - "M01: Authentication"
+
+      responses:
+        "302":
+          description: "Redirect after processing logout."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Successful logout. Redirect to homepage."
+                  value: "/"
+
+  /signup:
+    get:
+      operationId: R104
+      summary: "R104: Sign-up Form"
+      description: "Provide form for new users. Access: PUB"
+      tags:
+        - "M01: Authentication"
+
+      responses:
+        "200":
+          description: "Ok. Show sign-up form"
+
+    post:
+      operationId: R105
+      summary: "R105: Sign-up action"
+      description: "Processes the new user sign-up form submission. Access: PUB"
+      tags:
+        - "M01: Authentication"
+
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files (avatar)
+          multipart/form-data:
+           schema:
+             type: object
+             properties:
+               name:
+                 type: string
+               email:
+                 type: string
+               userPhoto:
+                 type: string
+                 format: binary
+             required:
+                - name
+                - email
+                - password
+
+      responses:
+        "302":
+          description: "Redirect after processing the new user sign-up form."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Successful registration. Redirect to user profile."
+                  value: "/users/{id}"
+                302Failure:
+                  description: "Failed registration. Redirect to sign-up form."
+                  value: "/signup"
+
+  # M02: Profile and User Information
+  /user/{id}:
+    get:
+      operationId: R201
+      summary: "R201: View user profile"
+      description: "Show the individual user profile. Access: PUB"
+      tags:
+        - "M02: Profile and User Information"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show user profile (UI20)"
+        "404":
+          description: "User not found"
+
+    put:
+      operationId: R202
+      summary: "R202: Edit user profile action"
+      description: "Processes the user edit profile form submission. Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files (avatar)
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                userPhoto:
+                  type: string
+                  format: binary
+
+      responses:
+        "302":
+          description: "Redirect after processing the user updated information."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Successful profile edition. Redirect to user profile."
+                  value: "/user/{id}"
+                302Failure:
+                  description: "Failed profile edition. Redirect to edit profile form."
+                  value: "/user/{id}/edit"
+
+    delete:
+      operationId: R203
+      summary: "R203: Delete user account action"
+      description: "Processes a request to delete a user account. Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "302":
+          description: "Redirect after deleting user account."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Successful user account deletion. Redirect to homepage."
+                  value: "/"
+                302Failure:
+                  description: "Failed to delete user account. Redirect to user profile."
+                  value: "/user/{id}"
+
+  /user/{id}/edit:
+    get:
+      operationId: R204
+      summary: "R204: User profile edition form"
+      description: "Provide form for user profile edition. Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show user profile edition form"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be owner of the profile"
+        "404":
+          description: "User not found"
+
+  /user/{id}/requestOrganizer:
+    post:
+      operationId: R205
+      summary: "R205: Request to be Organizer action"
+      description: "Processes a request made from an user. Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Successful Organizer resquest"
+        "400":
+          description: "Failed to create request. Bad request"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "404":
+          description: "User not found"
+
+  /api/user/{id}/attended:
+    get:
+      operationId: R206
+      summary: "R206: Show user events attended/attending"
+      description: "Show the events attended/being attended by the user . Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show user events attended"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be owner of the profile"
+        "404":
+          description: "User not found"
+
+  /api/user/{id}/organized:
+    get:
+      operationId: R207
+      summary: "R207: Show user events organized/organizing"
+      description: "Show the events organized/being organized by the user . Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show user events organized"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be owner of the profile"
+        "404":
+          description: "User not found"
+
+  /admin/users/search:
+    get:
+      operationId: R211
+      summary: "R211 : User search"
+      description: "Provides a page component with a list of users, according to the parameters. Access: ADM"
+      tags:
+        - "M02: Profile and User Information"
+
+      parameters:
+        - in: query
+          name: value
+          description: "string used for full-text search"
+          schema:
+            type: string
+          required: true
+
+      responses:
+        "200":
+          description: "OK. Show a list of users that fit the criteria"
+
+# M03 : Events
+  /event:
+    get:
+      operationId: R301
+      summary: "R301 : Create event form"
+      description: "Provide new article event form. Access: USR"
+      tags:
+        - "M03: Events"
+
+      responses:
+        '200':
+          description: 'Ok. Show Create Event Form'
+        '302':
+          description: 'Redirect after trying to get Create Article Form'
+          headers:
+            Location:
+              schema:
+                type: string  
+              examples:
+                302Failure:
+                  description: 'You are not logged in. Failed article creation. Redirect to login Page.'
+                  value: '/login' 
+
+    post:
+      operationId: R302
+      summary: "R302 : Create event action"
+      description: "Processes the new event creation form. Access: USR"
+      tags:
+        - "M03: Events"
+
+      
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                  eventName:
+                    type: string
+                  eventDescription:
+                    type: string
+                  eventAddress:
+                    type: string
+                  userId:
+                    type: integer
+                  eventId:
+                    type: integer
+                  eventCanceled:
+                    type: boolean
+                  public:
+                    type: boolean
+                  startDate:
+                    type: string
+                    format: date
+                  endDate:
+                    type: string
+                    format: date                  
+                  eventPhoto:
+                    type: string
+                    format: binary
+              required:
+                - eventName
+                - userId
+                - eventId
+                - eventDescription
+                - eventAddress
+                - eventCanceled
+                - public
+                - startDate
+                - endDate
+                - eventPhoto
+
+      responses:
+        "302":
+          description: "Redirect after processing the create event form."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Successful event creation. Redirect to event Page."
+                  value: "/event/{id}"
+                302Failure:
+                  description: "Failed event creation. Redirect to Create event form."
+                  value: "/event"
+
+
+  /event/{id}:
+    get:
+      operationId: R303
+      summary: "R303: View event page"
+      description: "Show the individual event page. Access: USR"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show event page (UI20)"
+        "404":
+          description: "Event not found"
+
+
+  /event/{id}/edit:
+    get:
+      operationId: R304
+      summary: "R304 : Event edition form"
+      description: "Provide a form for event edition. Access: OWN"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "OK. Show event edition form"
+        "401":
+          description: "Unauthorized. Must be authenticated."
+        "403":
+          description: "Unauthorized. Must be the owner of the event"
+        "404":
+          description: "Event not found"
+    put:
+      operationId: R305
+      summary: "R305: Edit event page action"
+      description: "Processes the event edit page form submission. Access: OWN"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                eventName:
+                  type: string
+                address:
+                  type: string
+                description:
+                  type: string
+                public:
+                  type: boolean
+                eventCanceled:
+                  type: boolean                  
+                eventPhoto:
+                  type: string
+                  format: binary
+                startDate:
+                  type: string
+                  format: date
+                endDate:
+                  type: string
+                  format: date
+
+      responses:
+        "302":
+          description: "Redirect after processing the event updated information."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Successful event edition. Redirect to event page."
+                  value: "/event/{id}"
+                302Failure:
+                  description: "Failed event edition. Redirect to edit event form."
+                  value: "/event/{id}/edit"
+
+
+  /event/{id}/report:
+    post:
+      operationId: R306
+      summary: "R306: Report an event"
+      description: "Processes a report made to an event. Access: USR"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+              required: true
+              content:
+                application/x-www-form-urlencoded:
+                  schema:
+                    type: object
+                    properties:
+                      reporterId:
+                        type: integer
+                      eventId:
+                        type: integer
+                      message:
+                        type: string
+                    required:
+                      - reporterId
+                      - eventId
+                      - message
+      responses:
+        "200":
+          description: "Successful report resquest"
+        "400":
+          description: "Failed to report. Bad request"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "404":
+          description: "Event not found"
+
+  /event/{id}/joinRequest:
+    post:
+      operationId: R307
+      summary: "R307: an user requests to join an event"
+      description: "Processes a join request made to an event. Access: USR"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Successful join resquest"
+        "400":
+          description: "Failed to create join request. Bad request"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "404":
+          description: "Event not found"
+
+  /event/{id}/inviteUser:
+    post:
+      operationId: R308
+      summary: "R308: creates an invite to an user to join an event"
+      description: "Creates a invite to an user for an event. Access: OWN"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+              required: true
+              content:
+                application/x-www-form-urlencoded:
+                  schema:
+                    type: object
+                    properties:
+                      inviteeId:
+                        type: integer
+                      inviterId:
+                        type: integer
+                      eventId:
+                        type: integer
+                    required:
+                      - inviteeId
+                      - eventId
+                      - inviterId
+
+      responses:
+        "200":
+          description: "Successful invite resquest"
+        "400":
+          description: "Failed to invite. Bad request"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "404":
+          description: "Event not found"
+          
+  /event/{id}/cancel:
+    post:
+      operationId: R309
+      summary: "R309: an user cancels an event that they own"
+      description: "Processes a cancel request made to an event. Access: OWN"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Successful cancel"
+        "400":
+          description: "Failed to cancel the event. Bad request"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "404":
+          description: "Event not found"
+
+  /event/{id}/tags:
+    post:
+      operationId: R310
+      summary: "R310: an event has its correponding tags"
+      description: "Processes a get request to all event tags. Access: PUB"
+      tags:
+        - "M03: Events"
+        - "M05: Categories & Tags"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Successful cancel"
+        "400":
+          description: "Failed to fetch the tags. Bad request"
+        "404":
+          description: "Event not found"
+
+  /event/{id}/categories:
+    post:
+      operationId: R310
+      summary: "R310: an event has its correponding categories"
+      description: "Processes a get request to all event categories. Access: PUB"
+      tags:
+        - "M03: Events"
+        - "M05: Categories & Tags"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Successful cancel"
+        "400":
+          description: "Failed to fetch the categories. Bad request"
+        "404":
+          description: "Event not found"
+ 
+  /search:
+    get:
+      operationId: R311
+      summary: "R3101: Search Page"
+      description: "Show Search Page given a search type and value. Access: PUB"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: query
+          name: query
+          description: "string used for full-text search"
+          schema:
+            type: string
+          required: false
+
+      responses:
+        "200":
+          description: "OK. Show Search Page"
+
+  /filter:
+    get:
+      operationId: R312
+      summary: "R312 : Return events according to certain filters"
+      description: "Show filtered events by certain criteria. Access: PUB"
+      tags:
+        - "M03: Events"
+        - "M05: Categories & Tags"
+
+      parameters:
+        - in: query
+          name: categories
+          description: "value used to fetch events matching these categories"
+          schema:
+            type: array
+          required: false
+        - in: query
+          name: tags
+          description: "value used to fetch events matching these tags"
+          schema:
+            type: array
+          required: false
+
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                categories:
+                  type: array
+                tags:
+                  type: array
+
+      responses:
+        "200":
+          description: "OK. Show filtered results"
+        "400":
+          description: "Failed to filter events. Bad Request"
+      
+  # M04 : Comments
+  /events/{event_id}/comment:
+    post:
+      operationId: R401
+      summary: "R401 : Create comment action"
+      description: "Processes the new comment creation form. Access: USR"
+      tags:
+        - "M04: Comments"
+
+      parameters:
+        - in: path
+          name: event_id
+          description: "event id"
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                commentContent:
+                  type: string
+                authorId:
+                  type: integer
+                eventId:
+                  type: integer
+                parentCommentId:
+                  type: integer
+              required:
+                - commentContent
+                - authorId
+                - eventId
+
+      responses:
+        "200":
+          description: "Successful comment creation. Return created comment"
+        "400":
+          description: "Failed to create comment. Bad request"
+        "401":
+          description: "Unauthorized. Must be authenticated."
+        "404":
+          description: "[Event | Parent Comment] id not found."
+
+  /events/{event_id}/comment/{id}:
+    put:
+      operationId: R402
+      summary: "R402 : Edit comment action"
+      description: "Processes a comment edition. Access: OWN"
+      tags:
+        - "M04: Comments"
+
+      parameters:
+        - in: path
+          name: event_id
+          description: "event id"
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: id
+          description: "comment id"
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+
+      responses:
+        "200":
+          description: "Successful comment update. Return updated comment"
+        "400":
+          description: "Failed to update comment. Bad request"
+        "401":
+          description: "Unauthorized. Must be authenticated."
+        "403":
+          description: "Forbidden. Must be the owner of the comment."
+        "404":
+          description: "Comment id not found."
+
+    delete:
+      operationId: R403
+      summary: "R403 : Delete comment action"
+      description: "Processes a request to delete a comment. Access: OWN, ADM"
+      tags:
+        - "M04: Comments"
+
+      parameters:
+        - in: path
+          name: event_id
+          description: "event id"
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: id
+          description: "comment id"
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Successful comment deletion. Return deleted comment"
+        "401":
+          description: "Unauthorized. Must be authenticated."
+        "403":
+          description: "Forbidden. Must be the owner of the comment."
+        "404":
+          description: "Comment id not found."
+
+
+  /events/{event_id}/comment/{id}/vote:
+    post:
+      operationId: R401
+      summary: "R401 : Vote on a comment"
+      description: "Processes the vote on a comment. Access: ATT"
+      tags:
+        - "M04: Comments"
+
+      parameters:
+        - in: path
+          name: event_id
+          description: "event id"
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: id
+          description: "comment id"
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                voterId:
+                  type: integer
+                commentId:
+                  type: integer
+                type:
+                  type: boolean
+                parentCommentId:
+                  type: integer
+              required:
+                - voterId
+                - commentId
+                - type
+
+      responses:
+        "200":
+          description: "Successful vote on comment."
+        "400":
+          description: "Failed to vote on comment. Bad request"
+        "401":
+          description: "Unauthorized. Must be authenticated."
+        "404":
+          description: "[Event | Parent Comment] id not found."
+
+  /events/{event_id}/comments:
+    get:
+      operationId: R404
+      summary: "R404 : Comments of a given event"
+      description: "Returns all comments of a given event. Access: ATT, ORG"
+      tags:
+        - "M04: Comments"
+      parameters:
+        - in: path
+          name: id
+          description: "event id"
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show events' comments"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be attendee/organizer of the event"
+        "404":
+          description: "User not found"
+
+
+# M05: Categories & Tags
+
+  /tags:
+      get:
+        operationId: R311
+        summary: "R310 : Get all existing tags"
+        description: "Provide all event tags. Access: PUB"
+        tags:
+          - "M03: Events"
+
+        responses:
+          '200':
+            description: 'Ok. Show All Tags'
+
+    
+  /categories:
+    get:
+      operationId: R312
+      summary: "R310 : Get all existing categories"
+      description: "Provide all event categories. Access: PUB"
+      tags:
+        - "M03: Events"
+
+      responses:
+        '200':
+          description: 'Ok. Show All categories'
+
+
+# M06: Polls
+
+  /api/event/{id}/poll:
+    get:
+        operationId: R605
+        summary: "R605 : Return polls of a given event"
+        description: "Returns polls of a given event according to user parameters. Access: ATT"
+        tags:
+          - "M06: Polls"
+        parameters:
+          - in: path
+            name: id
+            description: "event id"
+            schema:
+              type: integer
+            required: true
+          - in: query
+            name: user
+            description: "user id to limit polls in which user has voted"
+            schema:
+              type: integer
+            required: false # returns all pols if not specified
+
+        responses:
+          "200":
+            description: "OK. Return a list of polls that fit the criteria"
+          "404":
+            description: "Event id not found."
+
+    post:
+        operationId: R601
+        summary: "R601 : Create a poll"
+        description: "Creates a poll for a given event. Access: ORG"
+        tags:
+            - "M06: Polls"
+        parameters:
+          - in: path
+            name: id
+            description: "event id"
+            schema:
+              type: integer
+            required: true
+
+        requestBody:
+            required: true
+            content:
+              application/x-www-form-urlencoded:
+                  schema:
+                    type: object
+                    properties:
+                        pollContent:
+                          type: string
+                        eventId:
+                          type: integer
+                    required:
+                        - pollContent
+                        - eventId
+        responses:
+            "200":
+              description: "Success"
+            "403":
+             description: "Forbidden. Must be the organizer of the event."
+            "404":
+             description: "Event id not found."
+
+
+  /api/event/{event_id}/poll/{poll_id}:
+    post:
+        operationId: R602
+        summary: "R602 : Create poll options"
+        description: "Creates a poll options for a given poll. Access: ORG"
+        tags:
+            - "M06: Polls"
+        parameters:
+          - in: path
+            name: event_id
+            description: "event id"
+            schema:
+              type: integer
+            required: true
+          - in: path
+            name: poll_id
+            description: "poll id"
+            schema:
+                type: integer
+            required: true
+
+        requestBody:
+            required: true
+            content:
+              application/x-www-form-urlencoded:
+                schema:
+                  type: object
+                  properties:
+                    optionContent:
+                      type: string
+                    pollId:
+                      type: integer
+                  required:
+                    - optionContent
+                    - pollId
+
+        responses:
+            "200":
+              description: "Success"
+            "403":
+              description: "Forbidden. Must be the organizer of the event."
+            "404":
+              description: "Poll id not found."
+
+  
+    post:
+        operationId: R603
+        summary: "R603 : Answer to poll"
+        description: "Answer with a poll option to a given poll. Access: ATT"
+        tags:
+            - "M06: Polls"
+        parameters:
+          - in: path
+            name: event_id
+            description: "event id"
+            schema:
+                type: integer
+            required: true
+          - in: path
+            name: poll_id
+            description: "poll id"
+            schema:
+                type: integer
+            required: true
+
+        requestBody:
+            required: true
+            content:
+            application/x-www-form-urlencoded:
+                schema:
+                type: object
+                properties:
+                    userId:
+                    type: integer
+                    PollOptionId:
+                      type: integer
+                required:
+                    - userId
+                    - PollOptionId
+        responses:
+            "200":
+              description: "Success"
+            "403":
+              description: "Forbidden. Must be the attendee of the event."
+            "404":
+              description: "[Poll id | poll option id] not found."
+
+# M07: User Administration
+
+  /admin:
+      get:
+        operationId: R701
+        summary: "R701: Administration Panel"
+        description: "Administration Central Page. Access: ADM"
+        tags:
+          - "M07: User Administration"
+
+        responses:
+          "200":
+            description: "Ok. Access to administration central page (UI05)"
+          "400":
+            description: "Bad request."
+          "401":
+            description: "Unauthorized. Not logged in"
+          "403":
+            description: "Forbidden. No permissions"
+          "404":
+            description: "Not found"
+
+  /admin/reports:
+      get:
+        operationId: R702
+        summary: "R702: View all the reports"
+        description: "Page with information about all the reports. Access: ADM"
+        tags:
+          - "M07: User Administration"
+
+        parameters:
+          - in: query
+            name: reportStatus
+            description: (TRUE, FALSE)
+            schema:
+              type: boolean
+            required: false # show all reports
+
+        responses:
+          "200":
+            description: "Ok. Show all the reports"
+          "401":
+            description: "Unauthorized. Not logged in"
+          "403":
+            description: "Forbidden. No permissions"
+          "404":
+            description: "Not found"
+
+  /admin/reports/{report_id}:
+    patch:
+      operationId: R703
+      summary: "R703: Close a report"
+      description: "Processes a report and closes it"
+      tags:
+        - "M07: User Administration"
+
+      parameters:
+        - in: path
+          name: report_id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                reportId:
+                  type: integer
+                reportStatus:
+                  type: boolean
+
+      responses:
+        "200":
+          description: "Ok. Report closed successfully."
+
+  /admin/organizerRequests:
+      get:
+        operationId: R704
+        summary: "R704: View all the organizer requests"
+        description: "Page with information about all the organizer requests. Access: ADM"
+        tags:
+          - "M07: User Administration"
+
+        parameters:
+          - in: query
+            name: requestStatus
+            description: (TRUE, FALSE,NULL)
+            schema:
+              type: boolean
+            required: false # show all organizer requests
+
+        responses:
+          "200":
+            description: "Ok. Show all the reports"
+          "401":
+            description: "Unauthorized. Not logged in"
+          "403":
+            description: "Forbidden. No permissions"
+          "404":
+            description: "Not found"
+
+  /admin/organizerRequests/{organizerRequests_id}:
+    put:
+      operationId: R705
+      summary: "R705: Close an organizer requests"
+      description: "Processes an organizer requests and closes it"
+      tags:
+        - "M07: User Administration"
+
+      parameters:
+        - in: path
+          name: organizerRequests_id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+          required: true
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: integer
+                  requestStatus:
+                    type: boolean
+      responses:
+        "200":
+          description: "Ok. Report closed successfully."
+
+  /admin/users:
+    get:
+      operationId: R706
+      summary: "R706: View users"
+      description: "Page with information about all users types (filter by type). Access: ADM"
+      tags:
+        - "M07: User Administration"
+
+      parameters:
+        - in: query
+          name: userTypes
+          description: (user, organizer ,admin)
+          schema:
+            type: string
+            enum:
+              - "user"
+              - "organizer"
+              - "administrator"
+          required: false # show all organizer requests
+
+      responses:
+        "200":
+          description: "Ok. Show blocked users (UI07)"
+        "400":
+          description: "Bad request."
+        "401":
+          description: "Unauthorized. Not logged in"
+        "403":
+          description: "Forbidden. No permissions"
+        "404":
+          description: "Not found"
+
+  /user/{user_id}/status:
+    patch:
+      operationId: R707
+      summary: "R707: Changes User Status"
+      description: "Changes User Status (blocked/ disabled/ active). Access: ADM"
+      tags:
+        - "M07: User Administration"
+
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                accountStatus:
+                  type: string
+                  enum:
+                    - "active"
+                    - "blocked"
+                    - "disabled"
+              required:
+                - accountStatus
+
+      responses:
+        "200":
+          description: "Successfully blocked user user"
+        "400":
+          description: "Bad request."
+        "401":
+          description: "Unauthorized. Not logged in"
+        "403":
+          description: "Forbidden. No permissions"
+        "404":
+          description: "Not found"
+
+  /user/{user_id}/types:
+    patch:
+      operationId: R708
+      summary: "R708: Changes user type"
+      description: "Changes user type (user/organizer/admin). Access: ADM"
+      tags:
+        - "M07: User Administration"
+
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                userType:
+                  type: string
+                  enum:
+                    - "user"
+                    - "organizer"
+                    - "administrator"
+              required:
+                - userType
+
+      responses:
+        "200":
+          description: "Successfully changed user type"
+        "400":
+          description: "Bad request."
+        "401":
+          description: "Unauthorized. Not logged in"
+        "403":
+          description: "Forbidden. No permissions"
+        "404":
+          description: "Not found"
+
+  /event/{event_id}/types:
+    patch:
+      operationId: R709
+      summary: "R708: Changes event status"
+      description: "Changes event status (canceled/ active). Access: ADM"
+      tags:
+        - "M07: User Administration"
+
+      parameters:
+        - in: path
+          name: event_id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                eventCanceled:
+                  type: boolean
+              required:
+                - eventCanceled
+
+      responses:
+        "200":
+          description: "Successfully changed event status"
+        "400":
+          description: "Bad request."
+        "401":
+          description: "Unauthorized. Not logged in"
+        "403":
+          description: "Forbidden. No permissions"
+        "404":
+          description: "Not found"
+
+# M08: Static Pages
+
+  /about:
+    get:
+      operationId: R801
+      summary: "R801: About Page"
+      description: "Page with information about application and its developers. Access: PUB"
+      tags:
+        - "M08: Static Pages"
+
+      responses:
+        "200":
+          description: "Ok. Show About Page "
+
+  /faq:
+    get:
+      operationId: R802
+      summary: "R802: FAQ Page"
+      description: "Page with most frequently asked questions. Access: PUB"
+      tags:
+        - "M08: Static Pages"
+
+      responses:
+        "200":
+          description: "Ok. Show FAQ Page "
+
+  /contacts:
+    get:
+      operationId: R803
+      summary: "R803: Contacts Page"
+      description: "Page with contact information. Access: PUB"
+      tags:
+        - "M08: Static Pages"
+
+      responses:
+        "200":
+          description: "Ok. Show Contacts Page "
+
+# M09: Notifications
+
+  /user/{user_id}//notifications/:
+    get:
+      operationId: R601
+      summary: "R601: User Message Thread"
+      description: "Show user notifications. Access: USR"
+      tags:
+        - "M09: Notifications"
+
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show user notifications"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be owner of the profile"
+        "404":
+          description: "Not found"
+
+  /user/{user_id}//notifications/{id}:
+    put:
+      operationId: R602
+      summary: "R602: Mark Notifications as Read"
+      description: "Mark notification as read. Access: USR"
+      tags:
+        - "M09: Notifications"
+
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Mark notification as read."
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be owner of the profile"
+        "404":
+          description: "Not found"
