@@ -29,6 +29,12 @@ Route::get('admin/organizer_requests', 'AdminController@organizer_requests');
 Route::put('admin/organizer_requests/{id}/close', 'AdminController@closeRequest')->where(['id' => '[0-9]+']);
 Route::put('admin/organizer_requests/{id}/accept', 'AdminController@acceptRequest')->where(['id' => '[0-9]+']);
 
+
+//my Events
+Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
+Route::post('myEvents/{eventid}', 'UserController@leaveEvent');
+
+
 // API
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');

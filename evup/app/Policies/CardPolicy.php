@@ -30,9 +30,4 @@ class CardPolicy
       return Auth::check();
     }
 
-    public function delete(User $user, Card $card)
-    {
-      // Only a card owner can delete it
-      return $user->id == $card->user_id;
-    }
 }

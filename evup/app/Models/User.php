@@ -30,20 +30,19 @@ class User extends Authenticatable
     protected $hidden = [
         'accountstatus', 'usertype', 'remember_token'
     ];
-
-
+    
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'Attendee', 'attendeeId', 'eventId');
+        return $this->belongsToMany(Event::class, 'attendee', 'attendeeid', 'eventid');
     }
 
     public function comments() {
-        return $this->hasMany(Comment::class, 'authorId');
+        return $this->hasMany(Comment::class, 'authorid');
     }
 
     public function votes()
     {
-        return $this->belongsToMany(Comment::class, 'Vote', 'voterId', 'commentId')->withPivot('type');
+        return $this->belongsToMany(Comment::class, 'vote', 'voterid', 'commentid')->withPivot('type');
     }
 
     public function polls_options()
@@ -87,5 +86,12 @@ class User extends Authenticatable
                 'invitationStatus' => $area->invitationStatus,
             ];
         })->sortBy('eventId')->where('invitationStatus', '!=', TRUE);
+    }
+
+    
+    public function isAttending($eventId)
+    {
+        $attendeeList = $this->events->where('eventid', $eventId);
+        return count($attendeeList) > 0;
     }
 }

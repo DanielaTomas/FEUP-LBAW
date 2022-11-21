@@ -19,6 +19,8 @@
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
     <script type="text/javascript" src={{ asset('js/app.js') }} defer></script>
+    <script type="text/javascript" src={{ asset('js/event.js') }} defer></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
     <script src="https://kit.fontawesome.com/e93bc86ff0.js" crossorigin="anonymous"></script>
 </head>
 

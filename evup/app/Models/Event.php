@@ -20,7 +20,6 @@ class Event extends Model
     'address','description','eventPhoto','startDate','endDate'
   ];
 
-
   public function eventTags()
   {
     return $this->belongsToMany(Tag::class,'event_tag','eventid','tagid');
@@ -33,7 +32,7 @@ class Event extends Model
 
   public function attendees()
   {
-    return $this->belongsToMany(User::class, 'Attendee', 'attendeeId', 'eventId');
+    return $this->belongsToMany(User::class, 'attendee', 'attendeeid', 'eventid');
   }
 
   public function comments()
