@@ -3,7 +3,9 @@
         <a class="text-3xl font-bold font-heading" href="{{ url('/') }}"> EvUP </a>
         <!-- Nav Links -->
         <ul class="hidden xl:flex px-4 mx-auto font-semibold font-heading space-x-12">
-            @if (Auth::check())
+            @if (Auth::user()->usertype == 'Admin')
+                <a class="hover:text-gray-200" href="{{ url('/admin') }}">admin Panel</a>
+            @elseif (Auth::user()->usertype != 'Admin')
                 <a class="hover:text-gray-200" href="{{ url('/myEvents') }}">my Events</a>
             @else
                 <a class="hover:text-gray-200" href="{{ url('/login') }}">my Events</a>

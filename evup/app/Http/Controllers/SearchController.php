@@ -26,7 +26,7 @@ class SearchController extends Controller
     public function searchPublicEvents(Request $request)
     {
         $search = $request->input('search');
-        $events = Article::whereRaw('tsvectors @@ plainto_tsquery(\'english\', ?)', [$search])
+        $events = Event::whereRaw('tsvectors @@ plainto_tsquery(\'english\', ?)', [$search])
             ->where('public','=',true)
             ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$search])
             ->get();
