@@ -35,7 +35,7 @@ Route::put('admin/organizer_requests/{id}/accept', 'AdminController@acceptReques
 //my Events
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
 Route::post('myEvents/{eventid}', 'UserController@leaveEvent');
-
+Route::post('myEvent/{eventid}/invite', 'UserController@inviteUser')->where(['eventid' => '[0-9]+'])->name('searchUser');
 
 // API
 Route::put('api/cards', 'CardController@create');

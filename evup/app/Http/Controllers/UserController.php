@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Invitation;
 use App\Models\Report;
 
 use Illuminate\Http\Request;
@@ -15,9 +16,8 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function leaveEvent( $eventid){
-
-    
+    public function leaveEvent($eventid)
+    {
         $event = Event::find($eventid);
 
         if (is_null($event))
@@ -27,7 +27,7 @@ class UserController extends Controller
                 'errors' => ['user' => 'User not found, id: ' . $eventid]"
             ], 404);
 
-        $this->authorize('leaveEvent',User::class);
+        $this->authorize('leaveEvent', User::class);
 
         if (!Auth::user()->isAttending($eventid))
             return response()->json([
@@ -37,149 +37,176 @@ class UserController extends Controller
             ], 200);
 
         Auth::user()->events()->detach($eventid);
-   
+
         return response()->json([
             'status' => 'OK',
             'msg' => 'Removed event successfully ',
             'id' => $eventid,
         ], 200);
-
     }
 
+    public function inviteUser($eventId, Request $request)
+    {
+        $invitedUserEmail = $request->search;
+        $inviteddUser = User::where('email', $invitedUserEmail)->first();
+       
 
+        if (is_null($inviteddUser))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'User not found',
+                'errors' => ['user' => 'User not found']
+            ], 404);
 
+        $inviteddUserId = $inviteddUser->userid;
+        //$this->authorize('follow', $userToFollow);
 
+        if (Auth::user()->hasInvited($inviteddUserId,$eventId))
+            return response()->json([
+                'status' => 'RE',
+                'msg' => 'User already invited',
+                'id' => $inviteddUserId,
+            ], 400);
 
-  /**
-   * Display the User profile.
-   *
-   * @return View
-   */
-  public function show()
-  {
-      $user = User::find(Auth::id());
-      if (is_null($user))
-          return abort(404, 'User not found, id: ' . Auth::id());
+        Auth::user()->invites_sent()->attach($inviteddUserId,['eventid' => 5]);
+        //$inviteddUser->invites_received()->attach(Auth::id(),['eventid'=>$eventId]);
+        $c = Auth::user()->invites_received()->get()->count();
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Invited user successfully',
+            'id' =>$c,
+        ], 200);
+    }
 
-      $ordered_events = $user->ordered_events();
-      $ordered_invites = $user->ordered_invites();
-      $isOrganizer = 'Organizer' == $user->userType;
+    /**
+     * Display the User profile.
+     *
+     * @return View
+     */
+    public function show()
+    {
+        $user = User::find(Auth::id());
+        if (is_null($user))
+            return abort(404, 'User not found, id: ' . Auth::id());
 
-      return view('pages.user.profile', [
-          'user' => $user,
-          'events' => $ordered_events,
-          'invites' => $ordered_invites,
-          'isOrganizer' => $isOrganizer,
-      ]);
-  }
+        $ordered_events = $user->ordered_events();
+        $ordered_invites = $user->ordered_invites();
+        $isOrganizer = 'Organizer' == $user->userType;
 
-  /**
-   * Show the form for editing the user profile.
-   *
-   * @param  int $id Id of the user
-   * @return View
-   */
-  public function edit(int $id)
-  {
-      $user = User::find($id);
-      if (is_null($user))
-          return abort(404, 'User not found, id: ' . $id);
+        return view('pages.user.profile', [
+            'user' => $user,
+            'events' => $ordered_events,
+            'invites' => $ordered_invites,
+            'isOrganizer' => $isOrganizer,
+        ]);
+    }
 
-      $this->authorize('update', $user);
+    /**
+     * Show the form for editing the user profile.
+     *
+     * @param  int $id Id of the user
+     * @return View
+     */
+    public function edit(int $id)
+    {
+        $user = User::find($id);
+        if (is_null($user))
+            return abort(404, 'User not found, id: ' . $id);
 
-    $ordered_events = $user->ordered_events();
-    $ordered_invites = $user->ordered_invites();
-    $isOrganizer = 'Organizer' == $user->userType;
+        $this->authorize('update', $user);
 
-    return view('pages.user.profile', [
-        'user' => $user,
-        'events' => $ordered_events,
-        'invites' => $ordered_invites,
-        'isOrganizer' => $isOrganizer,
-    ]);
-  }
+        $ordered_events = $user->ordered_events();
+        $ordered_invites = $user->ordered_invites();
+        $isOrganizer = 'Organizer' == $user->userType;
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int $id Id of the user
-   * @return \Illuminate\Http\RedirectResponse
-   */
-  public function update(Request $request, int $id): RedirectResponse
-  {
-      $user = User::find($id);
-      if (is_null($user))
-          return redirect()->back()->withErrors(['user' => 'User not found, id: ' . $id]);
+        return view('pages.user.profile', [
+            'user' => $user,
+            'events' => $ordered_events,
+            'invites' => $ordered_invites,
+            'isOrganizer' => $isOrganizer,
+        ]);
+    }
 
-      $this->authorize('update', $user);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id Id of the user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, int $id): RedirectResponse
+    {
+        $user = User::find($id);
+        if (is_null($user))
+            return redirect()->back()->withErrors(['user' => 'User not found, id: ' . $id]);
 
-      $validator = Validator::make($request->all(), [
-          'name' => 'nullable|string|max:255',
-          'email' => 'nullable|string|email|max:255|unique:authenticated_user',
-          'password' => 'required_with:new_password,email|string|password',
-          'new_password' => 'nullable|string|min:6|confirmed',
-          'userPhoto' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
-      ]);
+        $this->authorize('update', $user);
 
-      if ($validator->fails()) {
-          $errors = [];
-          foreach ($validator->errors()->messages() as $key => $value) {
-              $errors[$key] = is_array($value) ? implode(',', $value) : $value;
-          }
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:authenticated_user',
+            'password' => 'required_with:new_password,email|string|password',
+            'new_password' => 'nullable|string|min:6|confirmed',
+            'userPhoto' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
+        ]);
 
-          // Go back to form and refill it
-          return redirect()->back()->withInput()->withErrors($errors);
-      }
+        if ($validator->fails()) {
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            }
 
-      if (isset($request->name)) $user->name = $request->name;
-      if (isset($request->email)) $user->email = $request->email;
-      if (isset($request->new_password)) $user->password = bcrypt($request->new_password);
+            // Go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
 
-      if (isset($request->userPhoto)) {
-          $newuserPhoto = $request->userPhoto;
-          $olduserPhoto = $user->userPhoto;
+        if (isset($request->name)) $user->name = $request->name;
+        if (isset($request->email)) $user->email = $request->email;
+        if (isset($request->new_password)) $user->password = bcrypt($request->new_password);
 
-          $imgName = round(microtime(true)*1000) . '.' . $newuserPhoto->extension();
-          $newuserPhoto->storeAs('public/userPhotos', $imgName);
-          $user->userPhoto = $imgName;
+        if (isset($request->userPhoto)) {
+            $newuserPhoto = $request->userPhoto;
+            $olduserPhoto = $user->userPhoto;
 
-          if (!is_null($olduserPhoto))
-              Storage::delete('public/userPhotos/' . $olduserPhoto);
-      }
+            $imgName = round(microtime(true) * 1000) . '.' . $newuserPhoto->extension();
+            $newuserPhoto->storeAs('public/userPhotos', $imgName);
+            $user->userPhoto = $imgName;
 
-      $user->save();
+            if (!is_null($olduserPhoto))
+                Storage::delete('public/userPhotos/' . $olduserPhoto);
+        }
 
-      return redirect("/user/${id}");
-  }
+        $user->save();
 
-  /**
-   * Deletes a user account.
-   *
-   * @param  Illuminate\Http\Request  $request
-   * @param int $id Id of the user
-   * @return \Illuminate\Http\RedirectResponse
-   */
-  public function delete(Request $request, int $id): RedirectResponse
-  {
-      $user = User::find($id);
-      if (is_null($user))
-          return redirect()->back()->withErrors(['user' => 'User not found, id: ' . $id]);
+        return redirect("/user/${id}");
+    }
 
-      $this->authorize('delete', $user);
+    /**
+     * Deletes a user account.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param int $id Id of the user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(Request $request, int $id): RedirectResponse
+    {
+        $user = User::find($id);
+        if (is_null($user))
+            return redirect()->back()->withErrors(['user' => 'User not found, id: ' . $id]);
 
-      $validator = Validator::make($request->all(), [
-          'password' => 'required|string|password'
-      ]);
+        $this->authorize('delete', $user);
 
-      if ($validator->fails())
-          return redirect()->back()->withErrors($validator->errors());
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string|password'
+        ]);
 
-      $deleted = $user->delete();
-      if ($deleted)
-          return redirect('/');
-      else
-          return redirect()->back()->withErrors(['user' => 'Failed to delete user account. Try again later']);
-  }
+        if ($validator->fails())
+            return redirect()->back()->withErrors($validator->errors());
 
+        $deleted = $user->delete();
+        if ($deleted)
+            return redirect('/');
+        else
+            return redirect()->back()->withErrors(['user' => 'Failed to delete user account. Try again later']);
+    }
 }

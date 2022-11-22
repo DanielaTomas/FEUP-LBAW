@@ -17,7 +17,7 @@ function sendAjaxRequest(method, url, data, handler) {
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.addEventListener('load', handler);
   console.log(request)
-  if (data != null) request.send(JSON.stringify(data));
+  request.send(encodeForAjax(data));
 }
 
 
