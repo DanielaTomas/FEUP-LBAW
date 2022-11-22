@@ -8,11 +8,11 @@ class OrganizerRequest extends Model
 {
     public $timestamps  = false;
 
-    protected $table = 'OrganizerRequest';
-    protected $primaryKey = 'organizerRequestId';
+    protected $table = 'organizerrequest';
+    protected $primaryKey = 'organizerrequestid';
 
     public function notifications()
     {
-        return $this->hasMany(Notification::class, 'organizerRequestId');
+        return $this->hasMany(Notification::class, 'organizerRequestid');
     } 
 }

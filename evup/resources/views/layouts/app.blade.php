@@ -33,7 +33,9 @@
         @include('partials.footer')
     </main>
     <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <script type="text/javascript" src={{ asset('js/admin.tabs.js') }}></script>
     <script type="text/javascript" src={{ asset('js/admin.users.js') }}></script>
+    <script type="text/javascript" src={{ asset('js/admin.reports.js') }}></script>
 </body>
 
 </html>

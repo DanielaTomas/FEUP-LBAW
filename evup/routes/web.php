@@ -19,17 +19,18 @@ Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
 
 // Admin
-Route::get('admin', 'AdminController@show')->name('admin');
+Route::get('admin', 'AdminController@show_panel')->name('admin');
 Route::get('admin/users', 'AdminController@users');
-//Route::get('admin/users/{id}/view', 'AdminController@view')->where(['id' => '[0-9]+']); Waiting for the profile to be finished
+Route::get('admin/users/search', 'SearchController@searchUsers')->name('users_search');
+//Route::get('admin/users/add', 'AdminController@addUser')->name('add_user');           //Waiting for the profile to be finished
+//Route::get('admin/users/{id}/view', 'AdminController@view')->where(['id' => '[0-9]+']);
 //Route::get('admin/users/{id}/edit', 'AdminController@edit')->where(['id' => '[0-9]+']);
 Route::put('admin/users/{id}/ban', 'AdminController@banUser')->where(['id' => '[0-9]+']);
 Route::put('admin/users/{id}/unban', 'AdminController@unbanUser')->where(['id' => '[0-9]+']);
-Route::get('admin/reports', 'AdminController@reports');
 Route::put('admin/reports/{id}/close', 'AdminController@closeReport')->where(['id' => '[0-9]+']);
-Route::get('admin/organizer_requests', 'AdminController@organizer_requests');
-Route::put('admin/organizer_requests/{id}/close', 'AdminController@closeRequest')->where(['id' => '[0-9]+']);
-Route::put('admin/organizer_requests/{id}/accept', 'AdminController@acceptRequest')->where(['id' => '[0-9]+']);
+Route::put('admin/events/{id}/delete', 'AdminController@cancelEvent')->where(['id' => '[0-9]+']);
+Route::post('admin/organizer_requests/{id}/deny', 'AdminController@denyRequest')->where(['id' => '[0-9]+'])->name('organizer_request_deny');
+Route::post('admin/organizer_requests/{id}/accept', 'AdminController@acceptRequest')->where(['id' => '[0-9]+'])->name('organizer_request_accept');
 
 
 //my Events

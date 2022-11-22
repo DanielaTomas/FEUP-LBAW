@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Event;
 use App\Models\User;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -23,4 +22,55 @@ class UserPolicy
         return Auth::check();
     }
 
+    /* --------- ADMIN POLICIES --------- */
+    public function show(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
+    public function users(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
+    public function banUser(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
+    public function unbanUser(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
+    public function reports(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
+    public function closeReport(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
+    public function cancelEvent(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
+    public function organizer_requests(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
+    public function denyRequest(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
+    public function acceptRequest(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
 }
+
