@@ -45,10 +45,28 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function inviteUser($eventId, Request $request)
+    public function searchUsers(Request $request){
+        $event = Event::find($request->eventid);
+        $organizer = User::find($event->userid);
+
+        $usersInvited = Auth::user()->invites_sent()->get();
+        $usersAttending = $event->attendees()->get();
+        
+        $users = User::whereRaw('(username like \'%' . $request->search . '%\' or email like \'%' . $request->search . '%\')')
+                    ->get();
+
+        $usersAttending-> push(Auth::user());
+        $usersAttending-> push($organizer);
+
+        $users = $users->diff($usersInvited);
+        $users = $users->diff($usersAttending);
+
+        return $users;
+    }
+
+    public function inviteUser(Request $request)
     {
-        $invitedUserEmail = $request->search;
-        $inviteddUser = User::where('email', $invitedUserEmail)->first();
+        $inviteddUser = User::where('email', $request->email)->first();
        
         if (is_null($inviteddUser))
             return response()->json([
@@ -60,19 +78,19 @@ class UserController extends Controller
         $inviteddUserId = $inviteddUser->userid;
         $this->authorize('invite', $inviteddUser);
 
-        if (Auth::user()->hasInvited($inviteddUserId,$eventId))
+        if (Auth::user()->hasInvited($inviteddUserId, $request->eventid))
             return response()->json([
                 'status' => '400',
                 'msg' => 'User already invited',
                 'id' => $inviteddUserId,
             ], 400);
 
-        Auth::user()->invites_sent()->attach($inviteddUserId,['eventid' => $eventId]);
+        Auth::user()->invites_sent()->attach($inviteddUserId,['eventid' => $request->eventid]);
 
         return response()->json([
             'status' => '200',
             'msg' => 'Invited user successfully',
-            'id' =>$inviteddUserId,
+            'id' =>$request->eventid,
         ], 200);
     }
 

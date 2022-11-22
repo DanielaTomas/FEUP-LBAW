@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function invites_sent()
     {
-        return $this->belongsToMany(User::class, 'invitation', 'inviterid', 'inviteeid')->withPivot('eventid');
+        return $this->belongsToMany(User::class, 'invitation', 'inviteeid', 'inviterid')->withPivot('eventid');
     }
 
     public function invites_received()

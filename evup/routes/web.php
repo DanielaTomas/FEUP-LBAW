@@ -31,18 +31,10 @@ Route::get('admin/organizer_requests', 'AdminController@organizer_requests');
 Route::put('admin/organizer_requests/{id}/close', 'AdminController@closeRequest')->where(['id' => '[0-9]+']);
 Route::put('admin/organizer_requests/{id}/accept', 'AdminController@acceptRequest')->where(['id' => '[0-9]+']);
 
-
 //my Events
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
 Route::post('myEvents/{eventid}', 'UserController@leaveEvent');
-Route::post('myEvent/{eventid}/invite', 'UserController@inviteUser')->where(['eventid' => '[0-9]+'])->name('searchUser');
-
-// API
-Route::put('api/cards', 'CardController@create');
-Route::delete('api/cards/{card_id}', 'CardController@delete');
-Route::put('api/cards/{card_id}/', 'ItemController@create');
-Route::post('api/item/{id}', 'ItemController@update');
-Route::delete('api/item/{id}', 'ItemController@delete');
+Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -53,5 +45,6 @@ Route::post('register', 'Auth\RegisterController@register');
 
 // Event
 Route::get('event/{id}','EventController@show');
+Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
 
 

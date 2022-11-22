@@ -32,7 +32,7 @@ class Event extends Model
 
   public function attendees()
   {
-    return $this->belongsToMany(User::class, 'attendee', 'attendeeid', 'eventid');
+    return $this->belongsToMany(User::class, 'attendee', 'eventid', 'attendeeid');
   }
 
   public function comments()
