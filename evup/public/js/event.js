@@ -1,11 +1,3 @@
-const leaveEvent = (eventid) => {
-    sendAjaxRequest('post', `myEvents/${eventid}`, { 'eventid': eventid }, leaveEventHandler(eventid));
-}
-
-function leaveEventHandler(eventid) {
-    const event = document.getElementById("eventCard" + eventid)
-    event.remove()
-}
 
 const event_id = window.location.pathname.substring(7);
 
@@ -35,6 +27,16 @@ function searchUserHandler(){
         area.appendChild(card)
     }
 }
+
+const leaveEvent = (eventid) => {
+    sendAjaxRequest('post', `myEvents/${eventid}`, { 'eventid': eventid }, leaveEventHandler(eventid));
+}
+
+function leaveEventHandler(eventid) {
+    const event = document.getElementById("eventCard" + eventid)
+    event.remove()
+}
+
 
 
 function inviteUser(){
