@@ -15,6 +15,41 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function leaveEvent( $eventid){
+
+    
+        $event = Event::find($eventid);
+
+        if (is_null($event))
+            return response()->json([
+                "'status' => 'Not Found',
+                'msg' => 'Event not found, id: ' . $eventid,
+                'errors' => ['user' => 'User not found, id: ' . $eventid]"
+            ], 404);
+
+        $this->authorize('leaveEvent',User::class);
+
+        if (!Auth::user()->isAttending($eventid))
+            return response()->json([
+                'status' => 'OK',
+                'msg' => 'User is not attending event',
+                'id' => $eventid,
+            ], 200);
+
+        Auth::user()->events()->detach($eventid);
+   
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Removed event successfully ',
+            'id' => $eventid,
+        ], 200);
+
+    }
+
+
+
+
+
   /**
    * Display the User profile.
    *

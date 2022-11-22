@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Event;
+use App\Models\User;
 
 class EventController extends Controller
 {
@@ -40,6 +41,24 @@ class EventController extends Controller
     return view('pages.event',[
       'event'=>$event,
     ]);
+  }
+
+  public function userEvents()
+  {
+    $this->authorize('list', Event::class);
+    $myEvents = Auth::user()->events()->get();
+    
+    return view('pages.myEvents', ['events' => $myEvents]);
+  }
+
+  public function delete(Request $request, $id)
+  {
+    $event = Event::find($id);
+
+    $this->authorize('delete', $event);
+    $event->delete();
+
+    return $event;
   }
 
 }
