@@ -61,4 +61,12 @@ class EventController extends Controller
     return $event;
   }
 
+  public function showForms(){
+
+    $tags = TagController::getAllTags();
+    $categories = CategoryController::getAllCategories();
+
+    return view('pages.createEvent', ['categories' => $categories, 'tags' => $tags ]);
+  }
+
 }

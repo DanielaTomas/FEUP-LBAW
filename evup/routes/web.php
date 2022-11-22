@@ -36,7 +36,7 @@ Route::post('admin/organizer_requests/{id}/accept', 'AdminController@acceptReque
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
 Route::post('myEvents/{eventid}', 'UserController@leaveEvent');
 Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
-
+Route::get('myEvents/createEvent', 'EventController@showForms');
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

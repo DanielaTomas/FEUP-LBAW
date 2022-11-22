@@ -9,10 +9,13 @@
             <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                 past Events
             </button>
-            @if (Auth::user()->isorganizer)
+            @if (Auth::user()->usertype=="Organizer")
                 <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                     Organizing
                 </button>
+                <a href="myEvents/createEvent"class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+                    Create an event
+                </a>
             @endif
         </div>
     </div>
