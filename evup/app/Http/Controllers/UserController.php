@@ -50,31 +50,29 @@ class UserController extends Controller
         $invitedUserEmail = $request->search;
         $inviteddUser = User::where('email', $invitedUserEmail)->first();
        
-
         if (is_null($inviteddUser))
             return response()->json([
-                'status' => 'Not Found',
-                'msg' => 'User not found',
+                'status' => '404',
+                'msg' => 'User not found, User'. $invitedUserEmail,
                 'errors' => ['user' => 'User not found']
             ], 404);
 
         $inviteddUserId = $inviteddUser->userid;
-        //$this->authorize('follow', $userToFollow);
+        $this->authorize('invite', $inviteddUser);
 
         if (Auth::user()->hasInvited($inviteddUserId,$eventId))
             return response()->json([
-                'status' => 'RE',
+                'status' => '400',
                 'msg' => 'User already invited',
                 'id' => $inviteddUserId,
             ], 400);
 
-        Auth::user()->invites_sent()->attach($inviteddUserId,['eventid' => 5]);
-        //$inviteddUser->invites_received()->attach(Auth::id(),['eventid'=>$eventId]);
-        $c = Auth::user()->invites_received()->get()->count();
+        Auth::user()->invites_sent()->attach($inviteddUserId,['eventid' => $eventId]);
+
         return response()->json([
-            'status' => 'OK',
+            'status' => '200',
             'msg' => 'Invited user successfully',
-            'id' =>$c,
+            'id' =>$inviteddUserId,
         ], 200);
     }
 

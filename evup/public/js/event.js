@@ -8,19 +8,19 @@ function leaveEventHandler(eventid) {
     event.remove()
 }
 
+    
 const inviteUser = (eventid) => {
     const mysearch = document.getElementById("mySearch");
-    sendAjaxRequest('post', `myEvent/${eventid}/invite`, { 'search': mysearch.value }, inviteUserHandler(eventid));
+    sendAjaxRequest('post', `myEvent/${eventid}/invite`, { 'search': mysearch.value }, inviteUserHandler);
 }
 
-function inviteUserHandler(eventid) {
-    
-    if (this.status == 'Not found') {
-        console.log("HIIIIIIIIIII")
+function inviteUserHandler(ev) {
+    const res = JSON.parse(this.responseText);
+    if (res.status == 404) {
         alert("USER not found")
-    }else if (this.status == 400){
+    }else if (res.status == 400){
         alert("already invited")
-    }else if (this.status == 200){
+    }else if (res.status == 200){
         alert("YAY")
     }
     
