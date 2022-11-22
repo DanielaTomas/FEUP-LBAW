@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -19,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'name', 'email', 'password','userPhoto','usertype','accountstatus'
+        'username', 'name', 'email', 'password', 'userPhoto', 'usertype', 'accountstatus'
     ];
 
     /**
@@ -30,13 +31,14 @@ class User extends Authenticatable
     protected $hidden = [
         'accountstatus', 'usertype', 'remember_token'
     ];
-    
+
     public function events()
     {
         return $this->belongsToMany(Event::class, 'attendee', 'attendeeid', 'eventid');
     }
 
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany(Comment::class, 'authorid');
     }
 
@@ -57,12 +59,12 @@ class User extends Authenticatable
 
     public function invites_sent()
     {
-        return $this->hasMany(User::class, 'inviterId');
+        return $this->belongsToMany(User::class, 'invitation', 'inviteeid', 'inviterid')->withPivot('eventid');
     }
 
     public function invites_received()
     {
-        return $this->hasMany(User::class, 'inviteeId');
+        return $this->belongsToMany(User::class, 'invitation', 'inviterid', 'inviteeid')->withPivot('eventid');
     }
 
     public function ordered_events()
@@ -88,10 +90,16 @@ class User extends Authenticatable
         })->sortBy('eventId')->where('invitationStatus', '!=', TRUE);
     }
 
-    
+
     public function isAttending($eventId)
     {
         $attendeeList = $this->events->where('eventid', $eventId);
         return count($attendeeList) > 0;
+    }
+
+    public function hasInvited($invitedUserId,$eventId)
+    {
+        $invited = $this->invites_sent()->where('inviteeid','=', $invitedUserId)->where('eventid','=', $eventId)->get()->count();
+        return $invited > 0;
     }
 }

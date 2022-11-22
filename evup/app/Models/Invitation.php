@@ -8,22 +8,22 @@ class Invitation extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'Invitation';
-    protected $primaryKey = 'invitationID';
+    protected $table = 'invitation';
+    protected $primaryKey = 'invitationid';
     
     public function sender() 
     {
-        return $this->belongsTo(User::class, 'inviterId');
+        return $this->belongsTo(User::class, 'inviterid');
     }
 
     public function receiver() 
     {
-        return $this->belongsTo(User::class, 'inviteeId');
+        return $this->belongsTo(User::class, 'inviteeid');
     }
 
     public function event() 
     {
-        return $this->belongsTo(Event::class, 'eventId');
+        return $this->belongsTo(Event::class, 'eventid');
     }
 
 }
