@@ -30,7 +30,7 @@ function banHandler(ban, id) {
         btn.innerHTML = 'Unban'
         btn.classList = 'block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button" data-modal-toggle="staticModal-' + id
         
-        accstatus = btn.parentElement.parentElement.parentElement.previousElementSibling.querySelector('span')
+        accstatus = select('#accstatus-' + id)
         accstatus.innerHTML = 'Blocked'
         accstatus.classList = 'bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'
 
@@ -51,7 +51,7 @@ function banHandler(ban, id) {
         btn.innerHTML = 'Ban'
         btn.classList = 'block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button" data-modal-toggle="staticModal-' + id
 
-        accstatus = btn.parentElement.parentElement.parentElement.previousElementSibling.querySelector('span')
+        accstatus = select('#accstatus-' + id)
         accstatus.innerHTML = 'Active'
         accstatus.classList = 'bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs'
 

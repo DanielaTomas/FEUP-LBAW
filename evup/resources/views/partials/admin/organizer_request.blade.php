@@ -2,9 +2,9 @@
     <td class="py-3 px-6 text-left">
         <div class="flex items-center">
             <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" src="https://randomuser.me/api/portraits/men/{{$request['request']->requesterid}}.jpg"/>
+                <img class="w-6 h-6 rounded-full" src="{{$request['requester']->userphoto}}"/>
             </div>
-            <span>{{$request['requester']->name}}</span>
+            <p>{{$request['requester']->name}}</p>
         </div>
     </td>
     <td class="py-3 px-6 text-center">

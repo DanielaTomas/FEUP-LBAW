@@ -2,32 +2,18 @@
 
 @section('content')
 
+<link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
 <div>
-    <h2 class="text-2xl font-semibold leading-tight">Reports</h2>
+    <h2 class="text-2xl font-semibold leading-tight">Users</h2>
 </div>
-<div class="my-2 flex sm:flex-row flex-col justify-between">
-    <div class="flex flex-row mb-1 sm:mb-0">
-        <div class="relative">
-            <select
-                class="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-8 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                <option>5</option>
-                <option>10</option>
-                <option>20</option>
-            </select>
-        </div>
-        <div class="relative">
-            <select
-                class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                <option>All</option>
-                <option>Active</option>
-                <option>Disabled</option>
-                <option>Blocked</option>
-            </select>
-        </div>
+<p class="text-l font-semibold leading-tight">Showing search results...</p>
+<div class="my-2 flex sm:flex-row justify-between">
+    <div class="self-center">
+        <a href="{{ url('admin') }}" class="text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Go Back</a>
     </div>
     <!-- Flowbite Search component -->
-    <div class="max-w-2xl mx-auto">
+    <div class="flex-auto max-w-2xl">
         <form action="{{ route('users_search') }}">   
             <label for="user-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
             <div class="relative">
@@ -39,9 +25,12 @@
             </div>
         </form>
     </div>
+    <div class="self-center">
+        <a href="{{ url('add_user') }}" class="text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Add new User</a>
+    </div>
 </div>
-<div class="overflow-x-auto">
-    <div class="min-w-screen min-h-screen flex items-center justify-center font-sans overflow-hidden">
+<div class="overflow-x-auto min-h-screen">
+    <div class="min-w-screen flex items-center justify-center font-sans overflow-hidden">
         <div class="w-full lg:w-5/6">
             <div class="bg-white shadow-md rounded my-6">
                 <table class="min-w-max w-full table-auto">
@@ -57,22 +46,6 @@
                         @each('partials.admin.user', $users, 'user')
                     </tbody>
                 </table>
-                <div
-                    class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                    <span class="text-xs xs:text-sm text-gray-900">
-                        Showing 1 to 4 of 50 Entries
-                    </span>
-                    <div class="inline-flex mt-2 xs:mt-0">
-                        <button
-                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                            Previous
-                        </button>
-                        <button
-                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
-                            Next
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

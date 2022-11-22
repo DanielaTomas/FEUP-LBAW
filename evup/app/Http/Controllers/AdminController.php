@@ -30,17 +30,15 @@ class AdminController extends UserController
         $reports = Report::orderByDesc('reportid')->get()
         ->map(function ($report) {
 
-            $reporter = Report::find($report->reportid)->reporter();
-            $reported = Report::find($report->reportid)->reported();
-            //$reporter = User::find($report->reporterid);
-            //$event = Event::find($report->eventid);
+            //$reporter = Report::find($report->reportid)->reporter();
+            //$reported = Report::find($report->reportid)->reported();
+            $reporter = User::find($report->reporterid);
+            $event = Event::find($report->eventid);
 
             return [
-                'id' => $report->id,
+                'report' => $report,
                 'reporter' => $reporter,
-                'event' => $reported,
-                'message' => $report->message,
-                'reportstatus' => $report->reportstatus,
+                'event' => $event,
             ];
         });
 
@@ -164,7 +162,7 @@ class AdminController extends UserController
 
     return response()->json([
         'status' => 'OK',
-        'msg' => 'Successfully banned user '.$user->name,
+        'msg' => 'Successfully unbanned user '.$user->name,
     ], 200);
   }
 
@@ -183,17 +181,15 @@ class AdminController extends UserController
     $reportsInfo = Report::orderByDesc('reportid')->get()
         ->map(function ($report) {
 
-            $reporter = Report::find($report->reportid)->reporter();
-            $reported = Report::find($report->reportid)->reported();
-            //$reporter = User::find($report->reporterid);
-            //$event = Event::find($report->eventid);
+            //$reporter = Report::find($report->reportid)->reporter();
+            //$reported = Report::find($report->reportid)->reported();
+            $reporter = User::find($report->reporterid);
+            $event = Event::find($report->eventid);
 
             return [
-                'id' => $report->id,
+                'report' => $report,
                 'reporter' => $reporter,
-                'event' => $reported,
-                'message' => $report->message,
-                'reportstatus' => $report->reportstatus,
+                'event' => $event,
             ];
         });
 
@@ -237,6 +233,43 @@ class AdminController extends UserController
             'msg' => 'Report was successfully closed',
         ], 200);
     }
+
+
+    /**
+   * Update the specified resource in storage.
+   *
+   * @param  int $id Id of the user
+   * @return \Illuminate\Http\RedirectResponse
+   */
+  public function cancelEvent(int $id)
+  {
+      $admin = User::find(Auth::id());
+      if (is_null($admin))
+          return abort(404, 'User not found');
+      $event = Event::find($id);
+      if (is_null($event))
+          return response()->json([
+              'status' => 'Not Found',
+              'msg' => 'Event not found, id: '.$id,
+              'errors' => ['event' => 'Event not found, id: '.$id]
+          ], 404);
+
+      $this->authorize('cancelEvent', $admin);
+
+      if ($event->eventcanceled)
+          return response()->json([
+              'status' => 'OK',
+              'msg' => 'Event was already canceled',
+          ], 200);
+
+      $event->eventcanceled = true;
+      $event->save();
+
+      return response()->json([
+          'status' => 'OK',
+          'msg' => 'Event was successfully canceleded',
+      ], 200);
+  }
 
 
 /**

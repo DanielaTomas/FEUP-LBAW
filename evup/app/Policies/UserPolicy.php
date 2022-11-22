@@ -42,6 +42,11 @@ class UserPolicy
         return $admin->usertype == 'Admin';
     }
 
+    public function cancelEvent(User $admin)
+    {
+        return $admin->usertype == 'Admin';
+    }
+
     public function organizer_requests(User $admin)
     {
         return $admin->usertype == 'Admin';

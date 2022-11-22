@@ -101,14 +101,14 @@ CREATE TABLE Comment(
 );
 
 CREATE TABLE JoinRequest(
-  JoinRequestId SERIAL PRIMARY KEY,
+  joinRequestId SERIAL PRIMARY KEY,
   requesterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
   eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
   requestStatus BOOLEAN
 );
 
 CREATE TABLE OrganizerRequest(
-  OrganizerRequestId SERIAL PRIMARY KEY,
+  organizerRequestId SERIAL PRIMARY KEY,
   requesterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
   requestStatus BOOLEAN
 );
@@ -262,7 +262,7 @@ CREATE TRIGGER joinUserEventRequestAccepted
 CREATE FUNCTION eventChange() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF ((NEW.eventStart != OLD.eventStart) || (NEW.eventEnd != OLD.eventEnd)) THEN
+    IF ((NEW.startDate != OLD.startDate) OR (NEW.endDate != OLD.endDate)) THEN
         INSERT INTO Notification (receiverId,eventId,notificationDate,notificationType)
         SELECT userId,eventId, DATE('now'),'EventChange'
         FROM Attendee WHERE NEW.eventId = Attendee.attendeeId;
@@ -384,7 +384,7 @@ CREATE TRIGGER new_poll_notification
 CREATE FUNCTION updateUserToOrg() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.requestStatus) THEN
+    IF (NEW.requestStatus == TRUE) THEN
         UPDATE Users 
         SET userType = 'Organizer'
         WHERE NEW.requesterId=Users.userId;
@@ -411,7 +411,7 @@ BEGIN
         WHERE requesterId = NEW.userId AND requestStatus=NULL;
 
         DELETE FROM OrganizerRequest
-        WHERE requesterId = NEW.userId AND requestStatus= FALSE;
+        WHERE requesterId = NEW.userId AND requestStatus=NULL;
 
         DELETE FROM Notification
         WHERE receiverId = NEW.userId;
@@ -591,7 +591,7 @@ insert into Event (eventId, userId, eventname, public, address, description, eve
 insert into Event (eventId, userId, eventname, public, address, description, eventPhoto, startDate, endDate) values (27, 30, 'Ratke-Conn', true, '5 Dovetail Park', 'Person boarding or alighting from bus injured in collision with fixed or stationary object', 'http://dummyimage.com/160x100.png/cc0000/ffffff', '2023-11-17', '2023-12-06');
 insert into Event (eventId, userId, eventname, public, address, description, eventPhoto, startDate, endDate) values (28, 2, 'Green, Walter and Boyle', true, '81 Upham Road', 'Displaced supracondylar fracture with intracondylar extension of lower end of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with malunion', 'http://dummyimage.com/159x100.png/dddddd/000000', '2022-11-11', '2022-11-21');
 insert into Event (eventId, userId, eventname, public, address, description, eventPhoto, startDate, endDate) values (29, 13, 'Sauer, Gerlach and Kiehn', true, '002 Lindbergh Center', 'Asphyxiation due to plastic bag, accidental, sequela', 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-12-01', '2023-12-15');
-insert into Event (eventId, userId, eventname, public, address, description, eventCanceled, eventPhoto, startDate, endDate) values (30, 17, 'Graham-Lemke', true, '7585 Oriole Terrace', 'Flaccid hemiplegia', false, 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-01-06', '2023-01-08');
+insert into Event (eventId, userId, eventname, public, address, description, eventCanceled, eventPhoto, startDate, endDate) values (30, 17, 'Graham-Lemke', true, '7585 Oriole Terrace', 'Flaccid hemiplegia', true, 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-01-06', '2023-01-08');
 
 -- Attendee --
 
@@ -657,6 +657,7 @@ insert into Report (reportId, reporterId, eventId, message, reportStatus) values
 insert into Report (reportId, reporterId, eventId, message, reportStatus) values (6, 1, 23, 'The event image is inappropriate...', true);
 insert into Report (reportId, reporterId, eventId, message, reportStatus) values (7, 5, 28, 'Fraud', false);
 insert into Report (reportId, reporterId, eventId, message, reportStatus) values (8, 3, 1, 'Should be tagged as adult content', true);
+insert into Report (reportId, reporterId, eventId, message, reportStatus) values (9, 6, 30, 'Should be tagged as adult content', true);
 
 --Invitation --
 
