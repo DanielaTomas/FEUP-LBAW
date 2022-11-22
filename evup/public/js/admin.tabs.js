@@ -1,6 +1,7 @@
 current = localStorage.getItem("currtab")
 if (!current) localStorage.setItem("currtab", "tab-users") // tab-users --> Users; tab-reports --> Reports; tab-requests --> Organizer Requests
-setAtiveTab(localStorage.getItem("currtab"))
+if (window.location.pathname.includes('/admin'))
+  setAtiveTab(localStorage.getItem("currtab"))
 
 function setAtiveTab(tabID){
   element = document.querySelector('#a-' + tabID)

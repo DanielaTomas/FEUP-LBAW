@@ -51,6 +51,12 @@
                 @endif
             </div>
 
+            @if ($errors->has('ban'))
+                <div class="error text-danger text-center">
+                    {{ $errors->first('ban') }}
+                </div>
+            @endif 
+
             <button class="transform rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400">
                 LOG IN
             </button>
