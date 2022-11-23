@@ -55,7 +55,8 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 // Event
-Route::get('event/{id}','EventController@show');
-Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
+Route::get('event/{id}','EventController@show')->name('show_event');
+Route::get('event/{id}/edit','EventController@edit');
+Route::post('event/{id}','EventController@update')->name('update_event');
 
 
