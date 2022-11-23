@@ -23,6 +23,10 @@ class UserPolicy
         return Auth::check();
     }
 
+    public function update()
+    {
+        return Auth::check();
+    }
     /* --------- EVENT POLICIES --------- */
 
     public function organizerEvents(User $organizer)
@@ -93,6 +97,7 @@ class UserPolicy
 
     public function acceptRequest(User $admin)
     {
+        return $admin->usertype == 'Admin';
         return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
     public function searchUsers(User $admin)

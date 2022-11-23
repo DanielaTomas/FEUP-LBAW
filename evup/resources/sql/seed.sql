@@ -43,7 +43,7 @@ CREATE TABLE Event(
     userId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
     eventName TEXT NOT NULL CONSTRAINT unique_eventName UNIQUE,
     public BOOLEAN NOT NULL,
-    address TEXT NOT NULL,
+    eventAddress TEXT NOT NULL,
     description TEXT NOT NULL,
     eventCanceled BOOLEAN NOT NULL DEFAULT FALSE,
     eventPhoto TEXT NOT NULL,

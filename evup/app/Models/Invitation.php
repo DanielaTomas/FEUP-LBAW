@@ -11,6 +11,7 @@ class Invitation extends Model
     protected $table = 'invitation';
     protected $primaryKey = 'invitationid';
     
+
     public function sender() 
     {
         return $this->belongsTo(User::class, 'inviterid');

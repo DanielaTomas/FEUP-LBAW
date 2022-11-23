@@ -123,25 +123,51 @@ class UserController extends Controller
      * @param  int $id Id of the user
      * @return View
      */
-    public function edit(int $id)
+    public function profile(int $userid)
     {
-        $user = User::find($id);
+        $user = User::find($userid);
         if (is_null($user))
-            return abort(404, 'User not found, id: ' . $id);
+            return abort(404, 'User not found, id: ' . $userid);
 
-        $this->authorize('update', $user);
+        $userInfo = [
+            'id' => $userid,
+            'username' => $user->username,
+            'name' => $user->name,
+            'email' => $user->email,
+            'userPhoto' => $user->userPhoto,
+            'accountStatus' => $user->accountStatus,
+            'userType' => $user->userType,
+        ];
 
-        $ordered_events = $user->ordered_events();
-        $ordered_invites = $user->ordered_invites();
-        $isOrganizer = 'Organizer' == $user->userType;
+        $isOrganizer = false;
+        if (Auth::check()) {
+            $isOrganizer = Auth::id() == $userInfo['id'];
+        }
 
-        return view('pages.user.profile', [
-            'user' => $user,
+
+        $ordered_events = $user->events()->get();
+        $ordered_invites = $user->invites_received()->get();
+
+
+        return view('pages.profile', [
+            'user' => $userInfo,
             'events' => $ordered_events,
             'invites' => $ordered_invites,
             'isOrganizer' => $isOrganizer,
         ]);
     }
+
+    public function showEditForms(){
+
+        $user = Auth::user();
+        if (is_null($user))
+            return abort(404, 'User not found, id: ' . $user->userid);
+
+        return view('pages.editProfile', [
+            'user' => $user
+        ]);
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -150,51 +176,25 @@ class UserController extends Controller
      * @param  int $id Id of the user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, int $id): RedirectResponse
+    public function update(Request $request)
     {
-        $user = User::find($id);
-        if (is_null($user))
-            return redirect()->back()->withErrors(['user' => 'User not found, id: ' . $id]);
+        $this->authorize('update', User::class);
 
-        $this->authorize('update', $user);
+        $user = Auth::user();
+        $user->name = $request->name;
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'nullable|string|max:255',
-            'email' => 'nullable|string|email|max:255|unique:authenticated_user',
-            'password' => 'required_with:new_password,email|string|password',
-            'new_password' => 'nullable|string|min:6|confirmed',
-            'userPhoto' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
-        ]);
+        $repeatedUsername = User::where('username',$user->username)->first();
+        $repeatedEmail = User::where('email',$user->email)->first();
 
-        if ($validator->fails()) {
-            $errors = [];
-            foreach ($validator->errors()->messages() as $key => $value) {
-                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
-            }
-
-            // Go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($errors);
-        }
-
-        if (isset($request->name)) $user->name = $request->name;
-        if (isset($request->email)) $user->email = $request->email;
-        if (isset($request->new_password)) $user->password = bcrypt($request->new_password);
-
-        if (isset($request->userPhoto)) {
-            $newuserPhoto = $request->userPhoto;
-            $olduserPhoto = $user->userPhoto;
-
-            $imgName = round(microtime(true) * 1000) . '.' . $newuserPhoto->extension();
-            $newuserPhoto->storeAs('public/userPhotos', $imgName);
-            $user->userPhoto = $imgName;
-
-            if (!is_null($olduserPhoto))
-                Storage::delete('public/userPhotos/' . $olduserPhoto);
-        }
+        if (isset($request->name) && $repeatedUsername->id != Auth::id()){
+            $user->name = $request->name;
+        } 
+        if (isset($request->email) && $repeatedEmail->id != Auth::id()){
+            $user->email = $request->email;
+        } 
 
         $user->save();
-
-        return redirect("/user/${id}");
+        return redirect("/user/$user->userid");
     }
 
     /**
