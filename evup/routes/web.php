@@ -14,17 +14,14 @@
 Route::get('/', 'HomeController@list')->name('home');
 Route::get('search','HomeController@searchEvents')->name('search');
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
 
 // Admin
 Route::get('admin', 'AdminController@show_panel')->name('admin');
 Route::get('admin/users', 'AdminController@users');
 Route::get('admin/users/search', 'SearchController@searchUsers')->name('users_search');
 //Route::get('admin/users/add', 'AdminController@addUser')->name('add_user');           //Waiting for the profile to be finished
-//Route::get('admin/users/{id}/view', 'AdminController@view')->where(['id' => '[0-9]+']);
-//Route::get('admin/users/{id}/edit', 'AdminController@edit')->where(['id' => '[0-9]+']);
+Route::get('/users/{id}/view', 'UserController@view')->where(['id' => '[0-9]+'])->name('view_user');
+Route::get('admin/users/{id}/edit', 'AdminController@edit')->where(['id' => '[0-9]+'])->name('edit_user');
 Route::put('admin/users/{id}/ban', 'AdminController@banUser')->where(['id' => '[0-9]+']);
 Route::put('admin/users/{id}/unban', 'AdminController@unbanUser')->where(['id' => '[0-9]+']);
 Route::put('admin/reports/{id}/close', 'AdminController@closeReport')->where(['id' => '[0-9]+']);
@@ -34,8 +31,13 @@ Route::post('admin/organizer_requests/{id}/accept', 'AdminController@acceptReque
 
 //my Events
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
-Route::post('myEvents/{eventid}', 'UserController@leaveEvent');
-Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
+Route::get('myEvents/organizing', 'EventController@organizerEvents')->name('organizing');
+Route::post('myEvents/{id}', 'UserController@leaveEvent')->where(['id' => '[0-9]+']);
+Route::post('event/{id}/inviteUsers', 'UserController@inviteUser')->where(['id' => '[0-9]+']);
+Route::get('event/{id}/attendees', 'EventController@attendees')->where(['id' => '[0-9]+'])->name('attendees');
+Route::get('event/{id}/adduser', 'EventController@view_add_user')->where(['id' => '[0-9]+'])->name('view_add_user');
+Route::post('event/{eventid}/adduser/{userid}', 'EventController@addUser')->where(['eventid' => '[0-9]+', 'userid' => '[0-9]+'])->name('add_user_event');
+Route::post('event/{eventid}/removeuser/{userid}', 'EventController@removeUser')->where(['eventid' => '[0-9]+', 'userid' => '[0-9]+'])->name('remove_user_event');
 Route::get('myEvents/createEvent', 'EventController@showForms');
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

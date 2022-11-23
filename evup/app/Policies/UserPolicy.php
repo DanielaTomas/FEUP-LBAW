@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Event;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,23 @@ class UserPolicy
         return Auth::check();
     }
 
+    /* --------- EVENT POLICIES --------- */
+
+    public function organizerEvents(User $organizer)
+    {
+        return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer';
+    }
+
+    public function addUser(User $organizer)
+    {
+        return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer';
+    }
+
+    public function removeUser(User $organizer)
+    {
+        return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer';
+    }
+
     public function invite( User $user, User $inviteddUser)
     {
         return Auth::check() && ($inviteddUser->userid != Auth::id());
@@ -30,52 +48,56 @@ class UserPolicy
     /* --------- ADMIN POLICIES --------- */
     public function show(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 
     public function users(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 
     public function banUser(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 
     public function unbanUser(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 
     public function reports(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 
     public function closeReport(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 
     public function cancelEvent(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 
     public function organizer_requests(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 
     public function denyRequest(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 
     public function acceptRequest(User $admin)
     {
-        return $admin->usertype == 'Admin';
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+    }
+    public function searchUsers(User $admin)
+    {
+        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
 }
 

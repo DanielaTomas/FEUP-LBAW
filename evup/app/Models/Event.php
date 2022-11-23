@@ -30,7 +30,7 @@ class Event extends Model
     return $this->belongsToMany(Category::class, 'event_category', 'eventid', 'categoryid');
   }
 
-  public function attendees()
+  public function events()
   {
     return $this->belongsToMany(User::class, 'attendee', 'eventid', 'attendeeid');
   }

@@ -46,5 +46,3 @@ function inviteUser(){
     card.remove()
 }
 
-
-

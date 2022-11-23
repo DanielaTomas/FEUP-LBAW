@@ -62,12 +62,13 @@ class AdminController extends UserController
         ]);
     }
 
+    
     /**
-   * Display the User profile.
+   * Display the User public profile. LATER ADD TO @UserController
    *
    * @return View
    */
-    public function view($id)
+    /*public function view($id)
     {
         $user = User::find($id);
         if (is_null($user))
@@ -83,7 +84,7 @@ class AdminController extends UserController
         ]);
     }
 
-
+    */
     /**
      * Display the list of users
      *
