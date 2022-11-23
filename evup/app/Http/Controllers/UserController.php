@@ -99,21 +99,19 @@ class UserController extends Controller
      *
      * @return View
      */
-    public function show()
+    public function viewUser($id)
     {
-        $user = User::find(Auth::id());
+        $user = User::find($id);
         if (is_null($user))
             return abort(404, 'User not found, id: ' . Auth::id());
+    
+        $ordered_events = $user->events()->get();
+        $ordered_invites = $user->invites_received()->get();
 
-        $ordered_events = $user->ordered_events();
-        $ordered_invites = $user->ordered_invites();
-        $isOrganizer = 'Organizer' == $user->userType;
-
-        return view('pages.user.profile', [
+        return view('pages.public_profile', [
             'user' => $user,
             'events' => $ordered_events,
             'invites' => $ordered_invites,
-            'isOrganizer' => $isOrganizer,
         ]);
     }
 
@@ -123,48 +121,34 @@ class UserController extends Controller
      * @param  int $id Id of the user
      * @return View
      */
-    public function profile(int $userid)
+    public function profile(int $id)
     {
-        $user = User::find($userid);
+        $user = User::find($id);
         if (is_null($user))
-            return abort(404, 'User not found, id: ' . $userid);
+            return abort(404, 'User not found, id: ' . $id);
 
-        $userInfo = [
-            'id' => $userid,
-            'username' => $user->username,
-            'name' => $user->name,
-            'email' => $user->email,
-            'userPhoto' => $user->userPhoto,
-            'accountStatus' => $user->accountStatus,
-            'userType' => $user->userType,
-        ];
-
-        $isOrganizer = false;
-        if (Auth::check()) {
-            $isOrganizer = Auth::id() == $userInfo['id'];
-        }
-
+        $this->authorize('profile', $user);
 
         $ordered_events = $user->events()->get();
         $ordered_invites = $user->invites_received()->get();
 
-
         return view('pages.profile', [
-            'user' => $userInfo,
+            'user' => $user,
             'events' => $ordered_events,
             'invites' => $ordered_invites,
-            'isOrganizer' => $isOrganizer,
         ]);
     }
 
-    public function showEditForms(){
+    public function showEditForms($id){
 
-        $user = Auth::user();
+        $user = User::find($id);
         if (is_null($user))
-            return abort(404, 'User not found, id: ' . $user->userid);
+            return abort(404, 'User not found, id: ' . $id);
+
+        $this->authorize('showEditForms', $user);
 
         return view('pages.editProfile', [
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -176,11 +160,13 @@ class UserController extends Controller
      * @param  int $id Id of the user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $this->authorize('update', User::class);
+        $user = User::find($id);
+        if (is_null($user))
+            return abort(404, 'User not found, id: ' . $id);
 
-        $user = Auth::user();
+        $this->authorize('update', $user);
         $user->name = $request->name;
 
         $repeatedUsername = User::where('username',$user->username)->first();

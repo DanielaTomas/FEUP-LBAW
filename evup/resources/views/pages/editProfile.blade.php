@@ -7,7 +7,7 @@
 <div class="flex items-center justify-center p-12">
 
   <div class="mx-auto w-full max-w-[550px]">
-    <form method="POST" action="{{route('editUser', Auth::id())}}">
+    <form method="POST" action="{{ route('editUser', ['id' => $user->userid]) }}">
     {{ csrf_field() }}
       <div class="-mx-3 flex flex-wrap">
         <div class="w-full px-3 sm:w-1/2">

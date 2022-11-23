@@ -22,10 +22,17 @@ class UserPolicy
     {
         return Auth::check();
     }
-
-    public function update()
+    public function profile(User $user)
     {
-        return Auth::check();
+        return Auth::id() == $user->userid;
+    }
+    public function showEditForms(User $user)
+    {
+        return (Auth::id() == $user->userid || $user->usertype == 'Admin');
+    }
+    public function update(User $user)
+    {
+        return (Auth::id() == $user->userid || $user->usertype == 'Admin');
     }
     /* --------- EVENT POLICIES --------- */
 

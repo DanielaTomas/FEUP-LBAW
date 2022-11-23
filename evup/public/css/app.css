@@ -1142,6 +1142,9 @@ input:checked + .toggle-bg {
 .h-8 {
   height: 2rem;
 }
+.h-12 {
+  height: 4rem;
+}
 .h-9 {
   height: 2.25rem;
 }
@@ -1177,6 +1180,9 @@ input:checked + .toggle-bg {
 }
 .w-8 {
   width: 2rem;
+}
+.w-12 {
+  width: 4rem;
 }
 .w-1\/2 {
   width: 50%;
