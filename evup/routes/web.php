@@ -48,5 +48,6 @@ Route::post('register', 'Auth\RegisterController@register');
 // Event
 Route::get('event/{id}','EventController@show');
 Route::get('event/{id}/edit','EventController@edit');
+Route::post('event/{id}','EventController@update')->name('update_event');
 
 

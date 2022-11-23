@@ -262,7 +262,7 @@ CREATE TRIGGER joinUserEventRequestAccepted
 CREATE FUNCTION eventChange() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF ((NEW.eventStart != OLD.eventStart) || (NEW.eventEnd != OLD.eventEnd)) THEN
+    IF ((NEW.startDate != OLD.startDate) OR (NEW.endDate != OLD.endDate)) THEN
         INSERT INTO Notification (receiverId,eventId,notificationDate,notificationType)
         SELECT userId,eventId, DATE('now'),'EventChange'
         FROM Attendee WHERE NEW.eventId = Attendee.attendeeId;
