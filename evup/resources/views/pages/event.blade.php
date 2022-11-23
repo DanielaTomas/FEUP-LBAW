@@ -37,7 +37,7 @@
         </section>
         <section id="eventCardLowerRight">
             <div id=eventCardCategories> @each('partials.category', $event->eventcategories()->get(), 'category') </div>
-            <p id=eventCardLocation> Address: {{ $event->address }} </p>
+            <p id=eventCardLocation> Address: {{ $event->eventaddress }} </p>
         </section>
     </section>
     <section> 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Event;
 use App\Models\User;
@@ -59,6 +60,51 @@ class EventController extends Controller
     $event->delete();
 
     return $event;
+  }
+
+  public function showForms()
+  {
+
+    $tags = TagController::getAllTags();
+    $categories = CategoryController::getAllCategories();
+
+    return view('pages.createEvent', ['categories' => $categories, 'tags' => $tags]);
+  }
+
+  public function createEvent(Request $request)
+  {
+
+    //$this->authorize('create', Event::class);
+
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'name' => 'required|string|min:3|max:100',
+        'eventAddress' => 'required|string|min:3|max:200',
+        'description' => 'required|string|min:3|max:100',
+        'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
+        'starDate' => 'required|date',
+        'endDate' => 'required|date',
+      ]
+    );
+    /*
+    if ($validator->fails()) {
+      // Go back to form and refill it
+      return redirect()->back()->withInput()->withErrors($errors);
+    }*/
+
+    $event = new Event;
+    $event->eventname = $request->name;
+    $event->eventaddress = $request->eventAddress;
+    $event->description = $request->description;
+    $event->eventphoto = $request->thumbnail;
+    $event->startdate = $request->startDate;
+    $event->enddate = $request->endDate;
+    $event->public = true;
+    $event->userid = Auth::id();
+    $event->save();
+
+    return redirect("/event/$event->eventid");
   }
 
 }
