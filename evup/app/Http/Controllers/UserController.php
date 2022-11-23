@@ -123,7 +123,7 @@ class UserController extends Controller
      * @param  int $id Id of the user
      * @return View
      */
-    public function show(int $userid)
+    public function profile(int $userid)
     {
         $user = User::find($userid);
         if (is_null($user))
