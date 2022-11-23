@@ -614,6 +614,10 @@ insert into Attendee (attendeeId, eventId) values (1, 31);
 insert into Attendee (attendeeId, eventId) values (4, 31);
 insert into Attendee (attendeeId, eventId) values (6, 31);
 insert into Attendee (attendeeId, eventId) values (12, 31);
+insert into Attendee (attendeeId, eventId) values (32, 2);
+insert into Attendee (attendeeId, eventId) values (32, 7);
+insert into Attendee (attendeeId, eventId) values (32, 8);
+insert into Attendee (attendeeId, eventId) values (32, 15);
 
 -- Category --
 
