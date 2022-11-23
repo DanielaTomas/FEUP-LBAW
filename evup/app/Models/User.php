@@ -12,8 +12,7 @@ class User extends Authenticatable
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
 
-    #protected $table = 'Users';
-    #protected $primaryKey = 'userId';
+    protected $primaryKey = 'userid';
 
     /**
      * The attributes that are mass assignable.
@@ -32,14 +31,14 @@ class User extends Authenticatable
     protected $hidden = [
         'accountStatus', 'userType', 'remember_token'
     ];
-
+    
     public function cards() {
         return $this->hasMany(Card::class);
     }
 
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'Attendee', 'attendeeId', 'eventId');
+        return $this->belongsToMany(Event::class, 'attendee', 'attendeeid', 'eventid');
     }
 
     public function comments() {
@@ -68,29 +67,29 @@ class User extends Authenticatable
 
     public function invites_received()
     {
-        return $this->hasMany(User::class, 'inviteeId');
+        return $this->hasMany(Invitation::class,'inviteeid');
     }
 
     public function ordered_events()
     {
         return $this->events->map(function ($area) {
             return [
-                'eventId' => $area->eventId,
-                'eventName' => $area->name,
-                'endDate' => $area->endDate,
+                'eventid' => $area->eventid,
+                'eventname' => $area->name,
+                'enddate' => $area->enddate,
             ];
-        })->sortBy('endDate')->where('endDate', '<', date("Y-m-d H:i:s"));
+        })->sortBy('enddate')->where('enddate', '<', date("Y-m-d H:i:s"));
     }
 
     public function ordered_invites()
     {
         return $this->invites_received->map(function ($area) {
             return [
-                'invitationId' => $area->invitationId,
-                'inviterId' => $area->inviterId,
-                'eventId' => $area->eventId,
-                'invitationStatus' => $area->invitationStatus,
+                'invitationid' => $area->invitationid,
+                'inviterid' => $area->inviterid,
+                'eventid' => $area->eventid,
+                'invitationstatus' => $area->invitationstatus,
             ];
-        })->sortBy('eventId')->where('invitationStatus', '!=', TRUE);
+        })->sortBy('eventid')->where('invitationstatus', '!=', TRUE);
     }
 }

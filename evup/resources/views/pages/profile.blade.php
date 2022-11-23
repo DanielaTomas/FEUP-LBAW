@@ -1,25 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id=profile> Profile(icon) </div>
+    <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
+        <div class="px-6 ">
+            <div class="text-center mt-2">
+                <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">
+                    {{ $user['name'] }}
+                    <button><a class="fa fa-pencil fa-fw" aria-hidden="true" href="/user/{{ $user['id'] }}/edit"></a></button>
+                </h3>
+                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
+                    <i class="text-slate-400 opacity-75"></i>{{ $user['username'] }} / {{ $user['email'] }}
+                </div>
+            </div>
+        <div>
+    </div>
     <article>
-        <div id="organizerTag"></div>
-        <div id=nameSection>
-            <p>Name Last</p>
-            <i class="fa-solid fa-pencil"></i>
-        </div>
-        <div id="myEventsHeader">
-            <h3> my Events</h3>
-            <p> view all</p>
-        </div>
-        <section id="myEventsProfile">
-            @include('partials.eventCard')
+        <section id="myEventsHeader">
+            <p>My events</p>
+            <p>Show All</p>
         </section>
+        <section id="Events">
+            @each('partials.eventCard', $events, 'event')
+        </section>
+    </article>
+    <article>
         <div id="myInvitationsHeader">
-            <h3> my Invitations</h3>
+                    <h3> my Invitations</h3>
         </div>
         <section id="myInvitationsProfile">
-            @include('partials.invitation')
+            @each('partials.invitation', $invites, 'invite')
         </section>
     </article>
 @endsection
