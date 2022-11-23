@@ -46,7 +46,8 @@ Route::post('admin/organizer_requests/{id}/accept', 'AdminController@acceptReque
 //my Events
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
 Route::post('myEvents/{eventid}', 'UserController@leaveEvent');
-Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
+Route::get('create', 'EventController@showForms'); 
+Route::post('organize', 'EventController@createEvent')->name('createEvent'); 
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -58,5 +59,6 @@ Route::post('register', 'Auth\RegisterController@register');
 // Event
 Route::get('event/{id}','EventController@show');
 Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
+Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
 
 
