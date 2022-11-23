@@ -5,24 +5,25 @@
 <h1>Edit My Information</h1>
 <br>
 <div class="flex items-center justify-center p-12">
-  <!-- Author: FormBold Team -->
-  <!-- Learn More: https://formbold.com -->
+
   <div class="mx-auto w-full max-w-[550px]">
-    <form method="POST">
+    <form method="POST" action="{{route('editUser', Auth::id())}}">
+    {{ csrf_field() }}
       <div class="-mx-3 flex flex-wrap">
         <div class="w-full px-3 sm:w-1/2">
           <div class="mb-5">
             <label
-              for="fName"
+              for="name"
               class="mb-3 block text-base font-medium text-[#07074D]"
             >
               First Name
             </label>
             <input
+              required
               type="text"
-              name="fName"
-              id="fName"
-              value={{ $user['name'] }}
+              name="name"
+              id="name"
+              value="{{ $user->name }}"
               class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
             />
           </div>
@@ -30,16 +31,17 @@
         <div class="w-full px-3 sm:w-1/2">
           <div class="mb-5">
             <label
-              for="lName"
+              for="email"
               class="mb-3 block text-base font-medium text-[#07074D]"
             >
               Email
             </label>
             <input
+              required
               type="text"
-              name="lName"
-              id="lName"
-              value={{ $user['email'] }}
+              name="email"
+              id="email"
+              value="{{ $user->email }}"
               class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
             />
           </div>
@@ -47,16 +49,17 @@
         <div class="w-full px-3 sm:w-1/2">
           <div class="mb-5">
             <label
-              for="uName"
+              for="username"
               class="mb-3 block text-base font-medium text-[#07074D]"
             >
               New Username
             </label>
             <input
+              required
               type="text"
-              name="uName"
-              id="uName"
-              value={{ $user['username'] }}
+              name="username"
+              id="username"
+              value="{{ $user->username }}"
               class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
             />
           </div>

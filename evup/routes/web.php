@@ -15,8 +15,9 @@ Route::get('/', 'HomeController@list')->name('home');
 Route::get('search','HomeController@searchEvents')->name('search');
 
 //User
-Route::get('user/{userid}', 'UserController@show')->name('userProfile')->where(['userid' => '[0-9]+']);
-Route::get('user/{id}/edit', 'UserController@edit')->name('editUser')->where(['id' => '[0-9]+']);
+Route::get('user/{userid}', 'UserController@profile')->name('userProfile')->where(['userid' => '[0-9]+']);
+Route::get('user/{id}/edit', 'UserController@showEditForms')->where(['id' => '[0-9]+']);
+Route::post('user/{id}/edit', 'UserController@update')->name('editUser')->where(['id' => '[0-9]+']);
 //  /user/{id}/requestOrganizer:
 //  /api/user/{id}/attended:
 //  /api/user/{id}/organized:
@@ -45,7 +46,8 @@ Route::post('admin/organizer_requests/{id}/accept', 'AdminController@acceptReque
 //my Events
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
 Route::post('myEvents/{eventid}', 'UserController@leaveEvent');
-Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
+Route::get('create', 'EventController@showForms'); 
+Route::post('organize', 'EventController@createEvent')->name('createEvent'); 
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -55,8 +57,12 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 // Event
+
 Route::get('event/{id}','EventController@show')->name('show_event');
 Route::get('event/{id}/edit','EventController@edit');
 Route::post('event/{id}','EventController@update')->name('update_event');
+Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
+Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
+
 
 

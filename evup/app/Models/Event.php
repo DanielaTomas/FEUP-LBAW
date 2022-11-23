@@ -17,7 +17,7 @@ class Event extends Model
   ];
 
   protected $fillable = [
-    'address','description','eventPhoto','startDate','endDate'
+    'eventaddress','description','eventPhoto','startDate','endDate'
   ];
 
   public function eventTags()

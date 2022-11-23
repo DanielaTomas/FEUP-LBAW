@@ -31,7 +31,7 @@
             <div id=eventCardCategories> @each('partials.category', $event->eventcategories()->get(), 'category') </div>
             <p class="leading-normal">{{ $event->description }}</p>
             <div class="flex flex-column items-center mt-4 ">
-                <div class="w-1/2 text-gray-700"> {{ $event->address }} </div>
+                <div class="w-1/2 text-gray-700"> {{ $event->eventaddress }} </div>
                 <div id=eventCardTags> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
             </div>
         </div>
