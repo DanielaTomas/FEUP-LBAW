@@ -20,18 +20,11 @@
                     <?php } ?>
                 </h3>
                 <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-                    <i class="text-slate-400 opacity-75"></i>{{ $user->username }} / {{ $user->email }}
+                    <i class="text-slate-400 opacity-75"></i>{{ $user->username }} / {{ $user['email'] }}
                 </div>
-                
-                
             </div>
         <div>
     </div>
-        <div>
-            <button  class="bg-grey-light hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded inline-flex items-center">
-            <span>Ask To Be Organizer</span>
-        </button>
-        </div>
     <article>
         <section id="myEventsHeader" class="m-4 text-center">
             <h2 class="text-2xl font-semibold leading-tight">My Events</h2>
@@ -40,12 +33,5 @@
             @each('partials.eventCard', $events, 'event')
         </section>
     </article>
-    <article>
-        <div id="myInvitationsHeader" class="m-4 text-center">
-            <h2 class="text-2xl font-semibold leading-tight">My Invitations</h2>
-        </div>
-        <section id="myInvitationsProfile" class="flex flex-wrap justify-center gap-2">
-            @each('partials.invitation', $invites, 'invite')
-        </section>
-    </article>
+
 @endsection
