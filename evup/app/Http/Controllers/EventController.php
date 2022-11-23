@@ -91,7 +91,7 @@ class EventController extends Controller
 
       $event->save();
 
-      return $event;
+      return redirect()->route('show_event',[$event->eventid]);
   }
 
 
