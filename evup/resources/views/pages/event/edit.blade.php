@@ -8,6 +8,9 @@
   <label for="eventname"><p>Name:</p></label>
   <input id="eventname" type="text" name="eventname" value="<?=$event->eventname?>">
 
+  <label for="description"><p>Description:</p></label>
+  <input id="description" type="text" name="description" value="<?=$event->description?>">
+
   <label for="address"><p>Address:</p></label>
   <input id="address" type="text" name="address" value="<?=$event->address?>">
 

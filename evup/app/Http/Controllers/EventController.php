@@ -69,7 +69,8 @@ class EventController extends Controller
       //$this->authorize('update', $event);
 
       $validator = Validator::make($request->all(), [
-          'eventname' => 'required|unique:event|string|max:255',
+          'eventname' => 'required|string|max:255',
+          'description' => 'required|string|max:255',
           'address' => 'required|string|max:255',
           'startdate' => 'required|date|after:tomorrow',
           'enddate' => 'required|date|after:startdate',
@@ -85,6 +86,7 @@ class EventController extends Controller
       }
 
       if (isset($request->eventname)) $event->eventname = $request->eventname;
+      if (isset($request->description)) $event->description = $request->description;
       if (isset($request->address)) $event->address = $request->address;
       if (isset($request->startdate)) $event->startdate = $request->startdate;
       if (isset($request->enddate)) $event->enddate = $request->enddate;
