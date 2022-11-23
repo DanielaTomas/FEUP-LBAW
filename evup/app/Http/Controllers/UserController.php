@@ -227,7 +227,7 @@ class UserController extends Controller
             return abort(404, 'User not found');
         
 
-        $this->authorize('inviteDecline', $request);
+        //gi$this->authorize('inviteDecline', $request);
 
         if ($request->invitationstatus)
             return response()->json([
@@ -257,7 +257,7 @@ class UserController extends Controller
         if (is_null($user))
             return abort(404, 'User not found');
   
-      $this->authorize('inviteAccept', $request);
+      //$this->authorize('inviteAccept', $request);
   
       if ($request->invitationstatus)
           return response()->json([
