@@ -374,4 +374,41 @@ class AdminController extends UserController
     ], 200);
   }
 
+  public function addUserAccount(){
+    return view('pages.admin.addUser', []);
+  }
+
+  public function createUser(Request $request){
+
+    $user = new User;
+    $user->name = $request->name;
+    $user->username = $request->username;
+    $user->email = $request->email;
+    $user->password = bcrypt($request->password);
+    $user->accountstatus = "Active";
+    
+    if ($request->has('admin')) {
+      $user->usertype = "Admin";
+    } else {
+        $user->usertype = "User";
+    }
+    $repeatedUsername = User::where('username',$request->username)->get()->count();
+    $repeatedEmail = User::where('email',$request->email)->get()->count();
+
+    if (isset($request->name) && ($repeatedUsername ==0) ){
+        $user->username = $request->username;
+    }else{
+        return redirect()->back()->withInput();
+    }
+    
+    if (isset($request->email) && ($repeatedEmail == 0)){
+        $user->email = $request->email;
+    }else{
+        return redirect()->back()->withInput();
+    }
+
+    $user->save();
+    return redirect("/user/$user->userid");
+  }
+
 }

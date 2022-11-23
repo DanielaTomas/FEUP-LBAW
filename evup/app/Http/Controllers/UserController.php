@@ -186,12 +186,16 @@ class UserController extends Controller
         $repeatedUsername = User::where('username',$user->username)->first();
         $repeatedEmail = User::where('email',$user->email)->first();
 
-        if (isset($request->name) && $repeatedUsername->id != Auth::id()){
-            $user->name = $request->name;
+        if (isset($request->username) && $repeatedUsername->id != Auth::id()){
+            $user->username = $request->username;
+        }else{
+            return redirect()->back()->withInput();
         } 
         if (isset($request->email) && $repeatedEmail->id != Auth::id()){
             $user->email = $request->email;
-        } 
+        }else{
+            return redirect()->back()->withInput();
+        }
 
         $user->save();
         return redirect("/user/$user->userid");

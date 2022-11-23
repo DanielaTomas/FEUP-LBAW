@@ -54,7 +54,7 @@
                         </form>
                     </div>
                     <div class="self-center">
-                        <a href="{{ url('add_user') }}" class="text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Add new User</a>
+                        <a href="{{ route('add_user_account') }}" class="text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Add new User</a>
                     </div>
                 </div>
                 <div class="overflow-x-auto min-h-screen">
