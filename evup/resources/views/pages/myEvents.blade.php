@@ -23,7 +23,7 @@
         <article>
             <div></div>
 
-            <section class="flex flex-wrap justify-center gap-2">
+            <section id="myeventsarea" class="flex flex-wrap justify-center gap-2">
                 @each('partials.eventCard', $events, 'event')
             </section>
         </article>
