@@ -213,7 +213,7 @@ class EventController extends Controller
       $validator = Validator::make($request->all(), [
           'eventname' => 'required|string|max:255',
           'description' => 'required|string|max:255',
-          'eventAddress' => 'required|string|max:255',
+          'eventaddress' => 'required|string|max:255',
           'startdate' => 'required|date|after:tomorrow',
           'enddate' => 'required|date|after:startdate',
       ]);
