@@ -13,6 +13,11 @@ class SearchController extends Controller
 {
     public function searchUsers(Request $request)
     {
+        $admin = User::find(Auth::id());
+        if (is_null($admin))
+            return abort(404, 'User not found');
+        $this->authorize('searchUsers', $admin);
+
         $search = $request->input('search');
         $users = User::whereRaw('tsvectors @@ plainto_tsquery(\'english\', ?)', [$search])
             ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$search])
@@ -21,6 +26,27 @@ class SearchController extends Controller
         return view('pages.admin.users',[
             'users' => $users,
         ]);
+    }
+
+
+    public function searchNonAttendingUsers(Request $request){
+        $search = $request->input('search');
+        $eventid = $request->input('eventid');
+
+        $usersInvited = Auth::user()->invites_sent()->get();
+        $usersAttending = Event::find($eventid)->events()->get();
+        
+        $users = User::whereRaw('tsvectors @@ plainto_tsquery(\'english\', ?)', [$search])
+            ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$search])
+            ->get();
+
+
+        $usersAttending-> push(Auth::user());
+
+        $users = $users->diff($usersInvited);
+        $users = $users->diff($usersAttending);
+
+        return $users;
     }
 
     public function searchPublicEvents(Request $request)

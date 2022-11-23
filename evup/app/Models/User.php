@@ -47,7 +47,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Comment::class, 'vote', 'voterid', 'commentid')->withPivot('type');
     }
 
-    public function polls_options()
+    public function answers()
     {
         return $this->belongsToMany(PollOption::class, 'Answer', 'userId', 'pollOptionId');
     }
