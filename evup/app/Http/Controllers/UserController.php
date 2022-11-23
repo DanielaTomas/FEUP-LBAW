@@ -50,7 +50,7 @@ class UserController extends Controller
         $organizer = User::find($event->userid);
 
         $usersInvited = Auth::user()->invites_sent()->get();
-        $usersAttending = $event->attendees()->get();
+        $usersAttending = $event->events()->get();
         
         $users = User::whereRaw('(username like \'%' . $request->search . '%\' or email like \'%' . $request->search . '%\')')
                     ->get();
