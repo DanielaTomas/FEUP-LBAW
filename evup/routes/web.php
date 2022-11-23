@@ -30,9 +30,6 @@ Route::post('user/{id}/organizerRequest/', 'UserController@organizerRequest')->w
 //Invite
 
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
 
 // Admin
 Route::get('admin', 'AdminController@show_panel')->name('admin');
