@@ -1,57 +1,53 @@
 @extends('layouts.app')
 
 @section('content')
-    <article class="eventcard" data-id="{{ $event->eventid }}">
-        <div class="flex flex-row p-5 items-center justify-between">
-            <h1 class="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
-            <button><i class="fa-solid fa-triangle-exclamation fa-2x"></i></button>
+
+<article class="eventcard" data-id="{{ $event->eventid }}">
+    <div class="flex flex-row p-5 items-center justify-between">
+        <h1 class="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
+        <?php if($event->organizer()->first()->usertype == 'Organizer' && $event->organizer()->first()->userid == $user->userid) { ?>
+            <a href="/event/{{$event->eventid}}/edit"><button><i class="fa-solid fa-pencil fa-2x"></i></button></a>
+        <?php } ?>
+        <button><i class="fa-solid fa-triangle-exclamation fa-2x"></i></button>
+    </div>
+    
+    <section id="eventimage">
+        <img src="{{ $event->eventphoto }}">
+        <div>
+            <button><i class="fa-solid fa-bell"></i></button>
+            <?php if($event->public == false) { ?>
+                <button><i class="fa-solid fa-lock"></i></button>
+            <?php } ?>
         </div>
-        <section id="">
-            <section class="w-full h-64 bg-top bg-cover rounded-t flex flex-col justify-between"
-                style="background-image: url( {{ $event->eventphoto }})">
-                @if (!$event->public)
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="w-8 h-8  mb-2 ml-2">
-                        <path fill-rule="evenodd"
-                            d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"
-                            clip-rule="evenodd" />
-                    </svg>
-                @endif
-                <div>
-                    <button><i class="fa-solid fa-bell"></i></button>
-                    <button><i class="fa-solid fa-lock"></i></button>
-                </div>
-            </section>
+    </section>
 
-            <h2 class="mb-4 text-3xl leading-none tracking-tight text-gray-800">Description</h2>
-            <p id=eventCardDescription> {{ $event->description }} </p>
-            <div id=eventCardTags> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
+    <section id=eventCardLower class="flex flex-row justify-around p-4 font-bold leading-none text-gray-800 bg-gray-400 md:flex-col md:items-center md:justify-center md:w-1/4">
+            <p id=eventCardStartDate> Start: {{ $event->startdate }} </p>
+            <p id=eventCardEndDate> End: {{ $event->enddate }} </p>
+            <p id=eventCardLocation> Address: {{ $event->address }} </p>
+            <p id=eventCardOrganizer> Organizer: {{ $event->organizer()->first()->username }} </p>
+    </section>
 
-            <h2 class="mb-4 text-3xl leading-none tracking-tight text-gray-800">Comments</h2>
-            <!--TODO finish comments and css -->
-            <div class="flex items-center">
-                <img class="w-6 h-6 rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg" />
-                <p class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-800"> Username </p><br>
-                <p class="mb-4 text-2xl leading-none tracking-tight text-gray-800"> november 12, 2022 at 7:00 pm </p>
-            </div>
-            <div class="flex items-center">
-                <div id="eventCardComments">@each('partials.comment', $event->comments()->get(), 'comment')</div>
-            </div>
-        </section>
+    <section>
+         <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Request to join</button>
+         <!-- <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Invite user</button> -->
+    </section>
 
-        <section id=eventCardLower>
-            <section id="eventCardLowerLeft">
-                <p id=eventCardStartDate> Start: {{ $event->startdate }} </p>
-                <p id=eventCardEndDate> End: {{ $event->enddate }} </p>
-            </section>
-            <section id="eventCardLowerRight">
-                <div id=eventCardCategories> @each('partials.category', $event->eventcategories()->get(), 'category') </div>
-                <p id=eventCardLocation> Address: {{ $event->eventaddress }} </p>
-            </section>
-        </section>
-        <section>
-            <h1> Invite another user</h1>
-            <div class="flex justify-center flex-col">
+    <section>
+        <h2 class="mb-4 text-3xl leading-none tracking-tight text-gray-800">Description</h2>
+        <p id=eventCardDescription> {{ $event->description }} </p>
+         <div id=eventCardTags> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
+
+        <h2 class="mb-4 text-3xl leading-none tracking-tight text-gray-800">Comments</h2>
+         <div class="flex items-center">
+            <div id="eventCardComments"> @each('partials.comment', $event->comments()->orderBy('commentdate')->get(), 'comment')</div>
+        </div>
+    </section>
+
+</article>
+
+    <h1> Invite another user</h1>
+        <div class="flex justify-center flex-col">
                 <div class="mb-3 xl:w-96">
                     <div class="input-group relative flex  items-stretch w-full mb-4">
                         <input id="mySearch" name="search" type="search"
@@ -68,11 +64,10 @@
                                 </path>
                             </svg>
                         </button>
-                    </div>
+            </div>
                 </div>
                 <div id="userResults" class="flex flex-wrap gap-5"> </div>
-            </div>
+        </div>
+</article>
 
-        </section>
-    </article>
 @endsection

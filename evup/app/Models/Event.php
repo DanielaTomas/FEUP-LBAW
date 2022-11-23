@@ -42,21 +42,21 @@ class Event extends Model
 
   public function polls()
   {
-    return $this->hasMany(Poll::class, 'eventId');
+    return $this->hasMany(Poll::class, 'eventid');
   }
 
   public function organizer()
   {
-    return $this->belongsTo(User::class,'userId');
+    return $this->belongsTo(User::class,'userid');
   }
 
   public function reports()
   {
-    return $this->hasMany(Report::class, 'reporterId');
+    return $this->hasMany(Report::class, 'reporterid');
   }
 
   public function notifications()
   {
-    return $this->hasMany(Notification::class, 'eventId');
+    return $this->hasMany(Notification::class, 'eventid');
   }
 }

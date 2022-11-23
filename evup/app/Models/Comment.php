@@ -16,8 +16,8 @@ class Comment extends Model
 
     public function author() 
     {
-        return $this->belongsTo(User::class, 'authorId');
-      }
+        return $this->belongsTo(User::class, 'authorid');
+    }
 
     public function event() 
     {
