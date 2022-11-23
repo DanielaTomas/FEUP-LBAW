@@ -47,7 +47,6 @@ Route::post('admin/organizer_requests/{id}/accept', 'AdminController@acceptReque
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
 Route::get('myEvents/organizing', 'EventController@organizerEvents')->name('organizing');
 Route::post('myEvents/{id}', 'UserController@leaveEvent')->where(['id' => '[0-9]+']);
-Route::get('create', 'EventController@showForms'); 
 Route::post('organize', 'EventController@createEvent')->name('createEvent')->where(['id' => '[0-9]+']);
 Route::get('event/{id}/attendees', 'EventController@attendees')->where(['id' => '[0-9]+'])->name('attendees');
 Route::get('event/{id}/adduser', 'EventController@view_add_user')->where(['id' => '[0-9]+'])->name('view_add_user');
@@ -64,7 +63,7 @@ Route::post('register', 'Auth\RegisterController@register');
 // Event
 
 Route::get('event/{id}','EventController@show')->name('show_event');
-Route::get('event/{id}/edit','EventController@edit');
+Route::get('event/{id}/edit','EventController@edit')->where(['id' => '[0-9]+'])->name('edit_event');
 Route::post('event/{id}','EventController@update')->name('update_event');
 Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
 Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 

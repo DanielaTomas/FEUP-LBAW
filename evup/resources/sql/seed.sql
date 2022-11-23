@@ -592,7 +592,7 @@ insert into Event ( userId, eventname, public, eventAddress, description, eventP
 insert into Event ( userId, eventname, public, eventAddress, description, eventPhoto, startDate, endDate) values ( 2, 'Green, Walter and Boyle', true, '81 Upham Road', 'Displaced supracondylar fracture with intracondylar extension of lower end of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with malunion', 'http://dummyimage.com/159x100.png/dddddd/000000', '2022-11-11', '2022-11-21');
 insert into Event ( userId, eventname, public, eventAddress, description, eventPhoto, startDate, endDate) values ( 13, 'Sauer, Gerlach and Kiehn', true, '002 Lindbergh Center', 'Asphyxiation due to plastic bag, accidental, sequela', 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-12-01', '2023-12-15');
 insert into Event ( eventId, userId, eventname, public, eventAddress, description, eventCanceled, eventPhoto, startDate, endDate) values (30, 17, 'Graham-Lemke', true, '7585 Oriole Terrace', 'Flaccid hemiplegia', false, 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-01-06', '2023-01-08');
-insert into Event ( eventId, userId, eventname, public, eventAddress, description, eventPhoto, startDate, endDate) values ( 31, 3, 'Christmas Party', true, '001 North Pole', 'Christmas Party in Santa house. Everyone can join!', 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2022-12-24', '2022-12-25');
+insert into Event ( eventId, userId, eventname, public, eventAddress, description, eventPhoto, startDate, endDate) values ( 31, 32, 'Christmas Party', true, '001 North Pole', 'Christmas Party in Santa house. Everyone can join!', 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2022-12-24', '2022-12-25');
 
 -- Attendee --
 
@@ -615,6 +615,10 @@ insert into Attendee (attendeeId, eventId) values (1, 31);
 insert into Attendee (attendeeId, eventId) values (4, 31);
 insert into Attendee (attendeeId, eventId) values (6, 31);
 insert into Attendee (attendeeId, eventId) values (12, 31);
+insert into Attendee (attendeeId, eventId) values (32, 2);
+insert into Attendee (attendeeId, eventId) values (32, 7);
+insert into Attendee (attendeeId, eventId) values (32, 8);
+insert into Attendee (attendeeId, eventId) values (32, 15);
 
 -- Category --
 
