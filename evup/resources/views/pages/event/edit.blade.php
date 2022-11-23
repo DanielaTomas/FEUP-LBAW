@@ -11,8 +11,8 @@
   <label for="description"><p>Description:</p></label>
   <input id="description" type="text" name="description" value="<?=$event->description?>">
 
-  <label for="address"><p>Address:</p></label>
-  <input id="address" type="text" name="address" value="<?=$event->address?>">
+  <label for="eventaddress"><p>Address:</p></label>
+  <input id="eventaddress" type="text" name="eventaddress" value="<?=$event->eventaddress?>">
 
   <label for="start"><p>Start date:</p></label>
   <input id="startdate" type="date" name="startdate" value="<?=$event->startdate?>">

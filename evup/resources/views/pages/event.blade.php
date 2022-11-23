@@ -24,7 +24,7 @@
     <section id=eventCardLower class="flex flex-row justify-around p-4 font-bold leading-none text-gray-800 bg-gray-400 md:flex-col md:items-center md:justify-center md:w-1/4">
             <p id=eventCardStartDate> Start: {{ $event->startdate }} </p>
             <p id=eventCardEndDate> End: {{ $event->enddate }} </p>
-            <p id=eventCardLocation> Address: {{ $event->address }} </p>
+            <p id=eventCardLocation> Address: {{ $event->eventaddress }} </p>
             <p id=eventCardOrganizer> Organizer: {{ $event->organizer()->first()->username }} </p>
     </section>
 
