@@ -27,6 +27,14 @@
             </div>
         <div>
     </div>
+        <div>
+        <form method="post" action="{{ route('request_organizer', ['id' => $user['id']]) }}" >
+            @csrf
+              <button type="submit" class="bg-grey-light hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded inline-flex items-center">
+            <span>Ask To Be Organizer</span>
+        </button>                      
+        </form>
+        </div>
     <article>
         <section id="myEventsHeader" class="m-4 text-center">
             <h2 class="text-2xl font-semibold leading-tight">My Events</h2>

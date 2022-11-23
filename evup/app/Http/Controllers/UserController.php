@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrganizerRequest;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Invitation;
@@ -210,5 +211,76 @@ class UserController extends Controller
             return redirect('/');
         else
             return redirect()->back()->withErrors(['user' => 'Failed to delete user account. Try again later']);
+    }
+
+    public function denyRequest(int $id)
+    {
+        $request = Invitation::find($id);
+        if (is_null($request))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'Request not found, id: '.$id,
+                'errors' => ['request' => 'Request not found, id: '.$id]
+            ], 404);
+        $user = User::find(Auth::id());
+        if (is_null($user))
+            return abort(404, 'User not found');
+        
+
+        $this->authorize('inviteDecline', $request);
+
+        if ($request->invitationstatus)
+            return response()->json([
+                'status' => 'OK',
+                'msg' => 'Request was already closed',
+            ], 200);
+
+        $request->invitationstatus = false;
+        $request->save();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Request was successfully closed',
+        ], 200);
+    }
+
+    public function acceptRequest(int $id)
+    {
+        $request = Invitation::find($id);
+        if (is_null($request))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'Request not found, id: '.$id,
+                'errors' => ['request' => 'Request not found, id: '.$id]
+            ], 404);
+        $user = User::find(Auth::id());
+        if (is_null($user))
+            return abort(404, 'User not found');
+  
+      $this->authorize('inviteAccept', $request);
+  
+      if ($request->invitationstatus)
+          return response()->json([
+              'status' => 'OK',
+              'msg' => 'Request was already accepted',
+          ], 200);
+  
+      $request->invitationstatus = true;
+      $request->save();
+  
+      return response()->json([
+          'status' => 'OK',
+          'msg' => 'Request was successfully accepted',
+      ], 200);
+    }
+
+    public function organizerRequest(int $id)
+    {
+        $request = new OrganizerRequest;
+        $request->requesterid=$id;
+        $request->save();
+
+        //$this->authorize('organizerRequest', $request);
+        return redirect("/user/$id");  
     }
 }
