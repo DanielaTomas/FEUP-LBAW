@@ -10,43 +10,43 @@
 											<div class="ml-3">
                                                 @each('partials.eventName', $invite->event()->get(), 'event')
 											</div>
-										</div>
+									</div>
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 								@each('partials.userName', $invite->sender()->get(), 'user')	
         
 								</td>
-                                @if (Auth::check()) <!-- if status == null-->
-                                    <div id=invitationStatus>
-                                        <div id="invitationAccept"> 
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <span
-                                                    class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                                    <span aria-hidden
-                                                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                                <span class="relative">Aceitar</span>
-                                                </span>
-                                            </td>
-                                        </div>
-                                        <div id="invitationDecline"> 
-                                           <td class="px-5 py-5 bg-white text-sm">
-                                                <span
-                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                                    <span aria-hidden
-                                                        class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                                                <span class="relative">Rejeitar</span>
-                                                </span>
-                                            </td>
-                                        </div>
-                                    </div> 
-                                @else
+                                <?php if ($invite['invitationstatus'] == TRUE) { ?>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                                 <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
                                                 <span class="relative">Aceite</span>
                                         </span>
                                 </td>
-                                @endif
+                                <?php } else if ($invite['invitationstatus'] === FALSE) { ?>
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                <span class="relative">Rejeitado</span>
+                                        </span>
+                                    </td>
+
+                                <?php } else{ ?>
+
+                                    <td id="here{{ $invite->invitationid }}">
+                                    <button value="Submit" type="button" id="accept{{ $invite->invitationid }}" onclick="acceptInvite({{ $invite->invitationid }})" class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                            <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                            <span class="relative">Aceitar</span>
+                                    </button>
+                                    </td>
+                                    <td>
+                                    <button value="Submit" type="button" id="decline{{ $invite->invitationid }}" onclick="declineInvite({{ $invite->invitationid }})" class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                <span class="relative">Rejeitar</span>
+                                       </button>
+                                    </td>
+                          
+                                <?php } ?>
 						</tbody>
 					</table>
 				</div>

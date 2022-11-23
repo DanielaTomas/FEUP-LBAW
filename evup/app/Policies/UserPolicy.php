@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Invitation;
 use App\Models\User;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -27,6 +28,19 @@ class UserPolicy
         return Auth::check() && ($inviteddUser->userid != Auth::id());
     }
 
+    public function inviteAccept(User $user,Invitation $invite)
+    {
+        return  Auth::check();
+    }
+
+    public function inviteDecline(User $user,Invitation $invite)
+    {
+        return Auth::check();
+    }
+    public function organizerRequest()
+    {
+        return Auth::check();
+    }
     /* --------- ADMIN POLICIES --------- */
     public function show(User $admin)
     {
@@ -77,6 +91,7 @@ class UserPolicy
     {
         return $admin->usertype == 'Admin';
     }
+
 }
 
 

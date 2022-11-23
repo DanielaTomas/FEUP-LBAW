@@ -225,7 +225,7 @@ DROP TRIGGER IF EXISTS user_search_update ON users;
 CREATE FUNCTION insert_attendee_invitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.invitationStatus && NEW.inviteeId NOT IN (SELECT Attendee.attendeeId FROM Attendee
+    IF (NEW.invitationStatus AND NEW.inviteeId NOT IN (SELECT Attendee.attendeeId FROM Attendee
     WHERE Attendee.eventId=NEW.eventId)) THEN
         INSERT INTO Attendee(attendeeId,eventId)
         VALUES (NEW.inviteeId,NEW.eventId);
@@ -669,6 +669,17 @@ insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values
 insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 22, 8, true);
 insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (4, 3, 8, false);
 insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 8, 9, false);
+
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 2, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 3, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 2, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 3, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 2, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 3, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 2, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 3, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (4, 1, 4, false);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 5, false);
 
 -- Poll --
 
