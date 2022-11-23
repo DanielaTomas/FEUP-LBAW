@@ -16,7 +16,8 @@ Route::get('search','HomeController@searchEvents')->name('search');
 
 //User
 Route::get('user/{userid}', 'UserController@profile')->name('userProfile')->where(['userid' => '[0-9]+']);
-Route::get('user/{id}/edit', 'UserController@edit')->name('editUser')->where(['id' => '[0-9]+']);
+Route::get('user/{id}/edit', 'UserController@showEditForms')->where(['id' => '[0-9]+']);
+Route::post('user/{id}/edit', 'UserController@update')->name('editUser')->where(['id' => '[0-9]+']);
 //  /user/{id}/requestOrganizer:
 //  /api/user/{id}/attended:
 //  /api/user/{id}/organized:

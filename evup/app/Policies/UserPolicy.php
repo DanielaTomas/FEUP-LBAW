@@ -22,6 +22,11 @@ class UserPolicy
         return Auth::check();
     }
 
+    public function update()
+    {
+        return Auth::check();
+    }
+
     public function invite( User $user, User $inviteddUser)
     {
         return Auth::check() && ($inviteddUser->userid != Auth::id());
