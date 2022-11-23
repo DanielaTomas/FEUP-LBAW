@@ -123,23 +123,58 @@ class UserController extends Controller
      * @param  int $id Id of the user
      * @return View
      */
-    public function edit(int $id)
+    public function show(int $userid)
     {
-        $user = User::find($id);
+        $user = User::find($userid);
         if (is_null($user))
-            return abort(404, 'User not found, id: ' . $id);
+            return abort(404, 'User not found, id: ' . $userid);
 
-        $this->authorize('update', $user);
+        $userInfo = [
+            'id' => $userid,
+            'username' => $user->username,
+            'name' => $user->name,
+            'email' => $user->email,
+            'userPhoto' => $user->userPhoto,
+            'accountStatus' => $user->accountStatus,
+            'userType' => $user->userType,
+        ];
 
-        $ordered_events = $user->ordered_events();
-        $ordered_invites = $user->ordered_invites();
-        $isOrganizer = 'Organizer' == $user->userType;
+        $isOrganizer = false;
+        if (Auth::check()) {
+            $isOrganizer = Auth::id() == $userInfo['id'];
+        }
 
-        return view('pages.user.profile', [
-            'user' => $user,
+
+        $ordered_events = $user->events()->get();
+        $ordered_invites = $user->invites_received()->get();
+
+
+        return view('pages.profile', [
+            'user' => $userInfo,
             'events' => $ordered_events,
             'invites' => $ordered_invites,
             'isOrganizer' => $isOrganizer,
+        ]);
+    }
+
+    public function edit(int $userid)
+    {
+        $user = User::find($userid);
+        if (is_null($user))
+            return abort(404, 'User not found, id: ' . $userid);
+
+        $userInfo = [
+            'id' => $userid,
+            'username' => $user->username,
+            'name' => $user->name,
+            'email' => $user->email,
+            'userPhoto' => $user->userPhoto,
+            'accountStatus' => $user->accountStatus,
+            'userType' => $user->userType,
+        ];
+
+        return view('pages.editprofile', [
+            'user' => $userInfo
         ]);
     }
 

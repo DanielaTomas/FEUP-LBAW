@@ -31,6 +31,10 @@ class User extends Authenticatable
     protected $hidden = [
         'accountstatus', 'usertype', 'remember_token'
     ];
+    
+    public function cards() {
+        return $this->hasMany(Card::class);
+    }
 
     public function events()
     {
@@ -71,23 +75,23 @@ class User extends Authenticatable
     {
         return $this->events->map(function ($area) {
             return [
-                'eventId' => $area->eventId,
-                'eventName' => $area->name,
-                'endDate' => $area->endDate,
+                'eventid' => $area->eventid,
+                'eventname' => $area->name,
+                'enddate' => $area->enddate,
             ];
-        })->sortBy('endDate')->where('endDate', '<', date("Y-m-d H:i:s"));
+        })->sortBy('enddate')->where('enddate', '<', date("Y-m-d H:i:s"));
     }
 
     public function ordered_invites()
     {
         return $this->invites_received->map(function ($area) {
             return [
-                'invitationId' => $area->invitationId,
-                'inviterId' => $area->inviterId,
-                'eventId' => $area->eventId,
-                'invitationStatus' => $area->invitationStatus,
+                'invitationid' => $area->invitationid,
+                'inviterid' => $area->inviterid,
+                'eventid' => $area->eventid,
+                'invitationstatus' => $area->invitationstatus,
             ];
-        })->sortBy('eventId')->where('invitationStatus', '!=', TRUE);
+        })->sortBy('eventid')->where('invitationstatus', '!=', TRUE);
     }
 
 

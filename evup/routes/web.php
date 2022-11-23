@@ -14,6 +14,16 @@
 Route::get('/', 'HomeController@list')->name('home');
 Route::get('search','HomeController@searchEvents')->name('search');
 
+//User
+Route::get('user/{userid}', 'UserController@show')->name('userProfile')->where(['userid' => '[0-9]+']);
+Route::get('user/{id}/edit', 'UserController@edit')->name('editUser')->where(['id' => '[0-9]+']);
+//  /user/{id}/requestOrganizer:
+//  /api/user/{id}/attended:
+//  /api/user/{id}/organized:
+//  /search/users:
+
+
+
 // Cards
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
