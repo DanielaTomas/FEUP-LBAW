@@ -1039,6 +1039,10 @@ input:checked + .toggle-bg {
 .m-0 {
   margin: 0px;
 }
+
+.m-4 {
+  margin: 1em;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1323,6 +1327,9 @@ input:checked + .toggle-bg {
 }
 .self-center {
   align-self: center;
+}
+.self-end {
+  align-self: end;
 }
 .overflow-hidden {
   overflow: hidden;

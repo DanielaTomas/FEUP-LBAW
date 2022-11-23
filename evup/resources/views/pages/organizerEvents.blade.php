@@ -9,14 +9,9 @@
             <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                 past Events
             </button>
-            @if (Auth::user()->usertype=="Organizer")
-                <a href="{{ route('organizing') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
-                    Organizing
-                </a>
-                <a href="myEvents/createEvent"class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
-                    Create an event
-                </a>
-            @endif
+            <a href="myEvents/createEvent"class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+                Create an event
+            </a>
         </div>
     </div>
     <div>
@@ -24,7 +19,7 @@
             <div></div>
 
             <section class="flex flex-wrap justify-center gap-2">
-                @each('partials.eventCard', $events, 'event')
+                @each('partials.organizerEventCard', $events, 'event')
             </section>
         </article>
     @endsection

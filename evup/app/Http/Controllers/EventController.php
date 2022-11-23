@@ -51,6 +51,17 @@ class EventController extends Controller
     return view('pages.myEvents', ['events' => $myEvents]);
   }
 
+  public function organizerEvents()
+  {
+    $organizer = User::find(Auth::id());
+    if (is_null($organizer))
+      return abort(404, 'User not found');
+    $this->authorize('organizerEvents', $organizer);
+    $events = Event::where('userid', $organizer->userid)->get();
+
+    return view('pages.organizerEvents', ['events' => $events]);
+  }
+
   public function attendees(Request $request,$id)
   {
     $organizer = User::find(Auth::id());

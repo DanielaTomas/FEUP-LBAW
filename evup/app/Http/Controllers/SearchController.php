@@ -40,7 +40,6 @@ class SearchController extends Controller
             ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$search])
             ->get();
 
-
         $usersAttending-> push(Auth::user());
 
         $users = $users->diff($usersInvited);

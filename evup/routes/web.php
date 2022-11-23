@@ -14,9 +14,6 @@
 Route::get('/', 'HomeController@list')->name('home');
 Route::get('search','HomeController@searchEvents')->name('search');
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
 
 // Admin
 Route::get('admin', 'AdminController@show_panel')->name('admin');
@@ -34,6 +31,7 @@ Route::post('admin/organizer_requests/{id}/accept', 'AdminController@acceptReque
 
 //my Events
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
+Route::get('myEvents/organizing', 'EventController@organizerEvents')->name('organizing');
 Route::post('myEvents/{id}', 'UserController@leaveEvent')->where(['id' => '[0-9]+']);
 Route::post('event/{id}/inviteUsers', 'UserController@inviteUser')->where(['id' => '[0-9]+']);
 Route::get('event/{id}/attendees', 'EventController@attendees')->where(['id' => '[0-9]+'])->name('attendees');

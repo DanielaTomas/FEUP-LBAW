@@ -23,6 +23,13 @@ class UserPolicy
         return Auth::check();
     }
 
+    /* --------- EVENT POLICIES --------- */
+
+    public function organizerEvents(User $organizer)
+    {
+        return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer';
+    }
+
     public function addUser(User $organizer)
     {
         return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer';
