@@ -20,27 +20,27 @@ class EventController extends Controller
    */
   static function getPublicEvents()
   {
-    return Event::where('public','=',true)->get();
+    return Event::where('public', '=', true)->get();
   }
 
   public static function searchPublicEvents(Request $request)
   {
     $search = $request->input('search');
     $events = Event::whereRaw('tsvectors @@ to_tsquery(\'english\', ?)', [$search])
-      ->where('public','=',true)->get();
+      ->where('public', '=', true)->get();
     return $events;
   }
 
-  public function show($id) 
+  public function show($id)
   {
     $event = Event::find($id);
 
-    if(is_null($event))
-      return abort(404,'Event not found');
+    if (is_null($event))
+      return abort(404, 'Event not found');
 
     //$this->authorize('show',$event);
-    return view('pages.event',[
-      'event'=>$event,
+    return view('pages.event', [
+      'event' => $event,
     ]);
   }
 
@@ -48,7 +48,7 @@ class EventController extends Controller
   {
     $this->authorize('list', Event::class);
     $myEvents = Auth::user()->events()->get();
-    
+
     return view('pages.myEvents', ['events' => $myEvents]);
   }
 
@@ -100,11 +100,16 @@ class EventController extends Controller
     $event->eventphoto = $request->thumbnail;
     $event->startdate = $request->startDate;
     $event->enddate = $request->endDate;
-    $event->public = true;
+    
+    if ($request->has('private')) {
+      $event->public = false;
+    } else {
+      $event->public = true;
+    }
+
     $event->userid = Auth::id();
     $event->save();
 
     return redirect("/event/$event->eventid");
   }
-
 }

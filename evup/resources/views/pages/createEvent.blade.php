@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="POST" action="{{route('createEvent')}}">
+    <form method="POST" action="{{ route('createEvent') }}">
         {{ csrf_field() }}
         <div class="text-center text-4xl font-medium">create a new Event</div>
         <div class="mb-6">
@@ -16,7 +16,8 @@
             @endif
         </div>
         <div class="mb-6">
-            <label for="eventAddress" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">event address</label>
+            <label for="eventAddress" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">event
+                address</label>
             <input type="text" name="eventAddress" id="eventAddress" value="{{ old('eventAddress') }}"
                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 required>
@@ -39,8 +40,7 @@
         <div class="flex items-start mb-6 mt-6">
             <div class="flex items-center h-5">
                 <input id="private" type="checkbox" name="private" {{ old('private') ? 'checked' : '' }}
-                    class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                    >
+                    class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800">
             </div>
             <label class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"> private Event</label>
         </div>
@@ -70,6 +70,26 @@
                 @endif
             </div>
         </div>
+        <div class="grid md:grid-cols-2 md:gap-6">
+            <div class="mb-6">
+
+                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">event Tags</h3>
+                <ul
+                    class="w-48 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    @each('partials.tagOption', $tags, 'tag')
+                </ul>
+            </div>
+            <div class="mb-6">
+
+                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">event Categories</h3>
+                <ul
+                    class="w-48 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    @each('partials.categoryOption', $categories, 'category')
+                </ul>
+            </div>
+
+
+        </div>
         <div class="flex mb-6 flex-col ">
             <label for="imgInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Background
                 photo</label>
@@ -86,4 +106,3 @@
             class="text-white bg-indigo-800 hover:bg-indigo-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
 @endsection
-

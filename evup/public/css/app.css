@@ -1189,6 +1189,9 @@ input:checked + .toggle-bg {
 .w-64 {
   width: 16rem;
 }
+.w-48 {
+  width: 12rem;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -1389,6 +1392,10 @@ input:checked + .toggle-bg {
 .rounded-r-lg {
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+}
+.rounded-t-lg {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 .border {
   border-width: 1px;
@@ -2249,6 +2256,10 @@ body {
   
   .dark .dark\:ring-offset-gray-800 {
   --tw-ring-offset-color: #1F2937;
+}
+  
+  .dark .dark\:ring-offset-gray-700 {
+  --tw-ring-offset-color: #374151;
 }
   
   .dark .dark\:hover\:bg-blue-700:hover {
