@@ -1,3 +1,4 @@
+
 openapi: 3.0.0
 
 info:
@@ -897,3 +898,4 @@ paths:
             description: "Forbidden. No permissions"
           "404":
             description: "Not found"
+
