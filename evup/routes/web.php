@@ -35,7 +35,9 @@ Route::post('user/{id}/organizerRequest/', 'UserController@organizerRequest')->w
 Route::get('admin', 'AdminController@show_panel')->name('admin');
 Route::get('admin/users', 'AdminController@users');
 Route::get('admin/users/search', 'SearchController@searchUsers')->name('users_search');
-//Route::get('admin/users/add', 'AdminController@addUser')->name('add_user');           //Waiting for the profile to be finished
+Route::get('admin/users/add', 'AdminController@addUserAccount')->name('add_user_account');       
+Route::post('admin/users/add', 'AdminController@createUser')->name('create_user');    
+Route::get('/users/{id}/view', 'UserController@view')->where(['id' => '[0-9]+'])->name('view_user');
 Route::put('admin/users/{id}/ban', 'AdminController@banUser')->where(['id' => '[0-9]+']);
 Route::put('admin/users/{id}/unban', 'AdminController@unbanUser')->where(['id' => '[0-9]+']);
 Route::put('admin/reports/{id}/close', 'AdminController@closeReport')->where(['id' => '[0-9]+']);
