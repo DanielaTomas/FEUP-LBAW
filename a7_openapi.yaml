@@ -16,8 +16,8 @@ externalDocs:
 tags:
   - name: "M01: Authentication"
   - name: "M02: Profile and User Information"
-  - name: "M04: Events"
-  - name: "M05: User Administration"
+  - name: "M03: Events"
+  - name: "M04: User Administration"
 
 paths:
   # M01: Authentication
