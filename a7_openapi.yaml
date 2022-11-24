@@ -168,472 +168,427 @@ paths:
         "404":
           description: "User not found"
 
-  /user/{id}/public:
-      get:
-        operationId: R202
-        summary: "R202: View public user profile"
-        description: "Show the individual public user profile. Access: PUB"
-        tags:
-          - "M02: Profile and User Information"
+/user/{id}/public:
+    get:
+      operationId: R202
+      summary: "R202: View public user profile"
+      description: "Show the individual public user profile. Access: PUB"
+      tags:
+        - "M02: Profile and User Information"
 
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Show user profile (UI20)"
-          "404":
-            description: "User not found"
-
-  /user/{id}/edit:
-      get:
-        operationId: R203
-        summary: "R203: User profile edition form"
-        description: "Provide form for user profile edition. Access: OWN"
-        tags:
-          - "M02: Profile and User Information"
-
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Show user profile edition form"
-          "401":
-            description: "Unauthorized. Must be authenticated"
-          "403":
-            description: "Forbidden. Must be owner of the profile"
-          "404":
-            description: "User not found"
-      post:
-        operationId: R204
-        summary: "R204 : Edit profile action"
-        description: "Processes the profile edition form. Access: OWN"
-        tags:
-          - "M02: Profile and User Information"
-
-        requestBody:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
           required: true
-          content:
-            application/x-www-form-urlencoded:
-              schema:
-                type: object
-                properties:
-                    username:
-                      type: string
-                    email:
-                      type: string
-                    name:
-                      type: string
-                required:
-                  - username
-                  - email
-                  - name
 
-        responses:
-          "302":
-            description: "Redirect after processing the profile edit form."
-            headers:
-              Location:
-                schema:
+      responses:
+        "200":
+          description: "Ok. Show user profile (UI20)"
+        "404":
+          description: "User not found"
+
+/user/{id}/edit:
+    get:
+      operationId: R203
+      summary: "R203: User profile edition form"
+      description: "Provide form for user profile edition. Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show user profile edition form"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be owner of the profile"
+        "404":
+          description: "User not found"
+    post:
+      operationId: R204
+      summary: "R204 : Edit profile action"
+      description: "Processes the profile edition form. Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                  username:
+                    type: string
+                  email:
+                    type: string
+                  name:
+                    type: string
+              required:
+                - username
+                - email
+                - name
+
+      responses:
+        "302":
+          description: "Redirect after processing the profile edit form."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Successful profile edition. Redirect to profile Page."
+                  value: "/user/{id}"
+                302Failure:
+                  description: "Failed profile edition. Redirect to profile form."
+                  value: "/user/{id}"
+
+/user/accept/{id}:
+    put:
+      operationId: R205
+      summary: "R205: Accepts an invite"
+      description: "Accepts an invite to an event that the user received. Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show user events organized"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be owner of the profile"
+        "404":
+          description: "Invite not found"
+    
+/user/deny/{id}:
+    put:
+      operationId: R206
+      summary: "R206: Does not accept an invite"
+      description: "Does not accept an invite to an event that the user received. Access: OWN"
+      tags:
+        - "M02: Profile and User Information"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show user events organized"
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be owner of the profile"
+        "404":
+          description: "Invite not found"
+
+
+# M03 : Events
+/event/{id}:
+    get:
+      operationId: R301
+      summary: "R301: View event page"
+      description: "Show the individual event page. Access: USR"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Show event page"
+        "404":
+          description: "Event not found"
+    post:
+      operationId: R302
+      summary: "R302: Edit event page action"
+      description: "Processes the event edit page form submission. Access: OWN"
+      tags:
+        - "M03: Events"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                eventName:
                   type: string
-                examples:
-                  302Success:
-                    description: "Successful profile edition. Redirect to profile Page."
-                    value: "/user/{id}"
-                  302Failure:
-                    description: "Failed profile edition. Redirect to profile form."
-                    value: "/user/{id}"
-
-  /user/accept/{id}:
-      put:
-        operationId: R205
-        summary: "R205: Accepts an invite"
-        description: "Accepts an invite to an event that the user received. Access: OWN"
-        tags:
-          - "M02: Profile and User Information"
-
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Show user events organized"
-          "401":
-            description: "Unauthorized. Must be authenticated"
-          "403":
-            description: "Forbidden. Must be owner of the profile"
-          "404":
-            description: "Invite not found"
-      
-  /user/deny/{id}:
-      put:
-        operationId: R206
-        summary: "R206: Does not accept an invite"
-        description: "Does not accept an invite to an event that the user received. Access: OWN"
-        tags:
-          - "M02: Profile and User Information"
-
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Show user events organized"
-          "401":
-            description: "Unauthorized. Must be authenticated"
-          "403":
-            description: "Forbidden. Must be owner of the profile"
-          "404":
-            description: "Invite not found"
-
-
-  # M03 : Events
-  /event/{id}:
-      get:
-        operationId: R301
-        summary: "R301: View event page"
-        description: "Show the individual event page. Access: USR"
-        tags:
-          - "M03: Events"
-
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Show event page"
-          "404":
-            description: "Event not found"
-      post:
-        operationId: R302
-        summary: "R302: Edit event page action"
-        description: "Processes the event edit page form submission. Access: OWN"
-        tags:
-          - "M03: Events"
-
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-        requestBody:
-          required: true
-          content:
-            multipart/form-data:
-              schema:
-                type: object
-                properties:
-                  eventName:
-                    type: string
-                  address:
-                    type: string
-                  description:
-                    type: string     
-                  eventPhoto:
-                    type: string
-                    format: binary
-                  startDate:
-                    type: string
-                    format: date
-                  endDate:
-                    type: string
-                    format: date
-
-        responses:
-          "302":
-            description: "Redirect after processing the event updated information."
-            headers:
-              Location:
-                schema:
+                address:
                   type: string
-                examples:
-                  302Success:
-                    description: "Successful event edition. Redirect to event page."
-                    value: "/event/{id}"
-                  302Failure:
-                    description: "Failed event edition. Redirect to edit event form."
-                    value: "/event/{id}/edit"
+                description:
+                  type: string     
+                eventPhoto:
+                  type: string
+                  format: binary
+                startDate:
+                  type: string
+                  format: date
+                endDate:
+                  type: string
+                  format: date
 
-  /event/{id}/edit:
-      get:
-        operationId: R303
-        summary: "R303 : Event edition form"
-        description: "Provide a form for event edition. Access: OWN"
-        tags:
-          - "M03: Events"
-
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "OK. Show event edition form"
-          "401":
-            description: "Unauthorized. Must be authenticated."
-          "403":
-            description: "Unauthorized. Must be the owner of the event"
-          "404":
-            description: "Event not found"
-
-  /event/{id}/searchUsers:
-      post:
-        operationId: R304
-        description: "Show Search Page given a search type and value. Access: PUB"
-        tags:
-          - "M03: Events"
-        
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-        requestBody:
-          required: true
-          content:
-            multipart/form-data:
+      responses:
+        "302":
+          description: "Redirect after processing the event updated information."
+          headers:
+            Location:
               schema:
-                type: object
-                properties:
-                  eventid:
-                    type: integer
-                  search:
-                    type: string
-        responses:
-          "200":
-            description: "OK."
+                type: string
+              examples:
+                302Success:
+                  description: "Successful event edition. Redirect to event page."
+                  value: "/event/{id}"
+                302Failure:
+                  description: "Failed event edition. Redirect to edit event form."
+                  value: "/event/{id}/edit"
 
-  /event/{id}/inviteUsers:
-      post:
-        operationId: R305
-        description: "Invite users to an event. Access: PUB"
-        tags:
-          - "M03: Events"
-        
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
+/event/{id}/edit:
+    get:
+      operationId: R303
+      summary: "R303 : Event edition form"
+      description: "Provide a form for event edition. Access: OWN"
+      tags:
+        - "M03: Events"
 
-        requestBody:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
           required: true
-          content:
-            multipart/form-data:
-              schema:
-                type: object
-                properties:
-                  eventid:
-                    type: integer
-                  search:
-                    type: string
-        responses:
-          "200":
-            description: "OK"
 
-  /event/{id}/attendees:
-      get:
-          operationId: R306
-          description: "Get attendees of an event. Access: ATT"
-          tags:
-            - "M03: Events"
+      responses:
+        "200":
+          description: "OK. Show event edition form"
+        "401":
+          description: "Unauthorized. Must be authenticated."
+        "403":
+          description: "Unauthorized. Must be the owner of the event"
+        "404":
+          description: "Event not found"
 
-          parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-          responses:
-            "200":
-              description: "OK."
-    
-  /event/{id}/adduser:
-      get:
-          operationId: R307
-          description: "Get list of users not attending event. Access: ATT"
-          tags:
-            - "M03: Events"
-
-          parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-          responses:
-            "200":
-              description: "OK."
-
-  /event/{eventid}/adduser/{userid}:
-      post:
-        operationId: R308
-        description: "Adds users to an event. Access: ORG"
-        tags:
-          - "M03: Events"
-        
-        parameters:
-          - in: path
-            name: eventid
-            schema:
-              type: integer
-            required: true
-            
-        requestBody:
-          required: true
-          content:
-            multipart/form-data:
-              schema:
-                type: object
-                properties:
-                  eventid:
-                    type: integer
-                  userid:
-                    type: integer
-        responses:
-          "200":
-            description: "OK."
-    
-  /event/{eventid}/removeuser/{userid}:
-      post:
-        operationId: R309
-        description: "Removes users of an event. Access: ORG"
-        tags:
-          - "M03: Events"
-        
-        parameters:
-          - in: path
-            name: eventid
-            schema:
-              type: integer
-            required: true
-            
-        requestBody:
-          required: true
-          content:
-            multipart/form-data:
-              schema:
-                type: object
-                properties:
-                  eventid:
-                    type: integer
-                  userid:
-                    type: integer
-        responses:
-          "200":
-            description: "OK."
-    
-  /myEvents:
-      get:
-          operationId: R310
-          description: "Get events user is attending/has attending. Access: USR"
-          tags:
-            - "M03: Events"
-
-          responses:
-            "200":
-              description: "OK."
-    
-  /myEvents/organizing:
-      get:
-          operationId: R311
-          description: "Get events user is organizing. Access: ORG"
-          tags:
-            - "M03: Events"
-
-          responses:
-            "200":
-              description: "OK."
-
-  /myEvents/createEvent:
-      get:
-        operationId: R312
-        description: "Get forms to create event. Access: ORG"
-        tags:
-          - "M03: Events"
-
-        responses:
-          "200":
-            description: "OK."
+/event/{id}/searchUsers:
+    post:
+      operationId: R304
+      description: "Show Search Page given a search type and value. Access: PUB"
+      tags:
+        - "M03: Events"
       
-      post:
-          operationId: R313
-          description: "Leave event user is attending/has attendend. Access: ORG"
-          tags:
-            - "M03: Events"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
 
-          requestBody:
-            required: true
-            content:
-              multipart/form-data:
-                schema:
-                  type: object
-                  properties:
-                    eventname:
-                      type: string
-                    eventadress:
-                      type: string
-                    public:
-                      type: boolean
-                    description:
-                      type: string
-                    startdate:
-                      type: string
-                    enddate:
-                      type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                eventid:
+                  type: integer
+                search:
+                  type: string
+      responses:
+        "200":
+          description: "OK."
 
-          parameters:
-            - in: path
-              name: id
-              schema:
-                type: integer
-              required: true
+/event/{id}/inviteUsers:
+    post:
+      operationId: R305
+      description: "Invite users to an event. Access: PUB"
+      tags:
+        - "M03: Events"
+      
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
 
-          responses:
-            "200":
-              description: "OK."
-            "401":
-              description: "Unauthorized. Must be authenticated"
-            "403":
-              description: "Forbidden. Must be owner of the event"
-            "404":
-              description: "Event not found"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                eventid:
+                  type: integer
+                search:
+                  type: string
+      responses:
+        "200":
+          description: "OK"
 
-  /myEvents/{id}:
-      post:
-        operationId: R314
-        summary: "R305: "
+/event/{id}/attendees:
+    get:
+        operationId: R306
+        description: "Get attendees of an event. Access: ATT"
+        tags:
+          - "M03: Events"
+
+        parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+        responses:
+          "200":
+            description: "OK."
+  
+/event/{id}/adduser:
+    get:
+        operationId: R307
+        description: "Get list of users not attending event. Access: ATT"
+        tags:
+          - "M03: Events"
+
+        parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+        responses:
+          "200":
+            description: "OK."
+
+/event/{eventid}/adduser/{userid}:
+    post:
+      operationId: R308
+      description: "Adds users to an event. Access: ORG"
+      tags:
+        - "M03: Events"
+      
+      parameters:
+        - in: path
+          name: eventid
+          schema:
+            type: integer
+          required: true
+          
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                eventid:
+                  type: integer
+                userid:
+                  type: integer
+      responses:
+        "200":
+          description: "OK."
+  
+/event/{eventid}/removeuser/{userid}:
+    post:
+      operationId: R309
+      description: "Removes users of an event. Access: ORG"
+      tags:
+        - "M03: Events"
+      
+      parameters:
+        - in: path
+          name: eventid
+          schema:
+            type: integer
+          required: true
+          
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                eventid:
+                  type: integer
+                userid:
+                  type: integer
+      responses:
+        "200":
+          description: "OK."
+  
+/myEvents:
+    get:
+        operationId: R310
+        description: "Get events user is attending/has attending. Access: USR"
+        tags:
+          - "M03: Events"
+
+        responses:
+          "200":
+            description: "OK."
+  
+/myEvents/organizing:
+    get:
+        operationId: R311
+        description: "Get events user is organizing. Access: ORG"
+        tags:
+          - "M03: Events"
+
+        responses:
+          "200":
+            description: "OK."
+
+/myEvents/createEvent:
+    get:
+      operationId: R312
+      description: "Get forms to create event. Access: ORG"
+      tags:
+        - "M03: Events"
+
+      responses:
+        "200":
+          description: "OK."
+    
+    post:
+        operationId: R313
         description: "Leave event user is attending/has attendend. Access: ORG"
         tags:
           - "M03: Events"
@@ -645,8 +600,18 @@ paths:
               schema:
                 type: object
                 properties:
-                  eventid:
-                    type: integer
+                  eventname:
+                    type: string
+                  eventadress:
+                    type: string
+                  public:
+                    type: boolean
+                  description:
+                    type: string
+                  startdate:
+                    type: string
+                  enddate:
+                    type: string
 
         parameters:
           - in: path
@@ -657,104 +622,61 @@ paths:
 
         responses:
           "200":
-              description: "OK."
+            description: "OK."
           "401":
             description: "Unauthorized. Must be authenticated"
           "403":
-            description: "Forbidden. Must be attendee of the event"
+            description: "Forbidden. Must be owner of the event"
           "404":
             description: "Event not found"
-  # M04: User Administration
 
-  /admin:
-        get:
-          operationId: R401
-          summary: "R401: Administration Panel"
-          description: "Administration Page. Access: ADM"
-          tags:
-            - "M07: User Administration"
+/myEvents/{id}:
+    post:
+      operationId: R314
+      summary: "R305: "
+      description: "Leave event user is attending/has attendend. Access: ORG"
+      tags:
+        - "M03: Events"
 
-          responses:
-            "200":
-              description: "Ok. Access to administration page"
-            "400":
-              description: "Bad request."
-            "401":
-              description: "Unauthorized. Not logged in"
-            "403":
-              description: "Forbidden. No permissions"
-            "404":
-              description: "Not found"
-
-
-  /admin/reports/{report_id}/close:
-      patch:
-        operationId: R402
-        summary: "R402: Close a report"
-        description: "Processes a report and closes it"
-        tags:
-          - "M07: User Administration"
-
-        parameters:
-          - in: path
-            name: report_id
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
             schema:
-              type: integer
-            required: true
+              type: object
+              properties:
+                eventid:
+                  type: integer
 
-        responses:
-          "200":
-            description: "Ok. Report closed successfully."
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
 
-  /admin/organizerRequests/{organizerRequests_id}/deny:
-      put:
-        operationId: R403
-        summary: "R403: Denies an organizer requests"
-        description: "Processes an organizer requests and denies it"
-        tags:
-          - "M07: User Administration"
+      responses:
+        "200":
+            description: "OK."
+        "401":
+          description: "Unauthorized. Must be authenticated"
+        "403":
+          description: "Forbidden. Must be attendee of the event"
+        "404":
+          description: "Event not found"
+# M04: User Administration
 
-        parameters:
-          - in: path
-            name: organizerRequests_id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Organizer Request denied successfully."
-
-  /admin/organizerRequests/{organizerRequests_id}/accept:
-      put:
-        operationId: R404
-        summary: "R404: Accepts an organizer requests"
-        description: "Processes an organizer requests and accepts it"
-        tags:
-          - "M07: User Administration"
-
-        parameters:
-          - in: path
-            name: organizerRequests_id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Organizer Request accepted successfully."
-
-  /admin/users:
+/admin:
       get:
-        operationId: R405
-        summary: "R405: View users"
-        description: "Page with information about all users. Access: ADM"
+        operationId: R401
+        summary: "R401: Administration Panel"
+        description: "Administration Page. Access: ADM"
         tags:
-          - "M07: User Administration"
+          - "M04: User Administration"
 
         responses:
           "200":
-            description: "Ok. Show users "
+            description: "Ok. Access to administration page"
           "400":
             description: "Bad request."
           "401":
@@ -764,104 +686,117 @@ paths:
           "404":
             description: "Not found"
 
-  /admin/users/search:
+
+/admin/reports/{report_id}/close:
+    put:
+      operationId: R402
+      summary: "R402: Close a report"
+      description: "Processes a report and closes it"
+      tags:
+        - "M04: User Administration"
+
+      parameters:
+        - in: path
+          name: report_id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Report closed successfully."
+
+/admin/organizerRequests/{organizerRequests_id}/deny:
+    put:
+      operationId: R403
+      summary: "R403: Denies an organizer requests"
+      description: "Processes an organizer requests and denies it"
+      tags:
+        - "M04: User Administration"
+
+      parameters:
+        - in: path
+          name: organizerRequests_id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Organizer Request denied successfully."
+
+/admin/organizerRequests/{organizerRequests_id}/accept:
+    put:
+      operationId: R404
+      summary: "R404: Accepts an organizer requests"
+      description: "Processes an organizer requests and accepts it"
+      tags:
+        - "M04: User Administration"
+
+      parameters:
+        - in: path
+          name: organizerRequests_id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Organizer Request accepted successfully."
+
+/admin/users:
+    get:
+      operationId: R405
+      summary: "R405: View users"
+      description: "Page with information about all users. Access: ADM"
+      tags:
+        - "M02: Profile and User Information"
+        - "M04: User Administration"
+
+      responses:
+        "200":
+          description: "Ok. Show users "
+        "400":
+          description: "Bad request."
+        "401":
+          description: "Unauthorized. Not logged in"
+        "403":
+          description: "Forbidden. No permissions"
+        "404":
+          description: "Not found"
+
+/admin/users/search:
+    get:
+      operationId: R406
+      summary: "R406 : User search"
+      description: "Provides a page component with a list of users. Access: ADM"
+      tags:
+        - "M02: Profile and User Information"
+        - "M04: User Administration"
+
+      parameters:
+        - in: query
+          name: value
+          description: "string used for full-text search"
+          schema:
+            type: string
+          required: true
+
+      responses:
+        "200":
+          description: "OK. Show a list of users that fit the query."
+
+/admin/users/add:
       get:
-        operationId: R406
-        summary: "R406 : User search"
-        description: "Provides a page component with a list of users. Access: ADM"
+        operationId: R407
+        summary: "R407: Admin Add User Form"
+        description: "Administration Page to add a new user to the platform. Access: ADM"
         tags:
-          - "M02: Profile and User Information"
-
-        parameters:
-          - in: query
-            name: value
-            description: "string used for full-text search"
-            schema:
-              type: string
-            required: true
+          - "M04: User Administration"
 
         responses:
           "200":
-            description: "OK. Show a list of users that fit the query."
-
-  /admin/users/add:
-        get:
-          operationId: R407
-          summary: "R407: Admin Add User Form"
-          description: "Administration Page to add a new user to the platform. Access: ADM"
-          tags:
-            - "M07: User Administration"
-
-          responses:
-            "200":
-              description: "Ok. Access to administration page"
-            "400":
-              description: "Bad request."
-            "401":
-              description: "Unauthorized. Not logged in"
-            "403":
-              description: "Forbidden. No permissions"
-            "404":
-              description: "Not found"
-
-        post:
-          operationId: R408
-          summary: "R408: Admin Add User Action"
-          description: "Adds a new user to the platform. Access: ADM"
-          tags:
-            - "M07: User Administration"
-
-          requestBody:
-            required: true
-            content:
-              application/x-www-form-urlencoded:
-                schema:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    username:
-                      type: string
-                    email:
-                      type: string
-                    password:
-                      type: string
-                  required:
-                      - name
-                      - username
-                      - email
-                      - password
-
-          responses:
-            "200":
-              description: "Ok. Access to administration page"
-            "400":
-              description: "Bad request."
-            "401":
-              description: "Unauthorized. Not logged in"
-            "403":
-              description: "Forbidden. No permissions"
-            "404":
-              description: "Not found"
-
-  /admin/users/{user_id}/ban:
-      patch:
-        operationId: R409
-        summary: "R409: Bans an user"
-        description: "Changes User Status to 'Blocked', effectively banning him from the platform. Access: ADM"
-        tags:
-          - "M07: User Administration"
-
-        parameters:
-          - in: path
-            name: user_id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Successfully banned user."
+            description: "Ok. Access to administration page"
           "400":
             description: "Bad request."
           "401":
@@ -871,24 +806,37 @@ paths:
           "404":
             description: "Not found"
 
-  /admin/users/{user_id}/unban:
-      patch:
-        operationId: R410
-        summary: "R410: Unbans an user"
-        description: "Changes User Status to 'Active', effectively unbanning him from the platform. Access: ADM"
+      post:
+        operationId: R408
+        summary: "R408: Admin Add User Action"
+        description: "Adds a new user to the platform. Access: ADM"
         tags:
-          - "M07: User Administration"
+          - "M04: User Administration"
 
-        parameters:
-          - in: path
-            name: user_id
-            schema:
-              type: integer
-            required: true
+        requestBody:
+          required: true
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  username:
+                    type: string
+                  email:
+                    type: string
+                  password:
+                    type: string
+                required:
+                    - name
+                    - username
+                    - email
+                    - password
 
         responses:
           "200":
-            description: "Ok. Successfully unbanned user."
+            description: "Ok. Access to administration page"
           "400":
             description: "Bad request."
           "401":
@@ -897,3 +845,57 @@ paths:
             description: "Forbidden. No permissions"
           "404":
             description: "Not found"
+
+/admin/users/{user_id}/ban:
+    put:
+      operationId: R409
+      summary: "R409: Bans an user"
+      description: "Changes User Status to 'Blocked', effectively banning him from the platform. Access: ADM"
+      tags:
+        - "M04: User Administration"
+
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Successfully banned user."
+        "400":
+          description: "Bad request."
+        "401":
+          description: "Unauthorized. Not logged in"
+        "403":
+          description: "Forbidden. No permissions"
+        "404":
+          description: "Not found"
+
+/admin/users/{user_id}/unban:
+    put:
+      operationId: R410
+      summary: "R410: Unbans an user"
+      description: "Changes User Status to 'Active', effectively unbanning him from the platform. Access: ADM"
+      tags:
+        - "M04: User Administration"
+
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        "200":
+          description: "Ok. Successfully unbanned user."
+        "400":
+          description: "Bad request."
+        "401":
+          description: "Unauthorized. Not logged in"
+        "403":
+          description: "Forbidden. No permissions"
+        "404":
+          description: "Not found"
