@@ -17,8 +17,8 @@ externalDocs:
 tags:
   - name: "M01: Authentication"
   - name: "M02: Profile and User Information"
-  - name: "M04: Events"
-  - name: "M05: User Administration"
+  - name: "M03: Events"
+  - name: "M04: User Administration"
 
 paths:
   # M01: Authentication
@@ -673,7 +673,7 @@ paths:
           summary: "R401: Administration Panel"
           description: "Administration Page. Access: ADM"
           tags:
-            - "M07: User Administration"
+            - "M04: User Administration"
 
           responses:
             "200":
@@ -689,12 +689,12 @@ paths:
 
 
   /admin/reports/{report_id}/close:
-      patch:
+      put:
         operationId: R402
         summary: "R402: Close a report"
         description: "Processes a report and closes it"
         tags:
-          - "M07: User Administration"
+          - "M04: User Administration"
 
         parameters:
           - in: path
@@ -713,7 +713,7 @@ paths:
         summary: "R403: Denies an organizer requests"
         description: "Processes an organizer requests and denies it"
         tags:
-          - "M07: User Administration"
+          - "M04: User Administration"
 
         parameters:
           - in: path
@@ -732,7 +732,7 @@ paths:
         summary: "R404: Accepts an organizer requests"
         description: "Processes an organizer requests and accepts it"
         tags:
-          - "M07: User Administration"
+          - "M04: User Administration"
 
         parameters:
           - in: path
@@ -751,7 +751,8 @@ paths:
         summary: "R405: View users"
         description: "Page with information about all users. Access: ADM"
         tags:
-          - "M07: User Administration"
+          - "M02: Profile and User Information"
+          - "M04: User Administration"
 
         responses:
           "200":
@@ -772,6 +773,7 @@ paths:
         description: "Provides a page component with a list of users. Access: ADM"
         tags:
           - "M02: Profile and User Information"
+          - "M04: User Administration"
 
         parameters:
           - in: query
@@ -791,7 +793,7 @@ paths:
           summary: "R407: Admin Add User Form"
           description: "Administration Page to add a new user to the platform. Access: ADM"
           tags:
-            - "M07: User Administration"
+            - "M04: User Administration"
 
           responses:
             "200":
@@ -810,7 +812,7 @@ paths:
           summary: "R408: Admin Add User Action"
           description: "Adds a new user to the platform. Access: ADM"
           tags:
-            - "M07: User Administration"
+            - "M04: User Administration"
 
           requestBody:
             required: true
@@ -844,58 +846,4 @@ paths:
               description: "Forbidden. No permissions"
             "404":
               description: "Not found"
-
-  /admin/users/{user_id}/ban:
-      patch:
-        operationId: R409
-        summary: "R409: Bans an user"
-        description: "Changes User Status to 'Blocked', effectively banning him from the platform. Access: ADM"
-        tags:
-          - "M07: User Administration"
-
-        parameters:
-          - in: path
-            name: user_id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Successfully banned user."
-          "400":
-            description: "Bad request."
-          "401":
-            description: "Unauthorized. Not logged in"
-          "403":
-            description: "Forbidden. No permissions"
-          "404":
-            description: "Not found"
-
-  /admin/users/{user_id}/unban:
-      patch:
-        operationId: R410
-        summary: "R410: Unbans an user"
-        description: "Changes User Status to 'Active', effectively unbanning him from the platform. Access: ADM"
-        tags:
-          - "M07: User Administration"
-
-        parameters:
-          - in: path
-            name: user_id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok. Successfully unbanned user."
-          "400":
-            description: "Bad request."
-          "401":
-            description: "Unauthorized. Not logged in"
-          "403":
-            description: "Forbidden. No permissions"
-          "404":
-            description: "Not found"
 
