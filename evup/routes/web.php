@@ -63,6 +63,10 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
+Route::get('forgot_password', 'Auth\PasswordResetController@showSendLinkForm')->name('showLinkForm');
+Route::post('forgot_password', 'Auth\PasswordResetController@sendLink')->name('sendLink');
+Route::get('reset', 'Auth\PasswordResetController@showResetPasswordForm')->name('reset_password');
+Route::post('reset', 'Auth\PasswordResetController@reset')->name('update_password');
 
 // Event
 
