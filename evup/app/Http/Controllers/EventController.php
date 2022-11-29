@@ -229,7 +229,7 @@ class EventController extends Controller
 
       if (isset($request->eventname)) $event->eventname = $request->eventname;
       if (isset($request->description)) $event->description = $request->description;
-      if (isset($request->eventAddress)) $event->eventAddress = $request->eventAddress;
+      if (isset($request->eventaddress)) $event->eventaddress = $request->eventaddress;
       if (isset($request->startdate)) $event->startdate = $request->startdate;
       if (isset($request->enddate)) $event->enddate = $request->enddate;
 
@@ -256,7 +256,7 @@ class EventController extends Controller
       $request->all(),
       [
         'name' => 'required|string|min:3|max:100',
-        'eventAddress' => 'required|string|min:3|max:200',
+        'eventaddress' => 'required|string|min:3|max:200',
         'description' => 'required|string|min:3|max:100',
         'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
         'starDate' => 'required|date',
@@ -271,7 +271,7 @@ class EventController extends Controller
 
     $event = new Event;
     $event->eventname = $request->name;
-    $event->eventaddress = $request->eventAddress;
+    $event->eventaddress = $request->eventaddress;
     $event->description = $request->description;
     $event->eventphoto = $request->thumbnail;
     $event->startdate = $request->startDate;
