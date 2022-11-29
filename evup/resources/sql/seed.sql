@@ -116,18 +116,18 @@ CREATE TABLE OrganizerRequest(
 CREATE TABLE Notification(
   notificationId SERIAL PRIMARY KEY,
   receiverId INTEGER NOT NULL REFERENCES Users (userId) ON DELETE CASCADE ON UPDATE CASCADE,
-  eventId INTEGER REFERENCES Event (eventId),
-  joinRequestId INTEGER REFERENCES JoinRequest (joinRequestId),
-  organizerRequestId INTEGER REFERENCES OrganizerRequest (organizerRequestId),
-  invitationId INTEGER REFERENCES Invitation (invitationId),
-  pollId INTEGER REFERENCES Poll(pollId),
+  eventId INTEGER REFERENCES Event (eventId) ON DELETE CASCADE ON UPDATE CASCADE,
+  joinRequestId INTEGER REFERENCES JoinRequest (joinRequestId) ON DELETE CASCADE ON UPDATE CASCADE,
+  organizerRequestId INTEGER REFERENCES OrganizerRequest (organizerRequestId) ON DELETE CASCADE ON UPDATE CASCADE,
+  invitationId INTEGER REFERENCES Invitation (invitationId) ON DELETE CASCADE ON UPDATE CASCADE,
+  pollId INTEGER REFERENCES Poll(pollId) ON DELETE CASCADE ON UPDATE CASCADE,
   notificationDate DATE NOT NULL,
   notificationType notificationtype NOT NULL,
   notificationStatus BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE Vote(
-  voterId INTEGER REFERENCES Users (userId) ON UPDATE CASCADE ON DELETE SET NULL,
+  voterId INTEGER REFERENCES Users (userId) ON UPDATE CASCADE ON DELETE CASCADE,
   commentId INTEGER REFERENCES Comment (commentId) ON UPDATE CASCADE ON DELETE CASCADE,
   type BOOLEAN NOT NULL,
   PRIMARY KEY(voterId, commentId)

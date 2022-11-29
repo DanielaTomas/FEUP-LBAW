@@ -203,12 +203,12 @@ class UserController extends Controller
 
         $this->authorize('delete', $user);
 
-        $validator = Validator::make($request->all(), [
+        /*$validator = Validator::make($request->all(), [
             'password' => 'required|string|password'
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator->errors());*/
 
         $deleted = $user->delete();
         if ($deleted)

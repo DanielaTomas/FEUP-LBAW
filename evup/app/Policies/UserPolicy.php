@@ -28,6 +28,11 @@ class UserPolicy
         return ($user->userid == $userprofile->userid);
     }
 
+    public function delete(User $user, User $userprofile)
+    {
+        return ($user->userid == $userprofile->userid);
+    }
+
     public function showEditForms(User $user, User $userprofile)
     {
         return ($user->userid == $userprofile->userid || $user->usertype == 'Admin');
