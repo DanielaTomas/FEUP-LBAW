@@ -1,15 +1,20 @@
-if (window.location.pathname.includes('/event/') && window.location.pathname.includes('/adduser')) {
-    eventid = localStorage.getItem("eventid")
-    if (!eventid) {
-        eventid = window.location.pathname.split('/event/')[1].split('/')[0]
-        localStorage.setItem("eventid", eventid)
-    }
-    setgoBackBtn()
+if (window.location.pathname.includes('/event/')) {
+    eventid = window.location.pathname.split('/event/')[1].split('/')[0]
+    localStorage.setItem("eventid", eventid)
+    
+    if (window.location.pathname.includes('/adduser'))
+        setgoBackBtn()
+    
+    if (window.location.pathname.includes('/attendees'))
+        setgoAddUserBtn()
 }
 
 function setgoBackBtn() {
-    eventid = localStorage.getItem("eventid")
     select('#goback').href = 'http://' + window.location.host + '/event/' + eventid + '/attendees'
+}
+
+function setgoAddUserBtn() {
+    select('#adduser').href = select('#adduser').href.replace('id', eventid)
 }
 
 function addUser(userid, eventid = localStorage.getItem("eventid")) {
