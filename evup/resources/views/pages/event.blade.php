@@ -5,6 +5,7 @@
 <article class="eventcard" data-id="{{ $event->eventid }}">
     <div class="flex flex-row p-5 items-center justify-between">
         <h1 class="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
+        @auth
         <?php if($event->organizer()->first()->usertype == 'Organizer' && $event->organizer()->first()->userid == $user->userid) { ?>
             <a href="{{route('edit_event', ['id' => $event->eventid])}}" class="self-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-700 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -12,6 +13,7 @@
                 </svg>
             </a>
         <?php } ?>
+        @endauth
         <button><i class="fa-solid fa-triangle-exclamation fa-2x"></i></button>
     </div>
     
