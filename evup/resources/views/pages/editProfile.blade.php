@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- Edit Profile")
+
 @section('content')
 <!-- component -->
 <h1>Edit My Information</h1>
