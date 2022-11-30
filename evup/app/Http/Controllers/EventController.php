@@ -196,7 +196,7 @@ class EventController extends Controller
 
     $user = User::find(Auth::id());
 
-    //$this->authorize('edit',$event);
+    $this->authorize('edit',$event);
     return view('pages.event.edit',[
       'event'=>$event, 'user'=>$user
     ]);

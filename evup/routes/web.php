@@ -22,6 +22,7 @@ Route::post('user/{id}/edit', 'UserController@update')->name('editUser')->where(
 Route::post('/user/deny/{id}', 'UserController@denyRequest')->where(['id' => '[0-9]+'])->name('invite_request_deny');
 Route::post('/user/accept/{id}', 'UserController@acceptRequest')->where(['id' => '[0-9]+'])->name('invite_request_accept');
 Route::post('user/{id}/organizerRequest/', 'UserController@organizerRequest')->where(['id' => '[0-9]+'])->name('request_organizer');
+Route::post('user/{id}/delete', 'UserController@delete')->where(['id' => '[0-9]+'])->name('delete_user');
 //  /user/{id}/requestOrganizer:
 //  /api/user/{id}/attended:
 //  /api/user/{id}/organized:
@@ -62,6 +63,10 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
+Route::get('forgot_password', 'Auth\ResetPasswordController@showSendLinkForm')->name('forgot_password');
+Route::post('forgot_password', 'Auth\ResetPasswordController@sendLink')->name('send_link');
+Route::get('reset', 'Auth\ResetPasswordController@showResetPasswordForm')->name('password.reset');
+Route::post('reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 // Event
 

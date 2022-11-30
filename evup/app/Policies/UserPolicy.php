@@ -23,13 +23,19 @@ class UserPolicy
     {
         return Auth::check();
     }
-    public function profile(User $user)
+    public function profile(User $user, User $userprofile)
     {
-        return Auth::id() == $user->userid;
+        return ($user->userid == $userprofile->userid);
     }
-    public function showEditForms(User $user)
+
+    public function delete(User $user, User $userprofile)
     {
-        return (Auth::id() == $user->userid || $user->usertype == 'Admin');
+        return ($user->userid == $userprofile->userid);
+    }
+
+    public function showEditForms(User $user, User $userprofile)
+    {
+        return ($user->userid == $userprofile->userid || $user->usertype == 'Admin');
     }
     public function update(User $user)
     {
@@ -37,29 +43,29 @@ class UserPolicy
     }
     /* --------- EVENT POLICIES --------- */
 
-    public function organizerEvents(User $organizer)
+    public function organizerEvents(User $user, User $organizer)
     {
-        return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer';
+        return $user->userid == $organizer->userid && $organizer->usertype == 'Organizer';
     }
 
-    public function addUser(User $organizer)
+    public function addUser(User $user, User $organizer)
     {
-        return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer';
+        return $user->userid == $organizer->userid && $organizer->usertype == 'Organizer';
     }
 
-    public function removeUser(User $organizer)
+    public function removeUser(User $user,User $organizer)
     {
-        return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer';
+        return $user->userid == $organizer->userid && $organizer->usertype == 'Organizer';
     }
 
-    public function invite( User $user, User $inviteddUser)
+    public function invite(User $user, User $inviteddUser)
     {
-        return Auth::check() && ($inviteddUser->userid != Auth::id());
+        return Auth::check() && ($inviteddUser->userid != $user->userid);
     }
 
     public function inviteAccept(User $user,Invitation $invite)
     {
-        return  Auth::check();
+        return Auth::check();
     }
 
     public function inviteDecline(User $user,Invitation $invite)
@@ -71,59 +77,58 @@ class UserPolicy
         return Auth::check();
     }
     /* --------- ADMIN POLICIES --------- */
-    public function show(User $admin)
+    public function show_panel(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
     public function users(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
     public function banUser(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
     public function unbanUser(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
     public function reports(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
     public function closeReport(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
     public function cancelEvent(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
     public function organizer_requests(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
     public function denyRequest(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
     public function acceptRequest(User $admin)
     {
         return $admin->usertype == 'Admin';
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
     }
     public function searchUsers(User $admin)
     {
-        return Auth::id() == $admin->userid && $admin->usertype == 'Admin';
+        return $admin->usertype == 'Admin';
     }
 
 }

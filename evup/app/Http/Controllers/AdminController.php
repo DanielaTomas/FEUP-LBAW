@@ -25,13 +25,13 @@ class AdminController extends UserController
         if (is_null($admin))
             return abort(404, 'User not found');
 
+        $this->authorize('show_panel', $admin);
+
         $users = User::get();
 
         $reports = Report::orderByDesc('reportid')->get()
         ->map(function ($report) {
 
-            //$reporter = Report::find($report->reportid)->reporter();
-            //$reported = Report::find($report->reportid)->reported();
             $reporter = User::find($report->reporterid);
             $event = Event::find($report->eventid);
 
@@ -53,7 +53,6 @@ class AdminController extends UserController
             ];
         });
 
-        $this->authorize('show', $admin);
         return view('pages.admin.panel',[
             'admin' => $admin,
             'users' => $users,
@@ -63,28 +62,6 @@ class AdminController extends UserController
     }
 
     
-    /**
-   * Display the User public profile. LATER ADD TO @UserController
-   *
-   * @return View
-   */
-    /*public function view($id)
-    {
-        $user = User::find($id);
-        if (is_null($user))
-            return abort(404, 'User not found, id: ' . Auth::id());
-
-        $ordered_events = $user->ordered_events();
-        $isorganizer = 'Organizer' == $user->usertype;
-
-        return view('pages.user.profile', [
-            'user' => $user,
-            'events' => $ordered_events,
-            'isorganizer' => $isorganizer,
-        ]);
-    }
-
-    */
     /**
      * Display the list of users
      *

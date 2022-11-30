@@ -35,7 +35,8 @@ CREATE TABLE Users(
   password TEXT NOT NULL,
   userPhoto TEXT,
   accountStatus AccountStatus NOT NULL,
-  userType UserTypes NOT NULL
+  userType UserTypes NOT NULL,
+  remember_token TEXT -- Laravel's remember me functionality
 );
 
 CREATE TABLE Event(
@@ -116,18 +117,18 @@ CREATE TABLE OrganizerRequest(
 CREATE TABLE Notification(
   notificationId SERIAL PRIMARY KEY,
   receiverId INTEGER NOT NULL REFERENCES Users (userId) ON DELETE CASCADE ON UPDATE CASCADE,
-  eventId INTEGER REFERENCES Event (eventId),
-  joinRequestId INTEGER REFERENCES JoinRequest (joinRequestId),
-  organizerRequestId INTEGER REFERENCES OrganizerRequest (organizerRequestId),
-  invitationId INTEGER REFERENCES Invitation (invitationId),
-  pollId INTEGER REFERENCES Poll(pollId),
+  eventId INTEGER REFERENCES Event (eventId) ON DELETE CASCADE ON UPDATE CASCADE,
+  joinRequestId INTEGER REFERENCES JoinRequest (joinRequestId) ON DELETE CASCADE ON UPDATE CASCADE,
+  organizerRequestId INTEGER REFERENCES OrganizerRequest (organizerRequestId) ON DELETE CASCADE ON UPDATE CASCADE,
+  invitationId INTEGER REFERENCES Invitation (invitationId) ON DELETE CASCADE ON UPDATE CASCADE,
+  pollId INTEGER REFERENCES Poll(pollId) ON DELETE CASCADE ON UPDATE CASCADE,
   notificationDate DATE NOT NULL,
   notificationType notificationtype NOT NULL,
   notificationStatus BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE Vote(
-  voterId INTEGER REFERENCES Users (userId) ON UPDATE CASCADE ON DELETE SET NULL,
+  voterId INTEGER REFERENCES Users (userId) ON UPDATE CASCADE ON DELETE CASCADE,
   commentId INTEGER REFERENCES Comment (commentId) ON UPDATE CASCADE ON DELETE CASCADE,
   type BOOLEAN NOT NULL,
   PRIMARY KEY(voterId, commentId)
@@ -561,6 +562,8 @@ insert into users (username, name, email, password, userphoto, accountStatus, us
 insert into users (username, name, email, password, userphoto,accountStatus, userType) values ('admin', 'Administrator', 'admin@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ6SURBVDjLjZO7T1NhGMY7Mji6uJgYt8bElTjof6CDg4sMSqIxJsRGB5F4TwQSIg1QKC0KWmkZEEsKtEcSxF5ohV5pKSicXqX3aqGn957z+PUEGopiGJ583/A+v3znvPkJAAjWR0VNJG0kGhKahCFhXcN3YBFfx8Kry6ym4xIzce88/fbWGY2k5WRb77UTTbWuYA9gDGg7EVmSIOF4g5T7HZKuMcSW5djWDyL0uRf0dCc8inYYxTcw9fAiCMBYB3gVj1z7gLhNTjKCqHkYP79KENC9Bq3uxrrqORzy+9D3tPAAccspVx1gWg0KbaZFbGllWFM+xrKkFQudV0CeDfJsjN4+C2nracjunoPq5VXIBrowMK4V1gG1LGyWdbZwCalsBYUyh2KFQzpXxVqkAGswD3+qBDpZwow9iYE5v26/VwfUQnnznyhvjguQYabIIpKpYD1ahI8UTT92MUSFuP5Z/9TBTgOgFrVjp3nakaG/0VmEfpX58pwzjUEquNk362s+PP8XYD/KpYTBHmRg9Wch0QX1R80dCZhYipudYQY2Auib8RmODVCa4hfUK4ngaiiLNFNFdKeCWWscXZMbWy9Unv9/gsIQU09a4pwvUeA3Uapy2C2wCKXL0DqTePLexbWPOv79E8f0UWrencZ2poxciUWZlKssB4bcHeE83NsFuMgpo2iIpMuNa1TNu4XjhggWvb+R2K3wZdLlAZl8Fd9jRb5sD+Xx0RJBx5gdom6VsMEFDyWF0WyCeSOFcDKPnRxZYTQL5Rc/nn1w4oFsBaIhC3r6FRh5erPRhYMyHdeFw4C6zkRhmijM7CnMu0AUZonCDCnRJBqSus5/ABD6Ba5CkQS8AAAAAElFTkSuQmCC', 'Active', 'Admin');
 insert into users (username, name, email, password, userphoto,accountStatus, userType) values ('organizer', 'Organizer', 'organizer@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ6SURBVDjLjZO7T1NhGMY7Mji6uJgYt8bElTjof6CDg4sMSqIxJsRGB5F4TwQSIg1QKC0KWmkZEEsKtEcSxF5ohV5pKSicXqX3aqGn957z+PUEGopiGJ583/A+v3znvPkJAAjWR0VNJG0kGhKahCFhXcN3YBFfx8Kry6ym4xIzce88/fbWGY2k5WRb77UTTbWuYA9gDGg7EVmSIOF4g5T7HZKuMcSW5djWDyL0uRf0dCc8inYYxTcw9fAiCMBYB3gVj1z7gLhNTjKCqHkYP79KENC9Bq3uxrrqORzy+9D3tPAAccspVx1gWg0KbaZFbGllWFM+xrKkFQudV0CeDfJsjN4+C2nracjunoPq5VXIBrowMK4V1gG1LGyWdbZwCalsBYUyh2KFQzpXxVqkAGswD3+qBDpZwow9iYE5v26/VwfUQnnznyhvjguQYabIIpKpYD1ahI8UTT92MUSFuP5Z/9TBTgOgFrVjp3nakaG/0VmEfpX58pwzjUEquNk362s+PP8XYD/KpYTBHmRg9Wch0QX1R80dCZhYipudYQY2Auib8RmODVCa4hfUK4ngaiiLNFNFdKeCWWscXZMbWy9Unv9/gsIQU09a4pwvUeA3Uapy2C2wCKXL0DqTePLexbWPOv79E8f0UWrencZ2poxciUWZlKssB4bcHeE83NsFuMgpo2iIpMuNa1TNu4XjhggWvb+R2K3wZdLlAZl8Fd9jRb5sD+Xx0RJBx5gdom6VsMEFDyWF0WyCeSOFcDKPnRxZYTQL5Rc/nn1w4oFsBaIhC3r6FRh5erPRhYMyHdeFw4C6zkRhmijM7CnMu0AUZonCDCnRJBqSus5/ABD6Ba5CkQS8AAAAAElFTkSuQmCC', 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto,accountStatus, userType) values ('user', 'User', 'user@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ6SURBVDjLjZO7T1NhGMY7Mji6uJgYt8bElTjof6CDg4sMSqIxJsRGB5F4TwQSIg1QKC0KWmkZEEsKtEcSxF5ohV5pKSicXqX3aqGn957z+PUEGopiGJ583/A+v3znvPkJAAjWR0VNJG0kGhKahCFhXcN3YBFfx8Kry6ym4xIzce88/fbWGY2k5WRb77UTTbWuYA9gDGg7EVmSIOF4g5T7HZKuMcSW5djWDyL0uRf0dCc8inYYxTcw9fAiCMBYB3gVj1z7gLhNTjKCqHkYP79KENC9Bq3uxrrqORzy+9D3tPAAccspVx1gWg0KbaZFbGllWFM+xrKkFQudV0CeDfJsjN4+C2nracjunoPq5VXIBrowMK4V1gG1LGyWdbZwCalsBYUyh2KFQzpXxVqkAGswD3+qBDpZwow9iYE5v26/VwfUQnnznyhvjguQYabIIpKpYD1ahI8UTT92MUSFuP5Z/9TBTgOgFrVjp3nakaG/0VmEfpX58pwzjUEquNk362s+PP8XYD/KpYTBHmRg9Wch0QX1R80dCZhYipudYQY2Auib8RmODVCa4hfUK4ngaiiLNFNFdKeCWWscXZMbWy9Unv9/gsIQU09a4pwvUeA3Uapy2C2wCKXL0DqTePLexbWPOv79E8f0UWrencZ2poxciUWZlKssB4bcHeE83NsFuMgpo2iIpMuNa1TNu4XjhggWvb+R2K3wZdLlAZl8Fd9jRb5sD+Xx0RJBx5gdom6VsMEFDyWF0WyCeSOFcDKPnRxZYTQL5Rc/nn1w4oFsBaIhC3r6FRh5erPRhYMyHdeFw4C6zkRhmijM7CnMu0AUZonCDCnRJBqSus5/ABD6Ba5CkQS8AAAAAElFTkSuQmCC', 'Active', 'User');
+insert into users (username, name, email, password, userphoto,accountStatus, userType) values ('password', 'Password Test', 'cisat14362@nubotel.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ6SURBVDjLjZO7T1NhGMY7Mji6uJgYt8bElTjof6CDg4sMSqIxJsRGB5F4TwQSIg1QKC0KWmkZEEsKtEcSxF5ohV5pKSicXqX3aqGn957z+PUEGopiGJ583/A+v3znvPkJAAjWR0VNJG0kGhKahCFhXcN3YBFfx8Kry6ym4xIzce88/fbWGY2k5WRb77UTTbWuYA9gDGg7EVmSIOF4g5T7HZKuMcSW5djWDyL0uRf0dCc8inYYxTcw9fAiCMBYB3gVj1z7gLhNTjKCqHkYP79KENC9Bq3uxrrqORzy+9D3tPAAccspVx1gWg0KbaZFbGllWFM+xrKkFQudV0CeDfJsjN4+C2nracjunoPq5VXIBrowMK4V1gG1LGyWdbZwCalsBYUyh2KFQzpXxVqkAGswD3+qBDpZwow9iYE5v26/VwfUQnnznyhvjguQYabIIpKpYD1ahI8UTT92MUSFuP5Z/9TBTgOgFrVjp3nakaG/0VmEfpX58pwzjUEquNk362s+PP8XYD/KpYTBHmRg9Wch0QX1R80dCZhYipudYQY2Auib8RmODVCa4hfUK4ngaiiLNFNFdKeCWWscXZMbWy9Unv9/gsIQU09a4pwvUeA3Uapy2C2wCKXL0DqTePLexbWPOv79E8f0UWrencZ2poxciUWZlKssB4bcHeE83NsFuMgpo2iIpMuNa1TNu4XjhggWvb+R2K3wZdLlAZl8Fd9jRb5sD+Xx0RJBx5gdom6VsMEFDyWF0WyCeSOFcDKPnRxZYTQL5Rc/nn1w4oFsBaIhC3r6FRh5erPRhYMyHdeFw4C6zkRhmijM7CnMu0AUZonCDCnRJBqSus5/ABD6Ba5CkQS8AAAAAElFTkSuQmCC', 'Active', 'User');
+
 
 
 -- Event --
@@ -612,10 +615,10 @@ insert into Attendee (attendeeId, eventId) values (5, 15);
 insert into Attendee (attendeeId, eventId) values (7, 7);
 insert into Attendee (attendeeId, eventId) values (8, 8);
 insert into Attendee (attendeeId, eventId) values (9, 9);
-insert into Attendee (attendeeId, eventId) values (1, 31);
-insert into Attendee (attendeeId, eventId) values (4, 31);
-insert into Attendee (attendeeId, eventId) values (6, 31);
-insert into Attendee (attendeeId, eventId) values (12, 31);
+insert into Attendee (attendeeId, eventId) values (1, 30);
+insert into Attendee (attendeeId, eventId) values (4, 30);
+insert into Attendee (attendeeId, eventId) values (6, 30);
+insert into Attendee (attendeeId, eventId) values (12, 30);
 insert into Attendee (attendeeId, eventId) values (32, 2);
 insert into Attendee (attendeeId, eventId) values (32, 7);
 insert into Attendee (attendeeId, eventId) values (32, 8);

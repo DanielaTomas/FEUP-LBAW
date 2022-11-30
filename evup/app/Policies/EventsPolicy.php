@@ -25,13 +25,17 @@ class EventsPolicy
 
     public function attendees(User $organizer, Event $event)
     {
-        return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
+        return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
     }
 
+    public function edit(User $organizer, Event $event)
+    {
+        return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
+    }
 
     public function view_add_user(User $organizer, Event $event)
     {
-        return Auth::id() == $organizer->userid && $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
+        return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
     }
 
 }
