@@ -35,7 +35,8 @@ CREATE TABLE Users(
   password TEXT NOT NULL,
   userPhoto TEXT,
   accountStatus AccountStatus NOT NULL,
-  userType UserTypes NOT NULL
+  userType UserTypes NOT NULL,
+  remember_token TEXT -- Laravel's remember me functionality
 );
 
 CREATE TABLE Event(

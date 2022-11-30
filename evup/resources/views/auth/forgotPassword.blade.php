@@ -24,10 +24,10 @@
 <body>
         <main class="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white">
 
-            <form method="POST" action="{{ route('sendLink') }}" class="flex w-[30rem] flex-col space-y-10">
+            <form method="POST" action="{{ route('send_link') }}" class="flex w-[30rem] flex-col space-y-10">
                 @csrf
 
-                <div class="text-center text-4xl font-medium">Password Recovery</div>
+                <div class="text-center text-4xl font-medium">Reset Password</div>
 
                 @if (Session::has('status')) 
                     <div class="alert alert-success" role="alert">
