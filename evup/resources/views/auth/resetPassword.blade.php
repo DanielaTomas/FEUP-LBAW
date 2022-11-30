@@ -36,10 +36,10 @@
                 @endif
 
                 @if ($errors->has('password'))
-                        <span class="error">
-                            {{ $errors->first('password') }}
-                        </span>
-                    @endif
+                    <span class="error">
+                        {{ $errors->first('password') }}
+                    </span>
+                @endif
 
                 <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
                     <input id="password" type="password" name="password" required placeholder="Password"
@@ -47,9 +47,12 @@
                 </div>
 
                 <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
-                    <input id="password-confirm" type="password" name="password_confirmation" required onkeyup="checkPass('#password')" placeholder="Confirm Password"
+                    <input id="password-confirm" type="password" name="password_confirmation" required placeholder="Confirm Password"
                         class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
                 </div>
+
+                <input type="hidden" name="token" value="{{ request()->token }}">
+                <input type="hidden" name="email" value="{{ request()->email }}">
 
                 <button class="transform rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400">
                     RESET PASSWORD

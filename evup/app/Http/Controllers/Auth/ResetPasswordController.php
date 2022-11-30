@@ -7,11 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
-class PasswordResetController extends Controller
+class ResetPasswordController extends Controller
 {   
-   
+    use ResetsPasswords;
     protected $redirectTo = '/';
 
     public function __construct() {
@@ -34,28 +33,13 @@ class PasswordResetController extends Controller
             :   back()->withErrors(['email' => __($response)]);
     }
 
-    public function showResetPasswordForm(Request $request, $token = null) {
+    public function showResetPasswordForm(Request $request)
+    {
+        $token = $request->route()->parameter('token');
+
         return view('auth.resetPassword')->with(
             ['token' => $token, 'email' => $request->email]
         );
-    }
-
-    public function reset(Request $request) {
-        $request->validate([
-        'token' => 'required',
-        'email' => 'required|email',
-        'password' => 'required|confirmed|min:6',
-    ]);
-
-        $response = Password::reset([
-            'token' => $request->token,
-            'email' => $request->email,
-            'password' => $request->password
-        ]);
-
-        return $response === Password::PASSWORD_RESET
-            ?   back()->with(['status' => __($response)])
-            :   back()->withErrors(['password' => __($response)]);
     }
  
 }
