@@ -24,7 +24,7 @@
 <body>
         <main class="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white">
 
-            <form method="POST" action="{{ route('update_password') }}" class="flex w-[30rem] flex-col space-y-10">
+            <form method="POST" action="{{ route('password.update') }}" class="flex w-[30rem] flex-col space-y-10">
                 @csrf
 
                 <div class="text-center text-4xl font-medium">Reset Password</div>
