@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- Create Event")
+
 @section('content')
     <form method="POST" action="{{ route('createEvent') }}">
         {{ csrf_field() }}

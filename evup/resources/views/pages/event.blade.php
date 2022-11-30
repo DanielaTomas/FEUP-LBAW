@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- Event")
+
 @section('content')
 
 <article class="eventcard" data-id="{{ $event->eventid }}">

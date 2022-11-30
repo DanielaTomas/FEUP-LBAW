@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- My Events")
+
 @section('content')
     <div class="flex content-center flex-col">
         <div class="inline-flex p-2 justify-center">

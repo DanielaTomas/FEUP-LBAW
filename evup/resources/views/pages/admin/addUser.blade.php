@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- Add User")
+
 @section('content')
 
 <div class="flex h-screen items-center justify-center bg-gray-900 text-white">

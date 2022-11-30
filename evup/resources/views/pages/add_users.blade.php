@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- Add Users")
+
 @section('content')
 
 <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
