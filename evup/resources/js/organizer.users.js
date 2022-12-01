@@ -50,9 +50,11 @@ function userHandler(add, userid) {
         elem.remove()
     }
 
+    /*
     if (add) 
         createAlert('success', 'You have added this user successfully.')
     else
         createAlert('success', 'You have removed this user successfully.')
-        
+    */
+
 }

@@ -29,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'accountstatus', 'usertype', 'remember_token'
+        'password', 'remember_token'
     ];
     
     public function cards() {

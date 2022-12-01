@@ -35,12 +35,13 @@ CREATE TABLE Users(
   password TEXT NOT NULL,
   userPhoto TEXT,
   accountStatus AccountStatus NOT NULL,
-  userType UserTypes NOT NULL
+  userType UserTypes NOT NULL,
+  remember_token TEXT -- Laravel's remember me functionality
 );
 
 CREATE TABLE Event(
     eventId SERIAL PRIMARY KEY,
-    userId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
+    userId INTEGER REFERENCES Users (userId) ON DELETE SET NULL ON UPDATE CASCADE,
     eventName TEXT NOT NULL CONSTRAINT unique_eventName UNIQUE,
     public BOOLEAN NOT NULL,
     eventAddress TEXT NOT NULL,
@@ -53,7 +54,7 @@ CREATE TABLE Event(
 );
 
 CREATE TABLE Attendee(
-  attendeeId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
+  attendeeId INTEGER NOT NULL REFERENCES Users (userId) ON DELETE CASCADE ON UPDATE CASCADE,
   eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
   PRIMARY KEY(attendeeId, eventId)
 );
@@ -70,7 +71,7 @@ CREATE TABLE Tag(
 
 CREATE TABLE Report(
   reportId SERIAL PRIMARY KEY,
-  reporterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
+  reporterId INTEGER REFERENCES Users (userId) ON DELETE SET NULL ON UPDATE CASCADE,
   eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
   message TEXT NOT NULL,
   reportStatus BOOLEAN NOT NULL DEFAULT FALSE
@@ -78,8 +79,8 @@ CREATE TABLE Report(
 
 CREATE TABLE Invitation(
   invitationId SERIAL PRIMARY KEY,
-  inviterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-  inviteeId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
+  inviterId INTEGER NOT NULL REFERENCES Users (userId) ON DELETE CASCADE ON UPDATE CASCADE,
+  inviteeId INTEGER NOT NULL REFERENCES Users (userId) ON DELETE CASCADE ON UPDATE CASCADE,
   eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
   invitationStatus BOOLEAN,
   CONSTRAINT invite_To_Self_ck CHECK (inviterId != inviteeId)
@@ -93,7 +94,7 @@ CREATE TABLE Poll(
 
 CREATE TABLE Comment(
   commentId SERIAL PRIMARY KEY,
-  authorId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
+  authorId INTEGER REFERENCES Users (userId) ON DELETE SET NULL ON UPDATE CASCADE,
   eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
   parentId INTEGER REFERENCES Comment (commentId) ON DELETE CASCADE ON UPDATE CASCADE,
   commentContent TEXT NOT NULL,
@@ -102,25 +103,25 @@ CREATE TABLE Comment(
 
 CREATE TABLE JoinRequest(
   joinRequestId SERIAL PRIMARY KEY,
-  requesterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
+  requesterId INTEGER NOT NULL REFERENCES Users (userId) ON DELETE CASCADE ON UPDATE CASCADE,
   eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
   requestStatus BOOLEAN
 );
 
 CREATE TABLE OrganizerRequest(
   organizerRequestId SERIAL PRIMARY KEY,
-  requesterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
+  requesterId INTEGER NOT NULL REFERENCES Users (userId) ON DELETE CASCADE ON UPDATE CASCADE,
   requestStatus BOOLEAN
 );
 
 CREATE TABLE Notification(
   notificationId SERIAL PRIMARY KEY,
-  receiverId INTEGER NOT NULL REFERENCES Users (userId),
-  eventId INTEGER REFERENCES Event (eventId),
-  joinRequestId INTEGER REFERENCES JoinRequest (joinRequestId),
-  organizerRequestId INTEGER REFERENCES OrganizerRequest (organizerRequestId),
-  invitationId INTEGER REFERENCES Invitation (invitationId),
-  pollId INTEGER REFERENCES Poll(pollId),
+  receiverId INTEGER NOT NULL REFERENCES Users (userId) ON DELETE CASCADE ON UPDATE CASCADE,
+  eventId INTEGER REFERENCES Event (eventId) ON DELETE CASCADE ON UPDATE CASCADE,
+  joinRequestId INTEGER REFERENCES JoinRequest (joinRequestId) ON DELETE CASCADE ON UPDATE CASCADE,
+  organizerRequestId INTEGER REFERENCES OrganizerRequest (organizerRequestId) ON DELETE CASCADE ON UPDATE CASCADE,
+  invitationId INTEGER REFERENCES Invitation (invitationId) ON DELETE CASCADE ON UPDATE CASCADE,
+  pollId INTEGER REFERENCES Poll(pollId) ON DELETE CASCADE ON UPDATE CASCADE,
   notificationDate DATE NOT NULL,
   notificationType notificationtype NOT NULL,
   notificationStatus BOOLEAN NOT NULL DEFAULT FALSE
@@ -146,19 +147,19 @@ CREATE TABLE Answer(
 
 CREATE TABLE Upload(
   uploadId SERIAL PRIMARY KEY,
-  commentId INTEGER NOT NULL REFERENCES Comment (commentId) ON UPDATE CASCADE,
+  commentId INTEGER NOT NULL REFERENCES Comment (commentId) ON UPDATE CASCADE ON DELETE CASCADE,
   fileName TEXT NOT NULL
 );
 
 CREATE TABLE Event_Category(
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
-  categoryId INTEGER NOT NULL REFERENCES Category (categoryId) ON UPDATE CASCADE,
+  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE ON DELETE CASCADE,
+  categoryId INTEGER NOT NULL REFERENCES Category (categoryId) ON UPDATE CASCADE ON DELETE CASCADE,
   PRIMARY KEY (eventId,categoryId)
 );
 
 CREATE TABLE Event_Tag(
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
-  tagId INTEGER NOT NULL REFERENCES Tag (tagId) ON UPDATE CASCADE,
+  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE ON DELETE CASCADE,
+  tagId INTEGER NOT NULL REFERENCES Tag (tagId) ON UPDATE CASCADE ON DELETE CASCADE,
   PRIMARY KEY (eventId,tagId)
 );
 
@@ -561,6 +562,8 @@ insert into users (username, name, email, password, userphoto, accountStatus, us
 insert into users (username, name, email, password, userphoto,accountStatus, userType) values ('admin', 'Administrator', 'admin@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ6SURBVDjLjZO7T1NhGMY7Mji6uJgYt8bElTjof6CDg4sMSqIxJsRGB5F4TwQSIg1QKC0KWmkZEEsKtEcSxF5ohV5pKSicXqX3aqGn957z+PUEGopiGJ583/A+v3znvPkJAAjWR0VNJG0kGhKahCFhXcN3YBFfx8Kry6ym4xIzce88/fbWGY2k5WRb77UTTbWuYA9gDGg7EVmSIOF4g5T7HZKuMcSW5djWDyL0uRf0dCc8inYYxTcw9fAiCMBYB3gVj1z7gLhNTjKCqHkYP79KENC9Bq3uxrrqORzy+9D3tPAAccspVx1gWg0KbaZFbGllWFM+xrKkFQudV0CeDfJsjN4+C2nracjunoPq5VXIBrowMK4V1gG1LGyWdbZwCalsBYUyh2KFQzpXxVqkAGswD3+qBDpZwow9iYE5v26/VwfUQnnznyhvjguQYabIIpKpYD1ahI8UTT92MUSFuP5Z/9TBTgOgFrVjp3nakaG/0VmEfpX58pwzjUEquNk362s+PP8XYD/KpYTBHmRg9Wch0QX1R80dCZhYipudYQY2Auib8RmODVCa4hfUK4ngaiiLNFNFdKeCWWscXZMbWy9Unv9/gsIQU09a4pwvUeA3Uapy2C2wCKXL0DqTePLexbWPOv79E8f0UWrencZ2poxciUWZlKssB4bcHeE83NsFuMgpo2iIpMuNa1TNu4XjhggWvb+R2K3wZdLlAZl8Fd9jRb5sD+Xx0RJBx5gdom6VsMEFDyWF0WyCeSOFcDKPnRxZYTQL5Rc/nn1w4oFsBaIhC3r6FRh5erPRhYMyHdeFw4C6zkRhmijM7CnMu0AUZonCDCnRJBqSus5/ABD6Ba5CkQS8AAAAAElFTkSuQmCC', 'Active', 'Admin');
 insert into users (username, name, email, password, userphoto,accountStatus, userType) values ('organizer', 'Organizer', 'organizer@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ6SURBVDjLjZO7T1NhGMY7Mji6uJgYt8bElTjof6CDg4sMSqIxJsRGB5F4TwQSIg1QKC0KWmkZEEsKtEcSxF5ohV5pKSicXqX3aqGn957z+PUEGopiGJ583/A+v3znvPkJAAjWR0VNJG0kGhKahCFhXcN3YBFfx8Kry6ym4xIzce88/fbWGY2k5WRb77UTTbWuYA9gDGg7EVmSIOF4g5T7HZKuMcSW5djWDyL0uRf0dCc8inYYxTcw9fAiCMBYB3gVj1z7gLhNTjKCqHkYP79KENC9Bq3uxrrqORzy+9D3tPAAccspVx1gWg0KbaZFbGllWFM+xrKkFQudV0CeDfJsjN4+C2nracjunoPq5VXIBrowMK4V1gG1LGyWdbZwCalsBYUyh2KFQzpXxVqkAGswD3+qBDpZwow9iYE5v26/VwfUQnnznyhvjguQYabIIpKpYD1ahI8UTT92MUSFuP5Z/9TBTgOgFrVjp3nakaG/0VmEfpX58pwzjUEquNk362s+PP8XYD/KpYTBHmRg9Wch0QX1R80dCZhYipudYQY2Auib8RmODVCa4hfUK4ngaiiLNFNFdKeCWWscXZMbWy9Unv9/gsIQU09a4pwvUeA3Uapy2C2wCKXL0DqTePLexbWPOv79E8f0UWrencZ2poxciUWZlKssB4bcHeE83NsFuMgpo2iIpMuNa1TNu4XjhggWvb+R2K3wZdLlAZl8Fd9jRb5sD+Xx0RJBx5gdom6VsMEFDyWF0WyCeSOFcDKPnRxZYTQL5Rc/nn1w4oFsBaIhC3r6FRh5erPRhYMyHdeFw4C6zkRhmijM7CnMu0AUZonCDCnRJBqSus5/ABD6Ba5CkQS8AAAAAElFTkSuQmCC', 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto,accountStatus, userType) values ('user', 'User', 'user@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ6SURBVDjLjZO7T1NhGMY7Mji6uJgYt8bElTjof6CDg4sMSqIxJsRGB5F4TwQSIg1QKC0KWmkZEEsKtEcSxF5ohV5pKSicXqX3aqGn957z+PUEGopiGJ583/A+v3znvPkJAAjWR0VNJG0kGhKahCFhXcN3YBFfx8Kry6ym4xIzce88/fbWGY2k5WRb77UTTbWuYA9gDGg7EVmSIOF4g5T7HZKuMcSW5djWDyL0uRf0dCc8inYYxTcw9fAiCMBYB3gVj1z7gLhNTjKCqHkYP79KENC9Bq3uxrrqORzy+9D3tPAAccspVx1gWg0KbaZFbGllWFM+xrKkFQudV0CeDfJsjN4+C2nracjunoPq5VXIBrowMK4V1gG1LGyWdbZwCalsBYUyh2KFQzpXxVqkAGswD3+qBDpZwow9iYE5v26/VwfUQnnznyhvjguQYabIIpKpYD1ahI8UTT92MUSFuP5Z/9TBTgOgFrVjp3nakaG/0VmEfpX58pwzjUEquNk362s+PP8XYD/KpYTBHmRg9Wch0QX1R80dCZhYipudYQY2Auib8RmODVCa4hfUK4ngaiiLNFNFdKeCWWscXZMbWy9Unv9/gsIQU09a4pwvUeA3Uapy2C2wCKXL0DqTePLexbWPOv79E8f0UWrencZ2poxciUWZlKssB4bcHeE83NsFuMgpo2iIpMuNa1TNu4XjhggWvb+R2K3wZdLlAZl8Fd9jRb5sD+Xx0RJBx5gdom6VsMEFDyWF0WyCeSOFcDKPnRxZYTQL5Rc/nn1w4oFsBaIhC3r6FRh5erPRhYMyHdeFw4C6zkRhmijM7CnMu0AUZonCDCnRJBqSus5/ABD6Ba5CkQS8AAAAAElFTkSuQmCC', 'Active', 'User');
+insert into users (username, name, email, password, userphoto,accountStatus, userType) values ('password', 'Password Test', 'cisat14362@nubotel.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ6SURBVDjLjZO7T1NhGMY7Mji6uJgYt8bElTjof6CDg4sMSqIxJsRGB5F4TwQSIg1QKC0KWmkZEEsKtEcSxF5ohV5pKSicXqX3aqGn957z+PUEGopiGJ583/A+v3znvPkJAAjWR0VNJG0kGhKahCFhXcN3YBFfx8Kry6ym4xIzce88/fbWGY2k5WRb77UTTbWuYA9gDGg7EVmSIOF4g5T7HZKuMcSW5djWDyL0uRf0dCc8inYYxTcw9fAiCMBYB3gVj1z7gLhNTjKCqHkYP79KENC9Bq3uxrrqORzy+9D3tPAAccspVx1gWg0KbaZFbGllWFM+xrKkFQudV0CeDfJsjN4+C2nracjunoPq5VXIBrowMK4V1gG1LGyWdbZwCalsBYUyh2KFQzpXxVqkAGswD3+qBDpZwow9iYE5v26/VwfUQnnznyhvjguQYabIIpKpYD1ahI8UTT92MUSFuP5Z/9TBTgOgFrVjp3nakaG/0VmEfpX58pwzjUEquNk362s+PP8XYD/KpYTBHmRg9Wch0QX1R80dCZhYipudYQY2Auib8RmODVCa4hfUK4ngaiiLNFNFdKeCWWscXZMbWy9Unv9/gsIQU09a4pwvUeA3Uapy2C2wCKXL0DqTePLexbWPOv79E8f0UWrencZ2poxciUWZlKssB4bcHeE83NsFuMgpo2iIpMuNa1TNu4XjhggWvb+R2K3wZdLlAZl8Fd9jRb5sD+Xx0RJBx5gdom6VsMEFDyWF0WyCeSOFcDKPnRxZYTQL5Rc/nn1w4oFsBaIhC3r6FRh5erPRhYMyHdeFw4C6zkRhmijM7CnMu0AUZonCDCnRJBqSus5/ABD6Ba5CkQS8AAAAAElFTkSuQmCC', 'Active', 'User');
+
 
 
 -- Event --
@@ -593,7 +596,7 @@ insert into Event ( userId, eventname, public, eventAddress, description, eventP
 insert into Event ( userId, eventname, public, eventAddress, description, eventPhoto, startDate, endDate) values ( 2, 'Green, Walter and Boyle', true, '81 Upham Road', 'Displaced supracondylar fracture with intracondylar extension of lower end of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with malunion', 'http://dummyimage.com/159x100.png/dddddd/000000', '2022-11-11', '2022-11-21');
 insert into Event ( userId, eventname, public, eventAddress, description, eventPhoto, startDate, endDate) values ( 13, 'Sauer, Gerlach and Kiehn', true, '002 Lindbergh Center', 'Asphyxiation due to plastic bag, accidental, sequela', 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-12-01', '2023-12-15');
 insert into Event (  userId, eventname, public, eventAddress, description, eventCanceled, eventPhoto, startDate, endDate) values ( 17, 'Graham-Lemke', true, '7585 Oriole Terrace', 'Flaccid hemiplegia', false, 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2023-01-06', '2023-01-08');
-insert into Event (  userId, eventname, public, eventAddress, description, eventPhoto, startDate, endDate) values ( 3, 'Christmas Party', true, '001 North Pole', 'Christmas Party in Santa house. Everyone can join!', 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2022-12-24', '2022-12-25');
+insert into Event (  userId, eventname, public, eventAddress, description, eventPhoto, startDate, endDate) values ( 32, 'Christmas Party', true, '001 North Pole', 'Christmas Party in Santa house. Everyone can join!', 'http://dummyimage.com/212x100.png/ff4444/ffffff', '2022-12-24', '2022-12-25');
 insert into Event ( userId, eventname, public, eventAddress, description, eventPhoto, startDate, endDate) values ( 13, 'Jerde Inc', false, '519 Arapahoe Parkway', 'Unspecified parasitic disease', 'http://dummyimage.com/103x100.png/5fa2dd/ffffff', '2022-12-19', '2023-02-13');
 -- Attendee --
 
@@ -612,10 +615,10 @@ insert into Attendee (attendeeId, eventId) values (5, 15);
 insert into Attendee (attendeeId, eventId) values (7, 7);
 insert into Attendee (attendeeId, eventId) values (8, 8);
 insert into Attendee (attendeeId, eventId) values (9, 9);
-insert into Attendee (attendeeId, eventId) values (1, 31);
-insert into Attendee (attendeeId, eventId) values (4, 31);
-insert into Attendee (attendeeId, eventId) values (6, 31);
-insert into Attendee (attendeeId, eventId) values (12, 31);
+insert into Attendee (attendeeId, eventId) values (1, 30);
+insert into Attendee (attendeeId, eventId) values (4, 30);
+insert into Attendee (attendeeId, eventId) values (6, 30);
+insert into Attendee (attendeeId, eventId) values (12, 30);
 insert into Attendee (attendeeId, eventId) values (32, 2);
 insert into Attendee (attendeeId, eventId) values (32, 7);
 insert into Attendee (attendeeId, eventId) values (32, 8);

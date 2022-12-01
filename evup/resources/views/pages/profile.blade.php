@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- Profile")
+
 @section('content')
     <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
         <div class="px-6 ">
@@ -9,7 +11,7 @@
                 </div>
                 <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">
                     {{ $user->name }}
-                    <?php if($user->usertype == 'Admin' || Auth::id() == $user->userid) { ?>
+                    @if(Auth::user()->usertype == 'Admin' || Auth::id() == $user->userid)
                         <button>
                             <a aria-hidden="true" href="{{ route('edit_user', ['id' => $user->userid]) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -17,21 +19,27 @@
                                 </svg>
                             </a>
                         </button>
-                    <?php } ?>
+                    @endif
                 </h3>
                 <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
                     <i class="text-slate-400 opacity-75"></i>{{ $user->username }} / {{ $user->email }}
                 </div>
-                
-                
             </div>
         <div>
     </div>
-        <div>
-            <button  class="bg-grey-light hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded inline-flex items-center">
-            <span>Ask To Be Organizer</span>
-        </button>
+    <div class="flex justify-end">
+        <div class="mr-6 transform hover:text-gray-900 transition duration-300">
+            <button class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
+                Request To Be Organizer
+            </button>
         </div>
+        <div class="mr-6 transform hover:text-gray-900 transition duration-300">
+            <!-- Delete Modal toggle -->
+            <button id="delBtn-{{$user -> userid}}" class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button" data-modal-toggle="staticModal-d{{$user -> userid}}">
+                Delete Account
+            </button>
+        </div>
+    </div>
     <article>
         <section id="myEventsHeader" class="m-4 text-center">
             <h2 class="text-2xl font-semibold leading-tight">My Events</h2>
@@ -48,4 +56,7 @@
             @each('partials.invitation', $invites, 'invite')
         </section>
     </article>
+
+    @include('partials.delete_modal')
+
 @endsection

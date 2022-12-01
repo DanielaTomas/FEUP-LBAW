@@ -69,6 +69,11 @@
                 No account?
                 <a href="{{ route('register') }}" class="font-medium text-indigo-500 underline-offset-4 hover:underline">Create One</a>
             </p>
+
+            <p class="text-center text-lg">
+                Did you forget your password?
+                <a href="{{ route('forgot_password') }}" class="font-medium text-indigo-500 underline-offset-4 hover:underline">Reset Password</a>
+            </p>
         </form>
     </main>
 

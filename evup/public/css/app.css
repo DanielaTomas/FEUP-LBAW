@@ -1166,6 +1166,9 @@ input:checked + .toggle-bg {
 .w-full {
   width: 100%;
 }
+.w-3q {
+  width: 75%;
+}
 .w-\[30rem\] {
   width: 30rem;
 }

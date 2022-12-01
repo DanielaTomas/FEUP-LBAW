@@ -45,10 +45,11 @@ function reportHandler(close, id) { // if close is true, act as a close report, 
 
     if (empty)
         container.innerHTML = '<p>Request Reviewed</p>'
-    
+    /*
     if (close) 
         createAlert('success', 'You have closed this report successfully.')
     else
         createAlert('success', 'You have deleted this event successfully.')
+    */
 
 }

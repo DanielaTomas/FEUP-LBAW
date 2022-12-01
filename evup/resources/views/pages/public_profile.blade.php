@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- Public Profile")
+
 @section('content')
     <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
         <div class="px-6 ">
@@ -9,7 +11,7 @@
                 </div>
                 <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">
                     {{ $user->name }}
-                    <?php if($user->usertype == 'Admin' || Auth::id() == $user->userid) { ?>
+                    @if(Auth::user()->usertype == 'Admin' || Auth::id() == $user->userid)
                         <button>
                             <a aria-hidden="true" href="{{ route('edit_user', ['id' => $user->userid]) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -17,7 +19,7 @@
                                 </svg>
                             </a>
                         </button>
-                    <?php } ?>
+                    @endif
                 </h3>
                 <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
                     <i class="text-slate-400 opacity-75"></i>{{ $user->username }} / {{ $user['email'] }}

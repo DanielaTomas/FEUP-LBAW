@@ -34,7 +34,7 @@ function banHandler(ban, id) {
         accstatus.innerHTML = 'Blocked'
         accstatus.classList = 'bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs'
 
-        createAlert('success', 'You have banned this user successfully.')
+        //createAlert('success', 'You have banned this user successfully.')
     }
 
     else {                                  /* Changes UNBAN btg to BAN btn after a user has ben UNbanned */
@@ -55,7 +55,7 @@ function banHandler(ban, id) {
         accstatus.innerHTML = 'Active'
         accstatus.classList = 'bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs'
 
-        createAlert('success', 'You have unbanned this user successfully.')
+        //createAlert('success', 'You have unbanned this user successfully.')
     }
 
 }
