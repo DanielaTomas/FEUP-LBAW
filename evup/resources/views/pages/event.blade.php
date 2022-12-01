@@ -24,7 +24,9 @@
         <div>
             <button><i class="fa-solid fa-bell"></i></button>
             <?php if($event->public == false) { ?>
-                <button><i class="fa-solid fa-lock"></i></button>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>
             <?php } ?>
         </div>
     </section>
@@ -47,16 +49,19 @@
 
         <h2 class="mb-4 text-3xl leading-none tracking-tight text-gray-800">Comments</h2>
         <div class="flex mx-auto items-center justify-center mt-56 mx-8 mb-4 max-w-lg">
-            <form class="w-full max-w-xl">
+            <form method="post" class="w-full max-w-xl" action="{{ route('create_comment',$event->eventid) }}">
+                @csrf
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Leave a comment</h2>
                     <div class="w-full md:w-full px-3 mb-2 mt-2">
                         <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='Type Your Comment' required></textarea>
                     </div>
                     <div class="w-full md:w-full flex items-start md:w-full px-3">
-                        <div class="-mr-1">
+                        
+                        <!-- <div class="-mr-1">
                             <input type='submit' class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100" value='Post Comment'>
-                        </div>
+                        </div> -->
+                        <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full" type="submit">Post Comment</button>
                      </div>
                 </div>
             </form>

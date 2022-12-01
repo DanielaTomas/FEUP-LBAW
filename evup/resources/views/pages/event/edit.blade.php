@@ -10,7 +10,10 @@
 
   <label for="description"><p>Description:</p></label>
   <input id="description" type="text" name="description" value="<?=$event->description?>">
-
+<!--TODO
+  <label for="eventphoto"><p>Image:</p></label>
+  <input id="eventphoto" type="image" name="eventphoto" value="">
+-->
   <label for="eventaddress"><p>Address:</p></label>
   <input id="eventaddress" type="text" name="eventaddress" value="<?=$event->eventaddress?>">
 
