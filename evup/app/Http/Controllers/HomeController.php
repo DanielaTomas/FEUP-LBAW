@@ -55,7 +55,10 @@ class HomeController extends Controller
       //array_merge($events, $tagEvents);
     //}
     //return response()->json(['msg' => 'Successfully added user '.count($tagEvents)], 200);
-    return $tagEvents;
+    $categories = CategoryController::getAllCategories();
+    $tags = TagController::getAllTags();
+    return response()->json(view('partials.content.publicEvents', ['events' => $tagEvents])->render()
+  , 200);
   }
   
 }

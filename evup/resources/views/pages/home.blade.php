@@ -30,7 +30,7 @@
             </div>
         </section>
         <section id="homeEvents">
-            @each('partials.publicEventCard', $events, 'event')
+            @include('partials.content.publicEvents', ['events' => $events])
         </section>
     </article>
   

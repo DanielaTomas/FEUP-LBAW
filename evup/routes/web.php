@@ -81,6 +81,6 @@ Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
 Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
 
 //Filter
-Route::post('filter_tag', 'HomeController@filterTag');
+Route::post('api/filter_tag', 'HomeController@filterTag');
 
 
