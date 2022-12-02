@@ -26,7 +26,7 @@ class CommentController extends Controller
         return abort(404, 'User not found');
 
      //$this->authorize('create', Comment::class);
-
+/*
      $validator = Validator::make(
         $request->all(),
         [
@@ -41,11 +41,12 @@ class CommentController extends Controller
         }
         return redirect()->back()->withInput()->withErrors($errors);
      }
-  
+  */
       $comment = new Comment;
       $comment->authorid = Auth::id();
       $comment->eventid = $id;
-      $comment->commentcontent = $request->commentcontent;
+      $comment->commentcontent = $request->input('commentcontent');
+      //$comment->commentcontent = $request->commentcontent;
       $comment->commentdate = date("Y-m-d");
       $comment->save();
   
@@ -53,7 +54,7 @@ class CommentController extends Controller
    }
  
 
-  public function delete(Request $request, $id)
+  public function delete($id)
   {
     $comment = Comment::find($id);
     if (is_null($comment))
