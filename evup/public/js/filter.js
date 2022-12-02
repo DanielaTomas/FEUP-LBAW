@@ -3,21 +3,20 @@
 
 const filterTag = (tagid) => {
     sendAjaxRequest('post', `/api/filter_tag`, { 'tagid': tagid }, filterTagHandler);
-    //const tag = event.target
-    /*
-    if (tag.class === "text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-indigo-400 text-blue-700 rounded-full"){
+    const tag = event.target
+    
+    if (tag.classList.contains("bg-indigo-900") ){
         console.log("YEE")
-        tag.className  = "text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-indigo-900 text-blue-700 rounded-full"
+    
     }
     else{
         console.log("AAAAAAAAAAAAI")
-        tag.className = "text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-indigo-400 text-blue-700 rounded-full"
-    }*/
+
+    }
 }
 
 function filterTagHandler() {
     const events = JSON.parse(this.responseText)
-    console.log("events:" + events.length)
     const area = document.getElementById("homeEvents")
     area.innerHTML = events
 }

@@ -37,27 +37,28 @@ class HomeController extends Controller
   public function filterTag(Request $request)
   {
     $tagid = $request->tagid;
+    $tag = Tag::find($tagid);
     /*
     if(in_array($tagid,$this->tagids)){
       $key = array_search($tagid, $this->tagids);
       unset($this->tagids[$key]);
       array_values($this->tagids);
     } else{
+   
       array_push($this->tagids, $tagid);
-    }*/
-    
-    //$events = [];
-    //foreach($this->tagids as $x){
-      $tag = Tag::find($tagid);
-      //return response()->json(['msg' => 'Successfully added user '.$tag->tagname], 200);
+    }
+
+    $events= collect();
+    foreach($this->tagids as $x){
+      $tag = Tag::find($x);
       $tagEvents = $tag->eventTags()->get();
-     
-      //array_merge($events, $tagEvents);
-    //}
-    //return response()->json(['msg' => 'Successfully added user '.count($tagEvents)], 200);
-    $categories = CategoryController::getAllCategories();
-    $tags = TagController::getAllTags();
-    return response()->json(view('partials.content.publicEvents', ['events' => $tagEvents])->render()
+ 
+      $events = $events->merge($tagEvents);
+    }
+    */
+    //return response()->json(['msg' => 'Successfully added user '.count($events)], 200);
+    $events = $tag->eventTags()->get();
+    return response()->json(view('partials.content.publicEvents', ['events' => $events])->render()
   , 200);
   }
   
