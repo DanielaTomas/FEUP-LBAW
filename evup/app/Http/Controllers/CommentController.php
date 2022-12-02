@@ -70,18 +70,18 @@ class CommentController extends Controller
     return redirect()->route('show_event',[$event->eventid]);
   }
 
-/*
-  public function update(Request $request, int $id, int $eventid)
+  public function update(Request $request, int $id, int $commentid)
   {
-      $event = Event::find($eventid);
+
+    $event = Event::find($id);
     if (is_null($event))
-        return abort(404, 'Event not found');
+        return redirect()->back()->withErrors(['event' => 'Event not found, id: ' . $id]);
+   
+    $comment = Comment::find($commentid);
+    if (is_null($comment))
+        return redirect()->back()->withErrors(['comment' => 'Comment not found, id: ' . $commentid]);
 
-    $user = User::find(Auth::id());
-    if (is_null($user))
-        return abort(404, 'User not found');
-
-     //$this->authorize('create', Comment::class);
+     //$this->authorize('update', Comment::class);
 
      $validator = Validator::make(
         $request->all(),
@@ -98,12 +98,24 @@ class CommentController extends Controller
         return redirect()->back()->withInput()->withErrors($errors);
      }
   
-      $comment->commentcontent = $request->commentcontent;
-      //$comment->commentdate = date("Y-m-d");
+      $comment->commentcontent = $request->commentcontent . "[edited]";
       $comment->save();
   
-      return redirect("/event/$event->eventid");
+      return redirect()->route('show_event',[$event->eventid]);
   }
-*/
+
+  public function edit(int $id, int $commentid) 
+  {
+    $comment = Comment::find($commentid);
+
+    if(is_null($comment))
+      return abort(404,'Comment not found');
+
+    //$this->authorize('edit',$comment);
+
+    return view('pages.event.editComment',[
+      'comment'=>$comment
+    ]);
+  }
 
 }

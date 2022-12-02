@@ -21,26 +21,26 @@ class Comment extends Model
 
     public function event() 
     {
-      return $this->belongsTo(Event::class, 'eventId');
+      return $this->belongsTo(Event::class, 'eventid');
     }
 
     public function parent_comment() 
     {
-      return $this->belongsTo(Comment::class, 'parentId');
+      return $this->belongsTo(Comment::class, 'parentid');
     } 
 
     public function child_comments() 
     {
-      return $this->hasMany(Comment::class, 'parentId');
+      return $this->hasMany(Comment::class, 'parentid');
     }
 
     public function uploads() 
     {
-      return $this->hasMany(Upload::class, 'commentId');
+      return $this->hasMany(Upload::class, 'commentid');
     }
 
     public function votes()
     {
-      return $this->belongsToMany(User::class, 'Vote', 'voterId', 'commentId')->withPivot('type');
+      return $this->belongsToMany(User::class, 'Vote', 'voterid', 'commentid')->withPivot('type');
     }
 }
