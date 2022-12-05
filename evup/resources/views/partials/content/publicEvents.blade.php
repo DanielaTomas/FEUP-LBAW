@@ -1,0 +1,1 @@
+@each('partials.publicEventCard', $events, 'event')

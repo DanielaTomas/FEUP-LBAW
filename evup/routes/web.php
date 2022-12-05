@@ -11,6 +11,10 @@
 |
 */
 // Home
+
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'HomeController@list')->name('home');
 Route::get('search','HomeController@searchEvents')->name('search');
 
@@ -63,7 +67,7 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
-Route::get('forgot_password', 'Auth\ResetPasswordController@showSendLinkForm')->name('forgot_password');
+Route::get('forgotPassword', 'Auth\ResetPasswordController@showSendLinkForm')->name('forgot_password');
 Route::post('forgot_password', 'Auth\ResetPasswordController@sendLink')->name('send_link');
 Route::get('reset', 'Auth\ResetPasswordController@showResetPasswordForm')->name('password.reset');
 Route::post('reset', 'Auth\ResetPasswordController@reset')->name('password.update');
@@ -76,5 +80,7 @@ Route::post('event/{id}','EventController@update')->name('update_event');
 Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
 Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
 
+//Filter
+Route::post('api/filter_tag', 'HomeController@filterTag');
 
 
