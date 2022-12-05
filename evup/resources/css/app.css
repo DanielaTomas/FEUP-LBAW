@@ -9,10 +9,6 @@ body {
     margin: 0;
   }
   
-  #content{
-    margin: 4em;
-  }
-  
   main > header > nav{
     display: flex;
     justify-content: space-between;
@@ -52,26 +48,9 @@ body {
     flex-wrap: wrap;
   }
   
-  #eventImage{
-    height: 10em;
-    width: 40em;
-    background-color: blue;
-  }
+
   
-  #eventcard{
-    background-color: white;
-    width: 40em;
-    height: 30em;
-  }
-  
-  #eventCardLower{
-    display: flex;
-    align-items: center;
-  }
-  
-  #eventCardLowerLeft{
-    width: 10em;
-  }
+
   
   
   

@@ -22,7 +22,7 @@
         </div>
 
     </section>
-    <article>
+    <article class="rounded-t-3xl">
         <section id="homeTagsSection">
             <p id="homeTagHeader">Select your interests to get event suggestions based on what you love</p>
             <div id="homeTags">
