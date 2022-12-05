@@ -58,11 +58,11 @@
                     href="{{ url('/login') }}">my Events</a>
             @endif
             <li><a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    href="{{ url('/aboutUs') }}">about Us</a></li>
+                    href="{{ route('about') }}">about Us</a></li>
             <li><a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    href="{{ url('/contactUs') }}">contact Us</a></li>
+                    href="{{ route('contact') }}">contact Us</a></li>
             <li><a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    href="{{ url('/faqs') }}">faqs</a></li>
+                    href="{{ route('faq') }}">faq</a></li>
         </ul>
     </div>
 

@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@list')->name('home');
 Route::get('search','HomeController@searchEvents')->name('search');
 
+// Static Pages
+Route::get('aboutUs', 'StaticPagesController@getAboutUs')->name('about');
+Route::get('contactUs', 'StaticPagesController@getContactUs')->name('contact');
+Route::get('faq', 'StaticPagesController@getFaq')->name('faq');
+
+
 //User
 Route::get('user/{id}/public', 'UserController@viewUser')->name('publicProfile')->where(['id' => '[0-9]+']);
 Route::get('user/{userid}', 'UserController@profile')->name('userProfile')->where(['userid' => '[0-9]+']);
