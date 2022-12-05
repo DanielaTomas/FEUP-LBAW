@@ -17,7 +17,7 @@
           </div>
 
 
-        <div class="flex md:gap-8 justify-center mt-8">
+        <div class="flex md:gap-8 justify-center mt-8 mb-8">
             <div class="card w-96 rounded-xl p-8 bg-gray-900 text-white shadow-xl hover:shadow">
                 <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="storage/avatar_placeholder.png" alt="Daniela Tomás's Avatar">
                 <div class="text-center mt-2 text-3xl font-medium">Daniela Tomás</div>
