@@ -53,22 +53,23 @@
                         </section>
 
                     </div>
-                    
+
                 </div>
                 @if (Auth::check())
-                        <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Invite another user</h2>
-                        <div class="flex justify-center flex-col">
-                            <div class="mb-3 xl:w-96">
-                                <div class="input-group relative flex  items-stretch w-full mb-4">
-                                    <input id="mySearch" name="search" type="search"
-                                        class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                        placeholder="Enter user's email" aria-label="Search"
-                                        aria-describedby="button-addon2">
-                                </div>
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Invite user</h2>
+                    </div>
+                    <div class="flex justify-center flex-col">
+                        <div class="mb-3 xl:w-96">
+                            <div class="input-group relative flex  items-stretch w-full mb-4">
+                                <input id="mySearch" name="search" type="search"
+                                    class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    placeholder="Enter user's email" aria-label="Search" aria-describedby="button-addon2">
                             </div>
-                            <div id="userResults" class="flex flex-wrap gap-5"> </div>
                         </div>
-                    @endif
+                        <div id="userResults" class="flex  flex-col gap-5 max-w-xl"> </div>
+                    </div>
+                @endif
             </section>
 
             <section class="flex flex-col  p-6 max-w-xl grow">
@@ -78,7 +79,7 @@
 
 
 
-                <section >
+                <section>
                     <div class=" mx-auto ">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Comments</h2>

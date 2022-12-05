@@ -62,7 +62,8 @@ class UserController extends Controller
         $users = $users->diff($usersInvited);
         $users = $users->diff($usersAttending);
 
-        return $users;
+        return response()->json(view('partials.content.usersToInvite', ['users' => $users])->render()
+        , 200);
     }
 
     public function inviteUser(Request $request)
