@@ -23,7 +23,7 @@
                 <div class="text-center mt-2 text-3xl font-medium">Daniela Tomás</div>
                 <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="">@daniela</a></div>
                 <div class="text-center font-normal text-lg">up202004946@edu.fc.up.pt</div>
-                <div class="px-6 text-center mt-2 font-normal text-sm mb-4">I'm currently studying Computer Science at FEUP</div>
+                <div class="px-6 text-center mt-2 font-normal text-sm mb-4">Description</div>
             </div>
 
             <div class="card w-96 rounded-xl p-8 bg-gray-900 text-white shadow-xl hover:shadow">

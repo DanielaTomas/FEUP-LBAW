@@ -7,14 +7,15 @@
             <button><i class="fa-brands fa-instagram"></i></button>
         </div>
         <div class="mt-28 flex flex-col md:flex-row md:justify-between items-center text-sm text-gray-400">
-            <p class="order-2 md:order-1 mt-8 md:mt-0"> &copy; Evup, 2022. </p>
+            <p class="order-2 md:order-1 mt-8 md:mt-0"> &copy; EvUP, 2022. </p>
             <div class="order-1 md:order-2">
-                <a id="faqs" class="px-2" href="{{ url('/faqs') }}">faqs</a>
-                <a id="aboutUs" class="px-2 border-l" href="{{ url('/aboutUs') }}">about us</a>
+                <a id="faqs" class="px-2" href="{{ url('/faqs') }}">Faqs</a>
+                <a id="contactUs" class="px-2 border-l" href="{{ url('/contactUs') }}">Contact Us</a>
+                <a id="aboutUs" class="px-2 border-l" href="{{ url('/aboutUs') }}">About Us</a>
                 @if (Auth::check())
-                    <a id="myEvents" class="px-2 border-l" href="{{ url('/myEvents') }}">my Events</a>
+                    <a id="myEvents" class="px-2 border-l" href="{{ url('/myEvents') }}">My Events</a>
                 @else
-                    <a id="myEvents" class="px-2 border-l" href="{{ url('/') }}">my Events</a>
+                    <a id="myEvents" class="px-2 border-l" href="{{ url('/') }}">My Events</a>
                 @endif
             </div>
         </div>

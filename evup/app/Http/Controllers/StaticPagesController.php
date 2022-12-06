@@ -23,7 +23,7 @@ class StaticPagesController extends Controller
      */
     public function getContactUs()
     {
-        return view('pages.staticPages.contact');
+        return view('pages.staticPages.contactUs');
     }
 
     /**
