@@ -21,6 +21,7 @@ Route::get('search','HomeController@searchEvents')->name('search');
 // Static Pages
 Route::get('aboutUs', 'StaticPagesController@getAboutUs')->name('about');
 Route::get('contactUs', 'StaticPagesController@getContactUs')->name('contact');
+Route::post('contactUs', 'StaticPagesController@saveContact')->name('contact_save');
 Route::get('faq', 'StaticPagesController@getFaq')->name('faq');
 
 
