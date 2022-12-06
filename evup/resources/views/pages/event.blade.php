@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <article data-id="{{ $event->eventid }}" class="rounded-t-3xl ">
+    <article data-id="{{ $event->eventid }}" class="rounded-t-3xl">
 
         <div class="flex flex-row items-center p-6">
             <h1 class=" text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
