@@ -22,60 +22,9 @@
             @endauth
             <button><i class="fa-solid fa-triangle-exclamation fa-2x"></i></button>
         </div>
-    
-    <section id="eventimage">
-        <img src="{{ $event->eventphoto }}">
-        <div>
-            <button><i class="fa-solid fa-bell"></i></button>
-            <?php if($event->public == false) { ?>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                </svg>
-            <?php } ?>
-        </div>
-    </section>
-
-    <section id=eventCardLower class="flex flex-row justify-around p-4 font-bold leading-none text-gray-800 bg-gray-400 md:flex-col md:items-center md:justify-center md:w-1/4">
-            <p id=eventCardStartDate> Start: {{ $event->startdate }} </p>
-            <p id=eventCardEndDate> End: {{ $event->enddate }} </p>
-            <p id=eventCardLocation> Address: {{ $event->eventaddress }} </p>
-            <p id=eventCardOrganizer> Organizer: {{ $event->organizer()->first()->username }} </p>
-    </section>
 
     <section>
-         <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Request to join</button>
-    </section>
-
-    <section>
-        <h2 class="mb-4 text-3xl leading-none tracking-tight text-gray-800">Description</h2>
-        <p id=eventCardDescription> {{ $event->description }} </p>
-        <div id=eventCardTags> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
-
-        <h2 class="mb-4 text-3xl leading-none tracking-tight text-gray-800">Comments</h2>
-        @auth
-        <?php 
-          if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) { 
-        ?>
-            <div class="flex mx-auto items-center justify-center mt-56 mx-8 mb-4 max-w-lg">
-                <form method="post" class="w-full max-w-xl" action="{{ route('create_comment',$event->eventid) }}">
-                    @csrf
-                    <div class="flex flex-wrap -mx-3 mb-6">
-                        <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Leave a comment</h2>
-                        <div class="w-full md:w-full px-3 mb-2 mt-2">
-                          <input class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" id="commentcontent" type="text" name="commentcontent" placeholder="Type Your Comment" required>
-                        </div>
-                        <div class="w-full md:w-full flex items-start md:w-full px-3">
-                            <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full" type="submit">Post Comment</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        <?php } ?>
-        @endauth
-        <div class="flex items-center">
-         <div id="eventCardComments"> @each('partials.comment', $event->comments()->orderBy('commentdate')->get(), 'comment')</div>
-        </div>
-
+        
         <section class=" flex flex-row flex-wrap justify-between">
 
             <section class="flex flex-col grow p-6 max-w-xl">
@@ -101,13 +50,11 @@
 
                     <div class="flex flex-row justify-center">
                         <section>
-                            <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Request to
-                                join</button>
+                            <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Request to join</button>
                         </section>
-
                     </div>
-
                 </div>
+
                 @if (Auth::check())
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Invite user</h2>
@@ -130,14 +77,30 @@
                 <p class="py-4"> {{ $event->description }} </p>
                 <div class="mb-4"> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
 
-
-
                 <section>
                     <div class=" mx-auto ">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Comments</h2>
                         </div>
-                        @if (Auth::check())
+                        @auth
+                        <?php 
+                        if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) { 
+                        ?>
+                            <div class="flex mx-auto items-center justify-center mt-56 mx-8 mb-4 max-w-lg">
+                                <form method="post" class="mb-6" action="{{ route('create_comment',$event->eventid) }}">
+                                    @csrf
+                                    <div class="flex flex-wrap -mx-3 mb-6">
+                                        <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Leave a comment</h2>
+                                        <div class="w-full md:w-full px-3 mb-2 mt-2">
+                                            <input class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" id="commentcontent" type="text" name="commentcontent" placeholder="Type Your Comment" required>
+                                        </div>
+                                        <div class="w-full md:w-full flex items-start md:w-full px-3">
+                                            <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full" type="submit">Post Comment</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+        <!--
                             <form class="mb-6">
                                 <div
                                     class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -151,7 +114,8 @@
                                     Post comment
                                 </button>
                             </form>
-                        @endif
+        -->             <?php } ?>
+                        @endauth
                         @each(
                             'partials.comment',
                             $event->comments()->orderBy('commentdate')->get(),
