@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS answer CASCADE;
 DROP TABLE IF EXISTS upload CASCADE;
 DROP TABLE IF EXISTS event_category CASCADE;
 DROP TABLE IF EXISTS event_tag CASCADE;
+DROP TABLE IF EXISTS contact CASCADE;
 
 DROP TYPE IF EXISTS notificationtype;
 DROP TYPE IF EXISTS AccountStatus;
@@ -163,6 +164,14 @@ CREATE TABLE Event_Tag(
   PRIMARY KEY (eventId,tagId)
 );
 
+-- Added during PA development
+CREATE TABLE Contact(
+  contactId SERIAL PRIMARY KEY,
+  name VARCHAR(150) NOT NULL, 
+  email TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  message TEXT NOT NULL
+);
 
 -----------------------------------------
 -- Indexes
