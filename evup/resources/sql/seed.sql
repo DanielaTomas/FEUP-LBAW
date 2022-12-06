@@ -720,16 +720,16 @@ insert into Poll (pollId, eventId, pollContent) values (10, 7, 'How useful will 
 
 -- Comment --
 
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (1, 4, 26, 'I am looking forward to it!!', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (2, 8, 8, 'I have some questions about the event. Someone can help me?', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (3, 7, 19, 'Looks very useful', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (4, 2, 18, ':)', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (5, 5, 11, ':(', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (6, 1, 1, 'It was fun', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (7, 9, 7, 'This event changed my life!', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (8, 2, 27, 'I did not like the event. I am disappointed.', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (9, 7, 10, 'Where is the event?', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (10, 5, 1, 'Nice!', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (4, 4, 'I am looking forward to it!!', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (8, 8, 'I have some questions about the event. Someone can help me?', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Looks very useful', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, ':)', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (5, 5, ':(', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (1, 1, 'It was fun', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (9, 9, 'This event changed my life!', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 2, 'I did not like the event. I am disappointed.', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Where is the event?', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, 'Nice!', CURRENT_TIMESTAMP);
 
 -- JoinRequest --
 

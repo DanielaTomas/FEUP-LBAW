@@ -20,6 +20,7 @@
     </script>
     <script type="text/javascript" src={{ asset('js/app.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/event.js') }} defer></script>
+    <script type="text/javascript" src={{ asset('js/event.comments.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/organizer.users.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/admin.tabs.js') }} defer></script>

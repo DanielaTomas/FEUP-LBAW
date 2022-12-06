@@ -83,9 +83,14 @@ Route::post('reset', 'Auth\ResetPasswordController@reset')->name('password.updat
 
 Route::get('event/{id}','EventController@show')->name('show_event');
 Route::get('event/{id}/edit','EventController@edit')->where(['id' => '[0-9]+'])->name('edit_event');
-Route::post('event/{id}','EventController@update')->name('update_event');
+Route::post('event/{id}/update','EventController@update')->name('update_event');
 Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
 Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
+Route::post('event/{id}/delete/{commentid}', 'CommentController@deleteComment')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('delete_comment'); 
+Route::post('event/{id}/create', 'CommentController@create')->where(['id' => '[0-9]+'])->name('create_comment'); 
+Route::post('event/{id}/editComment/{commentid}/update', 'CommentController@update')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('update_comment');
+Route::post('event/{id}/editComment/{commentid}', 'CommentController@edit')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('edit_comment'); 
+
 
 //Filter
 Route::post('api/filter_tag', 'HomeController@filterTag');
