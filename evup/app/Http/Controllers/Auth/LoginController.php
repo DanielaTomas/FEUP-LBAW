@@ -56,6 +56,13 @@ class LoginController extends Controller
                 'ban' => 'Your account has been banned by an administrator. You may be able to appeal this ban in the future.',
             ]);
         }
+        else if ($user->accountstatus == 'Disabled') {
+            Auth::logout();
+
+            return back()->withErrors([
+                'deleted' => 'This account has been deleted.',
+            ]);
+        }
 
         return redirect()->intended($this->redirectPath());
     }

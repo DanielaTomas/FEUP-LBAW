@@ -31,6 +31,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token'
     ];
+    protected $nullable = ['userphoto', 'remember_token'];
+
+    public function delete_info() {
+        foreach($this->nullable as $field) {
+            $this->{$field} = null;
+        }
+
+        $this->username = 'deleteduser' . $this->userid;
+        $this->name = 'Deleted User';
+        $this->email = 'deleteduser' . $this->userid . '@evup.com';
+        $this->password = 'deleteduser' . $this->userid;
+        $this->accountstatus = 'Disabled';
+
+        $this->save();
+    }
     
     public function cards() {
         return $this->hasMany(Card::class);
@@ -39,6 +54,10 @@ class User extends Authenticatable
     public function events()
     {
         return $this->belongsToMany(Event::class, 'attendee', 'attendeeid', 'eventid');
+    }
+
+    public function createdEvents() {
+        return $this->hasMany(Event::class, "userid");
     }
 
     public function comments()
