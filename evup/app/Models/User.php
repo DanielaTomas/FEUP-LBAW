@@ -31,6 +31,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token'
     ];
+    protected $nullable = ['userphoto', 'remember_token'];
+
+    public function delete_info() {
+        foreach($this->nullable as $field) {
+            $this->{$field} = null;
+        }
+
+        $this->username = 'deleteduser' . $this->userid;
+        $this->name = 'Deleted User';
+        $this->email = 'deleteduser' . $this->userid . '@evup.com';
+        $this->password = 'deleteduser' . $this->userid;
+        $this->accountstatus = 'Disabled';
+
+        $this->save();
+    }
     
     public function cards() {
         return $this->hasMany(Card::class);
@@ -41,9 +56,18 @@ class User extends Authenticatable
         return $this->belongsToMany(Event::class, 'attendee', 'attendeeid', 'eventid');
     }
 
+    public function createdEvents() {
+        return $this->hasMany(Event::class, "userid");
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class, 'authorid');
+    }
+
+    public function requests()
+    {
+        return $this->hasMany(OrganizerRequest::class, 'requesterid');
     }
 
     public function votes()
@@ -56,6 +80,11 @@ class User extends Authenticatable
         return $this->belongsToMany(PollOption::class, 'Answer', 'userId', 'pollOptionId');
     }
 
+
+    public function request(){
+        return $this->hasMany(OrganizerRequest::class, 'requesterId');
+    }
+    
     public function reports()
     {
         return $this->hasMany(Report::class, 'reporterId');
@@ -105,5 +134,14 @@ class User extends Authenticatable
     {
         $invited = $this->invites_sent()->where('inviteeid','=', $invitedUserId)->where('eventid','=', $eventId)->get()->count();
         return $invited > 0;
+    }
+
+    public function hasRequest(){
+        
+        $req = $this->hasMany(OrganizerRequest::class, 'requesterid')->where('requeststatus', '=', NULL)->count();
+        if($req==0){
+            return false;
+        }
+        return true;
     }
 }

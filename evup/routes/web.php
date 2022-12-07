@@ -21,6 +21,7 @@ Route::get('search','HomeController@searchEvents')->name('search');
 // Static Pages
 Route::get('aboutUs', 'StaticPagesController@getAboutUs')->name('about');
 Route::get('contactUs', 'StaticPagesController@getContactUs')->name('contact');
+Route::post('contactUs', 'StaticPagesController@saveContact')->name('contact_save');
 Route::get('faq', 'StaticPagesController@getFaq')->name('faq');
 
 
@@ -28,10 +29,10 @@ Route::get('faq', 'StaticPagesController@getFaq')->name('faq');
 Route::get('user/{id}/public', 'UserController@viewUser')->name('publicProfile')->where(['id' => '[0-9]+']);
 Route::get('user/{userid}', 'UserController@profile')->name('userProfile')->where(['userid' => '[0-9]+']);
 Route::get('user/{id}/edit', 'UserController@showEditForms')->name('edit_user')->where(['id' => '[0-9]+']);
+Route::get('/user/{id}/organizerRequest', 'UserController@organizerRequest')->where(['id' => '[0-9]+'])->name('request_organizer');
 Route::post('user/{id}/edit', 'UserController@update')->name('editUser')->where(['id' => '[0-9]+']);
 Route::post('/user/deny/{id}', 'UserController@denyRequest')->where(['id' => '[0-9]+'])->name('invite_request_deny');
 Route::post('/user/accept/{id}', 'UserController@acceptRequest')->where(['id' => '[0-9]+'])->name('invite_request_accept');
-Route::post('user/{id}/organizerRequest/', 'UserController@organizerRequest')->where(['id' => '[0-9]+'])->name('request_organizer');
 Route::post('user/{id}/delete', 'UserController@delete')->where(['id' => '[0-9]+'])->name('delete_user');
 //  /user/{id}/requestOrganizer:
 //  /api/user/{id}/attended:
@@ -82,9 +83,14 @@ Route::post('reset', 'Auth\ResetPasswordController@reset')->name('password.updat
 
 Route::get('event/{id}','EventController@show')->name('show_event');
 Route::get('event/{id}/edit','EventController@edit')->where(['id' => '[0-9]+'])->name('edit_event');
-Route::post('event/{id}','EventController@update')->name('update_event');
+Route::post('event/{id}/update','EventController@update')->name('update_event');
 Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
 Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
+Route::post('event/{id}/delete/{commentid}', 'CommentController@deleteComment')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('delete_comment'); 
+Route::post('event/{id}/create', 'CommentController@create')->where(['id' => '[0-9]+'])->name('create_comment'); 
+Route::post('event/{id}/editComment/{commentid}/update', 'CommentController@update')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('update_comment');
+Route::post('event/{id}/editComment/{commentid}', 'CommentController@edit')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('edit_comment'); 
+
 
 //Filter
 Route::post('api/filter_tag', 'HomeController@filterTag');

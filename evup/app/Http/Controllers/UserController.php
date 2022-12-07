@@ -109,6 +109,7 @@ class UserController extends Controller
     
         $ordered_events = $user->events()->get();
         $ordered_invites = $user->invites_received()->get();
+        $requests = $user->requests()->get();
 
         return view('pages.public_profile', [
             'user' => $user,
@@ -133,7 +134,7 @@ class UserController extends Controller
 
         $ordered_events = $user->events()->get();
         $ordered_invites = $user->invites_received()->get();
-
+        
         return view('pages.profile', [
             'user' => $user,
             'events' => $ordered_events,
@@ -204,18 +205,29 @@ class UserController extends Controller
 
         $this->authorize('delete', $user);
 
-        /*$validator = Validator::make($request->all(), [
-            'password' => 'required|string|password'
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string|currentpassword'
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors($validator->errors());*/
+            return redirect()->back()->withErrors(['password' => 'The password you entered does not match your current password.']);
 
-        $deleted = $user->delete();
-        if ($deleted)
-            return redirect('/');
-        else
-            return redirect()->back()->withErrors(['user' => 'Failed to delete user account. Try again later']);
+        if ($user->usertype == 'Organizer') {
+            // Cancels events created by the user
+            $createdEvents = $user->createdEvents()->get();
+
+            foreach ($createdEvents as $event) {
+                (new AdminController)->cancelEvent($event->eventid);
+            }
+        }
+
+        $user->events()->detach();
+
+        // Nullable fields are set to NULL and the rest is filled with dummy text ('deleteduser{id}')
+        $user = $user->delete_info();
+        Auth::logout();
+
+        return redirect()->route('home')->with('success', 'Your account has been deleted.');
     }
 
     public function denyRequest(int $id)
@@ -281,11 +293,17 @@ class UserController extends Controller
 
     public function organizerRequest(int $id)
     {
+
         $request = new OrganizerRequest;
         $request->requesterid=$id;
         $request->save();
 
         //$this->authorize('organizerRequest', $request);
-        return redirect("/user/$id");  
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Request was successfully accepted',
+        ], 200);  
     }
+
+
 }

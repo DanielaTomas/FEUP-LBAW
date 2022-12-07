@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS answer CASCADE;
 DROP TABLE IF EXISTS upload CASCADE;
 DROP TABLE IF EXISTS event_category CASCADE;
 DROP TABLE IF EXISTS event_tag CASCADE;
+DROP TABLE IF EXISTS contact CASCADE;
 
 DROP TYPE IF EXISTS notificationtype;
 DROP TYPE IF EXISTS AccountStatus;
@@ -163,6 +164,14 @@ CREATE TABLE Event_Tag(
   PRIMARY KEY (eventId,tagId)
 );
 
+-- Added during PA development
+CREATE TABLE Contact(
+  contactId SERIAL PRIMARY KEY,
+  name VARCHAR(150) NOT NULL, 
+  email TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  message TEXT NOT NULL
+);
 
 -----------------------------------------
 -- Indexes
@@ -711,16 +720,16 @@ insert into Poll (pollId, eventId, pollContent) values (10, 7, 'How useful will 
 
 -- Comment --
 
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (1, 4, 26, 'I am looking forward to it!!', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (2, 8, 8, 'I have some questions about the event. Someone can help me?', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (3, 7, 19, 'Looks very useful', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (4, 2, 18, ':)', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (5, 5, 11, ':(', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (6, 1, 1, 'It was fun', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (7, 9, 7, 'This event changed my life!', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (8, 2, 27, 'I did not like the event. I am disappointed.', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (9, 7, 10, 'Where is the event?', CURRENT_TIMESTAMP);
-insert into Comment (commentId, authorId, eventId, commentContent, commentDate) values (10, 5, 1, 'Nice!', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (4, 4, 'I am looking forward to it!!', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (8, 8, 'I have some questions about the event. Someone can help me?', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Looks very useful', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, ':)', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (5, 5, ':(', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (1, 1, 'It was fun', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (9, 9, 'This event changed my life!', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 2, 'I did not like the event. I am disappointed.', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Where is the event?', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, 'Nice!', CURRENT_TIMESTAMP);
 
 -- JoinRequest --
 
@@ -737,16 +746,16 @@ insert into JoinRequest (joinRequestId, requesterId, eventId) values (10, 1, 9);
 
 -- OrganizerRequest --
 
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (1, 5, false);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (2, 5, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (3, 9, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (4, 4, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (5, 4, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (6, 5, false);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (7, 4, false);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (8, 9, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (9, 4, true);
-insert into OrganizerRequest (organizerRequestId, requesterId) values (10, 8);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 5, false);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 5, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 9, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 5, false);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, false);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 9, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, true);
+insert into OrganizerRequest ( requesterId) values (8);
 
 -- Notification --
 

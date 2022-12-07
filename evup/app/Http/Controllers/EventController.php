@@ -213,6 +213,7 @@ class EventController extends Controller
       $validator = Validator::make($request->all(), [
           'eventname' => 'required|string|max:255',
           'description' => 'required|string|max:255',
+          //TODO 'eventphoto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
           'eventaddress' => 'required|string|max:255',
           'startdate' => 'required|date|after:tomorrow',
           'enddate' => 'required|date|after:startdate',
@@ -229,6 +230,7 @@ class EventController extends Controller
 
       if (isset($request->eventname)) $event->eventname = $request->eventname;
       if (isset($request->description)) $event->description = $request->description;
+      //if (isset($request->eventphoto)) $event->eventphoto = $request->eventphoto;
       if (isset($request->eventaddress)) $event->eventaddress = $request->eventaddress;
       if (isset($request->startdate)) $event->startdate = $request->startdate;
       if (isset($request->enddate)) $event->enddate = $request->enddate;
