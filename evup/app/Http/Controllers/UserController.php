@@ -109,6 +109,7 @@ class UserController extends Controller
     
         $ordered_events = $user->events()->get();
         $ordered_invites = $user->invites_received()->get();
+        $requests = $user->requests()->get();
 
         return view('pages.public_profile', [
             'user' => $user,
@@ -133,7 +134,7 @@ class UserController extends Controller
 
         $ordered_events = $user->events()->get();
         $ordered_invites = $user->invites_received()->get();
-
+        
         return view('pages.profile', [
             'user' => $user,
             'events' => $ordered_events,
@@ -292,11 +293,17 @@ class UserController extends Controller
 
     public function organizerRequest(int $id)
     {
+
         $request = new OrganizerRequest;
         $request->requesterid=$id;
         $request->save();
 
         //$this->authorize('organizerRequest', $request);
-        return redirect("/user/$id");  
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Request was successfully accepted',
+        ], 200);  
     }
+
+
 }

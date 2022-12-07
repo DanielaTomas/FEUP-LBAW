@@ -11,8 +11,14 @@ class OrganizerRequest extends Model
     protected $table = 'organizerrequest';
     protected $primaryKey = 'organizerrequestid';
 
+    protected $fillable = [
+        'requesterId',
+        'requestStatus'  
+    ];
     public function notifications()
     {
         return $this->hasMany(Notification::class, 'organizerRequestid');
     } 
+
+    
 }
