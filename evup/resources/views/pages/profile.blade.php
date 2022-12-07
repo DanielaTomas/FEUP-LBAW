@@ -84,7 +84,7 @@
                     <div id="myInvitationsHeader" class="m-4 text-center">
                         <h2 class="text-2xl font-semibold leading-tight">My Invitations</h2>
                     </div>
-                    <section id="myInvitationsProfile" class="flex flex-col p-5 max-w-2xl">
+                    <section id="myInvitationsProfile" class="flex flex-col p-5 max-w-2xl mx-auto">
                         @each('partials.invitation', $invites, 'invite')
                     </section>
                 </article>

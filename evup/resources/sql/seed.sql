@@ -696,14 +696,14 @@ insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values
 
 insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 2, null);
 insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 3, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 3, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 2, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 5, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 8, null);
 insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 2, null);
-insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 3, null);
-insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 2, null);
-insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 3, null);
-insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (2, 1, 2, null);
-insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 3, null);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 4, null);
 insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (4, 1, 4, false);
-insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 5, false);
+insert into Invitation ( inviterId, inviteeId, eventId, invitationStatus) values (3, 1, 1, false);
 
 -- Poll --
 
