@@ -211,11 +211,22 @@ class UserController extends Controller
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors());*/
 
-        $deleted = $user->delete();
-        if ($deleted)
-            return redirect('/');
-        else
-            return redirect()->back()->withErrors(['user' => 'Failed to delete user account. Try again later']);
+        if ($user->usertype == 'Organizer') {
+            // Cancels events created by the user
+            $createdEvents = $user->createdEvents()->get();
+
+            foreach ($createdEvents as $event) {
+                (new AdminController)->cancelEvent($event->eventid);
+            }
+        }
+
+        $user->events()->detach();
+
+        // Nullable fields are set to NULL and the rest is filled with dummy text ('deleteduser{id}')
+        $user = $user->delete_info();
+        Auth::logout();
+
+        return redirect()->route('home')->with('success', 'Your account has been deleted.');
     }
 
     public function denyRequest(int $id)
