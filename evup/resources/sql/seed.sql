@@ -737,16 +737,16 @@ insert into JoinRequest (joinRequestId, requesterId, eventId) values (10, 1, 9);
 
 -- OrganizerRequest --
 
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (1, 5, false);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (2, 5, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (3, 9, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (4, 4, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (5, 4, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (6, 5, false);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (7, 4, false);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (8, 9, true);
-insert into OrganizerRequest (organizerRequestId, requesterId, requestStatus) values (9, 4, true);
-insert into OrganizerRequest (organizerRequestId, requesterId) values (10, 8);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 5, false);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 5, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 9, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 5, false);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, false);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 9, true);
+insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, true);
+insert into OrganizerRequest ( requesterId) values (8);
 
 -- Notification --
 

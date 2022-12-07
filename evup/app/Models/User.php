@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class, 'authorid');
     }
 
+    public function requests()
+    {
+        return $this->hasMany(OrganizerRequest::class, 'requesterid');
+    }
+
     public function votes()
     {
         return $this->belongsToMany(Comment::class, 'vote', 'voterid', 'commentid')->withPivot('type');
@@ -56,6 +61,11 @@ class User extends Authenticatable
         return $this->belongsToMany(PollOption::class, 'Answer', 'userId', 'pollOptionId');
     }
 
+
+    public function request(){
+        return $this->hasMany(OrganizerRequest::class, 'requesterId');
+    }
+    
     public function reports()
     {
         return $this->hasMany(Report::class, 'reporterId');
@@ -105,5 +115,14 @@ class User extends Authenticatable
     {
         $invited = $this->invites_sent()->where('inviteeid','=', $invitedUserId)->where('eventid','=', $eventId)->get()->count();
         return $invited > 0;
+    }
+
+    public function hasRequest(){
+        
+        $req = $this->hasMany(OrganizerRequest::class, 'requesterid')->where('requeststatus', '=', NULL)->count();
+        if($req==0){
+            return false;
+        }
+        return true;
     }
 }
