@@ -204,12 +204,12 @@ class UserController extends Controller
 
         $this->authorize('delete', $user);
 
-        /*$validator = Validator::make($request->all(), [
-            'password' => 'required|string|password'
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string|currentpassword'
         ]);
 
         if ($validator->fails())
-            return redirect()->back()->withErrors($validator->errors());*/
+            return redirect()->back()->withErrors(['password' => 'The password you entered does not match your current password.']);
 
         if ($user->usertype == 'Organizer') {
             // Cancels events created by the user
