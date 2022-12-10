@@ -46,10 +46,6 @@ class User extends Authenticatable
 
         $this->save();
     }
-    
-    public function cards() {
-        return $this->hasMany(Card::class);
-    }
 
     public function events()
     {
@@ -70,6 +66,11 @@ class User extends Authenticatable
         return $this->hasMany(OrganizerRequest::class, 'requesterid');
     }
 
+    public function joinRequests()
+    {
+        return $this->hasMany(JoinRequest::class, 'requesterid');
+    }
+
     public function votes()
     {
         return $this->belongsToMany(Comment::class, 'vote', 'voterid', 'commentid')->withPivot('type');
@@ -78,11 +79,6 @@ class User extends Authenticatable
     public function answers()
     {
         return $this->belongsToMany(PollOption::class, 'Answer', 'userId', 'pollOptionId');
-    }
-
-
-    public function request(){
-        return $this->hasMany(OrganizerRequest::class, 'requesterId');
     }
     
     public function reports()

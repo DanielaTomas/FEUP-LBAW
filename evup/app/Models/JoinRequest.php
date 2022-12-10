@@ -8,11 +8,11 @@ class JoinRequest extends Model
 {
     public $timestamps  = false;
 
-    protected $table = 'JoinRequest';
-    protected $primaryKey = 'joinRequestId';
+    protected $table = 'joinrequest';
+    protected $primaryKey = 'joinrequestid';
 
     public function notifications()
     {
-        return $this->hasMany(Notification::class, 'joinRequestId');
+        return $this->hasMany(Notification::class, 'joinRequestid');
     } 
 }

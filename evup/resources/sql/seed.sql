@@ -735,16 +735,16 @@ insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 
 
 -- JoinRequest --
 
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (1, 1, 29, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (2, 4, 10, false);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (3, 4, 16, false);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (4, 2, 9, false);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (5, 1, 10, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (6, 2, 12, false);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (7, 3, 2, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (8, 1, 17, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (9, 3, 23, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId) values (10, 1, 9);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 1, 29, true);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 4, 10, false);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 4, 16, false);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 2, 9, false);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 1, 10, true);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 2, 12, false);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 3, 2, true);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 1, 17, true);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 3, 23, true);
+insert into JoinRequest ( requesterId, eventId) values ( 1, 9);
 
 -- OrganizerRequest --
 

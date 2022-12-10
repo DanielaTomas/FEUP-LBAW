@@ -61,3 +61,11 @@ function declineInviteHandler(eventid) {
     space.append(newButtonD)
 
 }
+const requestToJoin = (eventid) => {
+    sendAjaxRequest('post', `/api/requestToJoin`, { 'eventid': eventid }, requestToJoinHandler(eventid));
+}
+
+function requestToJoinHandler(eventid) {
+    button = select('#requestToJoinButton' + eventid)
+    button.remove()
+}
