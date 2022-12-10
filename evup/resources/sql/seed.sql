@@ -343,9 +343,11 @@ CREATE TRIGGER join_request_reviewed
 CREATE FUNCTION organizerRequestReviewed() RETURNS TRIGGER AS
 $BODY$
 BEGIN
+  IF (NEW.requestStatus) THEN
     INSERT INTO Notification (receiverId,organizerRequestId,notificationDate,notificationType)
-    VALUES(New.requesterId,New.organizerRequestId, DATE('now'),'OrganizerRequestReviewed');
-    RETURN NULL;
+    VALUES(NEW.requesterId,NEW.organizerRequestId, DATE('now'),'OrganizerRequestReviewed');
+  END IF;  
+  RETURN NULL;
 END
 $BODY$
 
@@ -394,7 +396,7 @@ CREATE TRIGGER new_poll_notification
 CREATE FUNCTION updateUserToOrg() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.requestStatus == TRUE) THEN
+    IF (NEW.requestStatus = TRUE) THEN
         UPDATE Users 
         SET userType = 'Organizer'
         WHERE NEW.requesterId=Users.userId;
@@ -733,39 +735,33 @@ insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 
 
 -- JoinRequest --
 
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (1, 1, 29, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (2, 4, 10, false);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (3, 4, 16, false);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (4, 2, 9, false);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (5, 1, 10, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (6, 2, 12, false);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (7, 3, 2, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (8, 1, 17, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId, requestStatus) values (9, 3, 23, true);
-insert into JoinRequest (joinRequestId, requesterId, eventId) values (10, 1, 9);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 1, 29, true);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 4, 10, false);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 4, 16, false);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 2, 9, false);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 1, 10, true);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 2, 12, false);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 3, 2, true);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 1, 17, true);
+insert into JoinRequest ( requesterId, eventId, requestStatus) values ( 3, 23, true);
+insert into JoinRequest ( requesterId, eventId) values ( 1, 9);
 
 -- OrganizerRequest --
 
 insert into OrganizerRequest ( requesterId, requestStatus) values ( 5, false);
-insert into OrganizerRequest ( requesterId, requestStatus) values ( 5, true);
-insert into OrganizerRequest ( requesterId, requestStatus) values ( 9, true);
-insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, true);
-insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, true);
-insert into OrganizerRequest ( requesterId, requestStatus) values ( 5, false);
-insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, false);
 insert into OrganizerRequest ( requesterId, requestStatus) values ( 9, true);
 insert into OrganizerRequest ( requesterId, requestStatus) values ( 4, true);
 insert into OrganizerRequest ( requesterId) values (8);
 
 -- Notification --
 
-insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (1, 5, 30, 1, 9, 8, 9, CURRENT_TIMESTAMP, 'EventChange', false);
-insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (2, 1, 27, 4, 8, 6, 7, CURRENT_TIMESTAMP, 'JoinRequestReviewed', true);
-insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (3, 8, 28, 8, 8, 2, 4,CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
-insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (4, 9, 1, 8, 9, 5, 2, CURRENT_TIMESTAMP, 'InviteReceived', true);
-insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (5, 4, 7, 9, 7, 3, 7, CURRENT_TIMESTAMP, 'InviteAccepted', false);
-insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (6, 3, 22, 5, 4, 7, 9, CURRENT_TIMESTAMP, 'NewPoll', false);
-insert into Notification (notificationId, receiverId, eventId, joinRequestId, organizerRequestId, invitationId, pollId, notificationDate, notificationType, notificationStatus) values (7, 5, 13, 6, 4, 4, 10, CURRENT_TIMESTAMP, 'NewInvitation', true);
+insert into Notification ( receiverId, eventId, notificationDate, notificationType, notificationStatus) values (1, 5, CURRENT_TIMESTAMP, 'EventChange', false);
+insert into Notification ( receiverId, joinRequestId, notificationDate, notificationType, notificationStatus) values ( 1, 7, CURRENT_TIMESTAMP, 'JoinRequestReviewed', true);
+insert into Notification ( receiverId, organizerRequestId, notificationDate, notificationType, notificationStatus) values ( 8, 2, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
+insert into Notification ( receiverId, invitationId, notificationDate, notificationType, notificationStatus) values ( 9, 9, CURRENT_TIMESTAMP, 'InviteReceived', true);
+insert into Notification ( receiverId, invitationId, notificationDate, notificationType, notificationStatus) values ( 4, 3, CURRENT_TIMESTAMP, 'InviteAccepted', false);
+insert into Notification ( receiverId, pollId, notificationDate, notificationType, notificationStatus) values ( 3, 9, CURRENT_TIMESTAMP, 'NewPoll', false);
+insert into Notification ( receiverId, invitationId, notificationDate, notificationType, notificationStatus) values ( 5, 4, CURRENT_TIMESTAMP, 'NewInvitation', true);
 
 -- Vote --
 

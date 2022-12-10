@@ -6,6 +6,7 @@ use App\Models\OrganizerRequest;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Invitation;
+use App\Models\JoinRequest;
 use App\Models\Report;
 
 use Illuminate\Http\Request;
@@ -297,6 +298,21 @@ class UserController extends Controller
         $request = new OrganizerRequest;
         $request->requesterid=$id;
         $request->save();
+
+        //$this->authorize('organizerRequest', $request);
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Request was successfully accepted',
+        ], 200);  
+    }
+
+    public function requestToJoin(Request $request)
+    {
+
+        $joinRequest = new JoinRequest();
+        $joinRequest->requesterid=Auth::id();
+        $joinRequest->eventid=$request->eventid;
+        $joinRequest->save();
 
         //$this->authorize('organizerRequest', $request);
         return response()->json([
