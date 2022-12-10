@@ -137,6 +137,8 @@
                         </div>
                     </div>
                 </div>
+       
+                @each('partials.admin.organizer_request_modal', $requests, 'request')
             </div>
           </div>
         </div>
