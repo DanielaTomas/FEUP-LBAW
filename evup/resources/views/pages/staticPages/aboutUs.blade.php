@@ -53,51 +53,44 @@
     </div>
 
 
-    <div id="accordion-flush" class="mt-16 mb-8" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+    <div id="accordion-open" class="mt-16 mb-8" data-accordion="open" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
         <h2 class="text-2xl text-gray-900 font-bold md:text-4xl">Main Features</h2>
-        <h2 id="accordion-flush-heading-1">
-            <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
-            <span>What is Flowbite?</span>
+        <h2 id="accordion-open-heading-1">
+            <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
+            <span>Events</span>
             <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
         </h2>
-        <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
+        <div id="accordion-open-body-1" class="hidden" aria-labelledby="accordion-open-heading-1">
             <div class="py-5 font-light border-b border-gray-200 dark:border-gray-700">
-            <p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons, dropdowns, modals, navbars, and more.</p>
-            <p class="text-gray-500 dark:text-gray-400">Check out this guide to learn how to <a href="/docs/getting-started/introduction/" class="text-blue-600 dark:text-blue-500 hover:underline">get started</a> and start developing websites even faster with components on top of Tailwind CSS.</p>
+            <p class="mb-2 text-gray-800 dark:text-gray-400">Users can request to join events, invite users, manage all events attended or apply for verification to organize them. If they become an attendee, they can view event messages, add comments, upload files, answer polls, view the attendee list and finally leave the event itself. </p>
+            <p class="text-gray-800 dark:text-gray-400">As an event organizer, you can create and manage your owns events (details, participants), create polls for the attendees, answer comments.</p>
             </div>
         </div>
-        <h2 id="accordion-flush-heading-2">
-            <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
-            <span>Is there a Figma file available?</span>
+        <h2 id="accordion-open-heading-2">
+            <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-open-body-2" aria-expanded="false" aria-controls="accordion-open-body-2">
+            <span>Profiles</span>
             <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
         </h2>
-        <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
+        <div id="accordion-open-body-2" class="hidden" aria-labelledby="accordion-open-heading-2">
             <div class="py-5 font-light border-b border-gray-200 dark:border-gray-700">
-            <p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is first conceptualized and designed using the Figma software so everything you see in the library has a design equivalent in our Figma file.</p>
-            <p class="text-gray-500 dark:text-gray-400">Check out the <a href="https://flowbite.com/figma/" class="text-blue-600 dark:text-blue-500 hover:underline">Figma design system</a> based on the utility classes from Tailwind CSS and components from Flowbite.</p>
+            <p class="mb-2 text-gray-800 dark:text-gray-400">In your profile you have access to all events you have attended or are currently attending and you can manage your invites to events from other users. In adition, you may request to be an Event Organizer and you can delete your account. Check out your <a href="{{ route('userProfile', Auth::id()) }}" class="text-blue-600 dark:text-blue-500 hover:underline"> profile</a>!</p>
+            <p class="text-gray-800 dark:text-gray-400">Other users can also see what events you have attended or are currently attending. Check out your <a href="{{ route('publicProfile', Auth::id()) }}" class="text-blue-600 dark:text-blue-500 hover:underline">public profile</a> and see what other users can see about you.</p>
             </div>
         </div>
-        <h2 id="accordion-flush-heading-3">
-            <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
-            <span>What are the differences between Flowbite and Tailwind UI?</span>
-            <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        <h2 id="accordion-open-heading-3">
+            <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-open-body-3" aria-expanded="false" aria-controls="accordion-open-body-3">
+            <span>Contact</span>
+            <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
         </h2>
-        <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
+        <div id="accordion-open-body-3" class="hidden" aria-labelledby="accordion-open-heading-3">
             <div class="py-5 font-light border-b border-gray-200 dark:border-gray-700">
-            <p class="mb-2 text-gray-500 dark:text-gray-400">The main difference is that the core components from Flowbite are open source under the MIT license, whereas Tailwind UI is a paid product. Another difference is that Flowbite relies on smaller and standalone components, whereas Tailwind UI offers sections of pages.</p>
-            <p class="mb-2 text-gray-500 dark:text-gray-400">However, we actually recommend using both Flowbite, Flowbite Pro, and even Tailwind UI as there is no technical reason stopping you from using the best of two worlds.</p>
-            <p class="mb-2 text-gray-500 dark:text-gray-400">Learn more about these technologies:</p>
-            <ul class="pl-5 text-gray-500 list-disc dark:text-gray-400">
-                <li><a href="https://flowbite.com/pro/" class="text-blue-600 dark:text-blue-500 hover:underline">Flowbite Pro</a></li>
-                <li><a href="https://tailwindui.com/" rel="nofollow" class="text-blue-600 dark:text-blue-500 hover:underline">Tailwind UI</a></li>
-            </ul>
+            <p class="mb-2 text-gray-800 dark:text-gray-400">Users can reach out to our team in order to submit new feature ideas, bug reports and even ban appeals. Contact us <a href="{{ route('contact') }}" class="text-blue-600 dark:text-blue-500 hover:underline">here.</a></p>
             </div>
         </div>
     </div>
 
-    </div>
 
 @endsection
