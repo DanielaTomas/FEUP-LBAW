@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMail;
 
 class StaticPagesController extends Controller
 {
@@ -56,18 +57,13 @@ class StaticPagesController extends Controller
 
         $contact->save();
 
-        Mail::send('contact-email',
-             array(
-                 'name' => $request->get('name'),
-                 'email' => $request->get('email'),
-                 'subject' => $request->get('subject'),
-                 'user_message' => $request->get('message'),
-             ), function($message) use ($request)
-               {
-                  $message->from($request->email);
-                  $message->to('admin@evup.com');
-               });
-
+        Mail::to('admin@evup.com')->send(new ContactMail(array(
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'subject' => $request->get('subject'),
+            'user_message' => $request->get('message'),
+        )));
+        
         return back()->with('success', 'Thank you for contacting us!');
     }
 }

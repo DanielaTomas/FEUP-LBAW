@@ -13,6 +13,7 @@
 // Home
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@list')->name('home');
@@ -29,10 +30,10 @@ Route::get('faq', 'StaticPagesController@getFaq')->name('faq');
 Route::get('user/{id}/public', 'UserController@viewUser')->name('publicProfile')->where(['id' => '[0-9]+']);
 Route::get('user/{userid}', 'UserController@profile')->name('userProfile')->where(['userid' => '[0-9]+']);
 Route::get('user/{id}/edit', 'UserController@showEditForms')->name('edit_user')->where(['id' => '[0-9]+']);
+Route::get('/user/{id}/organizerRequest', 'UserController@organizerRequest')->where(['id' => '[0-9]+'])->name('request_organizer');
 Route::post('user/{id}/edit', 'UserController@update')->name('editUser')->where(['id' => '[0-9]+']);
 Route::post('/user/deny/{id}', 'UserController@denyRequest')->where(['id' => '[0-9]+'])->name('invite_request_deny');
 Route::post('/user/accept/{id}', 'UserController@acceptRequest')->where(['id' => '[0-9]+'])->name('invite_request_accept');
-Route::post('user/{id}/organizerRequest/', 'UserController@organizerRequest')->where(['id' => '[0-9]+'])->name('request_organizer');
 Route::post('user/{id}/delete', 'UserController@delete')->where(['id' => '[0-9]+'])->name('delete_user');
 //  /user/{id}/requestOrganizer:
 //  /api/user/{id}/attended:
@@ -54,8 +55,8 @@ Route::put('admin/users/{id}/ban', 'AdminController@banUser')->where(['id' => '[
 Route::put('admin/users/{id}/unban', 'AdminController@unbanUser')->where(['id' => '[0-9]+']);
 Route::put('admin/reports/{id}/close', 'AdminController@closeReport')->where(['id' => '[0-9]+']);
 Route::put('admin/events/{id}/delete', 'AdminController@cancelEvent')->where(['id' => '[0-9]+']);
-Route::post('admin/organizer_requests/{id}/deny', 'AdminController@denyRequest')->where(['id' => '[0-9]+'])->name('organizer_request_deny');
-Route::post('admin/organizer_requests/{id}/accept', 'AdminController@acceptRequest')->where(['id' => '[0-9]+'])->name('organizer_request_accept');
+Route::put('admin/organizer_requests/{id}/deny', 'AdminController@denyRequest')->where(['id' => '[0-9]+'])->name('organizer_request_deny');
+Route::put('admin/organizer_requests/{id}/accept', 'AdminController@acceptRequest')->where(['id' => '[0-9]+'])->name('organizer_request_accept');
 
 //my Events
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
@@ -89,7 +90,8 @@ Route::post('event/{id}/inviteUsers', 'UserController@inviteUser');
 Route::post('event/{id}/delete/{commentid}', 'CommentController@deleteComment')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('delete_comment'); 
 Route::post('event/{id}/create', 'CommentController@create')->where(['id' => '[0-9]+'])->name('create_comment'); 
 Route::post('event/{id}/editComment/{commentid}/update', 'CommentController@update')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('update_comment');
-Route::post('event/{id}/editComment/{commentid}', 'CommentController@edit')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('edit_comment'); 
+Route::post('event/{id}/editComment/{commentid}', 'CommentController@edit')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('edit_comment');
+Route::post('api/requestToJoin', 'UserController@requestToJoin');
 
 
 //Filter

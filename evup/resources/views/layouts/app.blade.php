@@ -26,6 +26,7 @@
     <script type="text/javascript" src={{ asset('js/admin.tabs.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/admin.users.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/admin.reports.js') }} defer></script>
+    <script type="text/javascript" src={{ asset('js/admin.organizerRequest.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/filter.js') }} defer></script>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
     <script src="https://kit.fontawesome.com/e93bc86ff0.js" crossorigin="anonymous"></script>
