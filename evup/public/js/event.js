@@ -21,12 +21,12 @@ function searchUserHandler(){
 }
 
 
-function inviteUser(){
+function inviteUser(userid){
     const event_id2 = window.location.pathname.substring(7)
-    const email = event.target.parentElement.parentElement.children[2].textContent
+    const email = select("#email-" + userid).textContent
  
     sendAjaxRequest('post', `/event/${event_id}/inviteUsers`, { 'email': email, 'eventid':event_id2 });
-    const card = event.target.parentElement.parentElement.parentElement
+    const card = select("#usercard-" + userid)
     card.remove()
 }
 

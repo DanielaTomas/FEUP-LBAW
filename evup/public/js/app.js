@@ -18,7 +18,6 @@ function sendAjaxRequest(method, url, data, handler) {
   request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.addEventListener('load', handler);
-  console.log(request)
   request.send(encodeForAjax(data));
 }
 
