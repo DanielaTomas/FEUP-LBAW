@@ -15,15 +15,22 @@ function orgReqHandler(accept, id) { // if close is true, act as a close report,
     }
 
     /* Deal with errors */
-    button = select('#acceptOR-' + id)
+    requeststatus = select('#requeststatus-' + id)
     div = select('#acceptOR-' + id).parentElement
 
- 
     div.innerHTML = '<p>Request Reviewed</p>'
 
-    if (accept) 
+    if (accept)  {
+        requeststatus.innerHTML = 'Accepted'
+        requeststatus.classList = 'bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs'
+
         createAlert('success', 'You have  accepted this organizer request successfully.')
-    else
+    }
+    else {
+        requeststatus.innerHTML = 'Denied'
+        requeststatus.classList = 'bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs'
+
         createAlert('success', 'You have denied this organizer request successfully.')
+    }
 
 }
