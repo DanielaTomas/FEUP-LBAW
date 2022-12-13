@@ -25,7 +25,7 @@
             <div class="md:text-xl">{{ $event->startdate }}</div>
         </div>
         <div class="p-4 font-normal text-gray-800 md:w-3/4">
-            <a href="event/{{$event->eventid}}"><h1 class="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1></a>
+            <a href="{{route('show_event', $event->eventid)}}"><h1 class="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1></a>
             <div id=eventCardCategories> @each('partials.category', $event->eventcategories()->get(), 'category') </div>
             <p class="leading-normal">{{ $event->description }}</p>
             <div class="flex flex-column items-center mt-4 ">
