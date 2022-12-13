@@ -142,4 +142,6 @@
             </section>
     </article>
 
+    @each('partials.del_comment_modal', $event->comments()->orderBy('commentdate')->get(), 'comment')
+
 @endsection

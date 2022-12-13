@@ -54,7 +54,7 @@ class CommentController extends Controller
    }
  
 
-  public function deleteComment($id,$commentid)
+  public function deleteComment($id, $commentid)
   {
     $comment = Comment::find($commentid);
     if (is_null($comment))
@@ -64,18 +64,16 @@ class CommentController extends Controller
     if (is_null($event))
         return abort(404, 'Event not found');
 
-    //$this->authorize('deleteComment', $comment);
+    $this->authorize('deleteComment', $comment);
 
-     $comment->delete();
+    $comment->delete();
 
-   /*  return response()->json([
+    return response()->json([
       'status' => 'OK',
       'msg' => 'Removed comment successfully ',
       'id' => $id,
     ], 200);
-    */
-
-    return redirect()->route('show_event',[$event->eventid]);
+    
   }
 
   public function update(Request $request, int $id, int $commentid)

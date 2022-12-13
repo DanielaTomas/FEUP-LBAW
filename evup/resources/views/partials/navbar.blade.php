@@ -32,7 +32,7 @@
             <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ url('/aboutUs') }}">About</a></li>
             <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ url('/contactUs') }}">Contact</a></li>
         </ul>
-        <!-- Sign In / Register      -->
+        <!-- Login / Register      -->
     </div>
     <!-- Responsive navbar -->
     <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar2"
@@ -92,7 +92,7 @@
         </div>
     @else
         <a class="hover:text-indigo-300 transition ease-in-out font-semibold font-heading flex mr-6 p-4 self-center"
-            href="{{ url('/login') }}">Sign In</a>
+            href="{{ url('/login') }}">Login</a>
     @endif
 
 </nav>
