@@ -224,7 +224,9 @@ class UserController extends Controller
 
         $user->events()->detach();
 
-        // Nullable fields are set to NULL and the rest is filled with dummy text ('deleteduser{id}')
+        /* Delete info deletes every info associated with the deleted user: Invites sent and receveied; Notifications, */
+        /* Organizer Requests issued by the user, Join Requests issued by the user */
+        /* Nullable fields are set to NULL and the rest is filled with dummy text ('deleteduser{id}') */
         $user = $user->delete_info();
         Auth::logout();
 

@@ -8,37 +8,37 @@ class Notification extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'Notification';
+    protected $table = 'notification';
 
-    protected $primaryKey = 'notificationId';
+    protected $primaryKey = 'notificationid';
 
     public function receiver() 
     {
-        return $this->belongsTo(User::class, 'receiverId');
+        return $this->belongsTo(User::class, 'receiverid');
     }
 
     public function event() 
     {
-        return $this->belongsTo(Event::class, 'eventId');
+        return $this->belongsTo(Event::class, 'eventid');
     }
 
     public function poll() 
     {
-        return $this->belongsTo(Poll::class, 'pollId');
+        return $this->belongsTo(Poll::class, 'pollid');
     }
 
     public function join_request() 
     {
-        return $this->belongsTo(JoinRequest::class ,'joinRequestId');
+        return $this->belongsTo(JoinRequest::class ,'joinrequestid');
     }
 
     public function organizer_request() 
     {
-        return $this->belongsTo(OrganizerRequest::class, 'organizerRequestId');
+        return $this->belongsTo(OrganizerRequest::class, 'organizerrequestid');
     }
 
     public function invitation()
     {
-        return $this->belongsTo(Invitation::class, 'invitationId');
+        return $this->belongsTo(Invitation::class, 'invitationid');
     }
 }

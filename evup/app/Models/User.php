@@ -33,6 +33,9 @@ class User extends Authenticatable
     ];
     protected $nullable = ['userphoto', 'remember_token'];
 
+    /* Delete info deletes every info associated with the deleted user: Invites sent and receveied; Notifications, */
+    /* Organizer Requests issued by the user, Join Requests issued by the user */
+    /* Nullable fields are set to NULL and the rest is filled with dummy text ('deleteduser{id}') */
     public function delete_info() {
         foreach($this->nullable as $field) {
             $this->{$field} = null;
@@ -45,6 +48,18 @@ class User extends Authenticatable
         $this->accountstatus = 'Disabled';
 
         $this->save();
+
+        $this->invites_sent()->delete();
+        $this->invites_received()->delete();
+        $this->requests()->delete();
+        $this->joinRequests()->delete();
+        $this->notifications()->delete();
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'receiverid');
+
     }
 
     public function events()
