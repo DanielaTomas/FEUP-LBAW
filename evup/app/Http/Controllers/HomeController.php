@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Tag;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,13 @@ class HomeController extends Controller
     $tags = TagController::getAllTags();
     $events = EventController::getPublicEvents();
     $categories = CategoryController::getAllCategories();
-    return view('pages.home', ['events' => $events, 'tags' => $tags, 'categories' => $categories]);
+    if (Auth::check()) {
+      $notificationsController = new NotificationController();
+      $notifications = $notificationsController->getAllNotifications();
+      return view('pages.home', ['events' => $events, 'tags' => $tags, 'categories' => $categories, 'notifications' => $notifications]);
+    }
+    else
+      return view('pages.home', ['events' => $events, 'tags' => $tags, 'categories' => $categories]);
   }
 
   public function searchEvents(Request $request)
