@@ -782,7 +782,7 @@ insert into Vote (voterId, commentId, type) values (14, 9, false);
 insert into Vote (voterId, commentId, type) values (15, 7, true);
 
 insert into Vote (voterId, commentId, type) values (2, 4, true);
-insert into Vote (voterId, commentId, type) values (1, 4, true);
+insert into Vote (voterId, commentId, type) values (1, 4, false);
 
 
 -- PollOption --
