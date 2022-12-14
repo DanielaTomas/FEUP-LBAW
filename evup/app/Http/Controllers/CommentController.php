@@ -124,4 +124,24 @@ class CommentController extends Controller
     ]);
   }
 
+  public function like(int $id, int $commentid) 
+  {
+    $comment = Comment::find($commentid);
+
+    if(is_null($comment))
+      return abort(404,'Comment not found');
+
+    //$this->authorize('like',$comment);
+    $user = Auth::id();
+    $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => true]);
+
+    return redirect()->route('show_event',[$comment->eventid]);
+
+    /*return response()->json([
+      'status' => 'OK',
+      'msg' => 'Liked comment successfully ',
+      'id' => $id,
+    ], 200);*/
+  }
+
 }

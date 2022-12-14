@@ -93,6 +93,7 @@ Route::post('event/{id}/editComment/{commentid}/update', 'CommentController@upda
 Route::post('event/{id}/editComment/{commentid}', 'CommentController@edit')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('edit_comment');
 Route::post('api/requestToJoin', 'UserController@requestToJoin');
 
+Route::post('event/{id}/like/{commentid}','CommentController@like')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('like');;
 
 //Filter
 Route::post('api/filter_tag', 'HomeController@filterTag');
