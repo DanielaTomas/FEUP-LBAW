@@ -781,6 +781,10 @@ insert into Vote (voterId, commentId, type) values (13, 3, true);
 insert into Vote (voterId, commentId, type) values (14, 9, false);
 insert into Vote (voterId, commentId, type) values (15, 7, true);
 
+insert into Vote (voterId, commentId, type) values (2, 4, true);
+insert into Vote (voterId, commentId, type) values (1, 4, true);
+
+
 -- PollOption --
 insert into PollOption (pollOptionId, optionContent) values (1, 'Yes');
 insert into PollOption (pollOptionId, optionContent) values (2, 'No');

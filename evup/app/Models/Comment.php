@@ -41,6 +41,6 @@ class Comment extends Model
 
     public function votes()
     {
-      return $this->belongsToMany(User::class, 'vote', 'voterid', 'commentid')->withPivot('type');
+      return $this->belongsToMany(User::class, 'vote', 'commentid', 'voterid')->withPivot('type');
     }
 }

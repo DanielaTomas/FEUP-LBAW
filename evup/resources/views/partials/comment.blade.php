@@ -32,7 +32,8 @@
                         </button>
               </form>
           <?php } ?>
-          
+
+          <?= "VOTES" . $comment->votes()->get() ?><br><br>
             <!--
             <form id="upVote" method="post" action="">
                @csrf 
