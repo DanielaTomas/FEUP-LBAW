@@ -8,21 +8,21 @@ class PollOption extends Model
 {
     public $timestamps  = false;
 
-    protected $table = 'PollOption';
-    protected $primaryKey = 'pollOptionId';
+    protected $table = 'polloption';
+    protected $primaryKey = 'polloptionid';
 
     public function event()
     {
-        return $this->belongsTo(Poll::class, 'pollId');
+        return $this->belongsTo(Poll::class, 'pollid');
     }
 
     public function answers()
     {
-        return $this->belongsToMany(User::class, 'Answer', 'userId', 'pollOptionId');
+        return $this->belongsToMany(User::class, 'answer', 'userid', 'polloptionid');
     }
 
     public function notifications()
     {
-        return $this->hasMany(Notification::class, 'pollId');
+        return $this->hasMany(Notification::class, 'pollid');
     }
 }
