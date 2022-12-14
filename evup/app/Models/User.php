@@ -93,12 +93,12 @@ class User extends Authenticatable
 
     public function answers()
     {
-        return $this->belongsToMany(PollOption::class, 'Answer', 'userId', 'pollOptionId');
+        return $this->belongsToMany(PollOption::class, 'answer', 'userid', 'polloptionid');
     }
     
     public function reports()
     {
-        return $this->hasMany(Report::class, 'reporterId');
+        return $this->hasMany(Report::class, 'reporterid');
     }
 
     public function invites_sent()
