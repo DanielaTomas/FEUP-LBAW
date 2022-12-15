@@ -1,6 +1,6 @@
 <nav class="flex justify-between bg-gray-900 text-white w-screen">
     <div class="px-5 xl:px-12 py-6 flex w-full items-center">
-        <a class="text-3xl font-bold font-heading" href="{{ url('/') }}"> <div style="transform: scale(1);">
+        <a class="text-3xl font-bold font-heading" href="{{ route('home') }}"> <div style="transform: scale(1);">
             <svg width="288" height="104" viewBox="0 0 288 104" class="css-1j8o68f">
                 <defs id="SvgjsDefs1018">
                     <linearGradient id="SvgjsLinearGradient1027">
@@ -19,18 +19,18 @@
         </div> </a>
         <!-- Nav Links -->
         <ul class="hidden xl:flex px-4 mx-auto font-semibold font-heading space-x-12">
-            <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ url('/') }}">Home</a></li>
+            <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ route('home') }}">Home</a></li>
             @if (Auth::check())
                 @if (Auth::user()->usertype === 'Admin')
-                <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ url('/admin') }}">Admin Panel</a></li>
+                <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ route('admin') }}">Admin Panel</a></li>
                 @elseif (Auth::user()->usertype !== 'Admin')
-                <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ url('/myEvents') }}">My Events</a></li>
+                <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ route('myEvents') }}">My Events</a></li>
                 @endif
             @else
-                <a class="hover:text-indigo-300 transition ease-in-out" href="{{ url('/login') }}">My Events</a>
+                <a class="hover:text-indigo-300 transition ease-in-out" href="{{ route('login') }}">My Events</a>
             @endif
-            <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ url('/aboutUs') }}">About</a></li>
-            <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ url('/contactUs') }}">Contact</a></li>
+            <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ route('about') }}">About</a></li>
+            <li><a class="hover:text-indigo-300 transition ease-in-out" href="{{ route('contact') }}">Contact</a></li>
         </ul>
         <!-- Login / Register      -->
     </div>
@@ -46,18 +46,18 @@
         class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
         <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
             <li><a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                href="{{ url('/') }}">Home</a></li>
+                href="{{ route('home') }}">Home</a></li>
             @if (Auth::check())
                 @if (Auth::user()->usertype === 'Admin')
                     <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        href="{{ url('/admin') }}">Admin Panel</a>
+                        href="{{ route('admin') }}">Admin Panel</a>
                 @elseif (Auth::user()->usertype !== 'Admin')
                     <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        href="{{ url('/myEvents') }}">My Events</a>
+                        href="{{ route('myEvents') }}">My Events</a>
                 @endif
             @else
                 <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    href="{{ url('/login') }}">My Events</a>
+                    href="{{ route('login') }}">My Events</a>
             @endif
             <li><a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     href="{{ route('about') }}">About</a></li>
@@ -104,18 +104,18 @@
             class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
             <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
                 <li>
-                        <a href="{{ url('/user/' . Auth::id()) }}"
+                        <a href="{{ route('userProfile', Auth::id()) }}"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
                 </li>
             </ul>
             <div class="py-1">
-                <a href="{{ url('/logout') }}"
+                <a href="{{ route('logout') }}"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Sign
                     Out</a>
             </div>
         </div>
     @else
         <a class="hover:text-indigo-300 transition ease-in-out font-semibold font-heading flex mr-6 p-4 self-center"
-            href="{{ url('/login') }}">Login</a>
+            href="{{ route('login') }}">Login</a>
     @endauth
 </nav>

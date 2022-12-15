@@ -42,6 +42,7 @@ class NotificationController extends Controller
                 {
                     $event = Event::find($notification->eventid);
 
+                    $info['eventid'] = $event->eventid;
                     $info['eventname'] = $event->eventname;
                     $info['eventphoto'] = $event->eventphoto;
 
@@ -51,6 +52,7 @@ class NotificationController extends Controller
                     $joinrequest = JoinRequest::find($notification->joinrequestid);
                     $event = Event::find($joinrequest->eventid);
 
+                    $info['eventid'] = $event->eventid;
                     $info['eventname'] = $event->eventname;
                     $info['eventphoto'] = $event->eventphoto;
                     $info['requeststatus'] = $joinrequest->requeststatus;
@@ -66,7 +68,10 @@ class NotificationController extends Controller
                     $user = User::find($invite->inviterid);
                     $event = Event::find($invite->eventid);
 
+                    $info['userid'] = $user->userid;
                     $info['name'] = $user->name;
+                    $info['userphoto'] = $user->userphoto;
+                    $info['eventid'] = $event->eventid;
                     $info['eventname'] = $event->eventname;
                 }
                 else if ($notification->notificationtype === "InviteAccepted")
@@ -75,7 +80,10 @@ class NotificationController extends Controller
                     $user = User::find($invite->inviteeid);
                     $event = Event::find($invite->eventid);
 
+                    $info['userid'] = $user->userid;
                     $info['name'] = $user->name;
+                    $info['userphoto'] = $user->userphoto;
+                    $info['eventid'] = $event->eventid;
                     $info['eventname'] = $event->eventname;
                 }
                 else if ($notification->notificationtype === "NewPoll")
@@ -83,7 +91,10 @@ class NotificationController extends Controller
                     $poll = Poll::find($notification->pollid);
                     $event = Event::find($poll->eventid);
 
+                    $info['eventid'] = $event->eventid;
                     $info['eventname'] = $event->eventname;
+                    $info['eventphoto'] = $event->eventphoto;
+                    $info['pollid'] = $poll->pollid;
                 }
 
                 return $info;
