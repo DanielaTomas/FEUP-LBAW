@@ -123,7 +123,6 @@ CREATE TABLE notification(
   organizerrequestid INTEGER REFERENCES organizerrequest (organizerrequestid) ON DELETE CASCADE ON UPDATE CASCADE,
   invitationid INTEGER REFERENCES invitation (invitationid) ON DELETE CASCADE ON UPDATE CASCADE,
   pollid INTEGER REFERENCES poll (pollid) ON DELETE CASCADE ON UPDATE CASCADE,
-  is_read BOOLEAN DEFAULT false,
   notificationdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
   notificationtype notificationtype NOT NULL,
   notificationstatus BOOLEAN NOT NULL DEFAULT FALSE
