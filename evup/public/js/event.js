@@ -1,10 +1,14 @@
 const leaveEvent = (eventid) => {
-    sendAjaxRequest('post', `myEvents/${eventid}`, { 'eventid': eventid }, leaveEventHandler(eventid));
+    sendAjaxRequest('post', '/api/myEvents/leave_event', { 'eventid': eventid }, leaveEventHandler(eventid));
 }
 
 function leaveEventHandler(eventid) {
-    const event = document.getElementById("eventCard" + eventid)
-    event.remove()
+    if(window.location.pathname==='/myEvents'){
+        const event = document.getElementById("eventCard" + eventid)
+        event.remove()
+    }else{
+       window.location.reload()
+    }
 }
 
 const event_id = window.location.pathname.substring(7);

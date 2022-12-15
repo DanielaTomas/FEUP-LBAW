@@ -62,12 +62,12 @@ Route::put('admin/organizer_requests/{id}/accept', 'AdminController@acceptReques
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
 Route::get('myEvents/organizing', 'EventController@organizerEvents')->name('organizing');
 Route::get('myEvents/createEvent', 'EventController@showForms')->name('create_events');
-Route::post('myEvents/{id}', 'UserController@leaveEvent')->where(['id' => '[0-9]+']);
 Route::post('myEvents/createEvent', 'EventController@createEvent')->name('createEvent')->where(['id' => '[0-9]+']);
 Route::get('event/{id}/attendees', 'EventController@attendees')->where(['id' => '[0-9]+'])->name('attendees');
 Route::get('event/{id}/adduser', 'EventController@view_add_user')->where(['id' => '[0-9]+'])->name('view_add_user');
 Route::post('event/{eventid}/adduser/{userid}', 'EventController@addUser')->where(['eventid' => '[0-9]+', 'userid' => '[0-9]+'])->name('add_user_event');
 Route::post('event/{eventid}/removeuser/{userid}', 'EventController@removeUser')->where(['eventid' => '[0-9]+', 'userid' => '[0-9]+'])->name('remove_user_event');
+Route::post('api/myEvents/leave_event', 'UserController@leaveEvent')->where(['id' => '[0-9]+']);
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

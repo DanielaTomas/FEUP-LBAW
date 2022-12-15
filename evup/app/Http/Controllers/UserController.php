@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function leaveEvent($eventid)
+    public function leaveEvent(Request $request)
     {
+        $eventid = $request->eventid;
         $event = Event::find($eventid);
 
         if (is_null($event))
