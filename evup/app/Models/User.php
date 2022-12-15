@@ -62,6 +62,11 @@ class User extends Authenticatable
 
     }
 
+    public function unreadnotifications()
+    {
+        return $this->notifications->where('notificationstatus', '=','false');
+    }
+
     public function events()
     {
         return $this->belongsToMany(Event::class, 'attendee', 'attendeeid', 'eventid');

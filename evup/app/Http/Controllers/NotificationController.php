@@ -15,24 +15,25 @@ use Illuminate\Support\Facades\Auth;
 class NotificationController extends Controller
 {
     /**
-     * Returns a list of the user's notifications
+     * Returns a json with a view of the list of the user's notifications
      * 
-     * @return View
+     * @return JSON
      */
-    public function getAllNotifications()
+    public function show()
     {
-        //$this->authorize('notifications', User::class);
+        $this->authorize('notifications', User::class);
 
-        $notifications = Auth::user()->notifications->sortByDesc('date')
+        $notifications = Auth::user()->notifications->sortByDesc('notificationdate')
+            ->where('notificationstatus', '=', FALSE)
             ->map(function ($notification) {
                 $now = new DateTime('now');
-                $notifDate = new DateTime($notification->date);
+                $notifDate = new DateTime($notification->notificationdate);
                 $interval = $now->diff($notifDate);
                 $timeDiff = $this->formatTimeDiff($interval);
 
                 $info = [
                     'notificationtype' => $notification->notificationtype,
-                    'is_read' => $notification->is_read,
+                    'notificationstatus' => $notification->notificationstatus,
                     'time' => $timeDiff,
                 ];
 
@@ -87,7 +88,7 @@ class NotificationController extends Controller
                 return $info;
             });
 
-        return $notifications;
+        return response()->json(view('partials.getNotifications', ['notifications' => $notifications])->render(), 200);
     }
 
     /**
@@ -100,7 +101,7 @@ class NotificationController extends Controller
         $this->authorize('notifications', User::class);
 
         $notification = Notification::find($id);
-        $notification->is_read = true;
+        $notification->notificationstatus = true;
         $notification->save();
 
         return response()->json([
@@ -120,7 +121,7 @@ class NotificationController extends Controller
 
         $notifications = Auth::user()->notifications;
         $notifications->each(function ($notification) {
-            $notification->is_read = true;
+            $notification->notificationstatus = true;
             $notification->save();
         });
 

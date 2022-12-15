@@ -24,13 +24,7 @@ class HomeController extends Controller
     $tags = TagController::getAllTags();
     $events = EventController::getPublicEvents();
     $categories = CategoryController::getAllCategories();
-    if (Auth::check()) {
-      $notificationsController = new NotificationController();
-      $notifications = $notificationsController->getAllNotifications();
-      return view('pages.home', ['events' => $events, 'tags' => $tags, 'categories' => $categories, 'notifications' => $notifications]);
-    }
-    else
-      return view('pages.home', ['events' => $events, 'tags' => $tags, 'categories' => $categories]);
+    return view('pages.home', ['events' => $events, 'tags' => $tags, 'categories' => $categories]);
   }
 
   public function searchEvents(Request $request)
