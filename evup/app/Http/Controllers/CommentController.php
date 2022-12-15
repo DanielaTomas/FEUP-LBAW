@@ -135,13 +135,30 @@ class CommentController extends Controller
     $user = Auth::id();
     $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => true]);
 
-    return redirect()->route('show_event',[$comment->eventid]);
-
-    /*return response()->json([
+    return response()->json([
       'status' => 'OK',
       'msg' => 'Liked comment successfully ',
       'id' => $id,
-    ], 200);*/
+    ], 200);
+  }
+
+  public function dislike(int $id, int $commentid) 
+  {
+    $comment = Comment::find($commentid);
+
+    if(is_null($comment))
+      return abort(404,'Comment not found');
+
+    //$this->authorize('dislike',$comment);
+
+    $user = Auth::id();
+    $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => false]);
+
+    return response()->json([
+      'status' => 'OK',
+      'msg' => 'Disliked comment successfully ',
+      'id' => $id,
+    ], 200);
   }
 
 }

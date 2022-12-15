@@ -15,6 +15,16 @@ const like = (id,commentid) => {
 }
 
 function likeHandler(commentid) {
-    let count = document.querySelector("#count");
-    count.textContent++;
+    let count = document.querySelector("#likeCount-" + commentid);
+    count.innerHTML++;
+}  
+
+const dislike = (id,commentid) => {
+    const url = '/event/'+ id + '/dislike/' + commentid;
+    sendAjaxRequest('post', url, { 'eventid': id, 'commentid' : commentid }, dislikeHandler(commentid));
+}
+
+function dislikeHandler(commentid) {
+    let count = document.querySelector("#dislikeCount-" + commentid);
+    count.innerHTML++;
 }   
