@@ -70,9 +70,9 @@ CREATE TABLE tag(
   tagname TEXT NOT NULL CONSTRAINT tag_uk UNIQUE
 );
 
-CREATE TABLE Report(
-  reportId SERIAL PRIMARY KEY,
-  reporterId INTEGER REFERENCES users (userid) ON DELETE SET NULL ON UPDATE CASCADE,
+CREATE TABLE report(
+  reportid SERIAL PRIMARY KEY,
+  reporterid INTEGER REFERENCES users (userid) ON DELETE SET NULL ON UPDATE CASCADE,
   eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
   message TEXT NOT NULL,
   reportstatus BOOLEAN NOT NULL DEFAULT FALSE
@@ -80,11 +80,11 @@ CREATE TABLE Report(
 
 CREATE TABLE invitation(
   invitationid SERIAL PRIMARY KEY,
-  inviterId INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
-  inviteeId INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  inviterid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  inviteeid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
   eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
   invitationstatus BOOLEAN,
-  CONSTRAINT invite_To_Self_ck CHECK (inviterId != inviteeId)
+  CONSTRAINT invite_To_Self_ck CHECK (inviterid != inviteeid)
 );
 
 CREATE TABLE poll(
@@ -236,10 +236,10 @@ DROP TRIGGER IF EXISTS user_search_update ON users;
 CREATE FUNCTION insert_attendee_invitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.invitationstatus AND NEW.inviteeId NOT IN (SELECT attendee.attendeeid FROM attendee
+    IF (NEW.invitationstatus AND NEW.inviteeid NOT IN (SELECT attendee.attendeeid FROM attendee
     WHERE attendee.eventid=NEW.eventid)) THEN
         INSERT INTO attendee(attendeeid,eventid)
-        VALUES (NEW.inviteeId,NEW.eventid);
+        VALUES (NEW.inviteeid,NEW.eventid);
     END IF;
     RETURN NULL;
 END
@@ -294,7 +294,7 @@ $BODY$
 BEGIN
     IF (NEW.invitationstatus) THEN
         INSERT INTO notification (receiverid,invitationid,notificationdate,notificationtype)
-        VALUES(NEW.inviterId,NEW.invitationid, DATE('now'),'InviteAccepted');
+        VALUES(NEW.inviterid,NEW.invitationid, DATE('now'),'InviteAccepted');
     END IF;
     RETURN NULL;
 END
@@ -312,7 +312,7 @@ $BODY$
 BEGIN
     IF (NEW.invitationstatus) THEN
       INSERT INTO notification (receiverid,invitationid,notificationdate,notificationtype)
-      VALUES(NEW.inviteeId, NEW.invitationid, DATE('now'),'InviteReceived');
+      VALUES(NEW.inviteeid, NEW.invitationid, DATE('now'),'InviteReceived');
     END IF;
     RETURN NULL;
 END
@@ -654,41 +654,41 @@ insert into tag (tagid, tagname) values (13, 'Cinema');
 insert into tag (tagid, tagname) values (14, 'Literatura');
 insert into tag (tagid, tagname) values (15, 'Museologia');
 
--- Report --
+-- report --
 
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (1, 1, 1, 'This event is not suitable for up students.', false);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (2, 3, 22, 'This event is abusive.', true);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (3, 2, 3, 'The organizer of this event was rude to me.', false);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (4, 3, 1, 'This is spam!', false);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (5, 1, 21, 'Wrong category', true);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (6, 1, 23, 'The event image is inappropriate...', true);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (7, 5, 28, 'Fraud', false);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (8, 3, 1, 'Should be tagged as adult content', true);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (9, 6, 30, 'Should be tagged as adult content', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (1, 1, 1, 'This event is not suitable for up students.', false);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (2, 3, 22, 'This event is abusive.', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (3, 2, 3, 'The organizer of this event was rude to me.', false);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (4, 3, 1, 'This is spam!', false);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (5, 1, 21, 'Wrong category', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (6, 1, 23, 'The event image is inappropriate...', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (7, 5, 28, 'Fraud', false);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (8, 3, 1, 'Should be tagged as adult content', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (9, 6, 30, 'Should be tagged as adult content', true);
 
 --invitation --
 
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (4, 8, 1, null);
-insert into invitation (inviterId, inviteeId, eventid, invitationstatus) values (4, 7, 2, null);
-insert into invitation (inviterId, inviteeId, eventid, invitationstatus) values (7, 4, 3, null);
-insert into invitation (inviterId, inviteeId, eventid, invitationstatus) values (9, 3, 4, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (1, 2, 5, true);
-insert into invitation (inviterId, inviteeId, eventid, invitationstatus) values (1, 4, 6, true);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 22, 7, false);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 22, 8, true);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (4, 3, 8, false);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 8, 9, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (4, 8, 1, null);
+insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (4, 7, 2, null);
+insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (7, 4, 3, null);
+insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (9, 3, 4, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (1, 2, 5, true);
+insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (1, 4, 6, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 22, 7, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 22, 8, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (4, 3, 8, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 8, 9, false);
 
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 1, 2, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 3, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 1, 3, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 2, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 1, 5, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 8, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 1, 2, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 4, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (4, 1, 4, false);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 1, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 2, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 3, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 3, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 2, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 5, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 8, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 2, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 4, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (4, 1, 4, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 1, false);
 
 -- poll --
 

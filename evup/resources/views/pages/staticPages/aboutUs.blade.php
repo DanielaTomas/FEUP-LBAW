@@ -75,9 +75,16 @@
         </h2>
         <div id="accordion-open-body-2" class="hidden" aria-labelledby="accordion-open-heading-2">
             <div class="py-5 font-light border-b border-gray-200 dark:border-gray-700">
-            <p class="mb-2 text-gray-800 dark:text-gray-400">In your profile you have access to all events you have attended or are currently attending and you can manage your invites to events from other users. In adition, you may request to be an Event Organizer and you can delete your account. Check out your <a href="{{ route('userProfile', Auth::id()) }}" class="text-blue-600 dark:text-blue-500 hover:underline"> profile</a>!</p>
-            <p class="text-gray-800 dark:text-gray-400">Other users can also see what events you have attended or are currently attending. Check out your <a href="{{ route('publicProfile', Auth::id()) }}" class="text-blue-600 dark:text-blue-500 hover:underline">public profile</a> and see what other users can see about you.</p>
-            </div>
+            <p class="mb-2 text-gray-800 dark:text-gray-400">In your profile you have access to all events you have attended or are currently attending and you can manage your invites to events from other users. In adition, you may request to be an Event Organizer and you can delete your account. 
+                @auth
+                Check out your <a href="{{ route('userProfile', Auth::id()) }}" class="text-blue-600 dark:text-blue-500 hover:underline"> profile</a>!</p>
+                @else
+                </p>
+                @endauth
+            @auth
+                <p class="text-gray-800 dark:text-gray-400">Other users can also see what events you have attended or are currently attending. Check out your <a href="{{ route('publicProfile', Auth::id()) }}" class="text-blue-600 dark:text-blue-500 hover:underline">public profile</a> and see what other users can see about you.</p>
+            @endauth
+        </div>
         </div>
         <h2 id="accordion-open-heading-3">
             <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-open-body-3" aria-expanded="false" aria-controls="accordion-open-body-3">
