@@ -733,12 +733,17 @@ insert into joinrequest ( requesterid, eventid) values ( 1, 9);
 insert into organizerrequest ( requesterid, requeststatus) values ( 5, false);
 insert into organizerrequest ( requesterid, requeststatus) values ( 9, true);
 insert into organizerrequest ( requesterid, requeststatus) values ( 4, true);
+insert into organizerrequest ( requesterid, requeststatus) values (1, true);
 insert into organizerrequest ( requesterid) values (8);
 
 -- notification --
 
 insert into notification ( receiverid, eventid, notificationdate, notificationtype, notificationstatus) values (1, 5, CURRENT_TIMESTAMP, 'EventChange', false);
-insert into notification ( receiverid, joinrequestid, notificationdate, notificationtype, notificationstatus) values ( 1, 7, CURRENT_TIMESTAMP, 'JoinRequestReviewed', true);
+insert into notification ( receiverid, joinrequestid, notificationdate, notificationtype, notificationstatus) values ( 1, 1, CURRENT_TIMESTAMP, 'JoinRequestReviewed', false);
+insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values (1, 4, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', false);
+insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 1, 11, CURRENT_TIMESTAMP, 'InviteReceived', false);
+insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values (1, 6, CURRENT_TIMESTAMP, 'InviteAccepted', false);
+insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 1, 7, CURRENT_TIMESTAMP, 'NewPoll', false);
 insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values ( 8, 2, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 9, 9, CURRENT_TIMESTAMP, 'InviteReceived', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 4, 3, CURRENT_TIMESTAMP, 'InviteAccepted', false);

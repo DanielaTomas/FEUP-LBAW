@@ -32,6 +32,7 @@ class NotificationController extends Controller
                 $timeDiff = $this->formatTimeDiff($interval);
 
                 $info = [
+                    'notificationid' => $notification->notificationid,
                     'notificationtype' => $notification->notificationtype,
                     'notificationstatus' => $notification->notificationstatus,
                     'time' => $timeDiff,

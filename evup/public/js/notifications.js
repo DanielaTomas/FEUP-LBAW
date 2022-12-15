@@ -1,3 +1,5 @@
+fetchNotifications()
+
 function notificationPanelHandler() {
     if (this.status == 403) {
         window.location = '/login';
@@ -24,14 +26,19 @@ function notificationPanelHandler() {
     }
 }
 
-function notificationCleanHandler() {
+function notificationsCleanerHandler() {
     
     const area = select("#notificationPanel");
     while (area.firstChild) {
         area.removeChild(area.firstChild);
     }
     bellcircle = select('#bellcircle')
-    bellcircle.remove()
+    if (bellcircle) {
+        bellcircle.remove()
+        createAlert('success', 'You have read all your notifications.')
+    }
+    else
+        createAlert('warning', "You don't have any unread notifications.")
 
     div = document.createElement('div')
     div.classList = 'py-2 px-4 text-center text-gray-500'
@@ -39,17 +46,36 @@ function notificationCleanHandler() {
     area.append(div)
 }
 
+function notificationCleanerHandler(id) {
+    const area = select("#notificationPanel");
+    const notification = select("#notification-" + id);
+
+    notification.remove();
+
+    if (area.childElementCount == 0) {
+        bellcircle = select('#bellcircle')
+        bellcircle.remove()
+
+        div = document.createElement('div')
+        div.classList = 'py-2 px-4 text-center text-gray-500'
+        div.textContent = "You don't have any new notifications"
+        area.append(div)
+
+        createAlert('success', 'You have read all your notifications.')
+    }
+}
+
 function fetchNotifications() {
     sendAjaxRequest('get', '/api/notifications', null, notificationPanelHandler);
 }
 
 function readNotifications() {
-    // Mark notifications as read
-    sendAjaxRequest('put', '/notifications', null, notificationCleanHandler);
+    // Mark all notifications as read
+    sendAjaxRequest('put', '/notifications', null, notificationsCleanerHandler);
 }
 
 function readNotification(id) {
     // Mark a single notification with notificationid = id as read
     const url = '/notifications/'+ id;
-    sendAjaxRequest('put', url, null, null);
+    sendAjaxRequest('put', url, null, notificationCleanerHandler(id));
 }

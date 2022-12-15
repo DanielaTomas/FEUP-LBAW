@@ -44,7 +44,7 @@ Route::post('user/{id}/delete', 'UserController@delete')->where(['id' => '[0-9]+
 // Notifications
 Route::get('/api/notifications', 'NotificationController@show');
 Route::put('notifications', 'NotificationController@readNotifications');
-Route::put('notification/{id}', 'NotificationController@readNotification')->where(['id' => '[0-9]+']);
+Route::put('notifications/{id}', 'NotificationController@readNotification')->where(['id' => '[0-9]+']);
 
 
 //Invite

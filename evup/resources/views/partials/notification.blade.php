@@ -1,4 +1,4 @@
-<a href="#" class="flex py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
+<button id="notification-{{ $notification['notificationid'] }}" onclick="readNotification({{ $notification['notificationid'] }})" class="flex py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700" title="Click to mark notification as read.">
     <div class="flex-shrink-0">
     @if ($notification['notificationtype'] === "EventChange")
         <div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-blue-600 rounded-full border border-white dark:border-gray-800">
@@ -56,4 +56,4 @@
    @endif
         <div class="text-xs text-blue-600 dark:text-blue-500">{{ $notification['time'] }}</div>
     </div>
-</a>
+</button>
