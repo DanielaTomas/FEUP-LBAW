@@ -149,8 +149,7 @@ CREATE TABLE answer(
 
 CREATE TABLE upload(
   uploadid SERIAL PRIMARY KEY,
-  commentid INTEGER NOT NULL REFERENCES comment (commentid) ON UPDATE CASCADE ON DELETE CASCADE,
-  fileName TEXT NOT NULL
+  filename TEXT NOT NULL
 );
 
 CREATE TABLE event_category(
@@ -187,7 +186,6 @@ DROP INDEX IF EXISTS user_search;
 
 
 CREATE INDEX comments_event ON comment USING hash (eventid);
-CREATE INDEX comments_upload ON upload USING hash (commentid);
 CREATE INDEX notification_receiver ON notification USING hash (receiverid);
 
 ALTER TABLE event ADD COLUMN tsvectors TSVECTOR; 
@@ -816,9 +814,9 @@ insert into answer (userid, pollid) values (3, 3);
 
 -- upload --
 
-insert into upload (uploadid, commentid, fileName) values (1, 1, 'http://dummyimage.com/182x100.png/ff4444/ffffff');
-insert into upload (uploadid, commentid, fileName) values (2, 9, 'http://dummyimage.com/111x100.png/ff4444/ffffff');
-insert into upload (uploadid, commentid, fileName) values (3, 6, 'http://dummyimage.com/134x100.png/cc0000/ffffff');
+insert into upload (filename) values (  'http://dummyimage.com/182x100.png/ff4444/ffffff');
+insert into upload (filename) values (  'http://dummyimage.com/111x100.png/ff4444/ffffff');
+insert into upload (filename) values (  'http://dummyimage.com/134x100.png/cc0000/ffffff');
 
 -- event_category --
 

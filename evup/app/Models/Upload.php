@@ -9,11 +9,7 @@ class Upload extends Model
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
 
-    protected $table = 'Upload';
-    protected $primaryKey = 'uploadId';
+    protected $table = 'upload';
+    protected $primaryKey = 'uploadid';
 
-    public function comment() 
-    {
-        return $this->belongsTo(Comment::class);
-    }
 }
