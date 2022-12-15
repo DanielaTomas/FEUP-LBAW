@@ -9,7 +9,7 @@
         <div class="flex flex-row items-center p-6">
             <h1 class=" text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
             @auth
-                <?php if($event->organizer()->first()->usertype == 'Organizer' && $event->organizer()->first()->userid == $user->userid) { ?>
+                @if($event->organizer()->first()->usertype == 'Organizer' && $event->organizer()->first()->userid == $user->userid)
                 <a href="{{ route('edit_event', ['id' => $event->eventid]) }}"
                     class="self-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-700 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -18,7 +18,7 @@
                             d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                     </svg>
                 </a>
-                <?php } ?>
+                @endif
             @endauth
             <button><i class="fa-solid fa-triangle-exclamation fa-2x"></i></button>
         </div>
@@ -50,14 +50,24 @@
 
                         <div class="flex flex-row justify-center">
                             @if (Auth::check())
-                                @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0)
+                                @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() == 0)
                                     <section>
-                                        <button id="requestToJoinButton{{$event->eventid }}" data-modal-toggle="staticModal-jr{{$event-> eventid}}" 
+                                        <button id="requestToJoinButton{{ $event->eventid }}"
+                                            data-modal-toggle="staticModal-jr{{ $event->eventid }}"
                                             class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Request
                                             to join</button>
                                     </section>
                                 @endif
-                                @include('partials.join_request_modal',['event'=> $event])
+                                @include('partials.join_request_modal', ['event' => $event])
+                                @if (Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() != 0)
+                                    <section>
+                                        <button id="leaveEventButton{{ $event->eventid }}"
+                                            data-modal-toggle="staticModal-le{{ $event->eventid }}"
+                                            class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Leave
+                                            Event</button>
+                                    </section>
+                                @endif
+                                @include('partials.leave_event_modal', ['event' => $event])
                             @endif
 
                         </div>
@@ -96,7 +106,8 @@
                         if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) { 
                         ?>
                                 <div class="flex mx-auto items-center justify-center mt-56 mx-8 mb-4 max-w-lg">
-                                    <form method="post" class="mb-6" action="{{ route('create_comment', $event->eventid) }}">
+                                    <form method="post" class="mb-6"
+                                        action="{{ route('create_comment', $event->eventid) }}">
                                         @csrf
                                         <div class="flex flex-wrap -mx-3 mb-6">
                                             <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Leave a comment</h2>
@@ -115,20 +126,20 @@
                                     </form>
                                 </div>
                                 <!--
-                                    <form class="mb-6">
-                                        <div
-                                            class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                            <label for="comment" class="sr-only">Your comment</label>
-                                            <textarea id="comment" rows="6"
-                                                class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                                                placeholder="Write a comment..." required></textarea>
-                                        </div>
-                                        <button type="submit"
-                                            class="items-center font-bold px-3 py-1 bg-gray-800 text-white rounded-full">
-                                            Post comment
-                                        </button>
-                                    </form>
-                --> <?php } ?>
+                                                    <form class="mb-6">
+                                                        <div
+                                                            class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                                                            <label for="comment" class="sr-only">Your comment</label>
+                                                            <textarea id="comment" rows="6"
+                                                                class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                                                                placeholder="Write a comment..." required></textarea>
+                                                        </div>
+                                                        <button type="submit"
+                                                            class="items-center font-bold px-3 py-1 bg-gray-800 text-white rounded-full">
+                                                            Post comment
+                                                        </button>
+                                                    </form>
+                                --> <?php } ?>
                             @endauth
                             @each(
                                 'partials.comment',
@@ -142,6 +153,10 @@
             </section>
     </article>
 
-    @each('partials.del_comment_modal', $event->comments()->orderBy('commentdate')->get(), 'comment')
+    @each(
+        'partials.del_comment_modal',
+        $event->comments()->orderBy('commentdate')->get(),
+        'comment',
+    )
 
 @endsection

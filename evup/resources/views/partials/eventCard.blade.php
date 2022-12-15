@@ -3,12 +3,13 @@
 
     <div class="w-full h-64 bg-top bg-cover rounded-t flex flex-col justify-between"
         style="background-image: url( {{ $event->eventphoto }})">
-        <button value="Submit" type="button" onclick="leaveEvent({{ $event->eventid }})">
+        <button value="Submit" data-modal-toggle="staticModal-le{{$event -> eventid}}" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="h-8 w-8 hover:text-gray-400 mt-2 ml-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
+        @include('partials.leave_event_modal', ['event' => $event])
         @if (!$event->public)
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8  mb-2 ml-2">
                 <path fill-rule="evenodd"
