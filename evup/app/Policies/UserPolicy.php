@@ -131,6 +131,16 @@ class UserPolicy
         return $admin->usertype == 'Admin';
     }
 
+    /**
+     * Determine whether the user can see and manage notifications.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function notifications(User $user)
+    {
+        return Auth::check();
+    }
 }
 
 

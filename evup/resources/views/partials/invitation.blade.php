@@ -7,19 +7,19 @@
             <p>{{ $invite->sender()->first()->username }}</p>
         </td>
     </div>
-    <?php if ($invite['invitationstatus'] == TRUE) { ?>
+    @if ($invite['invitationstatus'] == TRUE)
     <td class="px-4 py-2 ">
         <button
             class="inline-flex text-green-900 items-center px-4 py-2 text-sm font-medium text-center bg-green-100 rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300">
             Aceite</button>
     </td>
-    <?php } else if ($invite['invitationstatus'] === FALSE) { ?>
+    @elseif ($invite['invitationstatus'] === FALSE)
     <td class="px-4 py-2">
         <button
             class="inline-flex text-red-900 items-center  px-4 py-2 text-sm font-medium text-center bg-red-100 rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300">
             Rejeitado</button>
     </td>
-    <?php } else{ ?>
+    @else
     <div class="flex flex-row">
         <div id="here{{ $invite->invitationid }}" class="px-4 py-2">
             <button value="Submit" type="button" id="accept{{ $invite->invitationid }}"
@@ -37,5 +37,5 @@
         </div>
     </div>
 
-    <?php } ?>
+    @endif
 </section>
