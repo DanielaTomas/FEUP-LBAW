@@ -56,6 +56,11 @@ class User extends Authenticatable
         $this->notifications()->delete();
     }
 
+    public function photo()
+    {
+        return $this->hasOne(Upload::class, 'uploadid');
+    }
+
     public function notifications()
     {
         return $this->hasMany(Notification::class, 'receiverid');

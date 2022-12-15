@@ -28,13 +28,18 @@ CREATE TYPE notificationtype AS ENUM ('EventChange','JoinRequestReviewed','Organ
 CREATE TYPE accountstatus AS ENUM ('Active','Disabled','Blocked');
 CREATE TYPE usertypes AS ENUM ('User','Organizer','Admin');
 
+CREATE TABLE upload(
+  uploadid SERIAL PRIMARY KEY,
+  filename TEXT NOT NULL
+);
+
 CREATE TABLE users(
   userid SERIAL PRIMARY KEY,
   username VARCHAR(50) NOT NULL CONSTRAINT unique_usernam_uk UNIQUE,
   name VARCHAR(150) NOT NULL, 
   email TEXT NOT NULL CONSTRAINT user_email_uk UNIQUE,
   password TEXT NOT NULL,
-  userphoto ITEGER REFERENCES upload (uploadid) on DELETE SET NULL ON UPDATE CASCADE,
+  userphoto INTEGER REFERENCES upload (uploadid) on DELETE SET NULL ON UPDATE CASCADE,
   accountstatus accountstatus NOT NULL,
   usertype usertypes NOT NULL,
   remember_token TEXT -- Laravel's remember me functionality
@@ -145,11 +150,6 @@ CREATE TABLE answer(
   userid INTEGER REFERENCES users (userid) ON UPDATE CASCADE ON DELETE CASCADE,
   pollid INTEGER REFERENCES poll (pollid) ON UPDATE CASCADE ON DELETE CASCADE,
   PRIMARY KEY(userid, pollid)
-);
-
-CREATE TABLE upload(
-  uploadid SERIAL PRIMARY KEY,
-  filename TEXT NOT NULL
 );
 
 CREATE TABLE event_category(
@@ -519,6 +519,11 @@ CREATE TRIGGER user_search_update
 
 ------------------------------------------------------------------------------------------------------
 
+-- upload --
+
+insert into upload (filename) values ('userDefault.png');
+insert into upload (filename) values ('eventDefault.jpeg');
+
 ---1234
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('mfalcus0', 'Micky Falcus', 'mfalcus0@google.com.hk', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('esergent1', 'Elfrida Sergent', 'esergent1@trellian.com', '$2a$12$GNYQT3cnVKmhgi5FMyjBuekVSDuYQ9J3brx.1YDQ9vyDOhzX5/4U6', 1, 'Active', 'Organizer');
@@ -810,12 +815,6 @@ insert into answer (userid, pollid) values (1, 2);
 insert into answer (userid, pollid) values (9, 8);
 insert into answer (userid, pollid) values (2, 4);
 insert into answer (userid, pollid) values (3, 3);
-
--- upload --
-
-insert into upload (filename) values ('userDefault.png');
-insert into upload (filename) values ('eventDefault.jpeg');
-
 
 -- event_category --
 
