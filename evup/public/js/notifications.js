@@ -1,5 +1,3 @@
-fetchNotifications()
-
 function notificationPanelHandler() {
     if (this.status == 403) {
         window.location = '/login';
