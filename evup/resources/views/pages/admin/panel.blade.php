@@ -82,6 +82,7 @@
                 </div>
                 
                 @each('partials.admin.ban_modal', $users, 'user')
+                @each('partials.admin.del_user', $users, 'user')
             </div>
             <div class="hidden" id="tab-reports">
                 <div>

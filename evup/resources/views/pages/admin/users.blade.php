@@ -54,5 +54,6 @@
 </div>
 
 @each('partials.admin.ban_modal', $users, 'user')
+@each('partials.admin.del_user', $users, 'user')
 
 @endsection

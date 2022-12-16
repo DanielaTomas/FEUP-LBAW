@@ -79,6 +79,50 @@ class AdminController extends UserController
         ]);
     }
 
+    /**
+     * Deletes a user account.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param int $id Id of the user
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteUser(Request $request, int $id)
+    {
+        $admin = User::find(Auth::id());
+        if (is_null($admin))
+            return abort(404, 'User not found');
+        $user = User::find($id);
+        if (is_null($user))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'User not found, id: '.$id,
+                'errors' => ['user' => 'User not found, id: '.$id]
+            ], 404);
+
+        $this->authorize('delete', $admin);
+
+        if ($user->usertype == 'Organizer') {
+            // Cancels events created by the user
+            $createdEvents = $user->createdEvents()->get();
+
+            foreach ($createdEvents as $event) {
+                $this->cancelEvent($event->eventid);
+            }
+        }
+
+        $user->events()->detach();
+
+        /* Delete info deletes every info associated with the deleted user: Invites sent and receveied; Notifications, */
+        /* Organizer Requests issued by the user, Join Requests issued by the user */
+        /* Nullable fields are set to NULL and the rest is filled with dummy text ('deleteduser{id}') */
+        $user->delete_info();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => "Successfully deleted this user's account",
+        ], 200);
+    }
+
 
    /**
    * Bans a user

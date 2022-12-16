@@ -23,7 +23,13 @@
     <td class="py-3 px-6 text-center">
         <div class="flex justify-center">
             <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" src="{{$report['reporter']->userphoto}}"/>
+                <img class="w-6 h-6 rounded-full" 
+                @if ($report['reporter']->accountstatus !== 'Disabled')
+                    src="{{$report['reporter']->userphoto}}"
+                @else
+                    src="storage/avatar_placeholder.png"
+                @endif
+                />
             </div>
             <p>{{$report['reporter']->name}}</p>
         </div>

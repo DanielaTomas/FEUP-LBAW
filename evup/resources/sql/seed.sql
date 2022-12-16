@@ -221,8 +221,6 @@ DROP FUNCTION IF EXISTS NewPoll;
 DROP TRIGGER IF EXISTS new_poll_notification ON poll;
 DROP FUNCTION IF EXISTS updateUserToOrg;
 DROP TRIGGER IF EXISTS update_user_to_organization ON organizerrequest;
-DROP FUNCTION IF EXISTS deleteUser;
-DROP TRIGGER IF EXISTS user_deleted ON users;
 DROP FUNCTION IF EXISTS eventCancelled;
 DROP TRIGGER IF EXISTS event_cancelled ON event;
 DROP FUNCTION IF EXISTS event_search_update;
@@ -392,46 +390,6 @@ LANGUAGE plpgsql;
 CREATE TRIGGER update_user_to_organization
     AFTER UPDATE ON organizerrequest
     EXECUTE PROCEDURE updateUserToOrg();
-
-
-CREATE FUNCTION deleteUser() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    IF (NEW.accountstatus='Disabled') THEN
-        DELETE FROM Atendee
-        WHERE attendeeid = NEW.userid;
-        
-        DELETE FROM joinrequest
-        WHERE requesterid = NEW.userid AND requeststatus=NULL;
-
-        DELETE FROM organizerrequest
-        WHERE requesterid = NEW.userid AND requeststatus=NULL;
-
-        DELETE FROM notification
-        WHERE receiverid = NEW.userid;
-
-        UPDATE users 
-        SET 
-        username = CONCAT('Anonymous',userid),
-        name='Anonymous',
-        email=CONCAT('Deleted',userid),
-        password = 'Deleted',
-        userphoto = NULL,
-        usertypes = NULL
-        WHERE NEW.userid=users.userid;
-
-
-    END IF;
-    RETURN NULL;
-END
-$BODY$
-
-LANGUAGE plpgsql;
-
-
-CREATE TRIGGER user_deleted
-    AFTER UPDATE ON users
-    EXECUTE PROCEDURE deleteUser();
 
 
 CREATE FUNCTION eventCancelled() RETURNS TRIGGER AS

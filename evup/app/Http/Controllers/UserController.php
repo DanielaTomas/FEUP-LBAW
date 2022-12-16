@@ -228,7 +228,7 @@ class UserController extends Controller
         /* Delete info deletes every info associated with the deleted user: Invites sent and receveied; Notifications, */
         /* Organizer Requests issued by the user, Join Requests issued by the user */
         /* Nullable fields are set to NULL and the rest is filled with dummy text ('deleteduser{id}') */
-        $user = $user->delete_info();
+        $user->delete_info();
         Auth::logout();
 
         return redirect()->route('home')->with('success', 'Your account has been deleted.');

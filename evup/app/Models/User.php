@@ -49,11 +49,11 @@ class User extends Authenticatable
 
         $this->save();
 
-        $this->invites_sent()->delete();
-        $this->invites_received()->delete();
-        $this->requests()->delete();
-        $this->joinRequests()->delete();
-        $this->notifications()->delete();
+        //$this->invites_sent()->delete();
+        //$this->invites_received()->delete();
+        //$this->requests()->delete();
+        //$this->joinRequests()->delete();
+        //$this->notifications()->delete();
     }
 
     public function notifications()

@@ -1,3 +1,8 @@
+function deleteUser(id) {
+    const url = '/admin/users/'+ id + '/delete';
+    sendAjaxRequest('put', url, null, delHandler(id));
+}
+
 function banUser(id) {
     const url = '/admin/users/'+ id + '/ban';
     sendAjaxRequest('put', url, null, banHandler(true, id));
@@ -6,6 +11,27 @@ function banUser(id) {
 function unbanUser(id) {
     const url = '/admin/users/'+ id + '/unban';
     sendAjaxRequest('put', url, null, banHandler(false, id));
+}
+
+function delHandler(id) {
+    if (this.status == 403) {
+        window.location = '/login';
+        return;
+    }
+
+    banbtn = select('#banBtn-' + id)
+    if(banbtn)
+        banbtn.remove()
+    else {
+        unbanbtn = select('#unbanBtn-' + id)
+        unbanbtn.remove()
+    }
+
+    accstatus = select('#accstatus-' + id)
+    accstatus.innerHTML = 'Disabled'
+    accstatus.classList = 'bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs'
+
+    createAlert('success', "You have delete this user's account successfully.")
 }
 
 function banHandler(ban, id) {
