@@ -60,7 +60,9 @@ class NotificationController extends Controller
                 else if ($notification->notificationtype === "OrganizerRequestReviewed")
                 {
                     $organizerrequest = OrganizerRequest::find($notification->organizerrequestid);
+                    $user = User::find($organizerrequest->requesterid);
                     $info['requeststatus'] = $organizerrequest->requeststatus;
+                    $info['userphoto'] = $user->userphoto;
                 }
                 else if ($notification->notificationtype === "InviteReceived")
                 {
