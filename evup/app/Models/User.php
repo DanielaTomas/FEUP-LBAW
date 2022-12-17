@@ -49,11 +49,16 @@ class User extends Authenticatable
 
         $this->save();
 
-        //$this->invites_sent()->delete();
-        //$this->invites_received()->delete();
-        //$this->requests()->delete();
-        //$this->joinRequests()->delete();
-        //$this->notifications()->delete();
+        /* Delete all invites sent by the user */
+        DB::table('invitation')->where('inviterid', $this->userid)->delete();
+        /* Delete all invites received by the user */
+        DB::table('invitation')->where('inviteeid', $this->userid)->delete();
+        /* Delete all organizer requests issued by the user */
+        DB::table('organizerrequest')->where('requesterid', $this->userid)->delete();
+        /* Delete all join requests issued by the user */
+        DB::table('joinrequest')->where('requesterid', $this->userid)->delete();
+        /* Delete all join requests issued by the user */
+        DB::table('notification')->where('receiverid', $this->userid)->delete();
     }
 
     public function notifications()
