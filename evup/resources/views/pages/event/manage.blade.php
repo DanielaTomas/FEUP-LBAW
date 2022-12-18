@@ -24,7 +24,7 @@
         </div>
 
         <section>
-
+            
             <section class=" flex flex-row flex-wrap justify-between">
 
                 <section class="flex flex-col grow p-6 max-w-xl">
@@ -49,6 +49,12 @@
                         </section>
                     </div>
                 </section>
+
+                @if ($event->eventcanceled)
+                <div class="flex flex-col  p-6 max-w-xl grow">
+                    <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">This Event has been canceled.</h2>
+                </div>
+                @endif
 
                 <section class="flex flex-col  p-6 max-w-xl grow">
                     <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Description</h2>

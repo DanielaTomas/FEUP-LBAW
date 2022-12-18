@@ -74,6 +74,7 @@ Route::post('myEvents/createEvent', 'EventController@createEvent')->name('create
 Route::get('event/{id}/manage', 'EventController@manageEvent')->where(['id' => '[0-9]+'])->name('manage_event');
 Route::put('event/{id}/public', 'EventController@setEventVisibilityPublic')->where(['id' => '[0-9]+']);
 Route::put('event/{id}/private', 'EventController@setEventVisibilityPrivate')->where(['id' => '[0-9]+']);
+Route::put('event/{id}/cancel', 'EventController@cancelEvent')->where(['id' => '[0-9]+']);
 Route::get('event/{id}/attendees', 'EventController@attendees')->where(['id' => '[0-9]+'])->name('attendees');
 Route::get('event/{id}/adduser', 'EventController@view_add_user')->where(['id' => '[0-9]+'])->name('view_add_user');
 Route::post('event/{eventid}/adduser/{userid}', 'EventController@addUser')->where(['eventid' => '[0-9]+', 'userid' => '[0-9]+'])->name('add_user_event');

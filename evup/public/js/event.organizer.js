@@ -20,6 +20,12 @@ function setEventToPrivate(eventid = localStorage.getItem("eventid")) {
     sendAjaxRequest('put', url, null, visibilityHandler(false, eventid));
 }
 
+
+function cancelEvent(eventid = localStorage.getItem("eventid")) {
+    const url = '/event/'+ eventid + '/cancel';
+    sendAjaxRequest('put', url, null, cancelEventHandler(eventid));
+}
+
 function visibilityHandler(public, eventid) {
     if (this.status == 403) {
         window.location = '/login';
@@ -33,6 +39,17 @@ function visibilityHandler(public, eventid) {
     else
         createAlert('success', 'You have set this event visibility to private successfully.')
         
+}
+
+function cancelEventHandler(eventid) {
+    if (this.status == 403) {
+        window.location = '/login';
+        return;
+    }
+
+    /* Deal with errors */
+
+    createAlert('success', 'You have canceled this event successfully.')       
 }
 
 

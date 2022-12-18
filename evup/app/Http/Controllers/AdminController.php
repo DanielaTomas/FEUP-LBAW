@@ -289,7 +289,7 @@ class AdminController extends UserController
 
       return response()->json([
           'status' => 'OK',
-          'msg' => 'Event was successfully canceleded',
+          'msg' => 'Event was successfully canceled',
       ], 200);
   }
 

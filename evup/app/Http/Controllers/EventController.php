@@ -97,6 +97,40 @@ class EventController extends Controller
     ], 200);
   }
 
+
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  int $id Id of the user
+   * @return \Illuminate\Http\RedirectResponse
+   */
+  public function cancelEvent(int $id)
+  {
+      $event = Event::find($id);
+      if (is_null($event))
+          return response()->json([
+              'status' => 'Not Found',
+              'msg' => 'Event not found, id: '.$id,
+              'errors' => ['event' => 'Event not found, id: '.$id]
+          ], 404);
+
+      $this->authorize('manage', $event);
+
+      if ($event->eventcanceled)
+          return response()->json([
+              'status' => 'OK',
+              'msg' => 'Event was already canceled',
+          ], 200);
+
+      $event->eventcanceled = true;
+      $event->save();
+
+      return response()->json([
+          'status' => 'OK',
+          'msg' => 'Event was successfully canceled',
+      ], 200);
+  }
+
   public function userEvents()
   {
     $this->authorize('list', Event::class);
