@@ -1631,6 +1631,9 @@ select {
 .self-center {
   align-self: center;
 }
+.self-start {
+  align-self: flex-start;
+}
 .overflow-hidden {
   overflow: hidden;
 }

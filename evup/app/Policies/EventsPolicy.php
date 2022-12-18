@@ -23,6 +23,11 @@ class EventsPolicy
         return Auth::check();
     }
 
+    public function manage(User $organizer, Event $event)
+    {
+        return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
+    }
+
     public function attendees(User $organizer, Event $event)
     {
         return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;

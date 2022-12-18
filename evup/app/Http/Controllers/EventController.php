@@ -45,6 +45,58 @@ class EventController extends Controller
     ]);
   }
 
+  public function manageEvent($id)
+  {
+    $event = Event::find($id);
+    if (is_null($event))
+      return abort(404, 'Event not found');
+
+    $this->authorize('manage',$event);
+    return view('pages.event.manage',['event' => $event]);
+  }
+
+  public function setEventVisibilityPublic($id)
+  {
+    $event = Event::find($id);
+    if (is_null($event))
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'User not found, id: '.$id,
+        'errors' => ['user' => 'User not found, id: '.$id]
+        ], 404);
+  
+    $this->authorize('manage', $event);
+
+    $event->public = TRUE;
+    $event->save();
+
+    return response()->json([
+        'status' => 'OK',
+        'msg' => 'Successfully set event visibility to public',
+    ], 200);
+  }
+
+  public function setEventVisibilityPrivate($id)
+  {
+    $event = Event::find($id);
+    if (is_null($event))
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'User not found, id: '.$id,
+        'errors' => ['user' => 'User not found, id: '.$id]
+        ], 404);
+  
+    $this->authorize('manage', $event);
+
+    $event->public = FALSE;
+    $event->save();
+
+    return response()->json([
+        'status' => 'OK',
+        'msg' => 'Successfully set event visibility to private',
+    ], 200);
+  }
+
   public function userEvents()
   {
     $this->authorize('list', Event::class);
