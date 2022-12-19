@@ -95,7 +95,7 @@
                                 <?php 
                         if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) { 
                         ?>
-                                <div class="flex mx-auto items-center justify-center mt-56 mx-8 mb-4 max-w-lg">
+                                <div class="flex mx-auto items-center justify-center mb-4 max-w-lg">
                                     <form method="post" class="mb-6" action="{{ route('create_comment', $event->eventid) }}">
                                         @csrf
                                         <div class="flex flex-wrap -mx-3 mb-6">
