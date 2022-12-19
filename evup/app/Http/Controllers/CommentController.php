@@ -133,6 +133,13 @@ class CommentController extends Controller
 
     //$this->authorize('like',$comment);
     $user = Auth::id();
+
+    if($comment->commentid != $user) {
+      foreach($comment->votes()->get() as $vote) { 
+          if($vote->userid == $user || $comment->commentid == $user) return;
+      } 
+    } 
+ 
     $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => true]);
 
     return response()->json([
@@ -152,6 +159,13 @@ class CommentController extends Controller
     //$this->authorize('dislike',$comment);
 
     $user = Auth::id();
+
+    if($comment->commentid != $user) {
+      foreach($comment->votes()->get() as $vote) { 
+          if($vote->userid == $user || $comment->commentid == $user) return;
+      } 
+    } 
+    
     $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => false]);
 
     return response()->json([
