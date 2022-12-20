@@ -14,7 +14,7 @@ use App\Models\User;
 class CommentController extends Controller
 {
 
-   public function createComment(Request $request, int $id, int $commentid)
+   public function createComment(Request $request, int $id, int $commentid = null)
    {
 
     $event = Event::find($id);
