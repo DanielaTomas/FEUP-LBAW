@@ -4,8 +4,10 @@ const deleteComment = (id,commentid) => {
 }
 
 function deleteCommentHandler(commentid) {
-    const comment = document.getElementById("comment" + commentid)
-    comment.remove()
+    const comment = document.querySelectorAll('#comment' + commentid)
+    for(var i = 0; i < comment.length; i++) {
+        comment[i].remove()        
+    }
     createAlert('success', 'You have removed this comment successfully.')
 }
 
