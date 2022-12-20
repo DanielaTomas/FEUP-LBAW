@@ -2,7 +2,7 @@
     class="flex flex-col w-full bg-white rounded shadow-lg sm:w-3/4 md:w-1/2 lg:w-2/5">
 
     <div class="w-full h-64 bg-top bg-cover rounded-t flex flex-col justify-between"
-        style="background-image: url( {{ $event->eventphoto }})">
+        style="background-image: url({{ asset('storage/images/image-'.$event->eventphoto.'.png')}})">
         <a href="{{ route('attendees', ['id' => $event->eventid]) }}" class="self-end text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-700 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Manage Participants</a>
         <a href="{{route('edit_event', ['id' => $event->eventid])}}" class="self-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-700 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="self-center w-6 h-6">

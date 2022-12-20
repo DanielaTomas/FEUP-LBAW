@@ -3,8 +3,8 @@
 @section('title', "- Create Event")
 
 @section('content')
-    <form method="POST" action="{{ route('createEvent') }}">
-        {{ csrf_field() }}
+    <form method="POST" action="{{ route('createEvent') }}" enctype="multipart/form-data">
+        @csrf
         <div class="text-center text-4xl font-medium">create a new Event</div>
         <div class="mb-6">
             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">event Name</label>
@@ -20,12 +20,12 @@
         <div class="mb-6">
             <label for="eventAddress" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">event
                 address</label>
-            <input type="text" name="eventAddress" id="eventAddress" value="{{ old('eventAddress') }}"
+            <input type="text" name="eventaddress" id="eventaddress" value="{{ old('eventaddress') }}"
                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                 required>
-            @if ($errors->has('eventAddress'))
+            @if ($errors->has('eventaddress'))
                 <span class="error">
-                    {{ $errors->first('eventAddress') }}
+                    {{ $errors->first('eventaddress') }}
                 </span>
             @endif
         </div>
@@ -96,7 +96,7 @@
             <label for="imgInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Background
                 photo</label>
 
-            <input class="rounded-lg" type="file" id="imgInput" name="thumbnail" accept="image/*">
+            <input class="rounded-lg" type="file" id="imgInput" name="image" accept="image/*">
 
             @if ($errors->has('thumbnail'))
                 <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">

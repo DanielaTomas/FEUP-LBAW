@@ -2,7 +2,7 @@
     class="flex flex-col w-full bg-white rounded shadow-lg sm:w-3/4 md:w-1/2 lg:w-2/5">
 
     <div class="w-full h-64 bg-top bg-cover rounded-t flex flex-col justify-between"
-        style="background-image: url( {{ $event->eventphoto }})">
+        style="background-image: url({{ asset('storage/images/image-'.$event->eventphoto.'.png')}})">
         <button value="Submit" data-modal-toggle="staticModal-le{{$event -> eventid}}" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="h-8 w-8 hover:text-gray-400 mt-2 ml-2">

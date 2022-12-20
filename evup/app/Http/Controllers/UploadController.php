@@ -13,7 +13,6 @@ class UploadController extends Controller
 
     public function store(Request $request)
     {
-        $size = $request->file('image')->getSize();
         $name = $request->file('image')->getClientOriginalName();
 
         $request->file('image')->storeAs('public/images/',$name);

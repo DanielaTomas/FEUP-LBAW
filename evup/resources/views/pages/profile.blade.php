@@ -23,7 +23,7 @@
         <div class="px-6 ">
             <div class="text-center mt-2">
                 <div class="mr-2">
-                    <img class="mx-auto w-12 h-12 rounded-full" src="{{ asset('storage/images/'.$user->photo()->first()->filename)}}" />
+                    <img class="mx-auto w-12 h-12 rounded-full" src="{{ asset('storage/images/image-'.$user->userphoto.'.png')}}" />
                 </div>
                 <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">
                     {{ $user->name }}
