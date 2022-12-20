@@ -4,15 +4,22 @@
 
 @section('content')
 
+@if ($event->eventcanceled)
+    <div class="bg-red-300 rounded-lg text-center p-6">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-800">This Event has been canceled.</h2>
+    </div>
+@endif
+
     <div class="my-2 flex sm:flex-row justify-between">
         <div class="self-center">
-            <a id="goback" href="" class="text-white right-2.5 bottom-2.5 mb-4 bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Go Back</a>
+            <a id="goback" href="" title="Go back to previous page" class="text-white right-2.5 bottom-2.5 mb-4 bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Go Back</a>
         </div>
     </div>
     <article data-id="{{ $event->eventid }}" class="rounded-t-3xl">
         <div class="flex flex-row items-center p-6">
             <h1 class=" text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
-                <a href="{{ route('edit_event', ['id' => $event->eventid]) }}"
+            @if (!$event->eventcanceled)   
+                <a href="{{ route('edit_event', ['id' => $event->eventid]) }}" title="Edit Event Details"
                     class="self-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
@@ -20,6 +27,7 @@
                             d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                     </svg>
                 </a>
+            @endif
             <button><i class="fa-solid fa-triangle-exclamation fa-2x"></i></button>
         </div>
 
@@ -50,32 +58,25 @@
                     </div>
                 </section>
 
-                @if ($event->eventcanceled)
-                <div class="flex flex-col  p-6 max-w-xl grow">
-                    <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">This Event has been canceled.</h2>
-                </div>
-                @endif
-
                 <section class="flex flex-col  p-6 max-w-xl grow">
                     <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Description</h2>
                     <p class="py-4"> {{ $event->description }} </p>
                     <div class="mb-4"> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
 
-                    <section>
+                    @if (!$event->eventcanceled)   
                         <div>
                             <div class="items-center mb-6">
                                 <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Manage Event</h2>
                             </div>
-                            <div class="flex flex-row justify-start items-center mb-6">
-
+                            <div class="flex flex-row justify-start items-center mb-6"> 
                                 <section>
-                                    <button id="cancelEventBtn{{ $event->eventid }}"
+                                    <button id="cancelEventBtn{{ $event->eventid }}" title="Cancel this event"
                                         data-modal-toggle="staticModal-e{{ $event->eventid }}"
                                         class="font-bold mr-4 px-4 py-2.5 bg-gray-900 hover:bg-indigo-600 mt-3 transition ease-in-out duration-300 text-white rounded-full">Cancel Event
                                     </button>
                                 </section>
                                 
-                                <button id="dropdownRadioHelperButton" data-dropdown-toggle="dropdownRadioHelper" class="ml-4 text-white rounded-full font-bold bg-gray-900 hover:bg-indigo-600 mt-3 transition ease-in-out duration-300 px-4 py-2.5 text-center inline-flex items-center" type="button">Event Visibility <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                                <button id="dropdownRadioHelperButton" data-dropdown-toggle="dropdownRadioHelper" title="Manage Event Visibility" class="ml-4 text-white rounded-full font-bold bg-gray-900 hover:bg-indigo-600 mt-3 transition ease-in-out duration-300 px-4 py-2.5 text-center inline-flex items-center" type="button">Event Visibility <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
     
                                 <!-- Dropdown menu -->
                                 <div id="dropdownRadioHelper" class="hidden z-10 w-60 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
@@ -111,8 +112,7 @@
                             </div>
 
                         </div>
-                    </section>
-
+                    @endif
                 </section>
             </section>
     </article>
