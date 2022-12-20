@@ -14,7 +14,7 @@ use App\Models\User;
 class CommentController extends Controller
 {
 
-   public function createComment(Request $request, int $id)
+   public function createComment(Request $request, int $id, int $commentid)
    {
 
     $event = Event::find($id);
@@ -45,6 +45,9 @@ class CommentController extends Controller
       $comment = new Comment;
       $comment->authorid = Auth::id();
       $comment->eventid = $id;
+      if($commentid != NULL) {
+        $comment->parentid = $commentid;
+      }
       //$comment->commentcontent = $request->input('commentcontent');
       $comment->commentcontent = $request->commentcontent;
       $comment->commentdate = date("Y-m-d");

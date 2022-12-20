@@ -96,20 +96,21 @@
                         if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) { 
                         ?>
                                 <div class="flex mx-auto items-center justify-center mb-4 max-w-lg">
-                                    <form method="post" class="mb-6" action="{{ route('create_comment', $event->eventid) }}">
+                                    <form method="post" class="mb-6" action="{{ route('create_comment', [$event->eventid]) }}">
                                         @csrf
                                         <div class="flex flex-wrap -mx-3 mb-6">
                                             <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Leave a comment</h2>
                                             <div class="w-full md:w-full px-3 mb-2 mt-2">
                                                 <input
-                                                    class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                                                    class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-500 focus:outline-none focus:bg-white"
                                                     id="commentcontent" type="text" name="commentcontent"
                                                     placeholder="Type Your Comment" required>
                                             </div>
                                             <div class="w-full md:w-full flex items-start md:w-full px-3">
                                                 <button
                                                     class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full"
-                                                    type="submit">Post Comment</button>
+                                                    type="submit">Post Comment
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
