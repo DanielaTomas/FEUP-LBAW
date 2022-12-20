@@ -722,16 +722,20 @@ insert into Poll (pollId, eventId, pollContent) values (10, 7, 'How useful will 
 
 -- Comment --
 
-insert into Comment (authorId, eventId, commentContent, commentDate) values (4, 4, 'I am looking forward to it!!', CURRENT_TIMESTAMP);
-insert into Comment (authorId, eventId, commentContent, commentDate) values (8, 8, 'I have some questions about the event. Someone can help me?', CURRENT_TIMESTAMP);
-insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Looks very useful', CURRENT_TIMESTAMP);
-insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, ':)', CURRENT_TIMESTAMP);
-insert into Comment (authorId, eventId, commentContent, commentDate) values (5, 5, ':(', CURRENT_TIMESTAMP);
-insert into Comment (authorId, eventId, commentContent, commentDate) values (1, 1, 'It was fun', CURRENT_TIMESTAMP);
-insert into Comment (authorId, eventId, commentContent, commentDate) values (9, 9, 'This event changed my life!', CURRENT_TIMESTAMP);
-insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 2, 'I did not like the event. I am disappointed.', CURRENT_TIMESTAMP);
-insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Where is the event?', CURRENT_TIMESTAMP);
-insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, 'Nice!', CURRENT_TIMESTAMP);
+insert into Comment (authorId, eventId, commentContent, commentDate) values (4, 4, 'I am looking forward to it!!', '2022-12-20');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (8, 8, 'I have some questions about the event. Someone can help me?', '2022-10-10');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Looks very useful', '2022-11-10');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, ':)', '2022-11-30');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (5, 5, ':(', '2022-12-22');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (1, 1, 'It was fun', '2022-12-02');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (9, 9, 'This event changed my life!', '2022-12-20');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 2, 'I did not like the event. I am disappointed.', '2022-12-20');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Where is the event?', '2022-11-06');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, 'Nice!', '2022-11-19');
+
+insert into Comment (authorId, eventId, parentId, commentContent, commentDate) values (2, 1, 6, 'Much appreciated! Glad you liked it ☺️', '2022-12-03');
+insert into Comment (authorId, eventId, parentId, commentContent, commentDate) values (1, 1, 10, ':) :)', '2022-11-20');
+insert into Comment (authorId, eventId, parentId, commentContent, commentDate) values (2, 1, 10, ':)', '2022-11-20');
 
 -- JoinRequest --
 
@@ -782,7 +786,6 @@ insert into Vote (voterId, commentId, type) values (14, 9, false);
 insert into Vote (voterId, commentId, type) values (15, 7, true);
 
 insert into Vote (voterId, commentId, type) values (2, 4, true);
-insert into Vote (voterId, commentId, type) values (1, 4, false);
 
 
 -- PollOption --
