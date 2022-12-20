@@ -5,7 +5,7 @@
 @section('content')
 
 @if ($event->eventcanceled)
-    <div class="bg-red-300 rounded-lg text-center p-6">
+    <div class="bg-red-300 rounded-lg text-center p-6 mb-4">
         <h2 class="text-3xl font-bold tracking-tight text-gray-800">This Event has been canceled.</h2>
     </div>
 @endif

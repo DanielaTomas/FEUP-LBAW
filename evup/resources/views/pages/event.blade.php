@@ -4,10 +4,17 @@
 
 @section('content')
 
+@if ($event->eventcanceled)
+    <div class="bg-red-300 rounded-lg text-center p-6 mb-4">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-800">This Event has been canceled.</h2>
+    </div>
+@endif
+
     <article data-id="{{ $event->eventid }}" class="rounded-t-3xl">
 
         <div class="flex flex-row items-center p-6">
             <h1 class=" text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
+            @if (!$event->eventcanceled)  
             @auth
                 @if($event->organizer()->first()->usertype == 'Organizer' && $event->organizer()->first()->userid == $user->userid)
                 <a href="{{ route('edit_event', ['id' => $event->eventid]) }}"
@@ -20,6 +27,7 @@
                 </a>
                 @endif
             @endauth
+            @endif
             <button><i class="fa-solid fa-triangle-exclamation fa-2x"></i></button>
         </div>
 
@@ -59,13 +67,15 @@
                                     </section>
                                 @endif
                                 @include('partials.join_request_modal', ['event' => $event])
-                                @if (Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() != 0)
-                                    <section>
-                                        <button id="leaveEventButton{{ $event->eventid }}"
-                                            data-modal-toggle="staticModal-le{{ $event->eventid }}"
-                                            class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Leave
-                                            Event</button>
-                                    </section>
+                                @if (!$event->eventcanceled) 
+                                    @if (Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() != 0)
+                                        <section>
+                                            <button id="leaveEventButton{{ $event->eventid }}"
+                                                data-modal-toggle="staticModal-le{{ $event->eventid }}"
+                                                class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Leave
+                                                Event</button>
+                                        </section>
+                                    @endif
                                 @endif
                                 @include('partials.leave_event_modal', ['event' => $event])
                             @endif
@@ -73,21 +83,23 @@
                         </div>
                     </div>
 
-                    @if (Auth::check())
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Invite user</h2>
-                        </div>
-                        <div class="flex justify-center flex-col">
-                            <div class="mb-3 xl:w-96">
-                                <div class="input-group relative flex  items-stretch w-full mb-4">
-                                    <input id="mySearch" name="search" type="search"
-                                        class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                        placeholder="Enter user's email" aria-label="Search"
-                                        aria-describedby="button-addon2">
-                                </div>
+                    @if (!$event->eventcanceled) 
+                        @if (Auth::check())
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Invite user</h2>
                             </div>
-                            <div id="userResults" class="flex  flex-col gap-5 max-w-xl"> </div>
-                        </div>
+                            <div class="flex justify-center flex-col">
+                                <div class="mb-3 xl:w-96">
+                                    <div class="input-group relative flex  items-stretch w-full mb-4">
+                                        <input id="mySearch" name="search" type="search"
+                                            class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                            placeholder="Enter user's email" aria-label="Search"
+                                            aria-describedby="button-addon2">
+                                    </div>
+                                </div>
+                                <div id="userResults" class="flex  flex-col gap-5 max-w-xl"> </div>
+                            </div>
+                        @endif
                     @endif
                 </section>
 
@@ -106,6 +118,7 @@
                         if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) { 
                         ?>
                                 <div class="flex mx-auto items-center justify-center mt-56 mx-8 mb-4 max-w-lg">
+                                    @if (!$event->eventcanceled) 
                                     <form method="post" class="mb-6"
                                         action="{{ route('create_comment', $event->eventid) }}">
                                         @csrf
@@ -124,6 +137,7 @@
                                             </div>
                                         </div>
                                     </form>
+                                    @endif
                                 </div>
                                 <!--
                                                     <form class="mb-6">

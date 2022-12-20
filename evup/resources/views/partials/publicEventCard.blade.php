@@ -1,12 +1,19 @@
 <div data-id="{{ $event->eventid }}" class="flex flex-col w-full bg-white rounded shadow-lg sm:w-3/4 md:w-1/2 lg:w-2/5">
     <div class="w-full h-64 bg-top bg-cover rounded-t" style="background-image:  url( {{ $event->eventphoto }})">
-        @if (Auth::check())
-            @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0)
-                <button  data-modal-toggle="staticModal-jr{{$event-> eventid}}" id="requestToJoinButton{{$event->eventid }}"
-                    class="m-3 inline-flex items-center font-bold leading-sm px-3 py-1 focus:bg-blue-700 focus:text-white bg-gray-900 text-white rounded-full">request
-                    to Join</button>
+        @if (!$event->eventcanceled)
+            @if (Auth::check())
+                @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0)
+                    <button  data-modal-toggle="staticModal-jr{{$event-> eventid}}" id="requestToJoinButton{{$event->eventid }}"
+                        class="m-3 inline-flex items-center font-bold leading-sm px-3 py-1 focus:bg-blue-700 focus:text-white bg-gray-900 text-white rounded-full">request
+                        to Join</button>
+                @endif
+                @include('partials.join_request_modal',['event'=> $event])
             @endif
-            @include('partials.join_request_modal',['event'=> $event])
+        @endif
+        @if ($event->eventcanceled)
+            <div class="bg-red-400 rounded-lg mx-auto text-center w-1/2 p-4 m-4">
+                <h2 class="text-lg font-bold text-gray-800">This Event has been canceled.</h2>
+            </div>
         @endif
     </div>
     <div class="flex flex-col w-full md:flex-row">
