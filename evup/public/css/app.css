@@ -2079,6 +2079,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(121 134 203 / var(--tw-text-opacity));
 }
+.text-indigo-600 {
+  --tw-text-opacity: 1;
+  color: rgb(88 80 236 / var(--tw-text-opacity));
+}
 .text-gray-600 {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
@@ -2411,6 +2415,10 @@ body {
   .hover\:text-indigo-300:hover {
   --tw-text-opacity: 1;
   color: rgb(121 134 203 / var(--tw-text-opacity));
+}
+ .hover\:text-indigo-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(88 80 236 / var(--tw-text-opacity));
 }
   
   .hover\:text-blue-600:hover {

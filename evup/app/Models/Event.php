@@ -17,7 +17,7 @@ class Event extends Model
   ];
 
   protected $fillable = [
-    'eventaddress','description','eventPhoto','startDate','endDate'
+    'eventaddress','description','eventphoto','startdate','enddate'
   ];
 
   public function eventTags()
@@ -58,5 +58,24 @@ class Event extends Model
   public function notifications()
   {
     return $this->hasMany(Notification::class, 'eventid');
+  }
+
+  public function getDate()
+  {
+    $startmonth = date('M', strtotime( $this['startdate'] ) );
+    $startday = date('d', strtotime( $this['startdate'] ) );
+    $starthour = date('H:i', strtotime( $this['startdate'] ) );
+    $endmonth = date('M', strtotime( $this['enddate'] ) );
+    $endday = date('d', strtotime( $this['enddate'] ) );
+    $endhour = date('H:i', strtotime( $this['enddate'] ) );
+
+    return [
+      'startmonth' => $startmonth,
+      'startday' => $startday,
+      'starthour' => $starthour,
+      'endmonth' => $endmonth,
+      'endday' => $endday,
+      'endhour' => $endhour,
+    ];
   }
 }
