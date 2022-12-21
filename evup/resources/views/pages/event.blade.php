@@ -117,7 +117,7 @@
                                 <?php 
                         if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) { 
                         ?>
-                                <div class="flex mx-auto items-center justify-center mt-56 mx-8 mb-4 max-w-lg">
+                                <div class="flex mx-auto items-center justify-center max-w-lg">
                                     @if (!$event->eventcanceled) 
                                     <form method="post" class="mb-6"
                                         action="{{ route('create_comment', $event->eventid) }}">
