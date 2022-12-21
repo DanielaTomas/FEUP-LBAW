@@ -18,12 +18,21 @@
                 </a>
             </div>
             @if (Auth::user()->usertype == 'Organizer')
+                @if (Auth::id() != $attendee['user'] -> userid)
+                    <div class="w-4 mr-2 transform hover:text-gray-900 transition duration-300">
+                        <!-- Remove Modal toggle -->
+                        <button id="removeBtn-{{$attendee['user'] -> userid}}" class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button" data-modal-toggle="staticModal-a{{$attendee['user'] -> userid}}">
+                            Remove
+                        </button>
+                    </div>
+                @else
+                
                 <div class="w-4 mr-2 transform hover:text-gray-900 transition duration-300">
-                    <!-- Remove Modal toggle -->
-                    <button id="removeBtn-{{$attendee['user'] -> userid}}" class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button" data-modal-toggle="staticModal-a{{$attendee['user'] -> userid}}">
+                    <button title="You can't remove the Organizer of the Event." class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button" disabled>
                         Remove
                     </button>
                 </div>
+                @endif
             @endif
         </div>
     </td>
