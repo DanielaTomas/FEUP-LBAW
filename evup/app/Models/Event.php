@@ -35,6 +35,10 @@ class Event extends Model
     return $this->belongsToMany(User::class, 'attendee', 'eventid', 'attendeeid');
   }
 
+  public function hasAttendee($user) {
+    return $this->events->contains($user);
+  }
+
   public function comments()
   {
     return $this->hasMany(Comment::class, 'eventid');

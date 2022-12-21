@@ -39,10 +39,13 @@ class EventController extends Controller
       return abort(404, 'Event not found');
 
     $user = User::find(Auth::id());
-    //$this->authorize('show',$event);
-    return view('pages.event',[
-      'event'=>$event, 'user'=>$user
-    ]);
+
+    if ($user->isAttendee($event) || $event->public)
+      return view('pages.event',[
+        'event'=>$event, 'user'=>$user
+      ]);
+    else
+      return abort(403 , 'THIS ACTION IS UNAUTHORIZED.');
   }
 
   public function manageEvent($id)
@@ -152,13 +155,12 @@ class EventController extends Controller
 
   public function attendees(Request $request,$id)
   {
-    $organizer = User::find(Auth::id());
-    if (is_null($organizer))
+    $user = User::find(Auth::id());
+    if (is_null($user))
       return abort(404, 'User not found');
     $event = Event::find($id);
     if (is_null($event))
       return abort(404, 'Event not found');
-    $this->authorize('attendees', $event);
 
     $attendees = DB::table('attendee')
             ->select('attendeeid', 'eventid')
@@ -175,7 +177,10 @@ class EventController extends Controller
       ];
    });
     
-    return view('pages.attendees', ['attendees' => $attendees]);
+    if ($user->isAttendee($event) || $event->public)
+      return view('pages.attendees', ['attendees' => $attendees]);
+    else
+      return abort(403 , 'THIS ACTION IS UNAUTHORIZED.');
   }
 
   public function view_add_user($id)
