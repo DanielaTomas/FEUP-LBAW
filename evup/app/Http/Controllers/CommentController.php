@@ -136,11 +136,10 @@ class CommentController extends Controller
 
     //$this->authorize('like',$comment);
     $user = Auth::id();
-
-    if($comment->commentid != $user) {
-      foreach($comment->votes()->get() as $vote) { 
-          if($vote->userid == $user || $comment->commentid == $user) return;
-      } 
+    
+    if($comment->authorid == $user) return;
+    foreach($comment->votes()->get() as $vote) { 
+          if($vote->userid == $user) return;
     } 
  
     $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => true]);
@@ -163,10 +162,9 @@ class CommentController extends Controller
 
     $user = Auth::id();
 
-    if($comment->commentid != $user) {
-      foreach($comment->votes()->get() as $vote) { 
-          if($vote->userid == $user || $comment->commentid == $user) return;
-      } 
+    if($comment->authorid == $user) return;
+    foreach($comment->votes()->get() as $vote) { 
+          if($vote->userid == $user) return;
     } 
     
     $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => false]);
