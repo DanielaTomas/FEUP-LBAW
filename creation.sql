@@ -1,177 +1,244 @@
------------------------------------------
--- Drop old schema
------------------------------------------
+create schema if not exists lbaw2252;
 
-DROP SCHEMA IF EXISTS lbaw2252 CASCADE;
-CREATE SCHEMA lbaw2252;
-SET search_path TO lbaw2252;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS event CASCADE;
+DROP TABLE IF EXISTS attendee CASCADE;
+DROP TABLE IF EXISTS category CASCADE;
+DROP TABLE IF EXISTS tag CASCADE;
+DROP TABLE IF EXISTS report CASCADE;
+DROP TABLE IF EXISTS invitation CASCADE;
+DROP TABLE IF EXISTS poll CASCADE;
+DROP TABLE IF EXISTS comment CASCADE;
+DROP TABLE IF EXISTS joinrequest CASCADE;
+DROP TABLE IF EXISTS organizerrequest CASCADE;
+DROP TABLE IF EXISTS notification CASCADE;
+DROP TABLE IF EXISTS vote CASCADE;
+DROP TABLE IF EXISTS polloption CASCADE;
+DROP TABLE IF EXISTS answer CASCADE;
+DROP TABLE IF EXISTS upload CASCADE;
+DROP TABLE IF EXISTS event_category CASCADE;
+DROP TABLE IF EXISTS event_tag CASCADE;
+DROP TABLE IF EXISTS contact CASCADE;
 
-CREATE TYPE NotificationTypes AS ENUM ('EventChange','JoinRequestReviewed','OrganizerRequestReviewed','InviteReceived','InviteAccepted','NewPoll','NewInvitation');
-CREATE TYPE AccountStatus AS ENUM ('Active','Disabled','Blocked');
-CREATE TYPE UserTypes AS ENUM ('User','Organizer','Admin');
+DROP TYPE IF EXISTS notificationtype;
+DROP TYPE IF EXISTS accountstatus;
+DROP TYPE IF EXISTS usertypes;
 
-CREATE TABLE Users(
-  userId SERIAL PRIMARY KEY,
+CREATE TYPE notificationtype AS ENUM ('EventChange','JoinRequestReviewed','OrganizerRequestReviewed','InviteReceived','InviteAccepted','NewPoll');
+CREATE TYPE accountstatus AS ENUM ('Active','Disabled','Blocked');
+CREATE TYPE usertypes AS ENUM ('User','Organizer','Admin');
+
+CREATE TABLE users(
+  userid SERIAL PRIMARY KEY,
   username VARCHAR(50) NOT NULL CONSTRAINT unique_usernam_uk UNIQUE,
   name VARCHAR(150) NOT NULL, 
   email TEXT NOT NULL CONSTRAINT user_email_uk UNIQUE,
   password TEXT NOT NULL,
-  userPhoto TEXT,
-  accountStatus AccountStatus NOT NULL,
-  userType UserTypes NOT NULL
+  userphoto TEXT,
+  accountstatus accountstatus NOT NULL,
+  usertype usertypes NOT NULL,
+  remember_token TEXT -- Laravel's remember me functionality
 );
 
-CREATE TABLE Event(
-  eventId SERIAL PRIMARY KEY,
-  userId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-  eventName TEXT NOT NULL CONSTRAINT unique_eventName UNIQUE,
-  public BOOLEAN NOT NULL,
-  address TEXT NOT NULL,
-  description TEXT NOT NULL,
-  eventCanceled BOOLEAN NOT NULL DEFAULT FALSE,
-  eventPhoto TEXT NOT NULL,
-  startDate DATE NOT NULL,
-  endDate DATE NOT NULL,
-  CONSTRAINT end_after_start_ck CHECK (endDate > startDate)
+CREATE TABLE event(
+    eventid SERIAL PRIMARY KEY,
+    userid INTEGER REFERENCES users (userid) ON DELETE SET NULL ON UPDATE CASCADE,
+    eventname TEXT NOT NULL CONSTRAINT unique_eventname UNIQUE,
+    public BOOLEAN NOT NULL,
+    eventaddress TEXT NOT NULL,
+    description TEXT NOT NULL,
+    eventcanceled BOOLEAN NOT NULL DEFAULT FALSE,
+    eventphoto TEXT NOT NULL,
+    startdate DATE NOT NULL,
+    enddate DATE NOT NULL,
+    CONSTRAINT end_after_start_ck CHECK (enddate > startdate)
 );
 
-CREATE TABLE Attendee(
-  attendeeId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
-  PRIMARY KEY(attendeeId, eventId)
+CREATE TABLE attendee(
+  attendeeid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
+  PRIMARY KEY(attendeeid, eventid)
 );
 
-CREATE TABLE Category(
-  categoryId SERIAL PRIMARY KEY,
-  categoryName TEXT NOT NULL CONSTRAINT category_uk UNIQUE
+CREATE TABLE category(
+  categoryid SERIAL PRIMARY KEY,
+  categoryname TEXT NOT NULL CONSTRAINT category_uk UNIQUE
 );
 
-CREATE TABLE Tag(
-  tagId SERIAL PRIMARY KEY,
-  tagName TEXT NOT NULL CONSTRAINT tag_uk UNIQUE
+CREATE TABLE tag(
+  tagid SERIAL PRIMARY KEY,
+  tagname TEXT NOT NULL CONSTRAINT tag_uk UNIQUE
 );
 
-CREATE TABLE Report(
-  reportId SERIAL PRIMARY KEY,
-  reporterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
+CREATE TABLE report(
+  reportid SERIAL PRIMARY KEY,
+  reporterid INTEGER REFERENCES users (userid) ON DELETE SET NULL ON UPDATE CASCADE,
+  eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
   message TEXT NOT NULL,
-  reportStatus BOOLEAN NOT NULL DEFAULT FALSE
+  reportstatus BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-CREATE TABLE Invitation(
-  invitationId SERIAL PRIMARY KEY,
-  inviterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-  inviteeId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
-  invitationStatus BOOLEAN,
-  CONSTRAINT invite_To_Self_ck CHECK (inviterId != inviteeId)
+CREATE TABLE invitation(
+  invitationid SERIAL PRIMARY KEY,
+  inviterid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  inviteeid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
+  invitationstatus BOOLEAN,
+  CONSTRAINT invite_To_Self_ck CHECK (inviterid != inviteeid)
 );
 
-CREATE TABLE Poll(
-  pollId SERIAL PRIMARY KEY,
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
-  pollContent TEXT NOT NULL
+CREATE TABLE poll(
+  pollid SERIAL PRIMARY KEY,
+  eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
+  pollcontent TEXT NOT NULL
 );
 
-CREATE TABLE Comment(
-  commentId SERIAL PRIMARY KEY,
-  authorId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
-  parentId INTEGER REFERENCES Comment (commentId) ON DELETE CASCADE ON UPDATE CASCADE,
-  commentContent TEXT NOT NULL,
-  commentDate DATE NOT NULL
+CREATE TABLE comment(
+  commentid SERIAL PRIMARY KEY,
+  authorId INTEGER REFERENCES users (userid) ON DELETE SET NULL ON UPDATE CASCADE,
+  eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
+  parentId INTEGER REFERENCES comment (commentid) ON DELETE CASCADE ON UPDATE CASCADE,
+  commentcontent TEXT NOT NULL,
+  commentdate DATE NOT NULL
 );
 
-CREATE TABLE JoinRequest(
-  joinRequestId SERIAL PRIMARY KEY,
-  requesterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
-  requestStatus BOOLEAN
+CREATE TABLE joinrequest(
+  joinrequestid SERIAL PRIMARY KEY,
+  requesterid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
+  requeststatus BOOLEAN
 );
 
-CREATE TABLE OrganizerRequest(
-  organizerRequestId SERIAL PRIMARY KEY,
-  requesterId INTEGER NOT NULL REFERENCES Users (userId) ON UPDATE CASCADE,
-  requestStatus BOOLEAN
+CREATE TABLE organizerrequest(
+  organizerrequestid SERIAL PRIMARY KEY,
+  requesterid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  requeststatus BOOLEAN
 );
 
-CREATE TABLE Notification(
-  notificationId SERIAL PRIMARY KEY,
-  receiverId INTEGER NOT NULL REFERENCES Users (userId),
-  eventId INTEGER REFERENCES Event (eventId),
-  joinRequestId INTEGER REFERENCES JoinRequest (joinRequestId),
-  organizerRequestId INTEGER REFERENCES OrganizerRequest (organizerRequestId),
-  invitationId INTEGER REFERENCES Invitation (invitationId),
-  pollId INTEGER REFERENCES Poll(pollId),
-  notificationDate DATE NOT NULL,
-  notificationType NotificationTypes NOT NULL,
-  notificationStatus BOOLEAN NOT NULL DEFAULT FALSE
+CREATE TABLE notification(
+  notificationid SERIAL PRIMARY KEY,
+  receiverid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  eventid INTEGER REFERENCES event (eventid) ON DELETE CASCADE ON UPDATE CASCADE,
+  joinrequestid INTEGER REFERENCES joinrequest (joinrequestid) ON DELETE CASCADE ON UPDATE CASCADE,
+  organizerrequestid INTEGER REFERENCES organizerrequest (organizerrequestid) ON DELETE CASCADE ON UPDATE CASCADE,
+  invitationid INTEGER REFERENCES invitation (invitationid) ON DELETE CASCADE ON UPDATE CASCADE,
+  pollid INTEGER REFERENCES poll (pollid) ON DELETE CASCADE ON UPDATE CASCADE,
+  notificationdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  notificationtype notificationtype NOT NULL,
+  notificationstatus BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-CREATE TABLE Vote(
-  voterId INTEGER REFERENCES Users (userId) ON UPDATE CASCADE ON DELETE CASCADE,
-  commentId INTEGER REFERENCES Comment (commentId) ON UPDATE CASCADE ON DELETE CASCADE,
+CREATE TABLE vote(
+  voterid INTEGER REFERENCES users (userid) ON UPDATE CASCADE ON DELETE CASCADE,
+  commentid INTEGER REFERENCES comment (commentid) ON UPDATE CASCADE ON DELETE CASCADE,
   type BOOLEAN NOT NULL,
-  PRIMARY KEY(voterId, commentId)
+  PRIMARY KEY(voterid, commentid)
 );
 
-CREATE TABLE PollOption(
-  pollOptionId SERIAL NOT NULL,
-  pollId INTEGER REFERENCES Poll (pollId) ON UPDATE CASCADE ON DELETE CASCADE,
-  optionContent TEXT NOT NULL
+CREATE TABLE polloption(
+  polloptionid SERIAL NOT NULL,
+  optioncontent TEXT NOT NULL
 );
 
-CREATE TABLE Answer(
-  userId INTEGER REFERENCES Users (userId) ON UPDATE CASCADE ON DELETE CASCADE,
-  pollId INTEGER REFERENCES Poll (pollId) ON UPDATE CASCADE ON DELETE CASCADE,
-  PRIMARY KEY(userId, pollId)
+CREATE TABLE answer(
+  userid INTEGER REFERENCES users (userid) ON UPDATE CASCADE ON DELETE CASCADE,
+  pollid INTEGER REFERENCES poll (pollid) ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY(userid, pollid)
 );
 
-CREATE TABLE Upload(
-  uploadId SERIAL PRIMARY KEY,
-  commentId INTEGER NOT NULL REFERENCES Comment (commentId) ON UPDATE CASCADE,
+CREATE TABLE upload(
+  uploadid SERIAL PRIMARY KEY,
+  commentid INTEGER NOT NULL REFERENCES comment (commentid) ON UPDATE CASCADE ON DELETE CASCADE,
   fileName TEXT NOT NULL
 );
 
-CREATE TABLE Event_Category(
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
-  categoryId INTEGER NOT NULL REFERENCES Category (categoryId) ON UPDATE CASCADE,
-  PRIMARY KEY (eventId,categoryId)
+CREATE TABLE event_category(
+  eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE ON DELETE CASCADE,
+  categoryid INTEGER NOT NULL REFERENCES category (categoryid) ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (eventid,categoryid)
 );
 
-CREATE TABLE Event_Tag(
-  eventId INTEGER NOT NULL REFERENCES Event (eventId) ON UPDATE CASCADE,
-  tagId INTEGER NOT NULL REFERENCES Tag (tagId) ON UPDATE CASCADE,
-  PRIMARY KEY (eventId,tagId)
+CREATE TABLE event_tag(
+  eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE ON DELETE CASCADE,
+  tagid INTEGER NOT NULL REFERENCES tag (tagid) ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY (eventid,tagid)
 );
 
+-- Added during PA development
+CREATE TABLE contact(
+  contactid SERIAL PRIMARY KEY,
+  name VARCHAR(150) NOT NULL, 
+  email TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  message TEXT NOT NULL
+);
 
 -----------------------------------------
 -- Indexes
 -----------------------------------------
 
-CREATE INDEX comments_event ON Comment USING hash (eventId);
-CREATE INDEX comments_upload ON Upload USING hash (commentId);
-CREATE INDEX notification_receiver ON Notification USING hash (receiverId);
 
-ALTER TABLE Event ADD COLUMN tsvectors TSVECTOR; 
-CREATE INDEX event_search ON Event USING GIST (tsvectors);
+DROP INDEX IF EXISTS comments_event;
+DROP INDEX IF EXISTS comments_upload;
+DROP INDEX IF EXISTS notification_receiver;
+DROP INDEX IF EXISTS event_search;
+DROP INDEX IF EXISTS user_search;
 
-ALTER TABLE Users ADD COLUMN tsvectors TSVECTOR;
-CREATE INDEX user_search ON Users USING GIST (tsvectors);
+
+CREATE INDEX comments_event ON comment USING hash (eventid);
+CREATE INDEX comments_upload ON upload USING hash (commentid);
+CREATE INDEX notification_receiver ON notification USING hash (receiverid);
+
+ALTER TABLE event ADD COLUMN tsvectors TSVECTOR; 
+CREATE INDEX event_search ON event USING GIST (tsvectors);
+
+ALTER TABLE users ADD COLUMN tsvectors TSVECTOR;
+CREATE INDEX user_search ON users USING GIST (tsvectors);
 
 -----------------------------------------
 -- Triggers
 -----------------------------------------
 
+
+
+DROP FUNCTION IF EXISTS insert_attendee_invitation ;
+DROP TRIGGER IF EXISTS attendee_inserted ON invitation;
+DROP FUNCTION IF EXISTS insert_attendee_request;
+DROP TRIGGER IF EXISTS joinUsereventRequestAccepted ON joinrequest;
+DROP FUNCTION IF EXISTS EventChange;
+DROP TRIGGER IF EXISTS EventChange_notification ON notification;
+DROP FUNCTION IF EXISTS InviteAccepted;
+DROP TRIGGER IF EXISTS notification_invite_accepted ON invitation;
+DROP FUNCTION IF EXISTS newinvitation;
+DROP TRIGGER IF EXISTS new_invitation ON invitation;
+DROP FUNCTION IF EXISTS JoinRequestReviewed;
+DROP TRIGGER IF EXISTS join_request_reviewed ON joinrequest;
+DROP FUNCTION IF EXISTS OrganizerRequestReviewed;
+DROP TRIGGER IF EXISTS organizer_request_reviewed ON organizerrequest;
+DROP FUNCTION IF EXISTS reportReviewed;
+DROP TRIGGER IF EXISTS report_reviewed ON report;
+DROP FUNCTION IF EXISTS NewPoll;
+DROP TRIGGER IF EXISTS new_poll_notification ON poll;
+DROP FUNCTION IF EXISTS updateUserToOrg;
+DROP TRIGGER IF EXISTS update_user_to_organization ON organizerrequest;
+DROP FUNCTION IF EXISTS eventCancelled;
+DROP TRIGGER IF EXISTS event_cancelled ON event;
+DROP FUNCTION IF EXISTS NewEvent;
+DROP TRIGGER IF EXISTS new_event ON event;
+DROP FUNCTION IF EXISTS event_search_update;
+DROP TRIGGER IF EXISTS event_search_update ON event;
+DROP FUNCTION IF EXISTS user_search_update;
+DROP TRIGGER IF EXISTS user_search_update ON users;
+
+
+
 CREATE FUNCTION insert_attendee_invitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.invitationStatus && NEW.inviteeId NOT IN (SELECT Attendee.attendeeId FROM Attendee
-    WHERE Attendee.eventId=NEW.eventId)) THEN
-        INSERT INTO Attendee(attendeeId,eventId)
-        VALUES (NEW.inviteeId,NEW.eventId);
+    IF (NEW.invitationstatus AND NEW.inviteeid NOT IN (SELECT attendee.attendeeid FROM attendee
+    WHERE attendee.eventid=NEW.eventid)) THEN
+        INSERT INTO attendee(attendeeid,eventid)
+        VALUES (NEW.inviteeid,NEW.eventid);
     END IF;
     RETURN NULL;
 END
@@ -180,16 +247,17 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER attendee_inserted
-    AFTER UPDATE ON Invitation
+    AFTER UPDATE ON invitation
+    FOR EACH ROW
     EXECUTE PROCEDURE insert_attendee_invitation();
 
 CREATE FUNCTION insert_attendee_request() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.requestStatus && NEW.requesterId NOT IN (SELECT Attendee.attendeeId FROM Attendee
-    WHERE Attendee.eventId=NEW.requesterId)) THEN
-        INSERT INTO Attendee(attendeeId,eventId)
-        VALUES (NEW.requesterId,NEW.eventId);
+    IF (NEW.requeststatus && NEW.requesterid NOT IN (SELECT attendee.attendeeid FROM attendee
+    WHERE attendee.eventid=NEW.requesterid)) THEN
+        INSERT INTO attendee(attendeeid,eventid)
+        VALUES (NEW.requesterid,NEW.eventid);
     END IF;
     RETURN NULL;
 END
@@ -197,18 +265,19 @@ $BODY$
 
 LANGUAGE plpgsql;
 
-CREATE TRIGGER joinUserEventRequestAccepted
-    AFTER UPDATE ON JoinRequest
+CREATE TRIGGER joinUsereventRequestAccepted
+    AFTER UPDATE ON joinrequest
+    FOR EACH ROW
     EXECUTE PROCEDURE insert_attendee_request();
 
 
-CREATE FUNCTION eventChange() RETURNS TRIGGER AS
+CREATE FUNCTION EventChange() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF ((NEW.eventStart != OLD.eventStart) || (NEW.eventEnd != OLD.eventEnd)) THEN
-        INSERT INTO Notification (receiverId,eventId,notificationDate,notificationType)
-        SELECT userId,eventId, DATE('now'),'EventChange'
-        FROM Attendee WHERE NEW.eventId = Attendee.attendeeId;
+    IF ((NEW.startdate != OLD.startdate) OR (NEW.enddate != OLD.enddate)) THEN
+        INSERT INTO notification (receiverid,eventid,notificationtype)
+        SELECT userid,eventid,'EventChange'
+        FROM attendee WHERE NEW.eventid = attendee.eventid;
     END IF;
     RETURN NULL;
 END
@@ -216,17 +285,18 @@ $BODY$
 
 LANGUAGE plpgsql;
 
-CREATE TRIGGER eventChange_notification
-    AFTER UPDATE ON Event
-    EXECUTE PROCEDURE eventChange();
+CREATE TRIGGER EventChange_notification
+    AFTER UPDATE ON event
+    FOR EACH ROW
+    EXECUTE PROCEDURE EventChange();
 
 
-CREATE FUNCTION inviteAccepted() RETURNS TRIGGER AS
+CREATE FUNCTION InviteAccepted() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.invitationStatus) THEN
-        INSERT INTO Notification (receiverId,invitationId,notificationDate,notificationType)
-        VALUES(NEW.inviterId,NEW.invitationId, DATE('now'),'InviteAccepted');
+    IF (NEW.invitationstatus) THEN
+        INSERT INTO notification (receiverid,invitationid,notificationtype)
+        VALUES(NEW.inviterid,NEW.invitationid,'InviteAccepted');
     END IF;
     RETURN NULL;
 END
@@ -235,17 +305,16 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER notification_invite_accepted
-    AFTER UPDATE ON Invitation
-    EXECUTE PROCEDURE inviteAccepted();
+    AFTER UPDATE ON invitation
+    FOR EACH ROW
+    EXECUTE PROCEDURE InviteAccepted();
 
 
-CREATE FUNCTION newInvitation() RETURNS TRIGGER AS
+CREATE FUNCTION newinvitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.invitationStatus) THEN
-      INSERT INTO Notification (receiverId,invitationId,notificationDate,notificationType)
-      VALUES(NEW.inviteeId, NEW.invitationId, DATE('now'),'NewInvitation');
-    END IF;
+    INSERT INTO notification (receiverid,invitationid,notificationtype)
+    VALUES(NEW.inviteeid, NEW.invitationid,'InviteReceived');
     RETURN NULL;
 END
 $BODY$
@@ -253,15 +322,16 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER new_invitation
-    AFTER INSERT ON Invitation
-    EXECUTE PROCEDURE newInvitation();
+    AFTER INSERT ON invitation
+    FOR EACH ROW
+    EXECUTE PROCEDURE newinvitation();
 
 
-CREATE FUNCTION joinRequestReviewed() RETURNS TRIGGER AS
+CREATE FUNCTION JoinRequestReviewed() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    INSERT INTO Notification (receiverId,joinRequestId,notificationDate,notificationType)
-    VALUES(NEW.requesterId,NEW.joinRequestId, DATE('now'),'JoinRequestReviewed');
+    INSERT INTO notification (receiverid,joinrequestid,notificationtype)
+    VALUES(NEW.requesterid,NEW.joinrequestid,'JoinRequestReviewed');
     RETURN NULL;
 END
 $BODY$
@@ -269,50 +339,36 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER join_request_reviewed
-    AFTER UPDATE ON JoinRequest
-    EXECUTE PROCEDURE joinRequestReviewed();
+    AFTER UPDATE ON joinrequest
+    FOR EACH ROW
+    EXECUTE PROCEDURE JoinRequestReviewed();
 
 
-CREATE FUNCTION organizerRequestReviewed() RETURNS TRIGGER AS
+CREATE FUNCTION OrganizerRequestReviewed() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    INSERT INTO Notification (receiverId,organizerRequestId,notificationDate,notificationType)
-    VALUES(New.requesterId,New.organizerRequestId, DATE('now'),'OrganizerRequestReviewed');
-    RETURN NULL;
+  IF (NEW.requeststatus) THEN
+    INSERT INTO notification (receiverid,organizerrequestid,notificationtype)
+    VALUES(NEW.requesterid,NEW.organizerrequestid,'OrganizerRequestReviewed');
+  END IF;  
+  RETURN NULL;
 END
 $BODY$
 
 LANGUAGE plpgsql;
 
 CREATE TRIGGER organizer_request_reviewed
-    AFTER UPDATE ON OrganizerRequest
-    EXECUTE PROCEDURE organizerRequestReviewed();
+    AFTER UPDATE ON organizerrequest
+    FOR EACH ROW
+    EXECUTE PROCEDURE OrganizerRequestReviewed();
 
 
-CREATE FUNCTION reportReviewed() RETURNS TRIGGER AS
+CREATE FUNCTION NewPoll() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.reportStatus) THEN
-        INSERT INTO Notification (receiverId,reportId,notificationDate,notificationType)
-        VALUES(NEW.reporterId,NEW.reportId, DATE('now'),'ReportReviewed');
-    END IF;
-    RETURN NULL;
-END
-$BODY$
-
-LANGUAGE plpgsql;
-
-CREATE TRIGGER report_reviewed
-    AFTER UPDATE ON Report
-    EXECUTE PROCEDURE reportReviewed();
-
-
-CREATE FUNCTION newPoll() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    INSERT INTO Notification (receiverId,pollId,notificationDate,notificationType)
-    SELECT attendeeId,NEW.pollId, DATE('now'),'NewPoll'
-    FROM Attendee WHERE NEW.eventId = Attendee.eventId;
+    INSERT INTO notification (receiverid,pollid,notificationtype)
+    SELECT attendeeid,NEW.pollid,'NewPoll'
+    FROM attendee WHERE NEW.eventid = attendee.eventid;
     RETURN NULL;
 END
 $BODY$
@@ -320,17 +376,18 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER new_poll_notification
-    AFTER INSERT ON Poll
-    EXECUTE PROCEDURE newPoll();
+    AFTER INSERT ON poll
+    FOR EACH ROW
+    EXECUTE PROCEDURE NewPoll();
 
 
 CREATE FUNCTION updateUserToOrg() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.requestStatus) THEN
-        UPDATE Users 
-        SET userType = 'Organizer'
-        WHERE NEW.requesterId=Users.userId;
+    IF (NEW.requeststatus = TRUE) THEN
+        UPDATE users 
+        SET usertype = 'Organizer'
+        WHERE NEW.requesterid=users.userid;
     END IF;
     RETURN NULL;
 END
@@ -339,59 +396,20 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER update_user_to_organization
-    AFTER UPDATE ON OrganizerRequest
+    AFTER UPDATE ON organizerrequest
+    FOR EACH ROW
     EXECUTE PROCEDURE updateUserToOrg();
-
-
-CREATE FUNCTION deleteUser() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    IF (NEW.accountStatus='Disabled') THEN
-        DELETE FROM Atendee
-        WHERE attendeeId = NEW.userId;
-        
-        DELETE FROM JoinRequest
-        WHERE requesterId = NEW.userId AND requestStatus=NULL;
-
-        DELETE FROM OrganizerRequest
-        WHERE requesterId = NEW.userId AND requestStatus= FALSE;
-
-        DELETE FROM Notification
-        WHERE receiverId = NEW.userId;
-
-        UPDATE Users 
-        SET 
-        username = CONCAT('Anonymous',userId),
-        name='Anonymous',
-        email=CONCAT('Deleted',userId),
-        password = 'Deleted',
-        userPhoto = NULL,
-        userTypes = NULL
-        WHERE NEW.userId=Users.userId;
-
-
-    END IF;
-    RETURN NULL;
-END
-$BODY$
-
-LANGUAGE plpgsql;
-
-
-CREATE TRIGGER user_deleted
-    AFTER UPDATE ON Users
-    EXECUTE PROCEDURE deleteUser();
 
 
 CREATE FUNCTION eventCancelled() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.eventCanceled =TRUE) THEN
+    IF (NEW.eventcanceled =TRUE) THEN
         DELETE FROM Atendee
-        WHERE eventId = NEW.eventId;
+        WHERE eventid = NEW.eventid;
 
-        DELETE FROM JoinRequest
-        WHERE eventId = NEW.eventId;
+        DELETE FROM joinrequest
+        WHERE eventid = NEW.eventid;
 
     END IF;
     RETURN NULL;
@@ -402,9 +420,27 @@ LANGUAGE plpgsql;
 
 
 CREATE TRIGGER event_cancelled
-    AFTER UPDATE ON Event
+    AFTER UPDATE ON event
+    FOR EACH ROW
     EXECUTE PROCEDURE eventCancelled();
 
+
+
+CREATE FUNCTION NewEvent() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    INSERT INTO attendee (attendeeid,eventid)
+    VALUES(NEW.userid,NEW.eventid);
+    RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER new_event
+    AFTER INSERT ON event
+    FOR EACH ROW
+    EXECUTE PROCEDURE NewEvent();
 
 CREATE FUNCTION event_search_update() RETURNS TRIGGER AS
 $BODY$
@@ -433,13 +469,13 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER event_search_update
-  BEFORE INSERT OR UPDATE ON Event
+  BEFORE INSERT OR UPDATE ON event
   FOR EACH ROW
   EXECUTE PROCEDURE event_search_update();
 
 CREATE FUNCTION user_search_update() RETURNS TRIGGER AS
 $BODY$
-
+  BEGIN
   IF TG_OP = 'INSERT' THEN
     NEW.tsvectors = (
       setweight(to_tsvector('english', NEW.username), 'A') ||
@@ -463,7 +499,6 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER user_search_update
-  BEFORE INSERT OR UPDATE ON Users
+  BEFORE INSERT OR UPDATE ON users
   FOR EACH ROW
   EXECUTE PROCEDURE user_search_update();
-
