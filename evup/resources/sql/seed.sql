@@ -246,6 +246,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER attendee_inserted
     AFTER UPDATE ON invitation
+    FOR EACH ROW
     EXECUTE PROCEDURE insert_attendee_invitation();
 
 CREATE FUNCTION insert_attendee_request() RETURNS TRIGGER AS
@@ -264,6 +265,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER joinUsereventRequestAccepted
     AFTER UPDATE ON joinrequest
+    FOR EACH ROW
     EXECUTE PROCEDURE insert_attendee_request();
 
 
@@ -271,8 +273,8 @@ CREATE FUNCTION EventChange() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF ((NEW.startdate != OLD.startdate) OR (NEW.enddate != OLD.enddate)) THEN
-        INSERT INTO notification (receiverid,eventid,notificationdate,notificationtype)
-        SELECT userid,eventid, DATE('now'),'EventChange'
+        INSERT INTO notification (receiverid,eventid,notificationtype)
+        SELECT userid,eventid,'EventChange'
         FROM attendee WHERE NEW.eventid = attendee.eventid;
     END IF;
     RETURN NULL;
@@ -283,6 +285,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER EventChange_notification
     AFTER UPDATE ON event
+    FOR EACH ROW
     EXECUTE PROCEDURE EventChange();
 
 
@@ -290,8 +293,8 @@ CREATE FUNCTION InviteAccepted() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF (NEW.invitationstatus) THEN
-        INSERT INTO notification (receiverid,invitationid,notificationdate,notificationtype)
-        VALUES(NEW.inviterid,NEW.invitationid, DATE('now'),'InviteAccepted');
+        INSERT INTO notification (receiverid,invitationid,notificationtype)
+        VALUES(NEW.inviterid,NEW.invitationid,'InviteAccepted');
     END IF;
     RETURN NULL;
 END
@@ -301,16 +304,15 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER notification_invite_accepted
     AFTER UPDATE ON invitation
+    FOR EACH ROW
     EXECUTE PROCEDURE InviteAccepted();
 
 
 CREATE FUNCTION newinvitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.invitationstatus) THEN
-      INSERT INTO notification (receiverid,invitationid,notificationdate,notificationtype)
-      VALUES(NEW.inviteeid, NEW.invitationid, DATE('now'),'InviteReceived');
-    END IF;
+    INSERT INTO notification (receiverid,invitationid,notificationtype)
+    VALUES(NEW.inviteeid, NEW.invitationid,'InviteReceived');
     RETURN NULL;
 END
 $BODY$
@@ -319,14 +321,15 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER new_invitation
     AFTER INSERT ON invitation
+    FOR EACH ROW
     EXECUTE PROCEDURE newinvitation();
 
 
 CREATE FUNCTION JoinRequestReviewed() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    INSERT INTO notification (receiverid,joinrequestid,notificationdate,notificationtype)
-    VALUES(NEW.requesterid,NEW.joinrequestid, DATE('now'),'JoinRequestReviewed');
+    INSERT INTO notification (receiverid,joinrequestid,notificationtype)
+    VALUES(NEW.requesterid,NEW.joinrequestid,'JoinRequestReviewed');
     RETURN NULL;
 END
 $BODY$
@@ -335,6 +338,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER join_request_reviewed
     AFTER UPDATE ON joinrequest
+    FOR EACH ROW
     EXECUTE PROCEDURE JoinRequestReviewed();
 
 
@@ -342,8 +346,8 @@ CREATE FUNCTION OrganizerRequestReviewed() RETURNS TRIGGER AS
 $BODY$
 BEGIN
   IF (NEW.requeststatus) THEN
-    INSERT INTO notification (receiverid,organizerrequestid,notificationdate,notificationtype)
-    VALUES(NEW.requesterid,NEW.organizerrequestid, DATE('now'),'OrganizerRequestReviewed');
+    INSERT INTO notification (receiverid,organizerrequestid,notificationtype)
+    VALUES(NEW.requesterid,NEW.organizerrequestid,'OrganizerRequestReviewed');
   END IF;  
   RETURN NULL;
 END
@@ -353,14 +357,15 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER organizer_request_reviewed
     AFTER UPDATE ON organizerrequest
+    FOR EACH ROW
     EXECUTE PROCEDURE OrganizerRequestReviewed();
 
 
 CREATE FUNCTION NewPoll() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    INSERT INTO notification (receiverid,pollid,notificationdate,notificationtype)
-    SELECT attendeeid,NEW.pollid, DATE('now'),'NewPoll'
+    INSERT INTO notification (receiverid,pollid,notificationtype)
+    SELECT attendeeid,NEW.pollid,'NewPoll'
     FROM attendee WHERE NEW.eventid = attendee.eventid;
     RETURN NULL;
 END
@@ -370,6 +375,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER new_poll_notification
     AFTER INSERT ON poll
+    FOR EACH ROW
     EXECUTE PROCEDURE NewPoll();
 
 
@@ -389,6 +395,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_user_to_organization
     AFTER UPDATE ON organizerrequest
+    FOR EACH ROW
     EXECUTE PROCEDURE updateUserToOrg();
 
 
@@ -412,6 +419,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER event_cancelled
     AFTER UPDATE ON event
+    FOR EACH ROW
     EXECUTE PROCEDURE eventCancelled();
 
 
