@@ -17,12 +17,14 @@
                     </svg>
                 </a>
             </div>
-            <div class="w-4 mr-2 transform hover:text-gray-900 transition duration-300">
-                <!-- Remove Modal toggle -->
-                <button id="removeBtn-{{$attendee['user'] -> userid}}" class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button" data-modal-toggle="staticModal-a{{$attendee['user'] -> userid}}">
-                    Remove
-                </button>
-            </div>
+            @if (Auth::user()->usertype == 'Organizer')
+                <div class="w-4 mr-2 transform hover:text-gray-900 transition duration-300">
+                    <!-- Remove Modal toggle -->
+                    <button id="removeBtn-{{$attendee['user'] -> userid}}" class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button" data-modal-toggle="staticModal-a{{$attendee['user'] -> userid}}">
+                        Remove
+                    </button>
+                </div>
+            @endif
         </div>
     </td>
 </tr>

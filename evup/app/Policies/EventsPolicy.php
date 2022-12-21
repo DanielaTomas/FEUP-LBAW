@@ -30,7 +30,7 @@ class EventsPolicy
 
     public function attendees(User $organizer, Event $event)
     {
-        return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
+        return Auth::check();
     }
 
     public function edit(User $organizer, Event $event)

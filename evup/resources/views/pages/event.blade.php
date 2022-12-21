@@ -14,6 +14,7 @@
 
         <div class="flex flex-row items-center p-6">
             <h1 class=" text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
+            <a href="{{ route('attendees', ['id' => $event->eventid]) }}" class="self-end text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">View Participants</a>
             @if (!$event->eventcanceled)  
             @auth
                 @if($event->organizer()->first()->usertype == 'Organizer' && $event->organizer()->first()->userid == $user->userid)
@@ -62,7 +63,7 @@
                                     <section>
                                         <button id="requestToJoinButton{{ $event->eventid }}"
                                             data-modal-toggle="staticModal-jr{{ $event->eventid }}"
-                                            class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Request
+                                            class="items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Request
                                             to join</button>
                                     </section>
                                 @endif

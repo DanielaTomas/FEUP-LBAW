@@ -7,14 +7,25 @@ if (window.location.pathname.includes('/event/')) {
     
     if (window.location.pathname.includes('/attendees'))
         setgoAddUserBtn()
+        setgoBackToEventBtn()
 }
 
 function setgoBackBtn() {
-    select('#goback').href = 'http://' + window.location.host + '/event/' + eventid + '/attendees'
+        select('#goback').href = 'http://' + window.location.host + '/event/' + eventid + '/attendees'
+}
+
+function setgoBackToEventBtn() {
+    if (select('#goback-u'))
+        select('#goback-u').href = 'http://' + window.location.host + '/event/' + eventid
+    else
+        return
 }
 
 function setgoAddUserBtn() {
-    select('#adduser').href = select('#adduser').href.replace('id', eventid)
+    if (select('#adduser'))
+        select('#adduser').href = select('#adduser').href.replace('id', eventid)
+    else
+        return
 }
 
 function addUser(userid, eventid = localStorage.getItem("eventid")) {
