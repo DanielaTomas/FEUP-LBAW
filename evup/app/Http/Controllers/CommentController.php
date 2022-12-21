@@ -127,7 +127,7 @@ class CommentController extends Controller
     ]);
   }
 
-  public function like(int $id, int $commentid) 
+  public function like(int $id, int $commentid,$voted) 
   {
     $comment = Comment::find($commentid);
 

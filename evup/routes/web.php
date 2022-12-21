@@ -93,8 +93,8 @@ Route::post('event/{id}/editComment/{commentid}/update', 'CommentController@upda
 Route::post('event/{id}/editComment/{commentid}', 'CommentController@edit')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('edit_comment');
 Route::post('api/requestToJoin', 'UserController@requestToJoin');
 
-Route::post('event/{id}/like/{commentid}','CommentController@like')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('like');
-Route::post('event/{id}/dislike/{commentid}','CommentController@dislike')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('dislike');;
+Route::post('event/{id}/like/{commentid}/voted/{voted}','CommentController@like')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('like');
+Route::post('event/{id}/dislike/{commentid}/voted/{voted}','CommentController@dislike')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('dislike');;
 
 //Filter
 Route::post('api/filter_tag', 'HomeController@filterTag');
