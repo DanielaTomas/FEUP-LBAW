@@ -22,6 +22,11 @@ function notificationPanelHandler() {
         div.append(bellicon)
         button.append(div)
     }
+    else 
+    {
+        area.classList.remove('notification-panel')
+        area.classList.add('notification-panel-empty')
+    }
 }
 
 function notificationsCleanerHandler() {
@@ -42,6 +47,8 @@ function notificationsCleanerHandler() {
     div.classList = 'py-2 px-4 text-center text-gray-500'
     div.textContent = "You don't have any new notifications"
     area.append(div)
+    area.classList.remove('notification-panel')
+    area.classList.add('notification-panel-empty')
 }
 
 function notificationCleanerHandler(id) {
@@ -58,6 +65,8 @@ function notificationCleanerHandler(id) {
         div.classList = 'py-2 px-4 text-center text-gray-500'
         div.textContent = "You don't have any new notifications"
         area.append(div)
+        area.classList.remove('notification-panel')
+        area.classList.add('notification-panel-empty')
 
         createAlert('success', 'You have read all your notifications.')
     }

@@ -2975,8 +2975,27 @@ body {
     padding-right: 3rem;
   }
 }
-  
 
+
+
+/* Notification Panel */
+.notification-panel
+{
+  overflow-y: scroll;
+  height: 45vh;
+}
+
+.notification-panel-empty
+{
+  overflow-y: auto;
+  height: auto;
+}
+  
+.notification-icon 
+{
+  position: relative;
+  z-index: 1;
+}
   
 
   

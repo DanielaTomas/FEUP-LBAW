@@ -76,7 +76,7 @@
             <div class="block py-2 px-4 font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-white">
                 Notifications
             </div>
-            <div id="notificationPanel" class="divide-y divide-gray-100 dark:divide-gray-700">
+            <div id="notificationPanel" class="divide-y divide-gray-100 dark:divide-gray-700 notification-panel">
                 <!-- To be filled with JS API -->
                 <div class="py-2 px-4 text-center text-gray-500">Loading...</div>
             </div>
