@@ -14,7 +14,7 @@ use App\Models\User;
 class CommentController extends Controller
 {
 
-   public function create(Request $request, int $id)
+   public function createComment(Request $request, int $id, int $commentid = null)
    {
 
     $event = Event::find($id);
@@ -45,6 +45,9 @@ class CommentController extends Controller
       $comment = new Comment;
       $comment->authorid = Auth::id();
       $comment->eventid = $id;
+      if($commentid != NULL) {
+        $comment->parentid = $commentid;
+      }
       //$comment->commentcontent = $request->input('commentcontent');
       $comment->commentcontent = $request->commentcontent;
       $comment->commentdate = date("Y-m-d");
@@ -122,6 +125,55 @@ class CommentController extends Controller
     return view('pages.event.editComment',[
       'comment'=>$comment
     ]);
+  }
+
+  public function like(int $id, int $commentid,$voted) 
+  {
+    $comment = Comment::find($commentid);
+
+    if(is_null($comment))
+      return abort(404,'Comment not found');
+
+    //$this->authorize('like',$comment);
+    $user = Auth::id();
+    
+    if($comment->authorid == $user) return;
+    foreach($comment->votes()->get() as $vote) { 
+          if($vote->userid == $user) return;
+    } 
+ 
+    $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => true]);
+
+    return response()->json([
+      'status' => 'OK',
+      'msg' => 'Liked comment successfully ',
+      'id' => $id,
+    ], 200);
+  }
+
+  public function dislike(int $id, int $commentid) 
+  {
+    $comment = Comment::find($commentid);
+
+    if(is_null($comment))
+      return abort(404,'Comment not found');
+
+    //$this->authorize('dislike',$comment);
+
+    $user = Auth::id();
+
+    if($comment->authorid == $user) return;
+    foreach($comment->votes()->get() as $vote) { 
+          if($vote->userid == $user) return;
+    } 
+    
+    $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => false]);
+
+    return response()->json([
+      'status' => 'OK',
+      'msg' => 'Disliked comment successfully ',
+      'id' => $id,
+    ], 200);
   }
 
 }

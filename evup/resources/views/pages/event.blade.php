@@ -126,38 +126,25 @@
                                             <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Leave a comment</h2>
                                             <div class="w-full md:w-full px-3 mb-2 mt-2">
                                                 <input
-                                                    class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                                                    class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-500 focus:outline-none focus:bg-white"
                                                     id="commentcontent" type="text" name="commentcontent"
                                                     placeholder="Type Your Comment" required>
                                             </div>
                                             <div class="w-full md:w-full flex items-start md:w-full px-3">
                                                 <button
                                                     class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full"
-                                                    type="submit">Post Comment</button>
+                                                    type="submit">Post Comment
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
                                     @endif
                                 </div>
-                                <!--
-                                                    <form class="mb-6">
-                                                        <div
-                                                            class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                                            <label for="comment" class="sr-only">Your comment</label>
-                                                            <textarea id="comment" rows="6"
-                                                                class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                                                                placeholder="Write a comment..." required></textarea>
-                                                        </div>
-                                                        <button type="submit"
-                                                            class="items-center font-bold px-3 py-1 bg-gray-800 text-white rounded-full">
-                                                            Post comment
-                                                        </button>
-                                                    </form>
-                                --> <?php } ?>
+                                <?php } ?>
                             @endauth
                             @each(
                                 'partials.comment',
-                                $event->comments()->orderBy('commentdate')->get(),
+                                $event->comments()->orderBy('commentdate','desc')->get(),
                                 'comment',
                             )
                         </div>
@@ -167,10 +154,6 @@
             </section>
     </article>
 
-    @each(
-        'partials.del_comment_modal',
-        $event->comments()->orderBy('commentdate')->get(),
-        'comment',
-    )
+    @each('partials.del_comment_modal', $event->comments()->orderBy('commentdate','desc')->get(), 'comment')
 
 @endsection

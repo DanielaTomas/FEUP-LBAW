@@ -98,7 +98,7 @@ class User extends Authenticatable
 
     public function votes()
     {
-        return $this->belongsToMany(Comment::class, 'vote', 'voterid', 'commentid')->withPivot('type');
+        return $this->belongsToMany(Comment::class, 'vote', 'commentid', 'voterid')->withPivot('type');
     }
 
     public function answers()
