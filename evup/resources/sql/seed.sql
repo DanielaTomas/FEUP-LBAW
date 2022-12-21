@@ -223,6 +223,8 @@ DROP FUNCTION IF EXISTS updateUserToOrg;
 DROP TRIGGER IF EXISTS update_user_to_organization ON organizerrequest;
 DROP FUNCTION IF EXISTS eventCancelled;
 DROP TRIGGER IF EXISTS event_cancelled ON event;
+DROP FUNCTION IF EXISTS NewEvent;
+DROP TRIGGER IF EXISTS new_event ON event;
 DROP FUNCTION IF EXISTS event_search_update;
 DROP TRIGGER IF EXISTS event_search_update ON event;
 DROP FUNCTION IF EXISTS user_search_update;
@@ -423,6 +425,23 @@ CREATE TRIGGER event_cancelled
     EXECUTE PROCEDURE eventCancelled();
 
 
+
+CREATE FUNCTION NewEvent() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    INSERT INTO attendee (attendeeid,eventid)
+    VALUES(NEW.userid,NEW.eventid);
+    RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER new_event
+    AFTER INSERT ON event
+    FOR EACH ROW
+    EXECUTE PROCEDURE NewEvent();
+
 CREATE FUNCTION event_search_update() RETURNS TRIGGER AS
 $BODY$
 BEGIN
@@ -562,7 +581,6 @@ insert into event ( userid, eventname, public, eventaddress, description, eventp
 insert into attendee (attendeeid, eventid) values (1, 1);
 insert into attendee (attendeeid, eventid) values (1, 10);
 insert into attendee (attendeeid, eventid) values (1, 11);
-insert into attendee (attendeeid, eventid) values (2, 1);
 insert into attendee (attendeeid, eventid) values (2, 2);
 insert into attendee (attendeeid, eventid) values (3, 1);
 insert into attendee (attendeeid, eventid) values (3, 3);
