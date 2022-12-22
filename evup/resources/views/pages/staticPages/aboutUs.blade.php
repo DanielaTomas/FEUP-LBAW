@@ -19,7 +19,7 @@
 
         <div class="flex md:gap-8 justify-center mt-8 mb-8">
             <div class="card w-96 rounded-xl p-8 bg-gray-900 text-white shadow-xl hover:shadow">
-                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="storage/avatar_placeholder.png" alt="Daniela Tomás's Avatar">
+                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="{{asset('storage/images/image-1.png')}}" alt="Daniela Tomás's Avatar">
                 <div class="text-center mt-2 text-3xl font-medium">Daniela Tomás</div>
                 <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="">@daniela</a></div>
                 <div class="text-center font-normal text-lg">up202004946@edu.fc.up.pt</div>
@@ -27,7 +27,7 @@
             </div>
 
             <div class="card w-96 rounded-xl p-8 bg-gray-900 text-white shadow-xl hover:shadow">
-                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="storage/avatar_placeholder.png" alt="Hugo Almeida's Avatar">
+                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="{{asset('storage/images/image-1.png')}}" alt="Hugo Almeida's Avatar">
                 <div class="text-center mt-2 text-3xl font-medium">Hugo Almeida</div>
                 <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="">@hugo</a></div>
                 <div class="text-center font-normal text-lg">up202006814@edu.fe.up.pt</div>
@@ -43,7 +43,7 @@
             </div>
 
             <div class="card w-96 rounded-xl p-8 bg-gray-900 text-white shadow-xl hover:shadow">
-                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="storage/avatar_placeholder.png" alt="Sara Moreira Reis's Avatar">
+                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="{{asset('storage/images/image-1.png')}}" alt="Sara Moreira Reis's Avatar">
                 <div class="text-center mt-2 text-3xl font-medium">Sara Moreira Reis</div>
                 <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="">@sara</a></div>
                 <div class="text-center font-normal text-lg">up202005388@edu.fe.up.pt</div>
