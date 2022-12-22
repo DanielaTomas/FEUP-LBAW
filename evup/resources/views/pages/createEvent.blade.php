@@ -15,6 +15,10 @@
                 <span class="error">
                     {{ $errors->first('name') }}
                 </span>
+            @elseif ($errors->any())
+                <span class="error">
+                    Event name already exists
+                </span>
             @endif
         </div>
         <div class="mb-6">
@@ -93,14 +97,14 @@
 
         </div>
         <div class="flex mb-6 flex-col ">
-            <label for="imgInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Background
+            <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Background
                 photo</label>
 
-            <input class="rounded-lg" type="file" id="imgInput" name="image" accept="image/*">
+            <input class="rounded-lg" type="file" id="image" name="image" accept="image/*" value="{{ old('image') }}">
 
-            @if ($errors->has('thumbnail'))
+            @if ($errors->has('image'))
                 <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
-                    <p class="">{{ $errors->first('thumbnail') }}</p>
+                    <p class="">{{ $errors->first('image') }}</p>
                 </div>
             @endif
         </div>

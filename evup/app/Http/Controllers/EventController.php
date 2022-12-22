@@ -322,7 +322,7 @@ class EventController extends Controller
 
     if (isset($request->eventname)) $event->eventname = $request->eventname;
     if (isset($request->description)) $event->description = $request->description;
-    //if (isset($request->eventphoto)) $event->eventphoto = $request->eventphoto;
+    if (isset($request->eventphoto)) $event->eventphoto = $request->eventphoto;
     if (isset($request->eventaddress)) $event->eventaddress = $request->eventaddress;
     if (isset($request->startdate)) $event->startdate = $request->startdate;
     if (isset($request->enddate)) $event->enddate = $request->enddate;
@@ -352,23 +352,33 @@ class EventController extends Controller
         'name' => 'required|string|min:3|max:100',
         'eventaddress' => 'required|string|min:3|max:200',
         'description' => 'required|string|min:3|max:100',
-        'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
+        'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
         'starDate' => 'required|date',
         'endDate' => 'required|date',
       ]
     );
-    /*
+
+    $errors = [];
     if ($validator->fails()) {
-      // Go back to form and refill it
+     
+      foreach ($validator->errors()->messages() as $key => $value) {
+        $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+      }
       return redirect()->back()->withInput()->withErrors($errors);
-    }*/
+    }
 
     $event = new Event;
-    $event->eventaddress = $request->eventaddress;
-    $event->eventname = $request->name;
 
+    $repeatedName = Event::where('eventname', $request->name)->first();
+
+        if (isset($request->name) && $repeatedName == null) {
+          $event->eventname = $request->name;
+        } else {
+            return redirect()->back()->withInput()->withErrors();
+        }
+    
+    $event->eventaddress = $request->eventaddress;
     $event->description = $request->description;
-    //$event->eventphoto = $request->thumbnail;
     $event->startdate = $request->startDate;
     $event->enddate = $request->endDate;
 
