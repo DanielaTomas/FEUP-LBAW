@@ -39,7 +39,7 @@
                 <section class="flex flex-col grow p-6 max-w-xl">
                     <div class="flex flex-col gap-4  rounded">
                         <div class=" h-64 bg-top bg-cover rounded-t flex flex-col  shadow-lg"
-                            style="background-image: url( {{ $event->eventphoto }})">
+                            style="background-image: url({{ asset('storage/images/image-'.$event->eventphoto.'.png')}})">
                             @if (!$event->public)
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                     class="w-8 h-8  mt-2 ml-2">

@@ -13,6 +13,7 @@
 // Home
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -111,4 +112,5 @@ Route::post('event/{id}/dislike/{commentid}/voted/{voted}','CommentController@di
 //Filter
 Route::post('api/filter_tag', 'HomeController@filterTag');
 
-
+Route::get('/upload', 'UploadController@create');
+Route::post('/upload', 'UploadController@store');

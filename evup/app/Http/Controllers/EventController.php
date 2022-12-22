@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Upload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -153,7 +154,7 @@ class EventController extends Controller
     return view('pages.organizerEvents', ['events' => $events]);
   }
 
-  public function attendees(Request $request,$id)
+  public function attendees(Request $request, $id)
   {
     $user = User::find(Auth::id());
     if (is_null($user))
@@ -163,15 +164,15 @@ class EventController extends Controller
       return abort(404, 'Event not found');
 
     $attendees = DB::table('attendee')
-            ->select('attendeeid', 'eventid')
-            ->where('eventid', $id)
-            ->get()
-            ->map(function ($attendee) {
+      ->select('attendeeid', 'eventid')
+      ->where('eventid', $id)
+      ->get()
+      ->map(function ($attendee) {
 
-      $user = User::find($attendee->attendeeid);
-      $event = Event::find($attendee->eventid);
+        $user = User::find($attendee->attendeeid);
+        $event = Event::find($attendee->eventid);
 
-      return [
+        return [
           'user' => $user,
           'event' => $event,
       ];
@@ -195,7 +196,7 @@ class EventController extends Controller
 
     $usersInvited = Auth::user()->invites_sent()->get();
     $usersAttending = Event::find($id)->events()->get();
-    
+
     $users = User::get();
 
     $usersAttending->push(Auth::user());
@@ -207,64 +208,64 @@ class EventController extends Controller
   }
 
   public function addUser(Request $request, int $userid, int $eventid)
-  {  
+  {
     $organizer = User::find(Auth::id());
     if (is_null($organizer))
-        return abort(404, 'User not found');
+      return abort(404, 'User not found');
     $user = User::find($userid);
     if (is_null($user))
-        return response()->json([
-            'status' => 'Not Found',
-            'msg' => 'User not found, id: '.$userid,
-            'errors' => ['user' => 'User not found, id: '.$userid]
-        ], 404);
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'User not found, id: ' . $userid,
+        'errors' => ['user' => 'User not found, id: ' . $userid]
+      ], 404);
 
     $event = User::find($eventid);
     if (is_null($event))
-        return response()->json([
-            'status' => 'Not Found',
-            'msg' => 'Event not found, id: '.$eventid,
-            'errors' => ['event' => 'Event not found, id: '.$eventid]
-        ], 404);
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'Event not found, id: ' . $eventid,
+        'errors' => ['event' => 'Event not found, id: ' . $eventid]
+      ], 404);
 
     $this->authorize('addUser', $organizer);
 
     $event->events()->attach($userid);
 
     return response()->json([
-        'status' => 'OK',
-        'msg' => 'Successfully added user '.$user->name .'to event'.$event->eventname,
+      'status' => 'OK',
+      'msg' => 'Successfully added user ' . $user->name . 'to event' . $event->eventname,
     ], 200);
   }
 
   public function removeUser(Request $request, int $userid, int $eventid)
-  {  
+  {
     $organizer = User::find(Auth::id());
     if (is_null($organizer))
-        return abort(404, 'User not found');
+      return abort(404, 'User not found');
     $user = User::find($userid);
     if (is_null($user))
-        return response()->json([
-            'status' => 'Not Found',
-            'msg' => 'User not found, id: '.$userid,
-            'errors' => ['user' => 'User not found, id: '.$userid]
-        ], 404);
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'User not found, id: ' . $userid,
+        'errors' => ['user' => 'User not found, id: ' . $userid]
+      ], 404);
 
     $event = User::find($eventid);
     if (is_null($event))
-        return response()->json([
-            'status' => 'Not Found',
-            'msg' => 'Event not found, id: '.$eventid,
-            'errors' => ['event' => 'Event not found, id: '.$eventid]
-        ], 404);
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'Event not found, id: ' . $eventid,
+        'errors' => ['event' => 'Event not found, id: ' . $eventid]
+      ], 404);
 
     $this->authorize('removeUser', $organizer);
 
     $event->events()->detach($userid);
 
     return response()->json([
-        'status' => 'OK',
-        'msg' => 'Successfully removed user '.$user->name .'from event'.$event->eventname,
+      'status' => 'OK',
+      'msg' => 'Successfully removed user ' . $user->name . 'from event' . $event->eventname,
     ], 200);
   }
 
@@ -278,57 +279,57 @@ class EventController extends Controller
     return $event;
   }
 
-  public function edit($id) 
+  public function edit($id)
   {
     $event = Event::find($id);
 
-    if(is_null($event))
-      return abort(404,'Event not found');
+    if (is_null($event))
+      return abort(404, 'Event not found');
 
     $user = User::find(Auth::id());
 
-    $this->authorize('edit',$event);
-    return view('pages.event.edit',[
-      'event'=>$event, 'user'=>$user
+    $this->authorize('edit', $event);
+    return view('pages.event.edit', [
+      'event' => $event, 'user' => $user
     ]);
   }
 
   public function update(Request $request, int $id)
   {
-      $event = Event::find($id);
-      if (is_null($event))
-          return redirect()->back()->withErrors(['event' => 'Event not found, id: ' . $id]);
+    $event = Event::find($id);
+    if (is_null($event))
+      return redirect()->back()->withErrors(['event' => 'Event not found, id: ' . $id]);
 
-      //$this->authorize('update', $event);
+    //$this->authorize('update', $event);
 
-      $validator = Validator::make($request->all(), [
-          'eventname' => 'required|string|max:255',
-          'description' => 'required|string|max:255',
-          //TODO 'eventphoto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
-          'eventaddress' => 'required|string|max:255',
-          'startdate' => 'required|date|after:tomorrow',
-          'enddate' => 'required|date|after:startdate',
-      ]);
+    $validator = Validator::make($request->all(), [
+      'eventname' => 'required|string|max:255',
+      'description' => 'required|string|max:255',
+      //TODO 'eventphoto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
+      'eventaddress' => 'required|string|max:255',
+      'startdate' => 'required|date|after:tomorrow',
+      'enddate' => 'required|date|after:startdate',
+    ]);
 
-      if ($validator->fails()) {
-          $errors = [];
-          foreach ($validator->errors()->messages() as $key => $value) {
-              $errors[$key] = is_array($value) ? implode(',', $value) : $value;
-          }
-
-          return redirect()->back()->withInput()->withErrors($errors);
+    if ($validator->fails()) {
+      $errors = [];
+      foreach ($validator->errors()->messages() as $key => $value) {
+        $errors[$key] = is_array($value) ? implode(',', $value) : $value;
       }
 
-      if (isset($request->eventname)) $event->eventname = $request->eventname;
-      if (isset($request->description)) $event->description = $request->description;
-      //if (isset($request->eventphoto)) $event->eventphoto = $request->eventphoto;
-      if (isset($request->eventaddress)) $event->eventaddress = $request->eventaddress;
-      if (isset($request->startdate)) $event->startdate = $request->startdate;
-      if (isset($request->enddate)) $event->enddate = $request->enddate;
+      return redirect()->back()->withInput()->withErrors($errors);
+    }
 
-      $event->save();
+    if (isset($request->eventname)) $event->eventname = $request->eventname;
+    if (isset($request->description)) $event->description = $request->description;
+    //if (isset($request->eventphoto)) $event->eventphoto = $request->eventphoto;
+    if (isset($request->eventaddress)) $event->eventaddress = $request->eventaddress;
+    if (isset($request->startdate)) $event->startdate = $request->startdate;
+    if (isset($request->enddate)) $event->enddate = $request->enddate;
 
-      return redirect()->route('show_event',[$event->eventid]);
+    $event->save();
+
+    return redirect()->route('show_event', [$event->eventid]);
   }
 
   public function showForms()
@@ -363,23 +364,32 @@ class EventController extends Controller
     }*/
 
     $event = new Event;
-    $event->eventname = $request->name;
     $event->eventaddress = $request->eventaddress;
+    $event->eventname = $request->name;
+
     $event->description = $request->description;
-    $event->eventphoto = $request->thumbnail;
+    //$event->eventphoto = $request->thumbnail;
     $event->startdate = $request->startDate;
     $event->enddate = $request->endDate;
-    
+
     if ($request->has('private')) {
       $event->public = false;
     } else {
       $event->public = true;
     }
 
+    $name = $request->file('image')->getClientOriginalName();
+    $upload = new Upload();
+    $upload->filename = $name;
+    $upload->save();
+    $request->image->storeAs('public/images/', "image-$upload->uploadid.png");
+ 
+
+    $event->eventphoto = $upload->uploadid;
+
     $event->userid = Auth::id();
     $event->save();
 
     return redirect("/event/$event->eventid");
   }
-
 }

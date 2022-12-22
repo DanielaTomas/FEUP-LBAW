@@ -61,6 +61,11 @@ class User extends Authenticatable
         DB::table('notification')->where('receiverid', $this->userid)->delete();
     }
 
+    public function photo()
+    {
+        return $this->hasOne(Upload::class, 'uploadid');
+    }
+
     public function notifications()
     {
         return $this->hasMany(Notification::class, 'receiverid');

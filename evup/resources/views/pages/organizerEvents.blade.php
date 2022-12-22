@@ -11,7 +11,7 @@
             <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                 past Events
             </button>
-            <a href="myEvents/createEvent"class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+            <a href="/myEvents/createEvent"class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                 Create an event
             </a>
         </div>

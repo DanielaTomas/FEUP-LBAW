@@ -20,6 +20,11 @@ class Event extends Model
     'eventaddress','description','eventphoto','startdate','enddate'
   ];
 
+  public function photo()
+  {
+      return $this->hasOne(Upload::class, 'uploadid');
+  }
+
   public function eventTags()
   {
     return $this->belongsToMany(Tag::class,'event_tag','eventid','tagid');

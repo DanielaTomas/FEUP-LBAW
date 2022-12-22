@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrganizerRequest;
+use App\Models\Upload;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Invitation;
@@ -48,34 +49,37 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function searchUsers(Request $request){
+    public function searchUsers(Request $request)
+    {
         $event = Event::find($request->eventid);
         $organizer = User::find($event->userid);
 
         $usersInvited = Auth::user()->invites_sent()->get();
         $usersAttending = $event->events()->get();
-        
-        $users = User::whereRaw('(username like \'%' . $request->search . '%\' or email like \'%' . $request->search . '%\')')
-                    ->get();
 
-        $usersAttending-> push(Auth::user());
-        $usersAttending-> push($organizer);
+        $users = User::whereRaw('(username like \'%' . $request->search . '%\' or email like \'%' . $request->search . '%\')')
+            ->get();
+
+        $usersAttending->push(Auth::user());
+        $usersAttending->push($organizer);
 
         $users = $users->diff($usersInvited);
         $users = $users->diff($usersAttending);
 
-        return response()->json(view('partials.content.usersToInvite', ['users' => $users])->render()
-        , 200);
+        return response()->json(
+            view('partials.content.usersToInvite', ['users' => $users])->render(),
+            200
+        );
     }
 
     public function inviteUser(Request $request)
     {
         $inviteddUser = User::where('email', $request->email)->first();
-       
+
         if (is_null($inviteddUser))
             return response()->json([
                 'status' => '404',
-                'msg' => 'User not found, User'. $invitedUserEmail,
+                'msg' => 'User not found, User' . $invitedUserEmail,
                 'errors' => ['user' => 'User not found']
             ], 404);
 
@@ -89,12 +93,12 @@ class UserController extends Controller
                 'id' => $inviteddUserId,
             ], 400);
 
-        Auth::user()->invites_sent()->attach($inviteddUserId,['eventid' => $request->eventid]);
+        Auth::user()->invites_sent()->attach($inviteddUserId, ['eventid' => $request->eventid]);
 
         return response()->json([
             'status' => '200',
             'msg' => 'Invited user successfully',
-            'id' =>$request->eventid,
+            'id' => $request->eventid,
         ], 200);
     }
 
@@ -108,7 +112,7 @@ class UserController extends Controller
         $user = User::find($id);
         if (is_null($user))
             return abort(404, 'User not found, id: ' . Auth::id());
-    
+
         $ordered_events = $user->events()->get();
         $ordered_invites = $user->invites_received()->get();
         $requests = $user->requests()->get();
@@ -136,7 +140,7 @@ class UserController extends Controller
 
         $ordered_events = $user->events()->get();
         $ordered_invites = $user->invites_received()->get();
-        
+
         return view('pages.profile', [
             'user' => $user,
             'events' => $ordered_events,
@@ -144,7 +148,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function showEditForms($id){
+    public function showEditForms($id)
+    {
 
         $user = User::find($id);
         if (is_null($user))
@@ -174,19 +179,26 @@ class UserController extends Controller
         $this->authorize('update', $user);
         $user->name = $request->name;
 
-        $repeatedUsername = User::where('username',$user->username)->first();
-        $repeatedEmail = User::where('email',$user->email)->first();
+        $repeatedUsername = User::where('username', $user->username)->first();
+        $repeatedEmail = User::where('email', $user->email)->first();
 
-        if (isset($request->username) && $repeatedUsername->id != Auth::id()){
+        if (isset($request->username) && $repeatedUsername->id != Auth::id()) {
             $user->username = $request->username;
-        }else{
-            return redirect()->back()->withInput();
-        } 
-        if (isset($request->email) && $repeatedEmail->id != Auth::id()){
-            $user->email = $request->email;
-        }else{
+        } else {
             return redirect()->back()->withInput();
         }
+        if (isset($request->email) && $repeatedEmail->id != Auth::id()) {
+            $user->email = $request->email;
+        } else {
+            return redirect()->back()->withInput();
+        }
+
+        $name = $request->file('image')->getClientOriginalName();
+        $upload = new Upload();
+        $upload->filename = $name;
+        $upload->save();
+        $request->image->storeAs('public/images/', "image-$upload->uploadid.png");
+        $user->userphoto = $upload->uploadid;
 
         $user->save();
         return redirect("/user/$user->userid");
@@ -240,13 +252,13 @@ class UserController extends Controller
         if (is_null($request))
             return response()->json([
                 'status' => 'Not Found',
-                'msg' => 'Request not found, id: '.$id,
-                'errors' => ['request' => 'Request not found, id: '.$id]
+                'msg' => 'Request not found, id: ' . $id,
+                'errors' => ['request' => 'Request not found, id: ' . $id]
             ], 404);
         $user = User::find(Auth::id());
         if (is_null($user))
             return abort(404, 'User not found');
-        
+
 
         //gi$this->authorize('inviteDecline', $request);
 
@@ -271,58 +283,56 @@ class UserController extends Controller
         if (is_null($request))
             return response()->json([
                 'status' => 'Not Found',
-                'msg' => 'Request not found, id: '.$id,
-                'errors' => ['request' => 'Request not found, id: '.$id]
+                'msg' => 'Request not found, id: ' . $id,
+                'errors' => ['request' => 'Request not found, id: ' . $id]
             ], 404);
         $user = User::find(Auth::id());
         if (is_null($user))
             return abort(404, 'User not found');
-  
-      //$this->authorize('inviteAccept', $request);
-  
-      if ($request->invitationstatus)
-          return response()->json([
-              'status' => 'OK',
-              'msg' => 'Request was already accepted',
-          ], 200);
-  
-      $request->invitationstatus = true;
-      $request->save();
-  
-      return response()->json([
-          'status' => 'OK',
-          'msg' => 'Request was successfully accepted',
-      ], 200);
+
+        //$this->authorize('inviteAccept', $request);
+
+        if ($request->invitationstatus)
+            return response()->json([
+                'status' => 'OK',
+                'msg' => 'Request was already accepted',
+            ], 200);
+
+        $request->invitationstatus = true;
+        $request->save();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Request was successfully accepted',
+        ], 200);
     }
 
     public function organizerRequest(int $id)
     {
 
         $request = new OrganizerRequest;
-        $request->requesterid=$id;
+        $request->requesterid = $id;
         $request->save();
 
         //$this->authorize('organizerRequest', $request);
         return response()->json([
             'status' => 'OK',
             'msg' => 'Request was successfully accepted',
-        ], 200);  
+        ], 200);
     }
 
     public function requestToJoin(Request $request)
     {
 
         $joinRequest = new JoinRequest();
-        $joinRequest->requesterid=Auth::id();
-        $joinRequest->eventid=$request->eventid;
+        $joinRequest->requesterid = Auth::id();
+        $joinRequest->eventid = $request->eventid;
         $joinRequest->save();
 
         //$this->authorize('organizerRequest', $request);
         return response()->json([
             'status' => 'OK',
             'msg' => 'Request was successfully accepted',
-        ], 200);  
+        ], 200);
     }
-
-
 }
