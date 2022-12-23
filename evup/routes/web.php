@@ -81,6 +81,7 @@ Route::post('event/{eventid}/adduser/{userid}', 'EventController@addUser')->wher
 Route::post('event/{eventid}/removeuser/{userid}', 'EventController@removeUser')->where(['eventid' => '[0-9]+', 'userid' => '[0-9]+'])->name('remove_user_event');
 Route::post('api/myEvents/leave_event', 'UserController@leaveEvent');
 Route::get('api/myEvents/organizing', 'EventController@organizerEvents');
+Route::post('api/myEvents/onMyAgenda', 'EventController@myEvents');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

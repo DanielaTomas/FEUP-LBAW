@@ -5,10 +5,10 @@
 @section('content')
     <div class="flex content-center flex-col">
         <div class="inline-flex p-2 justify-center">
-            <button onclick="" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
+            <button onclick="getMyEvents(0)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
                 on my Agenda
             </button>
-            <button onclick="" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+            <button onclick="getMyEvents(1)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                 past Events
             </button>
             @if (Auth::user()->usertype=="Organizer")

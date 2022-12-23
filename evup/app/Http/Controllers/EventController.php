@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Upload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -41,15 +42,16 @@ class EventController extends Controller
 
     $user = User::find(Auth::id());
 
-    if($event->public && !Auth::check()){
-      return view('pages.event',[
-        'event'=>$event]);
-    }else if ($user->isAttendee($event) || $event->public)
-      return view('pages.event',[
-        'event'=>$event, 'user'=>$user
+    if ($event->public && !Auth::check()) {
+      return view('pages.event', [
+        'event' => $event
+      ]);
+    } else if ($user->isAttendee($event) || $event->public)
+      return view('pages.event', [
+        'event' => $event, 'user' => $user
       ]);
     else
-      return abort(403 , 'THIS ACTION IS UNAUTHORIZED.');
+      return abort(403, 'THIS ACTION IS UNAUTHORIZED.');
   }
 
   public function manageEvent($id)
@@ -58,8 +60,8 @@ class EventController extends Controller
     if (is_null($event))
       return abort(404, 'Event not found');
 
-    $this->authorize('manage',$event);
-    return view('pages.event.manage',['event' => $event]);
+    $this->authorize('manage', $event);
+    return view('pages.event.manage', ['event' => $event]);
   }
 
   public function setEventVisibilityPublic($id)
@@ -68,18 +70,18 @@ class EventController extends Controller
     if (is_null($event))
       return response()->json([
         'status' => 'Not Found',
-        'msg' => 'User not found, id: '.$id,
-        'errors' => ['user' => 'User not found, id: '.$id]
-        ], 404);
-  
+        'msg' => 'User not found, id: ' . $id,
+        'errors' => ['user' => 'User not found, id: ' . $id]
+      ], 404);
+
     $this->authorize('manage', $event);
 
     $event->public = TRUE;
     $event->save();
 
     return response()->json([
-        'status' => 'OK',
-        'msg' => 'Successfully set event visibility to public',
+      'status' => 'OK',
+      'msg' => 'Successfully set event visibility to public',
     ], 200);
   }
 
@@ -89,18 +91,18 @@ class EventController extends Controller
     if (is_null($event))
       return response()->json([
         'status' => 'Not Found',
-        'msg' => 'User not found, id: '.$id,
-        'errors' => ['user' => 'User not found, id: '.$id]
-        ], 404);
-  
+        'msg' => 'User not found, id: ' . $id,
+        'errors' => ['user' => 'User not found, id: ' . $id]
+      ], 404);
+
     $this->authorize('manage', $event);
 
     $event->public = FALSE;
     $event->save();
 
     return response()->json([
-        'status' => 'OK',
-        'msg' => 'Successfully set event visibility to private',
+      'status' => 'OK',
+      'msg' => 'Successfully set event visibility to private',
     ], 200);
   }
 
@@ -113,29 +115,29 @@ class EventController extends Controller
    */
   public function cancelEvent(int $id)
   {
-      $event = Event::find($id);
-      if (is_null($event))
-          return response()->json([
-              'status' => 'Not Found',
-              'msg' => 'Event not found, id: '.$id,
-              'errors' => ['event' => 'Event not found, id: '.$id]
-          ], 404);
-
-      $this->authorize('manage', $event);
-
-      if ($event->eventcanceled)
-          return response()->json([
-              'status' => 'OK',
-              'msg' => 'Event was already canceled',
-          ], 200);
-
-      $event->eventcanceled = true;
-      $event->save();
-
+    $event = Event::find($id);
+    if (is_null($event))
       return response()->json([
-          'status' => 'OK',
-          'msg' => 'Event was successfully canceled',
+        'status' => 'Not Found',
+        'msg' => 'Event not found, id: ' . $id,
+        'errors' => ['event' => 'Event not found, id: ' . $id]
+      ], 404);
+
+    $this->authorize('manage', $event);
+
+    if ($event->eventcanceled)
+      return response()->json([
+        'status' => 'OK',
+        'msg' => 'Event was already canceled',
       ], 200);
+
+    $event->eventcanceled = true;
+    $event->save();
+
+    return response()->json([
+      'status' => 'OK',
+      'msg' => 'Event was successfully canceled',
+    ], 200);
   }
 
   public function userEvents()
@@ -154,8 +156,31 @@ class EventController extends Controller
     $this->authorize('organizerEvents', $organizer);
     $events = Event::where('userid', $organizer->userid)->get();
 
-    return response()->json(view('partials.content.organizerEvents', ['events' => $events])->render()
-    , 200);
+    return response()->json(
+      view('partials.content.organizerEvents', ['events' => $events])->render(),
+      200
+    );
+  }
+
+  public function myEvents(Request $request)
+  {
+    $user = Auth::user();
+    if (is_null($user))
+      return abort(404, 'User not found');
+    $this->authorize('list', Event::class);
+
+    $currentDate = Carbon::now();
+
+    if ($request->hasPassed == 1) {
+      $events = Auth::user()->events()->where('enddate', '<=', $currentDate)->get();
+    } else {
+      $events = Auth::user()->events()->where('enddate', '>', $currentDate)->get();
+    }
+
+    return response()->json(
+      view('partials.content.eventCards', ['events' => $events])->render(),
+      200
+    );
   }
 
   public function attendees(Request $request, $id)
@@ -179,13 +204,13 @@ class EventController extends Controller
         return [
           'user' => $user,
           'event' => $event,
-      ];
-   });
-    
+        ];
+      });
+
     if ($user->isAttendee($event) || $event->public)
       return view('pages.attendees', ['attendees' => $attendees]);
     else
-      return abort(403 , 'THIS ACTION IS UNAUTHORIZED.');
+      return abort(403, 'THIS ACTION IS UNAUTHORIZED.');
   }
 
   public function view_add_user($id)
@@ -364,7 +389,7 @@ class EventController extends Controller
 
     $errors = [];
     if ($validator->fails()) {
-     
+
       foreach ($validator->errors()->messages() as $key => $value) {
         $errors[$key] = is_array($value) ? implode(',', $value) : $value;
       }
@@ -375,12 +400,12 @@ class EventController extends Controller
 
     $repeatedName = Event::where('eventname', $request->name)->first();
 
-        if (isset($request->name) && $repeatedName == null) {
-          $event->eventname = $request->name;
-        } else {
-            return redirect()->back()->withInput()->withErrors();
-        }
-    
+    if (isset($request->name) && $repeatedName == null) {
+      $event->eventname = $request->name;
+    } else {
+      return redirect()->back()->withInput()->withErrors();
+    }
+
     $event->eventaddress = $request->eventaddress;
     $event->description = $request->description;
     $event->startdate = $request->startDate;
@@ -397,7 +422,7 @@ class EventController extends Controller
     $upload->filename = $name;
     $upload->save();
     $request->image->storeAs('public/images/', "image-$upload->uploadid.png");
- 
+
 
     $event->eventphoto = $upload->uploadid;
 
