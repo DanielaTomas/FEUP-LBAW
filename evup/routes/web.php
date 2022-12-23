@@ -111,6 +111,7 @@ Route::post('event/{id}/dislike/{commentid}/voted/{voted}','CommentController@di
 
 //Filter
 Route::post('api/filter_tag', 'HomeController@filterTag');
+Route::post('api/filter_category', 'HomeController@filterCategory');
 
 Route::get('/upload', 'UploadController@create');
 Route::post('/upload', 'UploadController@store');

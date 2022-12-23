@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Tag;
+use App\Models\Category;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,26 +40,18 @@ class HomeController extends Controller
   {
     $tagid = $request->tagid;
     $tag = Tag::find($tagid);
-    /*
-    if(in_array($tagid,$this->tagids)){
-      $key = array_search($tagid, $this->tagids);
-      unset($this->tagids[$key]);
-      array_values($this->tagids);
-    } else{
-   
-      array_push($this->tagids, $tagid);
-    }
-
-    $events= collect();
-    foreach($this->tagids as $x){
-      $tag = Tag::find($x);
-      $tagEvents = $tag->eventTags()->get();
- 
-      $events = $events->merge($tagEvents);
-    }
-    */
-    //return response()->json(['msg' => 'Successfully added user '.count($events)], 200);
+    
     $events = $tag->eventTags()->get();
+    return response()->json(view('partials.content.publicEvents', ['events' => $events])->render()
+  , 200);
+  }
+
+  public function filterCategory(Request $request)
+  {
+    $categoryid = $request->categoryid;
+    $category = Category::find($categoryid);
+    
+    $events = $category->eventCategories()->get();
     return response()->json(view('partials.content.publicEvents', ['events' => $events])->render()
   , 200);
   }

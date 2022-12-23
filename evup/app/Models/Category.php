@@ -12,7 +12,7 @@ class Category extends Model
     protected $primaryKey = 'categoryid';
     
 
-    public function eventCategories()
+  public function eventCategories()
   {
     return $this->belongsToMany(Event::class, 'event_category', 'categoryid', 'eventid');
   }
