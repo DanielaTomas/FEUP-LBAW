@@ -366,14 +366,12 @@ class EventController extends Controller
     $tags = TagController::getAllTags();
     $categories = CategoryController::getAllCategories();
 
-    return response()->json(
-      view('partials.content.createEvent', ['categories' => $categories, 'tags' => $tags])->render(),
-      200
-    );
+    return view('pages.createEvent', ['categories' => $categories, 'tags' => $tags]);
   }
 
   public function createEvent(Request $request)
   {
+  
 
     //$this->authorize('create', Event::class);
 
@@ -384,17 +382,18 @@ class EventController extends Controller
         'eventaddress' => 'required|string|min:3|max:200',
         'description' => 'required|string|min:3|max:100',
         'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
-        'starDate' => 'required|date',
         'endDate' => 'required|date',
+        'startDate' => 'required|date',
       ]
     );
 
     $errors = [];
     if ($validator->fails()) {
-
+  
       foreach ($validator->errors()->messages() as $key => $value) {
         $errors[$key] = is_array($value) ? implode(',', $value) : $value;
       }
+
       return redirect()->back()->withInput()->withErrors($errors);
     }
 
@@ -429,8 +428,26 @@ class EventController extends Controller
     $event->eventphoto = $upload->uploadid;
 
     $event->userid = Auth::id();
-    $event->save();
 
+
+    $tags = TagController::getAllTags();
+    $categories = CategoryController::getAllCategories();
+    $event->save();
+    foreach ($categories as $category){
+      if ($request->has("category-$category->categoryid")) {
+        $event->eventCategories()->attach($category->categoryid);
+      }
+    }
+
+    foreach ($tags as $tag){
+      if ($request->has("tag-$tag->tagid")) {
+        $event->eventTags()->attach($tag->tagid);
+      }
+    }
+
+
+  
+   
     return redirect("/event/$event->eventid");
   }
 }

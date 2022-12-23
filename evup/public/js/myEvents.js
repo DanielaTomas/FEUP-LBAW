@@ -17,13 +17,3 @@ function getMyEventsHandler() {
     const area = document.getElementById("myeventsarea")
     area.innerHTML = events
 }
-
-const getFormsCreateEvent = (hasPassed) => {
-    sendAjaxRequest('get', `api/myEvents/createEvent`, { 'hasPassed': hasPassed }, getFormsCreateEventHandler);
-}
-
-function getFormsCreateEventHandler() {
-    const form = JSON.parse(this.responseText)
-    const area = document.getElementById("myeventsarea")
-    area.innerHTML = form
-}
