@@ -41,7 +41,12 @@ class HomeController extends Controller
     $tagid = $request->tagid;
     $tag = Tag::find($tagid);
     
-    $events = $tag->eventTags()->get();
+    if($tagid==1){
+      $events = EventController::getPublicEvents();
+    }else{
+      $events = $tag->eventTags()->get();
+    }
+
     return response()->json(view('partials.content.publicEvents', ['events' => $events])->render()
   , 200);
   }
@@ -51,7 +56,11 @@ class HomeController extends Controller
     $categoryid = $request->categoryid;
     $category = Category::find($categoryid);
     
-    $events = $category->eventCategories()->get();
+    if($categoryid==1){
+      $events = EventController::getPublicEvents();
+    }else{
+      $events = $category->eventCategories()->get();
+    }
     return response()->json(view('partials.content.publicEvents', ['events' => $events])->render()
   , 200);
   }

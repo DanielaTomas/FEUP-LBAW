@@ -547,9 +547,9 @@ insert into users (username, name, email, password, userphoto,accountstatus, use
 
 
 -- event --
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Kovacek-Conn', false, '16 Brentwood Park', 'Nondisplaced fracture of base of neck of left femur', 2, '2023-11-08', '2023-11-30');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 13, 'Wilkinson-Klein', false, '21812 Ohio Alley', 'Benign neoplasm of scrotum',2, '2023-02-06', '2023-02-16');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 17, 'McDermott, Hammes and Medhurst', true, '52 Onsgard Trail', 'Other injury of superior mesenteric artery', 2, '2023-01-03', '2023-01-31');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Kovacek-Conn', false, '16 Brentwood Park', 'Nondisplaced fracture of base of neck of left femur', 2, '2023-11-08', '2023-11-30');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Wilkinson-Klein', false, '21812 Ohio Alley', 'Benign neoplasm of scrotum',2, '2023-02-06', '2023-02-16');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'McDermott, Hammes and Medhurst', true, '52 Onsgard Trail', 'Other injury of superior mesenteric artery', 2, '2023-01-03', '2023-01-31');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 18, 'Marquardt and Sons', false, '0752 Mayfield Park', 'Nondisplaced fracture of distal phalanx of right ring finger, sequela',2, '2023-01-24', '2023-01-25');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 20, 'Rutherford, DuBuque and MacGyver', false, '3926 Montana Avenue', 'Person boarding or alighting a three-wheeled motor vehicle injured in collision with two- or three-wheeled motor vehicle', 2, '2023-01-03', '2023-02-15');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 21, 'Mohr, Cummerata and Rempel', false, '902 Springview Center', 'Unspecified intracranial injury with loss of consciousness of 1 hour to 5 hours 59 minutes, sequela', 2, '2023-12-02', '2023-12-03');
@@ -604,22 +604,21 @@ insert into attendee (attendeeid, eventid) values (32, 8);
 insert into attendee (attendeeid, eventid) values (32, 15);
 
 -- Category --
-
-insert into Category (categoryid, categoryname) values (1, 'Tudo');
-insert into Category (categoryid, categoryname) values (2, 'Cinema');
-insert into Category (categoryid, categoryname) values (3, 'Ar livre');
-insert into Category (categoryid, categoryname) values (4, 'Música');
-insert into Category (categoryid, categoryname) values (5, 'Família');
-insert into Category (categoryid, categoryname) values (6, 'Exposição');
-insert into Category (categoryid, categoryname) values (7, 'Literatura');
-insert into Category (categoryid, categoryname) values (8, 'Conferência');
-insert into Category (categoryid, categoryname) values (9, 'Congresso');
-insert into Category (categoryid, categoryname) values (10, 'Seminário');
-insert into Category (categoryid, categoryname) values (11, 'Encontro');
-insert into Category (categoryid, categoryname) values (12, 'Online');
-insert into Category (categoryid, categoryname) values (13, 'Palestra');
-insert into Category (categoryid, categoryname) values (14, 'Teatro');
-insert into Category (categoryid, categoryname) values (15, 'Desporto');
+insert into Category ( categoryname) values ( 'Tudo');
+insert into Category ( categoryname) values ( 'Cinema');
+insert into Category ( categoryname) values ( 'Ar livre');
+insert into Category ( categoryname) values ( 'Música');
+insert into Category ( categoryname) values ( 'Família');
+insert into Category ( categoryname) values ( 'Exposição');
+insert into Category ( categoryname) values ( 'Literatura');
+insert into Category ( categoryname) values ( 'Conferência');
+insert into Category ( categoryname) values ( 'Congresso');
+insert into Category ( categoryname) values ( 'Seminário');
+insert into Category ( categoryname) values ( 'Encontro');
+insert into Category ( categoryname) values ( 'Online');
+insert into Category ( categoryname) values ( 'Palestra');
+insert into Category ( categoryname) values ( 'Teatro');
+insert into Category ( categoryname) values ( 'Desporto');
 
 -- tag --
 
@@ -844,11 +843,11 @@ insert into event_category (eventid, categoryid) values (30, 10);
 -- event_tag --
 insert into event_tag (eventid, tagid) values (1, 11);
 insert into event_tag (eventid, tagid) values (2, 4);
-insert into event_tag (eventid, tagid) values (3, 1);
+insert into event_tag (eventid, tagid) values (3, 3);
 insert into event_tag (eventid, tagid) values (4, 6);
 insert into event_tag (eventid, tagid) values (5, 15);
 insert into event_tag (eventid, tagid) values (6, 9);
-insert into event_tag (eventid, tagid) values (7, 1);
+insert into event_tag (eventid, tagid) values (7, 2);
 insert into event_tag (eventid, tagid) values (8, 13);
 insert into event_tag (eventid, tagid) values (9, 5);
 insert into event_tag (eventid, tagid) values (10, 10);
@@ -863,7 +862,7 @@ insert into event_tag (eventid, tagid) values (18, 13);
 insert into event_tag (eventid, tagid) values (19, 3);
 insert into event_tag (eventid, tagid) values (20, 2);
 insert into event_tag (eventid, tagid) values (21, 15);
-insert into event_tag (eventid, tagid) values (22, 1);
+insert into event_tag (eventid, tagid) values (22, 5);
 insert into event_tag (eventid, tagid) values (23, 14);
 insert into event_tag (eventid, tagid) values (24, 10);
 insert into event_tag (eventid, tagid) values (25, 10);

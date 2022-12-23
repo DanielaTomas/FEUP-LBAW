@@ -5,16 +5,16 @@
 @section('content')
     <div class="flex content-center flex-col">
         <div class="inline-flex p-2 justify-center">
-            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
+            <button onclick="" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
                 on my Agenda
             </button>
-            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+            <button onclick="" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                 past Events
             </button>
             @if (Auth::user()->usertype=="Organizer")
-                <a href="{{ route('organizing') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+                <button onclick="getOrganizingEvents()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                     Organizing
-                </a>
+                </button>
                 <a href="{{ route('create_events') }}"class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                     Create an event
                 </a>

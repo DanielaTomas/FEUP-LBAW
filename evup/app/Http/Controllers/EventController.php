@@ -41,7 +41,10 @@ class EventController extends Controller
 
     $user = User::find(Auth::id());
 
-    if ($user->isAttendee($event) || $event->public)
+    if($event->public && !Auth::check()){
+      return view('pages.event',[
+        'event'=>$event]);
+    }else if ($user->isAttendee($event) || $event->public)
       return view('pages.event',[
         'event'=>$event, 'user'=>$user
       ]);
@@ -151,7 +154,8 @@ class EventController extends Controller
     $this->authorize('organizerEvents', $organizer);
     $events = Event::where('userid', $organizer->userid)->get();
 
-    return view('pages.organizerEvents', ['events' => $events]);
+    return response()->json(view('partials.content.organizerEvents', ['events' => $events])->render()
+    , 200);
   }
 
   public function attendees(Request $request, $id)

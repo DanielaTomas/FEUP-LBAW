@@ -17,11 +17,6 @@ body {
     padding: 1em;
   }
   
-  #homeTop{
-    display: flex;
-    justify-content: space-between;
-  }
-  
   #content > article {
     background-color: #D7D3D3;
   }
