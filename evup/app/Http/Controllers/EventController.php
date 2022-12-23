@@ -363,11 +363,13 @@ class EventController extends Controller
 
   public function showForms()
   {
-
     $tags = TagController::getAllTags();
     $categories = CategoryController::getAllCategories();
 
-    return view('pages.createEvent', ['categories' => $categories, 'tags' => $tags]);
+    return response()->json(
+      view('partials.content.createEvent', ['categories' => $categories, 'tags' => $tags])->render(),
+      200
+    );
   }
 
   public function createEvent(Request $request)

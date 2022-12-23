@@ -69,7 +69,7 @@ Route::put('admin/organizer_requests/{id}/accept', 'AdminController@acceptReques
 
 //my Events
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
-Route::get('myEvents/createEvent', 'EventController@showForms')->name('create_events');
+Route::get('api/myEvents/createEvent', 'EventController@showForms')->name('create_events');
 Route::post('myEvents/createEvent', 'EventController@createEvent')->name('createEvent')->where(['id' => '[0-9]+']);
 Route::get('event/{id}/manage', 'EventController@manageEvent')->where(['id' => '[0-9]+'])->name('manage_event');
 Route::put('event/{id}/public', 'EventController@setEventVisibilityPublic')->where(['id' => '[0-9]+']);
