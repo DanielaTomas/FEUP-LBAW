@@ -86,6 +86,13 @@
                     <p class="py-4"> {{ $event->description }} </p>
                     <div class="mb-4"> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
 
+                    <h3 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Polls</h2>
+                    <br>
+                    <div class="mb-4">
+                    @foreach($polls as $poll)
+                        @include('partials.poll',['poll'=>$poll,'user'=>$user])
+                    @endforeach
+                    </div>
                     <section>
                         <div class=" mx-auto ">
                             <div class="flex justify-between items-center mb-6">

@@ -70,9 +70,9 @@ CREATE TABLE tag(
   tagname TEXT NOT NULL CONSTRAINT tag_uk UNIQUE
 );
 
-CREATE TABLE Report(
-  reportId SERIAL PRIMARY KEY,
-  reporterId INTEGER REFERENCES users (userid) ON DELETE SET NULL ON UPDATE CASCADE,
+CREATE TABLE report(
+  reportid SERIAL PRIMARY KEY,
+  reporterid INTEGER REFERENCES users (userid) ON DELETE SET NULL ON UPDATE CASCADE,
   eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
   message TEXT NOT NULL,
   reportstatus BOOLEAN NOT NULL DEFAULT FALSE
@@ -80,11 +80,11 @@ CREATE TABLE Report(
 
 CREATE TABLE invitation(
   invitationid SERIAL PRIMARY KEY,
-  inviterId INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
-  inviteeId INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  inviterid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
+  inviteeid INTEGER NOT NULL REFERENCES users (userid) ON DELETE CASCADE ON UPDATE CASCADE,
   eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
   invitationstatus BOOLEAN,
-  CONSTRAINT invite_To_Self_ck CHECK (inviterId != inviteeId)
+  CONSTRAINT invite_To_Self_ck CHECK (inviterid != inviteeid)
 );
 
 CREATE TABLE poll(
@@ -123,7 +123,6 @@ CREATE TABLE notification(
   organizerrequestid INTEGER REFERENCES organizerrequest (organizerrequestid) ON DELETE CASCADE ON UPDATE CASCADE,
   invitationid INTEGER REFERENCES invitation (invitationid) ON DELETE CASCADE ON UPDATE CASCADE,
   pollid INTEGER REFERENCES poll (pollid) ON DELETE CASCADE ON UPDATE CASCADE,
-  is_read BOOLEAN DEFAULT false,
   notificationdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
   notificationtype notificationtype NOT NULL,
   notificationstatus BOOLEAN NOT NULL DEFAULT FALSE
@@ -137,14 +136,15 @@ CREATE TABLE vote(
 );
 
 CREATE TABLE polloption(
-  polloptionid SERIAL NOT NULL,
+  polloptionid SERIAL PRIMARY KEY,
+  pollid INTEGER REFERENCES poll (pollid) ON UPDATE CASCADE ON DELETE CASCADE,
   optioncontent TEXT NOT NULL
 );
 
 CREATE TABLE answer(
   userid INTEGER REFERENCES users (userid) ON UPDATE CASCADE ON DELETE CASCADE,
-  pollid INTEGER REFERENCES poll (pollid) ON UPDATE CASCADE ON DELETE CASCADE,
-  PRIMARY KEY(userid, pollid)
+  polloptionid INTEGER REFERENCES polloption (polloptionid) ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY(userid, polloptionid)
 );
 
 CREATE TABLE upload(
@@ -222,8 +222,6 @@ DROP FUNCTION IF EXISTS NewPoll;
 DROP TRIGGER IF EXISTS new_poll_notification ON poll;
 DROP FUNCTION IF EXISTS updateUserToOrg;
 DROP TRIGGER IF EXISTS update_user_to_organization ON organizerrequest;
-DROP FUNCTION IF EXISTS deleteUser;
-DROP TRIGGER IF EXISTS user_deleted ON users;
 DROP FUNCTION IF EXISTS eventCancelled;
 DROP TRIGGER IF EXISTS event_cancelled ON event;
 DROP FUNCTION IF EXISTS event_search_update;
@@ -236,10 +234,10 @@ DROP TRIGGER IF EXISTS user_search_update ON users;
 CREATE FUNCTION insert_attendee_invitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.invitationstatus AND NEW.inviteeId NOT IN (SELECT attendee.attendeeid FROM attendee
+    IF (NEW.invitationstatus AND NEW.inviteeid NOT IN (SELECT attendee.attendeeid FROM attendee
     WHERE attendee.eventid=NEW.eventid)) THEN
         INSERT INTO attendee(attendeeid,eventid)
-        VALUES (NEW.inviteeId,NEW.eventid);
+        VALUES (NEW.inviteeid,NEW.eventid);
     END IF;
     RETURN NULL;
 END
@@ -294,7 +292,7 @@ $BODY$
 BEGIN
     IF (NEW.invitationstatus) THEN
         INSERT INTO notification (receiverid,invitationid,notificationdate,notificationtype)
-        VALUES(NEW.inviterId,NEW.invitationid, DATE('now'),'InviteAccepted');
+        VALUES(NEW.inviterid,NEW.invitationid, DATE('now'),'InviteAccepted');
     END IF;
     RETURN NULL;
 END
@@ -312,7 +310,7 @@ $BODY$
 BEGIN
     IF (NEW.invitationstatus) THEN
       INSERT INTO notification (receiverid,invitationid,notificationdate,notificationtype)
-      VALUES(NEW.inviteeId, NEW.invitationid, DATE('now'),'InviteReceived');
+      VALUES(NEW.inviteeid, NEW.invitationid, DATE('now'),'InviteReceived');
     END IF;
     RETURN NULL;
 END
@@ -393,46 +391,6 @@ LANGUAGE plpgsql;
 CREATE TRIGGER update_user_to_organization
     AFTER UPDATE ON organizerrequest
     EXECUTE PROCEDURE updateUserToOrg();
-
-
-CREATE FUNCTION deleteUser() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    IF (NEW.accountstatus='Disabled') THEN
-        DELETE FROM Atendee
-        WHERE attendeeid = NEW.userid;
-        
-        DELETE FROM joinrequest
-        WHERE requesterid = NEW.userid AND requeststatus=NULL;
-
-        DELETE FROM organizerrequest
-        WHERE requesterid = NEW.userid AND requeststatus=NULL;
-
-        DELETE FROM notification
-        WHERE receiverid = NEW.userid;
-
-        UPDATE users 
-        SET 
-        username = CONCAT('Anonymous',userid),
-        name='Anonymous',
-        email=CONCAT('Deleted',userid),
-        password = 'Deleted',
-        userphoto = NULL,
-        usertypes = NULL
-        WHERE NEW.userid=users.userid;
-
-
-    END IF;
-    RETURN NULL;
-END
-$BODY$
-
-LANGUAGE plpgsql;
-
-
-CREATE TRIGGER user_deleted
-    AFTER UPDATE ON users
-    EXECUTE PROCEDURE deleteUser();
 
 
 CREATE FUNCTION eventCancelled() RETURNS TRIGGER AS
@@ -654,54 +612,54 @@ insert into tag (tagid, tagname) values (13, 'Cinema');
 insert into tag (tagid, tagname) values (14, 'Literatura');
 insert into tag (tagid, tagname) values (15, 'Museologia');
 
--- Report --
+-- report --
 
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (1, 1, 1, 'This event is not suitable for up students.', false);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (2, 3, 22, 'This event is abusive.', true);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (3, 2, 3, 'The organizer of this event was rude to me.', false);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (4, 3, 1, 'This is spam!', false);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (5, 1, 21, 'Wrong category', true);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (6, 1, 23, 'The event image is inappropriate...', true);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (7, 5, 28, 'Fraud', false);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (8, 3, 1, 'Should be tagged as adult content', true);
-insert into Report (reportId, reporterId, eventid, message, reportstatus) values (9, 6, 30, 'Should be tagged as adult content', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (1, 1, 1, 'This event is not suitable for up students.', false);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (2, 3, 22, 'This event is abusive.', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (3, 2, 3, 'The organizer of this event was rude to me.', false);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (4, 3, 1, 'This is spam!', false);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (5, 1, 21, 'Wrong category', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (6, 1, 23, 'The event image is inappropriate...', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (7, 5, 28, 'Fraud', false);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (8, 3, 1, 'Should be tagged as adult content', true);
+insert into report (reportid, reporterid, eventid, message, reportstatus) values (9, 6, 30, 'Should be tagged as adult content', true);
 
 --invitation --
 
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (4, 8, 1, null);
-insert into invitation (inviterId, inviteeId, eventid, invitationstatus) values (4, 7, 2, null);
-insert into invitation (inviterId, inviteeId, eventid, invitationstatus) values (7, 4, 3, null);
-insert into invitation (inviterId, inviteeId, eventid, invitationstatus) values (9, 3, 4, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (1, 2, 5, true);
-insert into invitation (inviterId, inviteeId, eventid, invitationstatus) values (1, 4, 6, true);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 22, 7, false);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 22, 8, true);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (4, 3, 8, false);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 8, 9, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (4, 8, 1, null);
+insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (4, 7, 2, null);
+insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (7, 4, 3, null);
+insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (9, 3, 4, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (1, 2, 5, true);
+insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (1, 4, 6, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 22, 7, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 22, 8, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (4, 3, 8, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 8, 9, false);
 
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 1, 2, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 3, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 1, 3, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 2, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 1, 5, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 8, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (2, 1, 2, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 4, null);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (4, 1, 4, false);
-insert into invitation ( inviterId, inviteeId, eventid, invitationstatus) values (3, 1, 1, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 2, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 3, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 3, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 2, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 5, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 8, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 2, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 4, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (4, 1, 4, false);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 1, false);
 
 -- poll --
 
-insert into poll (pollid, eventid, pollcontent) values (1, 4,'What topics interest you the most?');
-insert into poll (pollid, eventid, pollcontent) values (2, 30,'What day are you going to the event?');
-insert into poll (pollid, eventid, pollcontent) values (3, 19,'What are you most looking forward to during the event?');
-insert into poll (pollid, eventid, pollcontent) values (4, 26,'What place should we have our next event in?');
-insert into poll (pollid, eventid, pollcontent) values (5, 18,'Are you interested in a meet-up after the event for further discussion?');
-insert into poll (pollid, eventid, pollcontent) values (6, 6, 'Who are you going to the event with?');
-insert into poll (pollid, eventid, pollcontent) values (7, 5, 'Your reasons for attending this event:');
-insert into poll (pollid, eventid, pollcontent) values (8, 7, 'What made you decide to attend this event?');
-insert into poll (pollid, eventid, pollcontent) values (9, 27, 'Were you able to connect with all of the things you wanted to during the event?');
-insert into poll (pollid, eventid, pollcontent) values (10, 7, 'How useful will the topics covered be to you in your course?');
+insert into poll ( eventid, pollcontent) values ( 4,'What topics interest you the most?');
+insert into poll ( eventid, pollcontent) values ( 4,'What day are you going to the event?');
+insert into poll ( eventid, pollcontent) values ( 19,'What are you most looking forward to during the event?');
+insert into poll ( eventid, pollcontent) values ( 26,'What place should we have our next event in?');
+insert into poll ( eventid, pollcontent) values ( 18,'Are you interested in a meet-up after the event for further discussion?');
+insert into poll ( eventid, pollcontent) values ( 6, 'Who are you going to the event with?');
+insert into poll ( eventid, pollcontent) values ( 5, 'Your reasons for attending this event:');
+insert into poll ( eventid, pollcontent) values ( 7, 'What made you decide to attend this event?');
+insert into poll ( eventid, pollcontent) values ( 27, 'Were you able to connect with all of the things you wanted to during the event?');
+insert into poll ( eventid, pollcontent) values ( 7, 'How useful will the topics covered be to you in your course?');
 
 -- comment --
 
@@ -734,12 +692,17 @@ insert into joinrequest ( requesterid, eventid) values ( 1, 9);
 insert into organizerrequest ( requesterid, requeststatus) values ( 5, false);
 insert into organizerrequest ( requesterid, requeststatus) values ( 9, true);
 insert into organizerrequest ( requesterid, requeststatus) values ( 4, true);
+insert into organizerrequest ( requesterid, requeststatus) values (1, true);
 insert into organizerrequest ( requesterid) values (8);
 
 -- notification --
 
 insert into notification ( receiverid, eventid, notificationdate, notificationtype, notificationstatus) values (1, 5, CURRENT_TIMESTAMP, 'EventChange', false);
-insert into notification ( receiverid, joinrequestid, notificationdate, notificationtype, notificationstatus) values ( 1, 7, CURRENT_TIMESTAMP, 'JoinRequestReviewed', true);
+insert into notification ( receiverid, joinrequestid, notificationdate, notificationtype, notificationstatus) values ( 1, 1, CURRENT_TIMESTAMP, 'JoinRequestReviewed', false);
+insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values (1, 4, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', false);
+insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 1, 11, CURRENT_TIMESTAMP, 'InviteReceived', false);
+insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values (1, 6, CURRENT_TIMESTAMP, 'InviteAccepted', false);
+insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 1, 7, CURRENT_TIMESTAMP, 'NewPoll', false);
 insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values ( 8, 2, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 9, 9, CURRENT_TIMESTAMP, 'InviteReceived', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 4, 3, CURRENT_TIMESTAMP, 'InviteAccepted', false);
@@ -764,55 +727,19 @@ insert into vote (voterid, commentid, type) values (14, 9, false);
 insert into vote (voterid, commentid, type) values (15, 7, true);
 
 -- polloption --
-insert into polloption (polloptionid, optioncontent) values (1, 'Yes');
-insert into polloption (polloptionid, optioncontent) values (2, 'No');
-insert into polloption (polloptionid, optioncontent) values (3, 'Not at all useful');
-insert into polloption (polloptionid, optioncontent) values (4, 'Somewhat useful');
-insert into polloption (polloptionid, optioncontent) values (5, 'Useful');
-insert into polloption (polloptionid, optioncontent) values (6, 'Very useful');
-insert into polloption (polloptionid, optioncontent) values (7, 'Friend(s)');
-insert into polloption (polloptionid, optioncontent) values (8, 'Family');
-insert into polloption (polloptionid, optioncontent) values (9, '10');
-insert into polloption (polloptionid, optioncontent) values (10, '11');
-insert into polloption (polloptionid, optioncontent) values (11, '12');
-insert into polloption (polloptionid, optioncontent) values (12, '13');
-insert into polloption (polloptionid, optioncontent) values (13, '14');
-insert into polloption (polloptionid, optioncontent) values (14, 'Other');
-insert into polloption (polloptionid, optioncontent) values (15, 'Have fun with friends');
-insert into polloption (polloptionid, optioncontent) values (16, 'Meet new people');
-insert into polloption (polloptionid, optioncontent) values (17, 'Can be useful for university subjects');
-insert into polloption (polloptionid, optioncontent) values (18, 'FEUP');
-insert into polloption (polloptionid, optioncontent) values (19, 'FCUP');
-insert into polloption (polloptionid, optioncontent) values (20, 'FCUL');
-insert into polloption (polloptionid, optioncontent) values (21, 'Computing in the Modern World');
-insert into polloption (polloptionid, optioncontent) values (22, 'UNIX/LINUX Fundamentals');
-insert into polloption (polloptionid, optioncontent) values (23, 'Introduction to Software Engineering.');
-insert into polloption (polloptionid, optioncontent) values (24, 'Operating Systems');
-insert into polloption (polloptionid, optioncontent) values (25, 'FMUP');
-insert into polloption (polloptionid, optioncontent) values (26, 'Maybe');
-insert into polloption (polloptionid, optioncontent) values (27, 'ICABAS');
-insert into polloption (polloptionid, optioncontent) values (28, 'None of the options');
-insert into polloption (polloptionid, optioncontent) values (29, 'Some');
-insert into polloption (polloptionid, optioncontent) values (30, 'All');
-
+insert into polloption ( optioncontent, pollid) values ('Yes',1);
+insert into polloption ( optioncontent, pollid) values ('No',1);
+insert into polloption ( optioncontent, pollid) values ('Not at all useful',1);
+insert into polloption ( optioncontent, pollid) values ('Somewhat useful',2);
+insert into polloption ( optioncontent, pollid) values ('Useful',2);
+insert into polloption ( optioncontent, pollid) values ('Very useful',2);
 
 -- answer --                            voteType??
 
-insert into answer (userid, pollid) values (9, 2);
-insert into answer (userid, pollid) values (7, 2);
-insert into answer (userid, pollid) values (2, 3);
-insert into answer (userid, pollid) values (4, 1);
-insert into answer (userid, pollid) values (5, 9);
-insert into answer (userid, pollid) values (4, 6);
-insert into answer (userid, pollid) values (2, 1);
-insert into answer (userid, pollid) values (8, 10);
-insert into answer (userid, pollid) values (1, 5);
-insert into answer (userid, pollid) values (2, 7);
-insert into answer (userid, pollid) values (1, 9);
-insert into answer (userid, pollid) values (1, 2);
-insert into answer (userid, pollid) values (9, 8);
-insert into answer (userid, pollid) values (2, 4);
-insert into answer (userid, pollid) values (3, 3);
+insert into answer (userid, polloptionid) values (1, 2);
+insert into answer (userid, polloptionid) values (7, 2);
+insert into answer (userid, polloptionid) values (2, 3);
+insert into answer (userid, polloptionid) values (4, 1);
 
 -- upload --
 

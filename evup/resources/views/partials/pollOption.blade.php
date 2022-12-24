@@ -1,0 +1,1 @@
+<input id="Answer{{$answer->polloptionid}}" type="radio"> {{$answer->optioncontent}} -> {{$answer->nanswers()}} votes <br>

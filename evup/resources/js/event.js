@@ -1,3 +1,12 @@
+
+const voteOption = (optionid,pollid) => {
+    sendAjaxRequest('post', `event/${optionid}/answerpoll`, { 'optionid': event_id }, voteOptionHandler(optionid,pollid));
+}
+
+function voteOptionHandler(optionid,pollid){
+    console.log("olá")
+}
+
 const leaveEvent = (eventid) => {
     sendAjaxRequest('post', `myEvents/${eventid}`, { 'eventid': eventid }, leaveEventHandler(eventid));
 }

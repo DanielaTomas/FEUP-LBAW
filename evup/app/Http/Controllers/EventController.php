@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Event;
+use App\Models\PollOption;
 use App\Models\User;
 
 class EventController extends Controller
@@ -39,9 +40,10 @@ class EventController extends Controller
       return abort(404, 'Event not found');
 
     $user = User::find(Auth::id());
+    $polls = $event->polls()->get();
     //$this->authorize('show',$event);
     return view('pages.event',[
-      'event'=>$event, 'user'=>$user
+      'event'=>$event, 'user'=>$user,'polls'=>$polls
     ]);
   }
 
@@ -291,4 +293,14 @@ class EventController extends Controller
     return redirect("/event/$event->eventid");
   }
 
+  public function answerpoll(int $pollid){
+    $poll = PollOption::Find($pollid);
+    $user = User::find(Auth::id());
+    $poll->attach($user);
+
+    return response()->json([
+      'status' => 'OK',
+      'msg' => 'Successfully added answer '
+  ], 200);
+  }
 }

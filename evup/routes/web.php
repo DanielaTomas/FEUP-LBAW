@@ -92,7 +92,7 @@ Route::post('event/{id}/create', 'CommentController@create')->where(['id' => '[0
 Route::post('event/{id}/editComment/{commentid}/update', 'CommentController@update')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('update_comment');
 Route::post('event/{id}/editComment/{commentid}', 'CommentController@edit')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('edit_comment');
 Route::post('api/requestToJoin', 'UserController@requestToJoin');
-
+Route::get('event/{id}/answerpoll','EventController@answerpoll')->where(['id' => '[0-9]+'])->name('answerpoll');
 
 //Filter
 Route::post('api/filter_tag', 'HomeController@filterTag');
