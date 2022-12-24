@@ -1654,6 +1654,9 @@ select {
 .self-center {
   align-self: center;
 }
+.self-start {
+  align-self: flex-start;
+}
 .overflow-hidden {
   overflow: hidden;
 }
@@ -2107,6 +2110,14 @@ select {
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+.text-indigo-300 {
+  --tw-text-opacity: 1;
+  color: rgb(121 134 203 / var(--tw-text-opacity));
+}
+.text-indigo-600 {
+  --tw-text-opacity: 1;
+  color: rgb(88 80 236 / var(--tw-text-opacity));
 }
 .text-indigo-500 {
   --tw-text-opacity: 1;
@@ -3010,6 +3021,31 @@ body {
   }
 }
   
+/* Notification Panel */
+.notification-panel
+{
+  overflow-y: scroll;
+  height: 45vh;
+  
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.notification-panel::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+.notification-panel-empty
+{
+  overflow-y: auto;
+  height: auto;
+}
+  
+.notification-icon 
+{
+  position: relative;
+  z-index: 1;
+}
 
   
 
