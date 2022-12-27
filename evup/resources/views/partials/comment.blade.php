@@ -5,7 +5,7 @@
                 <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
                         class="mr-2 w-6 h-6 rounded-full" src="{{ $comment->author()->first()->userphoto }}">
                     {{ $comment->author()->first()->username }}</p>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mr-4">{{ $comment->commentdate }}</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mr-4">{{ $comment->time_diff() }}</p>
             @auth
                 @if (Auth::id() == $comment->authorid || Auth::user()->usertype == "Admin")
                 <div id="deleteButton-{{ $comment->commentid }}">   
@@ -83,7 +83,7 @@
                 <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
                         class="mr-2 w-6 h-6 rounded-full" src="{{ $reply->author()->first()->userphoto }}">
                     {{ $reply->author()->first()->username }}</p>
-                <p class="text-sm text-gray-600 dark:text-gray-400">{{ $reply->commentdate }}</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">{{ $reply->time_diff() }}</p>
             </div>
 
         </div>

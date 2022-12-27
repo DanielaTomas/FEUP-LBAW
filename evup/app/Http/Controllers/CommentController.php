@@ -180,40 +180,5 @@ class CommentController extends Controller
       'id' => $id,
     ], 200);
   }
-
-  private function formatTimeDiff($diff)
-    {
-        $res = $diff->format('%y years ago');
-        if ($res[0] === '1')
-            $res = $diff->format('%y year ago');
-        if ($res[0] > '0') return $res;
-
-        $res = $diff->format('%m months ago');
-        if ($res[0] === '1')
-            $res = $diff->format('%m month ago');
-        if ($res[0] > '0') return $res;
-
-        $res = $diff->format('%d days ago');
-        if ($res[0] === '1')
-            $res = $diff->format('%d day ago');
-        if ($res[0] > '0') return $res;
-
-        $res = $diff->format('%h hours ago');
-        if ($res[0] === '1')
-            $res = $diff->format('%h hour ago');
-        if ($res[0] > '0') return $res;
-
-        $res = $diff->format('%i minutes ago');
-        if ($res[0] === '1')
-            $res = $diff->format('%i minute ago');
-        if ($res[0] > '0') return $res;
-
-        $res = $diff->format('%s seconds ago');
-        if ($res[0] === '1')
-            $res = $diff->format('%s second ago');
-        if ($res[0] > '0') return $res;
-
-        return "just now";
-    }
-
+  
 }
