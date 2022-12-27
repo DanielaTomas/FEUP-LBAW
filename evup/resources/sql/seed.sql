@@ -104,7 +104,7 @@ CREATE TABLE comment(
   eventid INTEGER NOT NULL REFERENCES event (eventid) ON UPDATE CASCADE,
   parentId INTEGER REFERENCES comment (commentid) ON DELETE CASCADE ON UPDATE CASCADE,
   commentcontent TEXT NOT NULL,
-  commentdate DATE NOT NULL
+  commentdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE joinrequest(

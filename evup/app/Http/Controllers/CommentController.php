@@ -14,12 +14,12 @@ use App\Models\User;
 class CommentController extends Controller
 {
 
-   public function createComment(Request $request, int $id, int $commentid = null)
+   public function createComment(Request $request, int $eventid, int $parentid = null)
    {
 
-    $event = Event::find($id);
+    $event = Event::find($eventid);
     if (is_null($event))
-        return redirect()->back()->withErrors(['event' => 'Event not found, id: ' . $id]);
+      return abort(404, 'Event not found');
 
     $user = User::find(Auth::id());
     if (is_null($user))
@@ -34,26 +34,31 @@ class CommentController extends Controller
         ]
       );
       
-      if ($validator->fails()) {
-        $errors = [];
-        foreach ($validator->errors()->messages() as $key => $value) {
-            $errors[$key] = is_array($value) ? implode(',', $value) : $value;
-        }
-        return redirect()->back()->withInput()->withErrors($errors);
-     }
+      if ( $validator->fails() ) {
+        return response()->json([
+            'status' => 'Bad Request',
+            'msg' => 'Failed to create comment. Bad request',
+            'errors' => $validator->errors(),
+        ], 400);
+    }
   
       $comment = new Comment;
       $comment->authorid = Auth::id();
-      $comment->eventid = $id;
-      if($commentid != NULL) {
-        $comment->parentid = $commentid;
+      $comment->eventid = $eventid;
+      if($parentid != NULL) {
+        $parent = Comment::find($parentid);
+        if (is_null($parent))
+          return abort(404, 'Parent Comment not found');
+        else
+          $comment->parentid = $parentid;
       }
-      //$comment->commentcontent = $request->input('commentcontent');
       $comment->commentcontent = $request->commentcontent;
-      $comment->commentdate = date("Y-m-d");
       $comment->save();
   
-      return redirect()->route('show_event',[$event->eventid]);
+      return response()->json([
+        'status' => 'OK',
+        'msg' => 'Added comment successfully ',
+      ], 200);
    }
  
 
@@ -61,7 +66,7 @@ class CommentController extends Controller
   {
     $comment = Comment::find($commentid);
     if (is_null($comment))
-    return abort(404, 'Comment not found');
+      return abort(404, 'Comment not found');
 
     $event = Event::find($id);
     if (is_null($event))
@@ -175,5 +180,40 @@ class CommentController extends Controller
       'id' => $id,
     ], 200);
   }
+
+  private function formatTimeDiff($diff)
+    {
+        $res = $diff->format('%y years ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%y year ago');
+        if ($res[0] > '0') return $res;
+
+        $res = $diff->format('%m months ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%m month ago');
+        if ($res[0] > '0') return $res;
+
+        $res = $diff->format('%d days ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%d day ago');
+        if ($res[0] > '0') return $res;
+
+        $res = $diff->format('%h hours ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%h hour ago');
+        if ($res[0] > '0') return $res;
+
+        $res = $diff->format('%i minutes ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%i minute ago');
+        if ($res[0] > '0') return $res;
+
+        $res = $diff->format('%s seconds ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%s second ago');
+        if ($res[0] > '0') return $res;
+
+        return "just now";
+    }
 
 }

@@ -1,6 +1,33 @@
-const deleteComment = (id,commentid) => {
-    const url = '/event/'+ id + '/delete/' + commentid;
-    sendAjaxRequest('post', url, { 'eventid': id, 'commentid' : commentid }, deleteCommentHandler(commentid));
+const createNewComment = (eventid) => {
+    const url = '/event/'+ eventid + '/createComment/';
+    const body = select('#commentTextArea').value;
+    if (!body) return;
+
+    sendAjaxRequest('post', url, { 'commentcontent': body, 'eventid': eventid }, newCommentHandler());
+}
+
+
+const editComment = (commentId, editBox) => {
+    const body = select(`#edit_textarea_${commentId}`).value;
+    if (!body) return;
+
+    sendAjaxRequest('PUT', `/comment/${commentId}`, { body }, editCommentHandler(commentId, editBox));
+}
+
+const newCommentHandler = () => function () {
+    const json = JSON.parse(this.responseText);
+
+    if (this.status != 200) {
+        createAlert('error',json.errors);
+    }
+
+    createAlert('success','You have added a new comment successfully.');
+}
+
+
+const deleteComment = (eventid,commentid) => {
+    const url = '/event/'+ eventid + '/delete/' + commentid;
+    sendAjaxRequest('post', url, { 'eventid': eventid, 'commentid' : commentid }, deleteCommentHandler(commentid));
 }
 
 function deleteCommentHandler(commentid) {
