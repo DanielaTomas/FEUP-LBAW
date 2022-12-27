@@ -3,11 +3,11 @@
 @section('title', "- Public Profile")
 
 @section('content')
-    <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
+<article class="rounded-t-3xl">
         <div class="px-6 ">
             <div class="text-center mt-2">
                 <div class="mr-2">
-                    <img class="mx-auto w-12 h-12 rounded-full" src="{{ $user->userphoto }}"/>
+                    <img class="mx-auto w-12 h-12 rounded-full" src="{{ asset('storage/images/image-'.$user->userphoto.'.png')}}" />
                 </div>
                 <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">
                     {{ $user->name }}
@@ -26,7 +26,6 @@
                 </div>
             </div>
         <div>
-    </div>
     <article>
         <section id="myEventsHeader" class="m-4 text-center">
             <h2 class="text-2xl font-semibold leading-tight">My Events</h2>
@@ -35,5 +34,6 @@
             @each('partials.eventCard', $events, 'event')
         </section>
     </article>
+</article>
 
 @endsection
