@@ -4,9 +4,9 @@
             <div class="mr-2">
                 <img class="w-6 h-6 rounded-full" 
                 @if($user->accountstatus !== 'Disabled')
-                    src="{{$user->userphoto}}"
+                    src="{{ asset('storage/images/image-'.$user->userphoto.'.png')}}"
                 @else
-                    src="storage/avatar_placeholder.png"
+                    src="{{ asset('storage/images/image-1.png')}}"
                 @endif
                 />
             </div>

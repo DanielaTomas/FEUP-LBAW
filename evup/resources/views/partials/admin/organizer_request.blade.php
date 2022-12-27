@@ -2,7 +2,7 @@
     <td class="py-3 px-6 text-left">
         <div class="flex items-center">
             <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" src="{{$request['requester']->userphoto}}"/>
+                <img class="w-6 h-6 rounded-full" src="{{ asset('storage/images/image-'.$report['reporter']->userphoto.'.png')}}"/>
             </div>
             <p>{{$request['requester']->name}}</p>
         </div>
