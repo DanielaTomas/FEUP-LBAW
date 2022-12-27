@@ -25,6 +25,12 @@ class CommentController extends Controller
     if (is_null($user))
         return abort(404, 'User not found');
 
+    if($parentid != NULL) {
+      $parent = Comment::find($parentid);
+      if (is_null($parent))
+        return abort(404, 'Parent Comment not found');
+    }
+
      //$this->authorize('create', Comment::class);
 
      $validator = Validator::make(
@@ -45,21 +51,26 @@ class CommentController extends Controller
       $comment = new Comment;
       $comment->authorid = Auth::id();
       $comment->eventid = $eventid;
-      if($parentid != NULL) {
-        $parent = Comment::find($parentid);
-        if (is_null($parent))
-          return abort(404, 'Parent Comment not found');
-        else
+      if($parentid != NULL)
           $comment->parentid = $parentid;
-      }
       $comment->commentcontent = $request->commentcontent;
       $comment->save();
   
+      if($parentid != NULL) {
+        return response()->json([
+          'status' => 'OK',
+          'msg' => 'Successfully created reply',
+          'html' => view('partials.reply', ['comment' => $comment,])->render(),
+        ], 200);
+      }
+      
       return response()->json([
         'status' => 'OK',
-        'msg' => 'Added comment successfully ',
+        'msg' => 'Successfully created comment',
+        'html' => view('partials.comment', ['comment' => $comment,])->render(),
       ], 200);
-   }
+   
+  }
  
 
   public function deleteComment($id, $commentid)
@@ -180,5 +191,5 @@ class CommentController extends Controller
       'id' => $id,
     ], 200);
   }
-  
+
 }

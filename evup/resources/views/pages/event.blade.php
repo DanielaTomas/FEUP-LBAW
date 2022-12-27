@@ -123,11 +123,9 @@
                             </div>
                         <?php } ?>
                         @endauth
-                        @each(
-                        'partials.comment',
-                        $event->comments()->orderBy('commentdate','desc')->get(),
-                        'comment',
-                        )
+                        <section id="comments">
+                            @each('partials.comment', $event->comments()->orderBy('commentdate','desc')->get(), 'comment',)
+                        </section>
                     </div>
                 </section>
 

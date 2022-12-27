@@ -3,9 +3,16 @@ const createNewComment = (eventid) => {
     const body = select('#commentTextArea').value;
     if (!body) return;
 
-    sendAjaxRequest('post', url, { 'commentcontent': body, 'eventid': eventid }, newCommentHandler());
+    sendAjaxRequest('post', url, { 'commentcontent': body, 'eventid': eventid }, newCommentHandler(false));
 }
 
+const createNewReply = (parent, eventid, parentid) => {
+    const url = '/event/'+ eventid + '/createComment/' + parentid;
+    const body = select(`#replyTextArea-${parentid}`).value;
+    if (!body) return;
+
+    sendAjaxRequest('post', url, { 'commentcontent': body, 'eventid': eventid, 'parentid': parentid }, newCommentHandler(true, parent, 'afterend', `#replyTextArea-${parentid}`));
+}
 
 const editComment = (commentId, editBox) => {
     const body = select(`#edit_textarea_${commentId}`).value;
@@ -14,14 +21,21 @@ const editComment = (commentId, editBox) => {
     sendAjaxRequest('PUT', `/comment/${commentId}`, { body }, editCommentHandler(commentId, editBox));
 }
 
-const newCommentHandler = () => function () {
+const newCommentHandler = (reply, parent = select('#comments'), position = 'afterbegin', textarea = '#commentTextArea') => function () {
     const json = JSON.parse(this.responseText);
 
     if (this.status != 200) {
         createAlert('error',json.errors);
     }
+    if (reply) {
+        createAlert('success','You have added a new reply successfully.');
+    }
+    else {
+        createAlert('success','You have added a new comment successfully.');
+    }
+    parent.insertAdjacentHTML(position, json.html);
+    select(textarea).value = '';
 
-    createAlert('success','You have added a new comment successfully.');
 }
 
 
