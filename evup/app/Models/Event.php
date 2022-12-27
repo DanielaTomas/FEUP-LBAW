@@ -73,18 +73,18 @@ class Event extends Model
   {
     $startmonth = date('M', strtotime( $this['startdate'] ) );
     $startday = date('d', strtotime( $this['startdate'] ) );
-    $starthour = date('H:i', strtotime( $this['startdate'] ) );
+    $startyear = date('Y', strtotime( $this['startdate'] ) );
     $endmonth = date('M', strtotime( $this['enddate'] ) );
     $endday = date('d', strtotime( $this['enddate'] ) );
-    $endhour = date('H:i', strtotime( $this['enddate'] ) );
+    $endyear = date('Y', strtotime( $this['enddate'] ) );
 
     return [
       'startmonth' => $startmonth,
       'startday' => $startday,
-      'starthour' => $starthour,
+      'startyear' => $startyear,
       'endmonth' => $endmonth,
       'endday' => $endday,
-      'endhour' => $endhour,
+      'endyear' => $endyear,
     ];
   }
 }
