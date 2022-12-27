@@ -66,7 +66,7 @@
                         @if (!$event->eventcanceled)
                         @if (Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() != 0)
                         <section>
-                            <button id="leaveEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-le{{ $event->eventid }}" class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full">Leave
+                            <button id="leaveEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-le{{ $event->eventid }}" class="items-center font-bold px-3 py-1 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 text-white rounded-full">Leave
                                 Event</button>
                         </section>
                         @endif
@@ -118,7 +118,7 @@
                                             <input class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-500 focus:outline-none focus:bg-white" id="commentcontent" type="text" name="commentcontent" placeholder="Type Your Comment" required>
                                         </div>
                                         <div class="w-full md:w-full flex items-start md:w-full px-3">
-                                            <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full" type="submit">Post Comment
+                                            <button class="items-center font-bold px-3 py-1 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 text-white rounded-full" type="submit">Post Comment
                                             </button>
                                         </div>
                                     </div>

@@ -19,8 +19,8 @@ const like = (id,commentid,voted) => {
         sendAjaxRequest('post', url, { 'eventid': id, 'commentid' : commentid }, likeHandler(commentid));
     }
     else {
-        createAlert('warning','You cannot vote on your own comments or you already voted on this comment');
-        alert('You cannot vote on your own comments or you already voted on this comment');
+        createAlert('warning','You already voted on this comment');
+        alert('You already voted on this comment');
     }
 }
 
@@ -36,8 +36,8 @@ const dislike = (id,commentid, voted) => {
         sendAjaxRequest('post', url, { 'eventid': id, 'commentid' : commentid }, dislikeHandler(commentid));
     }
     else {
-        createAlert('warning','You cannot vote on your own comments or you already voted on this comment');
-        alert('You cannot vote on your own comments or you already voted on this comment');
+        createAlert('warning','You already voted on this comment');
+        alert('You already voted on this comment');
     }
 }
 

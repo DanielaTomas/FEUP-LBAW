@@ -1211,6 +1211,12 @@ select {
 .m-3 {
   margin: 0.75rem;
 }
+.m-2 {
+  margin: 0.5rem;
+}
+.m-1 {
+  margin: 0.25rem;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -2417,6 +2423,16 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
+
+.hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(4 108 78 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-red-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(200 30 30 / var(--tw-bg-opacity));
+}
   
   .hover\:text-gray-300:hover {
   --tw-text-opacity: 1;
@@ -3020,7 +3036,30 @@ body {
     padding-right: 3rem;
   }
 }
-  
+
+
+/* SVGs */
+.fill-red {
+  fill: red;
+}
+
+.fill-green {
+  fill: green;
+}
+
+.fill-gray-900 {
+  fill: #111827;
+}
+
+.hover\:fill-red:hover {
+  fill: red;
+}
+
+.hover\:fill-green:hover {
+  fill: green;
+}
+
+
 /* Notification Panel */
 .notification-panel
 {
