@@ -25,9 +25,6 @@
             </div>
         </div>
     </div>
- <?php } ?>
-
- <?php if ($request['request']->requeststatus === NULL) { ?>
     <!-- Deny Organizer Request main modal -->
     <div id="staticModal-denyorg{{$request['request'] -> organizerrequestid}}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 p-4 w-full md:inset-0 h-modal md:h-full">
         <div class="relative w-full max-w-2xl h-full md:h-auto">

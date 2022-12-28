@@ -1,10 +1,10 @@
-current = localStorage.getItem("a-currtab")
-if (!current) localStorage.setItem("a-currtab", "tab-users") // tab-users --> Users; tab-reports --> Reports; tab-requests --> Organizer Requests
-if (window.location.pathname.includes('/admin'))
-  setAdminAtiveTab(localStorage.getItem("a-currtab"))
+current = localStorage.getItem("o-currtab")
+if (!current) localStorage.setItem("o-currtab", "tab-details") // tab-users --> Users; tab-reports --> Reports; tab-requests --> Organizer Requests
+if (window.location.pathname.includes('/dashboard'))
+    setEventDashboardAtiveTab(localStorage.getItem("o-currtab"))
 
-function setAdminAtiveTab(tabID){
-  element = document.querySelector('#a-' + tabID)
+function setEventDashboardAtiveTab(tabID){
+  element = document.querySelector('#o-' + tabID)
   ulElement = document.getElementById('tabs-ul')
   aElements = ulElement.querySelectorAll("li > a")
   tabContents = document.getElementById("tabs-id").querySelectorAll(".tab-content > div")
@@ -23,5 +23,5 @@ function setAdminAtiveTab(tabID){
   element.classList.add("bg-gray-900")
   document.getElementById(tabID).classList.remove("hidden")
   document.getElementById(tabID).classList.add("block")
-  localStorage.setItem("a-currtab", tabID)
+  localStorage.setItem("o-currtab", tabID)
 }

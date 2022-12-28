@@ -71,6 +71,9 @@ Route::put('admin/organizer_requests/{id}/accept', 'AdminController@acceptReques
 Route::get('myEvents', 'EventController@userEvents')->name('myEvents');
 Route::get('api/myEvents/createEvent', 'EventController@showForms')->name('create_events');
 Route::post('myEvents/createEvent', 'EventController@createEvent')->name('createEvent')->where(['id' => '[0-9]+']);
+Route::get('event/{id}/dashboard', 'EventController@show_dashboard')->where(['id' => '[0-9]+'])->name('event_dashboard');
+Route::put('event/{eventid}/join_requests/{id}/deny', 'EventController@denyJoinRequest')->where(['eventid' => '[0-9]+', 'id' => '[0-9]+'])->name('join_request_deny');
+Route::put('event/{eventid}/join_requests/{id}/accept', 'EventController@acceptJoinRequest')->where(['eventid' => '[0-9]+', 'id' => '[0-9]+'])->name('join_request_accept');
 Route::get('event/{id}/manage', 'EventController@manageEvent')->where(['id' => '[0-9]+'])->name('manage_event');
 Route::put('event/{id}/public', 'EventController@setEventVisibilityPublic')->where(['id' => '[0-9]+']);
 Route::put('event/{id}/private', 'EventController@setEventVisibilityPrivate')->where(['id' => '[0-9]+']);
