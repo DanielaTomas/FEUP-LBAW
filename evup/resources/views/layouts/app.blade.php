@@ -32,6 +32,7 @@
     <script type="text/javascript" src={{ asset('js/admin.organizerRequest.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/filter.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/notifications.js') }} defer></script>
+    <script type="text/javascript" src={{ asset('js/flowbite.modal.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/myEvents.js') }} defer></script>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
     <script src="https://kit.fontawesome.com/e93bc86ff0.js" crossorigin="anonymous"></script>

@@ -6,6 +6,8 @@ function getOrganizingEventsHandler() {
     const events = JSON.parse(this.responseText)
     const area = document.getElementById("myeventsarea")
     area.innerHTML = events
+
+    initModal(selectors)
 }
 
 const getMyEvents = (hasPassed) => {
@@ -16,4 +18,6 @@ function getMyEventsHandler() {
     const events = JSON.parse(this.responseText)
     const area = document.getElementById("myeventsarea")
     area.innerHTML = events
+
+    initModal(selectors)
 }
