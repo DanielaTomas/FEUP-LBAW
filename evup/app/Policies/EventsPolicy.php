@@ -33,16 +33,6 @@ class EventsPolicy
         return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
     }
 
-    public function denyJoinRequest(User $organizer, Event $event)
-    {
-        return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
-    }
-
-    public function acceptJoinRequest(User $organizer, Event $event)
-    {
-        return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
-    }
-
     public function edit(User $organizer, Event $event)
     {
         return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
