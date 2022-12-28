@@ -56,19 +56,23 @@
 
                     <div class="flex flex-row justify-around">
                         @if (Auth::check())
-                            @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() == 0)
+                            @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && !Auth::user()->isAttending($event->eventid))
                                 <!-- Request to Join Event Modal toggle -->
-                                <button id="requestToJoinButton{{ $event->eventid }}" data-modal-toggle="staticModal-jr{{ $event->eventid }}" class="items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Request to join</button>
+                                <button id="requestToJoinButton{{ $event->eventid }}" data-modal-toggle="staticModal-jr{{ $event->eventid }}" title="Request to join this event" class="items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Request to join</button>
                                 @include('partials.join_request_modal', ['event' => $event])
                             @endif
                             @if (!$event->eventcanceled)
-                                @if (Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() != 0)
-                                    <!-- Leave Event Modal toggle -->
-                                    <button id="leaveEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-le{{ $event->eventid }}" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
-                                    @include('partials.leave_event_modal', ['event' => $event])
+                                @if (Auth::user()->isAttending($event->eventid))
+                                    @if ($event->organizer()->first()->userid !== $user->userid)
+                                        <!-- Leave Event Modal toggle -->
+                                        <button id="leaveEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-le{{ $event->eventid }}" title="Leave this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
+                                        @include('partials.leave_event_modal', ['event' => $event])
+                                    @else
+                                        <button id="leaveEventButton{{ $event->eventid }}" disabled title="You cannot leave your own event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-600 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
+                                    @endif
                                 @endif
                                 <!-- Report Event Modal toggle -->
-                                <button id="reportEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Report Event</button>
+                                <button id="reportEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" title="Report this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Report Event</button>
                                 @include('partials.report_event_modal', ['event' => $event])
                             @endif
                         @endif
@@ -77,7 +81,7 @@
                 </div>
 
                 @if (!$event->eventcanceled)
-                @if (Auth::check())
+                @auth
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Invite user</h2>
                 </div>
@@ -89,7 +93,7 @@
                     </div>
                     <div id="userResults" class="flex  flex-col gap-5 max-w-xl"> </div>
                 </div>
-                @endif
+                @endauth
                 @endif
             </section>
 
@@ -98,15 +102,13 @@
                 <p class="py-4"> {{ $event->description }} </p>
                 <div class="mb-4"> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
 
+                @auth
+                @if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid))
                 <section>
                     <div class=" mx-auto ">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Comments</h2>
                         </div>
-                        @auth
-                        <?php
-                        if ($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) {
-                        ?>
                             <div class="flex mx-auto items-center justify-center max-w-lg">
                                 @if (!$event->eventcanceled)
                                     <div class="flex flex-wrap -mx-3 mb-6">
@@ -120,18 +122,15 @@
                                     </div>
                                 @endif
                             </div>
-                        <?php } ?>
-                        @endauth
                         <section id="comments">
                             @each('partials.comment', $event->comments()->orderBy('commentdate','desc')->get(), 'comment',)
                         </section>
                     </div>
                 </section>
-
+                @endif
+                @endauth
             </section>
         </section>
 </article>
-
-@each('partials.del_comment_modal', $event->comments()->orderBy('commentdate','desc')->get(), 'comment')
 
 @endsection

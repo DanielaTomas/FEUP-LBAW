@@ -74,4 +74,6 @@
 
 @endif
 
+@include('partials.del_comment_modal', ['comment' => $comment])
+
 @each('partials.reply', $comment->child_comments()->get(), 'comment',)

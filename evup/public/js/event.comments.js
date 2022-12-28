@@ -35,7 +35,9 @@ const newCommentHandler = (reply, parent = select('#comments'), position = 'afte
     }
     parent.insertAdjacentHTML(position, json.html);
     select(textarea).value = '';
-
+    
+    /* Rerun flowbite's modal code the event listeners are added again*/
+    initModal(selectors)
 }
 
 
