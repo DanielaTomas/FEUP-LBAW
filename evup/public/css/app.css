@@ -2349,6 +2349,10 @@ body {
     gap: 2em;
     flex-wrap: wrap;
   }
+
+  .whitespace-pre-wrap {
+    white-space: pre-wrap;
+  }
   
   .placeholder\:italic::-moz-placeholder {
   font-style: italic;
