@@ -5,23 +5,25 @@ if (window.location.pathname.includes('/event/')) {
     if (window.location.pathname.includes('/adduser'))
         setgoBackBtn()
     
-    if (window.location.pathname.includes('/attendees'))
-        setgoAddUserBtn()
+    if (window.location.pathname.includes('/attendees')) {
+        setAddUserBtn()
         setgoBackToEventBtn()
+    }
+
+    if (window.location.pathname.includes('/dashboard')) 
+        setAddUserBtn()
+
 }
 
 function setgoBackBtn() {
-        select('#goback').href = 'http://' + window.location.host + '/event/' + eventid + '/attendees'
+    select('#goback').href = 'http://' + window.location.host + '/event/' + eventid + '/dashboard'
 }
 
 function setgoBackToEventBtn() {
-    if (select('#goback-u'))
-        select('#goback-u').href = 'http://' + window.location.host + '/event/' + eventid
-    else
-        return
+    select('#goback').href = 'http://' + window.location.host + '/event/' + eventid
 }
 
-function setgoAddUserBtn() {
+function setAddUserBtn() {
     if (select('#adduser'))
         select('#adduser').href = select('#adduser').href.replace('id', eventid)
     else

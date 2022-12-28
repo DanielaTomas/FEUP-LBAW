@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Event;
+use App\Models\JoinRequest;
 use App\Models\User;
 
 class EventController extends Controller
@@ -46,12 +47,160 @@ class EventController extends Controller
       return view('pages.event', [
         'event' => $event
       ]);
-    } else if ($user->isAttendee($event) || $event->public)
+    } else if ($user->isAttendee($event) || $event->public || $user->userid == $event->userid)
       return view('pages.event', [
         'event' => $event, 'user' => $user
       ]);
     else
       return abort(403, 'THIS ACTION IS UNAUTHORIZED.');
+  }
+
+  /**
+     * Display the Administration Panel
+     *
+     * @return View
+     */
+    public function show_dashboard(int $eventid)
+    {
+      $organizer = User::find(Auth::id());
+      if (is_null($organizer))
+          return abort(404, 'User not found');
+
+      $event = Event::find($eventid);
+      if (is_null($event))
+          return abort(404, 'Event not found');
+
+      $this->authorize('dashboard', $event);
+
+      $attendees = DB::table('attendee')
+      ->select('attendeeid', 'eventid')
+      ->where('eventid', $eventid)
+      ->get()
+      ->map(function ($attendee) {
+
+        $user = User::find($attendee->attendeeid);
+        $event = Event::find($attendee->eventid);
+
+        return [
+          'user' => $user,
+          'event' => $event,
+        ];
+      });
+
+      $join_requests = JoinRequest::orderByDesc('joinrequestid')->get()
+      ->where('eventid', '=', $eventid)
+      ->map(function ($request) {
+
+          $requester = User::find($request->requesterid);
+
+          return [
+              'request' => $request,
+              'requester' => $requester,
+          ];
+      });
+
+      return view('pages.event.dashboard',[
+          'organizer' => $organizer,
+          'event' => $event,
+          'attendees' => $attendees,
+          'requests' => $join_requests,
+      ]);
+  }
+
+
+  public function denyJoinRequest(int $eventid, int $id)
+  {
+      $organizer = User::find(Auth::id());
+      if (is_null($organizer))
+        return response()->json([
+          'status' => 'Not Found',
+          'msg' => 'User not found, id: '.Auth::id(),
+          'errors' => ['user' => 'User not found, id: '.Auth::id()]
+        ], 404);
+      $event = Event::find($eventid);
+      if (is_null($event))
+        return response()->json([
+          'status' => 'Not Found',
+          'msg' => 'Event not found, id: '.$eventid,
+          'errors' => ['event' => 'Event not found, id: '.$eventid]
+        ], 404);
+      $request = JoinRequest::find($id);
+      if (is_null($request))
+        return response()->json([
+            'status' => 'Not Found',
+            'msg' => 'Request not found, id: '.$id,
+            'errors' => ['request' => 'Request not found, id: '.$id]
+        ], 404);
+
+
+      if ($event->userid !== $organizer->userid || $request->eventid !== $event->eventid)
+        return response()->json([
+          'status' => 'Forbidden',
+          'msg' => 'Resource cannot be accessed',
+          'errors' => ['request' => 'Request cannot be accessed']
+        ], 403);
+
+      if ($request->requestStatus)
+          return response()->json([
+              'status' => 'OK',
+              'msg' => 'Request was already denied',
+          ], 200);
+
+      $request->requeststatus = false;
+      $request->save();
+
+      return response()->json([
+          'status' => 'OK',
+          'msg' => 'Request was successfully denied',
+      ], 200);
+  }
+
+
+
+  public function acceptJoinRequest(int $eventid, int $id)
+  {
+    $organizer = User::find(Auth::id());
+    if (is_null($organizer))
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'User not found, id: '.Auth::id(),
+        'errors' => ['user' => 'User not found, id: '.Auth::id()]
+      ], 404);
+    $event = Event::find($eventid);
+    if (is_null($event))
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'Event not found, id: '.$eventid,
+        'errors' => ['event' => 'Event not found, id: '.$eventid]
+      ], 404);
+    $request = JoinRequest::find($id);
+    if (is_null($request))
+      return response()->json([
+          'status' => 'Not Found',
+          'msg' => 'Request not found, id: '.$id,
+          'errors' => ['request' => 'Request not found, id: '.$id]
+      ], 404);
+
+    if ($event->userid !== $organizer->userid || $request->eventid !== $event->eventid)
+      return response()->json([
+        'status' => 'Forbidden',
+        'msg' => 'Resource cannot be accessed',
+        'errors' => ['request' => 'Request cannot be accessed']
+      ], 403);
+
+    if ($request->requeststatus)
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Request was already accepted',
+        ], 200);
+
+    $request->requeststatus = true;
+    $request->save();
+
+    return response()->json([
+        'status' => 'OK',
+        'msg' => 'Request was successfully accepted',
+    ], 200);
   }
 
   public function manageEvent($id)
@@ -207,7 +356,7 @@ class EventController extends Controller
         ];
       });
 
-    if ($user->isAttendee($event) || $event->public)
+    if ($user->isAttendee($event) || $event->public || $user->userid == $event->userid)
       return view('pages.attendees', ['attendees' => $attendees]);
     else
       return abort(403, 'THIS ACTION IS UNAUTHORIZED.');

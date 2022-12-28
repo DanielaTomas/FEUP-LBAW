@@ -27,6 +27,11 @@ class EventsPolicy
     {
         return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
     }
+    
+    public function dashboard(User $organizer, Event $event)
+    {
+        return $organizer->usertype == 'Organizer' && Auth::id() == $event->userid;
+    }
 
     public function edit(User $organizer, Event $event)
     {

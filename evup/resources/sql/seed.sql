@@ -252,7 +252,7 @@ CREATE TRIGGER attendee_inserted
 CREATE FUNCTION insert_attendee_request() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF (NEW.requeststatus && NEW.requesterid NOT IN (SELECT attendee.attendeeid FROM attendee
+    IF (NEW.requeststatus AND NEW.requesterid NOT IN (SELECT attendee.attendeeid FROM attendee
     WHERE attendee.eventid=NEW.requesterid)) THEN
         INSERT INTO attendee(attendeeid,eventid)
         VALUES (NEW.requesterid,NEW.eventid);
@@ -403,7 +403,7 @@ CREATE FUNCTION eventCancelled() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF (NEW.eventcanceled =TRUE) THEN
-        DELETE FROM Atendee
+        DELETE FROM attendee
         WHERE eventid = NEW.eventid;
 
         DELETE FROM joinrequest
@@ -716,6 +716,9 @@ insert into joinrequest ( requesterid, eventid, requeststatus) values ( 3, 2, tr
 insert into joinrequest ( requesterid, eventid, requeststatus) values ( 1, 17, true);
 insert into joinrequest ( requesterid, eventid, requeststatus) values ( 3, 23, true);
 insert into joinrequest ( requesterid, eventid) values ( 1, 9);
+insert into joinrequest ( requesterid, eventid) values ( 4, 10);
+insert into joinrequest ( requesterid, eventid) values ( 8, 10);
+insert into joinrequest ( requesterid, eventid) values ( 17, 10);
 
 -- organizerrequest --
 
