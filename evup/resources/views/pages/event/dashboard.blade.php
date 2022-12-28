@@ -104,37 +104,37 @@
                                             <section>
                                                 <button id="cancelEventBtn{{ $event->eventid }}" title="Cancel this event"
                                                     data-modal-toggle="staticModal-e{{ $event->eventid }}"
-                                                    class="font-bold mr-4 px-4 py-2.5 bg-gray-900 hover:bg-indigo-600 mt-3 transition ease-in-out duration-300 text-white rounded-full">Cancel Event
+                                                    class="font-bold mr-4 px-4 py-2.5 bg-gray-900 hover:bg-indigo-600 mt-3 transition ease-in-out duration-300 text-white rounded-lg">Cancel Event
                                                 </button>
                                             </section>
                                             
-                                            <button id="dropdownRadioHelperButton" data-dropdown-toggle="dropdownRadioHelper" title="Manage Event Visibility" class="ml-4 text-white rounded-full font-bold bg-gray-900 hover:bg-indigo-600 mt-3 transition ease-in-out duration-300 px-4 py-2.5 text-center inline-flex items-center" type="button">Event Visibility <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                                            <button id="dropdownRadioHelperButton" data-dropdown-toggle="dropdownRadioHelper" title="Manage Event Visibility" class="ml-4 text-white rounded-lg font-bold bg-gray-900 hover:bg-indigo-600 mt-3 transition ease-in-out duration-300 px-4 py-2.5 text-center inline-flex items-center" type="button">Event Visibility <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
                 
                                             <!-- Dropdown menu -->
-                                            <div id="dropdownRadioHelper" class="hidden z-10 w-60 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                            <div id="dropdownRadioHelper" class="hidden z-10 w-60 bg-gray-100 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                                 <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioHelperButton">
                                                 <li>
-                                                    <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                    <div class="flex p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600">
                                                     <div class="flex items-center h-5">
                                                         <input @if (!$event->public) checked @endif id="helper-radio-private" name="helper-radio" type="radio" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                                     </div>
                                                     <div class="ml-2 text-sm">
                                                         <label for="helper-radio-4" class="font-medium text-gray-900 dark:text-gray-300">
                                                             <div>Private</div>
-                                                            <p id="helper-radio-text-4" class="text-xs font-normal text-gray-500 dark:text-gray-300">Private events work with invite-only access.</p>
+                                                            <p id="helper-radio-text-4" class="text-xs font-normal text-gray-600 dark:text-gray-300">Private events work with invite-only access.</p>
                                                         </label>
                                                     </div>
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                    <div class="flex p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600">
                                                     <div class="flex items-center h-5">
                                                         <input @if ($event->public) checked @endif id="helper-radio-public" name="helper-radio" type="radio" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                                     </div>
                                                     <div class="ml-2 text-sm">
                                                         <label for="helper-radio-5" class="font-medium text-gray-900 dark:text-gray-300">
                                                             <div>Public</div>
-                                                            <p id="helper-radio-text-5" class="text-xs font-normal text-gray-500 dark:text-gray-300">Public events can be accessed and viewed by all users.</p>
+                                                            <p id="helper-radio-text-5" class="text-xs font-normal text-gray-600 dark:text-gray-300">Public events can be accessed and viewed by all users.</p>
                                                         </label>
                                                     </div>
                                                     </div>
@@ -159,7 +159,7 @@
                 <div class="my-2 flex sm:flex-row justify-between">
                     <div class="self-center">
                                     {{-- This is 'id' is being replaced with js at runtime --> view organizer.users.js --}}
-                        <a id="adduser" href="{{ route('view_add_user', ['id' => 'id']) }}" class="text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Add a User to the Event</a>
+                        <a id="adduser" href="{{ route('view_add_user', ['id' => 'id']) }}" class="text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Add a User to the Event</a>
                     </div>
                 </div>
                 <div class="overflow-x-auto min-h-screen">

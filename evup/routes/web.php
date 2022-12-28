@@ -74,7 +74,8 @@ Route::post('myEvents/createEvent', 'EventController@createEvent')->name('create
 Route::get('event/{id}/dashboard', 'EventController@show_dashboard')->where(['id' => '[0-9]+'])->name('event_dashboard');
 Route::put('event/{eventid}/join_requests/{id}/deny', 'EventController@denyJoinRequest')->where(['eventid' => '[0-9]+', 'id' => '[0-9]+'])->name('join_request_deny');
 Route::put('event/{eventid}/join_requests/{id}/accept', 'EventController@acceptJoinRequest')->where(['eventid' => '[0-9]+', 'id' => '[0-9]+'])->name('join_request_accept');
-Route::get('event/{id}/manage', 'EventController@manageEvent')->where(['id' => '[0-9]+'])->name('manage_event');
+/* Route 'manage_event' is depecrated. Event management is now done is event dashboard*/
+//Route::get('event/{id}/manage', 'EventController@manageEvent')->where(['id' => '[0-9]+'])->name('manage_event');
 Route::put('event/{id}/public', 'EventController@setEventVisibilityPublic')->where(['id' => '[0-9]+']);
 Route::put('event/{id}/private', 'EventController@setEventVisibilityPrivate')->where(['id' => '[0-9]+']);
 Route::put('event/{id}/cancel', 'EventController@cancelEvent')->where(['id' => '[0-9]+']);

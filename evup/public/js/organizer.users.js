@@ -16,14 +16,11 @@ if (window.location.pathname.includes('/event/')) {
 }
 
 function setgoBackBtn() {
-        select('#goback').href = 'http://' + window.location.host + '/event/' + eventid + '/attendees'
+    select('#goback').href = 'http://' + window.location.host + '/event/' + eventid + '/dashboard'
 }
 
 function setgoBackToEventBtn() {
-    if (select('#goback-u'))
-        select('#goback-u').href = 'http://' + window.location.host + '/event/' + eventid
-    else
-        return
+    select('#goback').href = 'http://' + window.location.host + '/event/' + eventid
 }
 
 function setAddUserBtn() {
