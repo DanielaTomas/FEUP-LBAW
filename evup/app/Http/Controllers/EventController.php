@@ -639,6 +639,6 @@ class EventController extends Controller
 
     $report->save();
 
-    return redirect()->route('show_event' , $eventid)->with('success', 'Your report has been submited with success.');
+    return redirect()->route('show_event' , $eventid)->with('success', 'Your report has been submited.');
   }
 }

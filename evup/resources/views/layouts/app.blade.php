@@ -40,7 +40,9 @@
 <body>
     <main>
         @include('partials.navbar')
-        <section id="alertcontainer" class="w-3q p-4 mt-4 ml-auto mr-auto"></section>
+        <section id="alertcontainer" class="w-3q p-4 mt-4 ml-auto mr-auto">
+            @include('partials.alerts')
+        </section>
         <section id="content" class="mx-20">
             @yield('content')
         </section>
