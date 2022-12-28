@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\Event;
 use App\Models\JoinRequest;
+use App\Models\Report;
 use App\Models\User;
 
 class EventController extends Controller
@@ -599,5 +600,45 @@ class EventController extends Controller
     }
 
     return redirect("/event/$event->eventid");
+  }
+
+  public function reportEvent(Request $request, int $eventid)
+  {
+    $user = User::find(Auth::id());
+    if (is_null($user))
+      return abort(404, 'User not found');
+
+    $event = Event::find($eventid);
+    if (is_null($event))
+      return abort(404, 'Event not found');
+
+    $this->authorize('reportEvent',$user);
+
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'message' => 'required|string|min:3|max:100',
+      ]
+    );
+
+    $errors = [];
+    if ($validator->fails()) {
+  
+      foreach ($validator->errors()->messages() as $key => $value) {
+        $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+      }
+
+      return redirect()->back()->withInput()->withErrors($errors);
+    }
+    
+    $report = new Report();
+
+    $report->reporterid = Auth::id();
+    $report->eventid = $eventid;
+    $report->message = $request->input('message');
+
+    $report->save();
+
+    return redirect()->route('show_event' , $eventid)->with('success', 'Your report has been submited with success.');
   }
 }

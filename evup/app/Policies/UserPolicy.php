@@ -43,6 +43,10 @@ class UserPolicy
     }
     /* --------- EVENT POLICIES --------- */
 
+    public function reportEvent(User $user)
+    {
+        return Auth::check();
+    }
     public function createEvent(User $user, User $organizer)
     {
         return $user->userid == $organizer->userid && $organizer->usertype == 'Organizer';
