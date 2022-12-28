@@ -31,7 +31,7 @@ class CommentController extends Controller
        return abort(404, 'Parent Comment not found');
    }
 
-    $this->authorize('create', $event);
+    $this->authorize('createComment', $event);
 
     $validator = Validator::make(
        $request->all(),
