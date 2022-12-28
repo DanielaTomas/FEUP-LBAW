@@ -487,7 +487,7 @@ class EventController extends Controller
       'description' => 'required|string|max:255',
       //TODO 'eventphoto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
       'eventaddress' => 'required|string|max:255',
-      'startdate' => 'required|date|after:tomorrow',
+      'startdate' => 'required|date',
       'enddate' => 'required|date|after:startdate',
     ]);
 

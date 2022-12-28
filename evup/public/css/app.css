@@ -1373,6 +1373,9 @@ select {
 .h-64 {
   height: 16rem;
 }
+.h-32 {
+  height: 8rem;
+}
 .h-8 {
   height: 2rem;
 }
@@ -1391,6 +1394,9 @@ select {
 .h-full {
   height: 100%;
 }
+.h-auto {
+  height: auto;
+}
 .h-11 {
   height: 2.75rem;
 }
@@ -1405,6 +1411,9 @@ select {
 }
 .w-full {
   width: 100%;
+}
+.w-auto {
+  width: auto;
 }
 .w-\[30rem\] {
   width: 30rem;
@@ -2312,6 +2321,10 @@ body {
   }
   
   #content > article {
+    background-color: #D7D3D3;
+  }
+
+  .bg-color-\[\#D7D3D3\] {
     background-color: #D7D3D3;
   }
   
