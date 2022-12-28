@@ -62,21 +62,27 @@
                 <div class="overflow-x-auto min-h-screen">
                     <div class="min-w-screen flex items-center justify-center font-sans overflow-hidden">
                         <div class="w-full lg:w-5/6">
-                            <div class="bg-white shadow-md rounded my-6">
-                                <table class="min-w-max w-full table-auto">
-                                    <thead>
-                                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                            <th class="py-3 px-6 text-left">User</th>
-                                            <th class="py-3 px-6 text-center">Type</th>
-                                            <th class="py-3 px-6 text-center">Status</th>
-                                            <th class="py-3 px-6 text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-gray-600 text-sm font-light">
-                                        @each('partials.admin.user', $users, 'user')
-                                    </tbody>
-                                </table>
-                            </div>
+                            @if (count($users) == 0)
+                                <div class="text-center">
+                                    <h2 class="text-xl font-semibold leading-tight">There are currently no users in the platform.</h2>
+                                </div>
+                            @else
+                                <div class="bg-white shadow-md rounded my-6">
+                                    <table class="min-w-max w-full table-auto">
+                                        <thead>
+                                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                                <th class="py-3 px-6 text-left">User</th>
+                                                <th class="py-3 px-6 text-center">Type</th>
+                                                <th class="py-3 px-6 text-center">Status</th>
+                                                <th class="py-3 px-6 text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-gray-600 text-sm font-light">
+                                            @each('partials.admin.user', $users, 'user')
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -91,23 +97,29 @@
                 <div class="overflow-x-auto min-h-screen">
                     <div class="min-w-screen flex items-center justify-center font-sans overflow-hidden">
                         <div class="w-full lg:w-5/6">
-                            <div class="bg-white shadow-md rounded my-6">
-                                <table class="min-w-max w-full table-auto">
-                                    <thead>
-                                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                            <th class="py-3 px-6 text-left">Event Reported</th>
-                                            <th class="py-3 px-6 text-center">Event Status</th>
-                                            <th class="py-3 px-6 text-center">Reason</th>
-                                            <th class="py-3 px-6 text-center">Reporter</th>
-                                            <th class="py-3 px-6 text-center">Report Status</th>
-                                            <th class="py-3 px-6 text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-gray-600 text-sm font-light">
-                                        @each('partials.admin.report', $reports, 'report')
-                                    </tbody>
-                                </table>
-                            </div>
+                            @if (count($reports) == 0)
+                                <div class="text-center">
+                                    <h2 class="text-xl font-semibold leading-tight">There are currently no reports.</h2>
+                                </div>
+                            @else
+                                <div class="bg-white shadow-md rounded my-6">
+                                    <table class="min-w-max w-full table-auto">
+                                        <thead>
+                                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                                <th class="py-3 px-6 text-left">Event Reported</th>
+                                                <th class="py-3 px-6 text-center">Event Status</th>
+                                                <th class="py-3 px-6 text-center">Reason</th>
+                                                <th class="py-3 px-6 text-center">Reporter</th>
+                                                <th class="py-3 px-6 text-center">Report Status</th>
+                                                <th class="py-3 px-6 text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-gray-600 text-sm font-light">
+                                            @each('partials.admin.report', $reports, 'report')
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -121,20 +133,26 @@
                 <div class="overflow-x-auto min-h-screen">
                     <div class="min-w-screen flex items-center justify-center font-sans overflow-hidden">
                         <div class="w-full lg:w-5/6">
-                            <div class="bg-white shadow-md rounded my-6">
-                                <table class="min-w-max w-full table-auto">
-                                    <thead>
-                                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                            <th class="py-3 px-6 text-left">User</th>
-                                            <th class="py-3 px-6 text-center">Status</th>
-                                            <th class="py-3 px-6 text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-gray-600 text-sm font-light">
-                                        @each('partials.admin.organizer_request', $requests, 'request')
-                                    </tbody>
-                                </table>
-                            </div>
+                            @if (count($requests) == 0)
+                                <div class="text-center">
+                                    <h2 class="text-xl font-semibold leading-tight">There are currently no organizer requests.</h2>
+                                </div>
+                            @else
+                                <div class="bg-white shadow-md rounded my-6">
+                                    <table class="min-w-max w-full table-auto">
+                                        <thead>
+                                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                                <th class="py-3 px-6 text-left">User</th>
+                                                <th class="py-3 px-6 text-center">Status</th>
+                                                <th class="py-3 px-6 text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-gray-600 text-sm font-light">
+                                            @each('partials.admin.organizer_request', $requests, 'request')
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

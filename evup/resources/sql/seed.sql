@@ -403,7 +403,7 @@ CREATE FUNCTION eventCancelled() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF (NEW.eventcanceled =TRUE) THEN
-        DELETE FROM Atendee
+        DELETE FROM attendee
         WHERE eventid = NEW.eventid;
 
         DELETE FROM joinrequest

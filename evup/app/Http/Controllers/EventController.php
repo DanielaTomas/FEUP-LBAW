@@ -47,7 +47,7 @@ class EventController extends Controller
       return view('pages.event', [
         'event' => $event
       ]);
-    } else if ($user->isAttendee($event) || $event->public)
+    } else if ($user->isAttendee($event) || $event->public || $user->userid == $event->userid)
       return view('pages.event', [
         'event' => $event, 'user' => $user
       ]);
@@ -356,7 +356,7 @@ class EventController extends Controller
         ];
       });
 
-    if ($user->isAttendee($event) || $event->public)
+    if ($user->isAttendee($event) || $event->public || $user->userid == $event->userid)
       return view('pages.attendees', ['attendees' => $attendees]);
     else
       return abort(403, 'THIS ACTION IS UNAUTHORIZED.');
