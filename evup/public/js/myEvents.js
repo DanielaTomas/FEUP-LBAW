@@ -7,6 +7,7 @@ function getOrganizingEventsHandler() {
     const area = document.getElementById("myeventsarea")
     area.innerHTML = events
 
+    /* Rerun flowbite's modal code the event listeners are added again*/
     initModal(selectors)
 }
 
@@ -19,5 +20,6 @@ function getMyEventsHandler() {
     const area = document.getElementById("myeventsarea")
     area.innerHTML = events
 
+    /* Rerun flowbite's modal code the event listeners are added again*/
     initModal(selectors)
 }
