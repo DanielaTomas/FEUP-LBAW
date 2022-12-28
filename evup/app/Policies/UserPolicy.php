@@ -43,6 +43,11 @@ class UserPolicy
     }
     /* --------- EVENT POLICIES --------- */
 
+    public function createEvent(User $user, User $organizer)
+    {
+        return $user->userid == $organizer->userid && $organizer->usertype == 'Organizer';
+    }
+
     public function organizerEvents(User $user, User $organizer)
     {
         return $user->userid == $organizer->userid && $organizer->usertype == 'Organizer';
@@ -63,18 +68,24 @@ class UserPolicy
         return Auth::check() && ($inviteddUser->userid != $user->userid);
     }
 
-    public function inviteAccept(User $user,Invitation $invite)
+    public function inviteAccept(User $user, User $invitee)
     {
-        return Auth::check();
+        return Auth::check() && $user->userid == $invitee->userid;
     }
 
-    public function inviteDecline(User $user,Invitation $invite)
+    public function inviteDecline(User $user, User $invitee)
     {
-        return Auth::check();
+        return Auth::check() && $user->userid == $invitee->userid;
     }
-    public function organizerRequest()
+
+    public function organizerRequest(User $user)
     {
-        return Auth::check();
+        return $user->usertype != 'Organizer' && $user->usertype != 'Admin';
+    }
+
+    public function requestToJoin(User $user)
+    {
+        return $user->usertype != 'Admin';
     }
     /* --------- ADMIN POLICIES --------- */
     public function show_panel(User $admin)

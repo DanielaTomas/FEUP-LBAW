@@ -241,6 +241,7 @@ class EventController extends Controller
     $organizer = User::find(Auth::id());
     if (is_null($organizer))
       return abort(404, 'User not found');
+
     $user = User::find($userid);
     if (is_null($user))
       return response()->json([
@@ -318,6 +319,7 @@ class EventController extends Controller
     $user = User::find(Auth::id());
 
     $this->authorize('edit', $event);
+
     return view('pages.event.edit', [
       'event' => $event, 'user' => $user
     ]);
@@ -329,7 +331,7 @@ class EventController extends Controller
     if (is_null($event))
       return redirect()->back()->withErrors(['event' => 'Event not found, id: ' . $id]);
 
-    //$this->authorize('update', $event);
+    $this->authorize('update', $event);
 
     $validator = Validator::make($request->all(), [
       'eventname' => 'required|string|max:255',
@@ -371,9 +373,11 @@ class EventController extends Controller
 
   public function createEvent(Request $request)
   {
-  
+    $organizer = User::find(Auth::id());
+    if (is_null($organizer))
+      return abort(404, 'User not found');
 
-    //$this->authorize('create', Event::class);
+    $this->authorize('createEvent',$organizer);
 
     $validator = Validator::make(
       $request->all(),
@@ -445,9 +449,6 @@ class EventController extends Controller
       }
     }
 
-
-  
-   
     return redirect("/event/$event->eventid");
   }
 }

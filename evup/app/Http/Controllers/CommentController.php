@@ -14,70 +14,70 @@ use App\Models\User;
 class CommentController extends Controller
 {
 
-   public function createComment(Request $request, int $eventid, int $parentid = null)
-   {
+  public function createComment(Request $request, int $eventid, int $parentid = null)
+  {
 
-    $event = Event::find($eventid);
-    if (is_null($event))
-      return abort(404, 'Event not found');
+   $event = Event::find($eventid);
+   if (is_null($event))
+     return abort(404, 'Event not found');
 
-    $user = User::find(Auth::id());
-    if (is_null($user))
-        return abort(404, 'User not found');
+   $user = User::find(Auth::id());
+   if (is_null($user))
+       return abort(404, 'User not found');
 
-    if($parentid != NULL) {
-      $parent = Comment::find($parentid);
-      if (is_null($parent))
-        return abort(404, 'Parent Comment not found');
-    }
+   if($parentid != NULL) {
+     $parent = Comment::find($parentid);
+     if (is_null($parent))
+       return abort(404, 'Parent Comment not found');
+   }
 
-     //$this->authorize('create', Comment::class);
+    $this->authorize('create', $event);
 
-     $validator = Validator::make(
-        $request->all(),
-        [
-          'commentcontent' => 'required|string|min:1|max:1000',
-        ]
-      );
-      
-      if ( $validator->fails() ) {
-        return response()->json([
-            'status' => 'Bad Request',
-            'msg' => 'Failed to create comment. Bad request',
-            'errors' => $validator->errors(),
-        ], 400);
-    }
+    $validator = Validator::make(
+       $request->all(),
+       [
+         'commentcontent' => 'required|string|min:1|max:1000',
+       ]
+     );
+     
+     if ( $validator->fails() ) {
+       return response()->json([
+           'status' => 'Bad Request',
+           'msg' => 'Failed to create comment. Bad request',
+           'errors' => $validator->errors(),
+       ], 400);
+   }
+ 
+     $comment = new Comment;
+     $comment->authorid = Auth::id();
+     $comment->eventid = $eventid;
+     if($parentid != NULL)
+         $comment->parentid = $parentid;
+     $comment->commentcontent = $request->commentcontent;
+     $comment->save();
+ 
+     if($parentid != NULL) {
+       return response()->json([
+         'status' => 'OK',
+         'msg' => 'Successfully created reply',
+         'html' => view('partials.reply', ['comment' => $comment,])->render(),
+       ], 200);
+     }
+     
+     return response()->json([
+       'status' => 'OK',
+       'msg' => 'Successfully created comment',
+       'html' => view('partials.comment', ['comment' => $comment,])->render(),
+     ], 200);
   
-      $comment = new Comment;
-      $comment->authorid = Auth::id();
-      $comment->eventid = $eventid;
-      if($parentid != NULL)
-          $comment->parentid = $parentid;
-      $comment->commentcontent = $request->commentcontent;
-      $comment->save();
-  
-      if($parentid != NULL) {
-        return response()->json([
-          'status' => 'OK',
-          'msg' => 'Successfully created reply',
-          'html' => view('partials.reply', ['comment' => $comment,])->render(),
-        ], 200);
-      }
-      
-      return response()->json([
-        'status' => 'OK',
-        'msg' => 'Successfully created comment',
-        'html' => view('partials.comment', ['comment' => $comment,])->render(),
-      ], 200);
-   
-  }
+ }
  
 
   public function deleteComment($id, $commentid)
   {
     $comment = Comment::find($commentid);
     if (is_null($comment))
-      return abort(404, 'Comment not found');
+    return abort(404, 'Comment not found');
 
     $event = Event::find($id);
     if (is_null($event))
@@ -106,7 +106,7 @@ class CommentController extends Controller
     if (is_null($comment))
         return redirect()->back()->withErrors(['comment' => 'Comment not found, id: ' . $commentid]);
 
-     //$this->authorize('update', Comment::class);
+     $this->authorize('update', $comment);
 
      $validator = Validator::make(
         $request->all(),
@@ -136,7 +136,7 @@ class CommentController extends Controller
     if(is_null($comment))
       return abort(404,'Comment not found');
 
-    //$this->authorize('edit',$comment);
+    $this->authorize('edit',$comment);
 
     return view('pages.event.editComment',[
       'comment'=>$comment
@@ -150,13 +150,9 @@ class CommentController extends Controller
     if(is_null($comment))
       return abort(404,'Comment not found');
 
-    //$this->authorize('like',$comment);
+    $this->authorize('like',$comment);
     $user = Auth::id();
     
-    if($comment->authorid == $user) return;
-    foreach($comment->votes()->get() as $vote) { 
-          if($vote->userid == $user) return;
-    } 
  
     $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => true]);
 
@@ -174,14 +170,9 @@ class CommentController extends Controller
     if(is_null($comment))
       return abort(404,'Comment not found');
 
-    //$this->authorize('dislike',$comment);
+    $this->authorize('dislike',$comment);
 
     $user = Auth::id();
-
-    if($comment->authorid == $user) return;
-    foreach($comment->votes()->get() as $vote) { 
-          if($vote->userid == $user) return;
-    } 
     
     $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => false]);
 
