@@ -13,7 +13,7 @@
     </td>
     <td class="px-4 py-2">
         <button onclick="inviteUser({{ $user->userid }})"
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Invite
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 rounded-lg  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Invite
             User</button>
     </td>
 </div>

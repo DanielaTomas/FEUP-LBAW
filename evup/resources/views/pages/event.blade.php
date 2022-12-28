@@ -54,24 +54,23 @@
                         <p> Organizer: {{ $event->organizer()->first()->username }} </p>
                     </section>
 
-                    <div class="flex flex-row justify-center">
+                    <div class="flex flex-row justify-around">
                         @if (Auth::check())
-                        @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() == 0)
-                        <section>
-                            <button id="requestToJoinButton{{ $event->eventid }}" data-modal-toggle="staticModal-jr{{ $event->eventid }}" class="items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Request
-                                to join</button>
-                        </section>
-                        @endif
-                        @include('partials.join_request_modal', ['event' => $event])
-                        @if (!$event->eventcanceled)
-                        @if (Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() != 0)
-                        <section>
-                            <button id="leaveEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-le{{ $event->eventid }}" class="items-center font-bold px-3 py-1 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 text-white rounded-lg">Leave
-                                Event</button>
-                        </section>
-                        @endif
-                        @endif
-                        @include('partials.leave_event_modal', ['event' => $event])
+                            @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() == 0)
+                                <!-- Request to Join Event Modal toggle -->
+                                <button id="requestToJoinButton{{ $event->eventid }}" data-modal-toggle="staticModal-jr{{ $event->eventid }}" class="items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Request to join</button>
+                                @include('partials.join_request_modal', ['event' => $event])
+                            @endif
+                            @if (!$event->eventcanceled)
+                                @if (Auth::user()->events()->where('event.eventid', $event->eventid)->get()->count() != 0)
+                                    <!-- Leave Event Modal toggle -->
+                                    <button id="leaveEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-le{{ $event->eventid }}" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
+                                    @include('partials.leave_event_modal', ['event' => $event])
+                                @endif
+                                <!-- Report Event Modal toggle -->
+                                <button id="reportEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Report Event</button>
+                                @include('partials.report_event_modal', ['event' => $event])
+                            @endif
                         @endif
 
                     </div>

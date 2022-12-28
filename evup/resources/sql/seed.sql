@@ -640,15 +640,15 @@ insert into tag (tagid, tagname) values (15, 'Museologia');
 
 -- report --
 
-insert into report (reportid, reporterid, eventid, message, reportstatus) values (1, 1, 1, 'This event is not suitable for up students.', false);
-insert into report (reportid, reporterid, eventid, message, reportstatus) values (2, 3, 22, 'This event is abusive.', true);
-insert into report (reportid, reporterid, eventid, message, reportstatus) values (3, 2, 3, 'The organizer of this event was rude to me.', false);
-insert into report (reportid, reporterid, eventid, message, reportstatus) values (4, 3, 1, 'This is spam!', false);
-insert into report (reportid, reporterid, eventid, message, reportstatus) values (5, 1, 21, 'Wrong category', true);
-insert into report (reportid, reporterid, eventid, message, reportstatus) values (6, 1, 23, 'The event image is inappropriate...', true);
-insert into report (reportid, reporterid, eventid, message, reportstatus) values (7, 5, 28, 'Fraud', false);
-insert into report (reportid, reporterid, eventid, message, reportstatus) values (8, 3, 1, 'Should be tagged as adult content', true);
-insert into report (reportid, reporterid, eventid, message, reportstatus) values (9, 6, 30, 'Should be tagged as adult content', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 1, 1, 'This event is not suitable for up students.', false);
+insert into report (reporterid, eventid, message, reportstatus) values ( 3, 22, 'This event is abusive.', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 2, 3, 'The organizer of this event was rude to me.', false);
+insert into report (reporterid, eventid, message, reportstatus) values ( 3, 1, 'This is spam!', false);
+insert into report (reporterid, eventid, message, reportstatus) values ( 1, 21, 'Wrong category', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 1, 23, 'The event image is inappropriate...', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 5, 28, 'Fraud', false);
+insert into report (reporterid, eventid, message, reportstatus) values ( 3, 1, 'Should be tagged as adult content', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 6, 30, 'Should be tagged as adult content', true);
 
 --invitation --
 
