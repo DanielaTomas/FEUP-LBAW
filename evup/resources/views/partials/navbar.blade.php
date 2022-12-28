@@ -1,6 +1,6 @@
 <nav class="flex justify-between bg-gray-900 text-white w-screen">
     <div class="px-5 xl:px-12 py-6 flex w-full items-center">
-        <a class="text-3xl font-bold font-heading" href="{{ route('home') }}"> <div style="transform: scale(1);">
+        <a class="text-3xl font-bold font-heading" href="{{ route('home') }}"> <div style="transform: scale(0.9);">
             <svg width="288" height="104" viewBox="0 0 288 104" class="css-1j8o68f">
                 <defs id="SvgjsDefs1018">
                     <linearGradient id="SvgjsLinearGradient1027">
