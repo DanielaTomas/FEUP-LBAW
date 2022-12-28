@@ -88,6 +88,7 @@ class EventController extends Controller
       });
 
       $join_requests = JoinRequest::orderByDesc('joinrequestid')->get()
+      ->where('eventid', '=', $eventid)
       ->map(function ($request) {
 
           $requester = User::find($request->requesterid);
@@ -131,9 +132,8 @@ class EventController extends Controller
             'errors' => ['request' => 'Request not found, id: '.$id]
         ], 404);
 
-      $this->authorize('denyJoinRequest', $organizer);
 
-      if ($event->userid !== $organizer->userid)
+      if ($event->userid !== $organizer->userid || $request->eventid !== $event->eventid)
         return response()->json([
           'status' => 'Forbidden',
           'msg' => 'Resource cannot be accessed',
@@ -181,9 +181,7 @@ class EventController extends Controller
           'errors' => ['request' => 'Request not found, id: '.$id]
       ], 404);
 
-    $this->authorize('acceptRequest', $organizer);
-
-    if ($event->userid !== $organizer->userid)
+    if ($event->userid !== $organizer->userid || $request->eventid !== $event->eventid)
       return response()->json([
         'status' => 'Forbidden',
         'msg' => 'Resource cannot be accessed',

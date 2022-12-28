@@ -23,6 +23,7 @@
     <script type="text/javascript" src={{ asset('js/event.dashboard.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/event.comments.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/event.organizer.js') }} defer></script>
+    <script type="text/javascript" src={{ asset('js/event.joinRequest.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/organizer.users.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/admin.tabs.js') }} defer></script>

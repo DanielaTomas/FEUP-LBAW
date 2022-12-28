@@ -58,16 +58,6 @@ class UserPolicy
         return $user->userid == $organizer->userid && $organizer->usertype == 'Organizer';
     }
 
-    public function denyJoinRequest(User $user, User $organizer)
-    {
-        return $user->userid == $organizer->userid && $organizer->usertype == 'Organizer';
-    }
-
-    public function acceptJoinRequest(User $user, User $organizer)
-    {
-        return $user->userid == $organizer->userid && $organizer->usertype == 'Organizer';
-    }
-
     public function invite(User $user, User $inviteddUser)
     {
         return Auth::check() && ($inviteddUser->userid != $user->userid);
