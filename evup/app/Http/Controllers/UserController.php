@@ -255,12 +255,16 @@ class UserController extends Controller
                 'msg' => 'Request not found, id: ' . $id,
                 'errors' => ['request' => 'Request not found, id: ' . $id]
             ], 404);
+
         $user = User::find(Auth::id());
         if (is_null($user))
             return abort(404, 'User not found');
 
+        $invitee = User::find($request->inviteeid);
+        if (is_null($user))
+            return abort(404, 'User not found');
 
-        //gi$this->authorize('inviteDecline', $request);
+        $this->authorize('inviteDecline', $invitee, $request);
 
         if ($request->invitationstatus)
             return response()->json([
@@ -280,17 +284,23 @@ class UserController extends Controller
     public function acceptRequest(int $id)
     {
         $request = Invitation::find($id);
+        
         if (is_null($request))
             return response()->json([
                 'status' => 'Not Found',
                 'msg' => 'Request not found, id: ' . $id,
                 'errors' => ['request' => 'Request not found, id: ' . $id]
             ], 404);
+
         $user = User::find(Auth::id());
         if (is_null($user))
             return abort(404, 'User not found');
 
-        //$this->authorize('inviteAccept', $request);
+        $invitee = User::find($request->inviteeid);
+        if (is_null($user))
+            return abort(404, 'User not found');
+
+        $this->authorize('inviteAccept', $invitee, $request);
 
         if ($request->invitationstatus)
             return response()->json([
@@ -314,7 +324,8 @@ class UserController extends Controller
         $request->requesterid = $id;
         $request->save();
 
-        //$this->authorize('organizerRequest', $request);
+        $this->authorize('organizerRequest');
+
         return response()->json([
             'status' => 'OK',
             'msg' => 'Request was successfully accepted',
@@ -329,7 +340,8 @@ class UserController extends Controller
         $joinRequest->eventid = $request->eventid;
         $joinRequest->save();
 
-        //$this->authorize('organizerRequest', $request);
+        $this->authorize('requestToJoin');
+
         return response()->json([
             'status' => 'OK',
             'msg' => 'Request was successfully accepted',
