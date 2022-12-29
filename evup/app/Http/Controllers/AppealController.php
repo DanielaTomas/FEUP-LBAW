@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appeal;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UnbanAppealMail;
+use Illuminate\Support\Facades\Auth;
 
 class AppealController extends Controller
 {
@@ -16,13 +18,33 @@ class AppealController extends Controller
      */
     public function getAppeal(int $userid)
     {
+        $user = User::find($userid);
+        if (is_null($user))
+            return abort(404, 'User not found');
+
+        if (Auth::check())
+            return abort(403, 'Forbidden Access');
+
+        if ($user->accountstatus != 'Blocked')
+            return abort(403, 'Forbidden Access');
+
         return view('auth.unban', [
             'userid' => $userid
-          ]);
+        ]);
     }
 
 
     public function saveAppeal(Request $request, int $id) { 
+        $user = User::find($id);
+        if (is_null($user))
+            return abort(404, 'User not found');
+
+        if (Auth::check())
+            return abort(403, 'Forbidden Access');
+
+        if ($user->accountstatus != 'Blocked')
+            return abort(403, 'Forbidden Access');
+
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
