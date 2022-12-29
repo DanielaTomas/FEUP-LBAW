@@ -4,10 +4,6 @@
 
 @section('content')
 
-@if(Session::has('success'))
-    <div class="flex p-4 mb-4 bg-green-100 rounded-lg dark:bg-green-200"> <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-green-700 dark:text-green-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" /></svg> <span class="sr-only">Info</span> <div class="ml-3 text-sm font-medium text-green-700 dark:text-green-800"><span class="font-medium">Success!</span>  {{ Session::get('success') }} </div> </div>
-@endif
-
 <div class="relative flex items-top justify-center min-h-screen bg-white dark:bg-gray-900 sm:items-center sm:pt-0">
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <img class="mx-auto" src="storage/logo3d.png" alt="EVUP Logo 3D">

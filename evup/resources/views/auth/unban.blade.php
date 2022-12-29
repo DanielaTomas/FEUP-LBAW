@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - Register</title>
+    <title>{{ config('app.name', 'Laravel') }} - Unban Appeal</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -22,7 +22,8 @@
 </head>
 
 <body>
-    <main class="flex flex-col h-screen items-center justify-center bg-gray-900 text-white">
+
+    <main class="mx-auto flex flex-col min-h-screen w-full items-center justify-center bg-gray-900 text-white">
 
         <a class="text-3xl font-bold font-heading" href="{{ route('home') }}"> <div style="transform: scale(0.9);">
             <svg width="288" height="104" viewBox="0 0 288 104" class="css-1j8o68f">
@@ -42,69 +43,74 @@
             </svg>
         </div> </a>
 
-        <form method="POST" action="{{ route('register') }}" class="flex w-[30rem] flex-col space-y-10">
-            {{ csrf_field() }}
-            <div class="text-center text-4xl font-medium">Register</div>
+        @if(Session::has('success'))
+            <div class="flex p-4 mb-4 bg-green-100 rounded-lg dark:bg-green-200"> <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-green-700 dark:text-green-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" /></svg> <span class="sr-only">Info</span> <div class="ml-3 text-sm font-medium text-green-700 dark:text-green-800"><span class="font-medium">Success!</span>  {{ Session::get('success') }} </div> </div>
+        @endif
 
-            <p class="text-center text-lg"> Enter your information to register </p>
-
-            <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
-                <input type="text" name="name" value="{{ old('name') }}" required placeholder="Name"
-                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
-                @if ($errors->has('name'))
-                    <span class="error">
-                        {{ $errors->first('name') }}
-                    </span>
-                @endif
-            </div>
-
-            <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
-                <input type="text" name="username" value="{{ old('username') }}" required placeholder="Username"
-                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
-                @if ($errors->has('username'))
-                    <span class="error">
-                        {{ $errors->first('username') }}
-                    </span>
-                @endif
-            </div>
-
-            <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
-                <input type="email" name="email" value="{{ old('email') }}" required type="text"
-                    placeholder="Email"
-                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
-                @if ($errors->has('email'))
-                    <span class="error">
-                        {{ $errors->first('email') }}
-                    </span>
-                @endif
-            </div>
-
-            <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
-                <input type="password" name="password" required placeholder="Password"
-                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
-                @if ($errors->has('password'))
-                    <span class="error">
-                        {{ $errors->first('password') }}
-                    </span>
-                @endif
-            </div>
-
-            <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
-                <input id="password-confirm" type="password" name="password_confirmation" required placeholder="Password confirmation"
-                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+        <div class="relative flex items-top justify-center sm:items-center sm:pt-0">
+            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                <div class="mt-8 overflow-hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        <div class="p-6 mr-2 mb-4 bg-gray-100 dark:bg-gray-800 sm:rounded-lg">
+                            <h1 class="text-4xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight">
+                                Unban Appeal
+                            </h1>
+                            <p class="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400 mt-2">
+                                Fill in the form to appeal for your unban
+                            </p>
         
+                            <div class="flex items-center mt-8 text-gray-600 dark:text-gray-400">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <div class="ml-4 text-md tracking-wide font-semibold w-40">
+                                    EvUP @FEUP, R. Dr. Roberto Frias,
+                                    4200-465 Porto
+                                </div>
+                            </div>
+        
+                            <div class="flex items-center mt-2 text-gray-600 dark:text-gray-400">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <div class="ml-4 text-md tracking-wide font-semibold w-40">
+                                    contact@evup.com
+                                </div>
+                            </div>
+                        </div>
+        
+                        <form method="POST" action="{{ route('appeal_save', $userid) }}" class="p-6 flex flex-col justify-center">
+                            @csrf
+                            <div class="flex flex-col">
+                                <label for="name" class="hidden">Full Name</label>
+                                <input type="name" name="name" id="name" placeholder="Full Name" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
+                            </div>
+        
+                            <div class="flex flex-col mt-2">
+                                <label for="email" class="hidden">Email</label>
+                                <input type="email" name="email" id="email" placeholder="Email" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
+                            </div>
+        
+                            <div class="flex flex-col mt-2">
+                                <label for="message" class="hidden">Message</label>
+                                <textarea rows="4" name="message" id="message" placeholder="Type your message" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none"></textarea>
+                            </div>
+        
+        
+                            <button type="submit" class="md:w-32 bg-white hover:bg-indigo-600 text-gray-700 hover:text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <button class="transform rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400">
-                Register Now
-            </button>
-
-            <a href="{{ route('home') }}"
-                class=" text-center font-medium text-indigo-500 underline-offset-4 hover:underline">Return Home</a>
-        </form>
+        </div>
     </main>
 
     <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
 </body>
 
 </html>
+
+

@@ -50,10 +50,12 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($user->accountstatus == 'Blocked') {
+            $userid = Auth::id();
             Auth::logout();
 
-            return back()->withErrors([
-                'ban' => 'Your account has been banned by an administrator. You may be able to appeal this ban in the future.',
+            return back()->with([
+                'ban' => 'Your account has been banned by an administrator. To create an unban appeal, please click ',
+                'userid' => $userid,
             ]);
         }
         else if ($user->accountstatus == 'Disabled') {

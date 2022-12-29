@@ -9,10 +9,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} - Login</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script type="text/javascript">
         // Fix for Firefox autofocus CSS bug
@@ -69,9 +68,10 @@
                 @endif
             </div>
 
-            @if ($errors->has('ban'))
+            @if (Session::has('ban'))
                 <div class="error text-danger text-center">
-                    {{ $errors->first('ban') }}
+                    {{ Session::get('ban') }}
+                    <a href="{{ route('appeal', Session::get('userid')) }}" class="font-medium text-indigo-500 underline-offset-4 hover:underline">here.</a>
                 </div>
             @endif 
 

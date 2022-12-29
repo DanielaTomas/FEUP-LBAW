@@ -98,6 +98,8 @@ Route::get('forgotPassword', 'Auth\ResetPasswordController@showSendLinkForm')->n
 Route::post('forgot_password', 'Auth\ResetPasswordController@sendLink')->name('send_link');
 Route::get('reset', 'Auth\ResetPasswordController@showResetPasswordForm')->name('password.reset');
 Route::post('reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+Route::get('appeal/{id}', 'AppealController@getAppeal')->where(['id' => '[0-9]+'])->name('appeal');
+Route::post('appeal/{id}', 'AppealController@saveAppeal')->where(['id' => '[0-9]+'])->name('appeal_save');
 
 // Event
 
