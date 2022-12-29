@@ -874,3 +874,10 @@ insert into event_tag (eventid, tagid) values (27, 12);
 insert into event_tag (eventid, tagid) values (28, 4);
 insert into event_tag (eventid, tagid) values (29, 7);
 insert into event_tag (eventid, tagid) values (30, 9);
+
+
+-- contact --
+insert into contact (name, email, subject, message) values ( 'Micky Falcus', 'mfalcus0@google.com.hk', 'New Feature', 'Could you add a ticket system for the events?');
+insert into contact (name, email, subject, message) values ( 'Elfrida Sergent', 'esergent1@trellian.com', 'Bug', 'I found a bug in the events page that happens when I...');
+insert into contact (name, email, subject, message) values ( 'Gaultiero Lanahan', 'glanahan2@rediff.com', 'Feature Idea', 'Please add more customization options for the profile');
+insert into contact (name, email, subject, message) values ( 'Darlene Blackader', 'dblackader3@shareasale.com', 'Question', 'How do I create polls as an event organizer?');

@@ -1457,6 +1457,9 @@ select {
 .w-60 {
   width: 15rem;
 }
+.w-92 {
+  width: 23rem;
+}
 .w-96 {
   width: 24rem;
 }
@@ -1468,6 +1471,15 @@ select {
 }
 .w-64 {
   width: 16rem;
+}
+.w-72 {
+  width: 18rem;
+}
+.w-76 {
+  width: 19rem;
+}
+.w-80 {
+  width: 20rem;
 }
 .min-w-max {
   min-width: -moz-max-content;

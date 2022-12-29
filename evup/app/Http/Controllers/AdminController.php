@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Report;
@@ -53,11 +54,14 @@ class AdminController extends UserController
             ];
         });
 
+        $contacts = Contact::get();
+
         return view('pages.admin.panel',[
             'admin' => $admin,
             'users' => $users,
             'reports' => $reports,
             'requests' => $organizer_requests,
+            'contacts' => $contacts,
         ]);
     }
 
