@@ -95,7 +95,7 @@ class CommentController extends Controller
     
   }
 
-  public function update(Request $request, int $id, int $commentid)
+  public function updateComment(Request $request, int $id, int $commentid)
   {
 
     $event = Event::find($id);
@@ -126,10 +126,15 @@ class CommentController extends Controller
       $comment->commentcontent = $request->commentcontent . "[edited]";
       $comment->save();
   
-      return redirect()->route('show_event',[$event->eventid]);
+      return response()->json([
+        'status' => 'OK',
+        'msg' => 'Removed comment successfully ',
+        'id' => $id,
+      ], 200);
   }
 
-  public function edit(int $id, int $commentid) 
+  /*
+  public function editComment(int $id, int $commentid) 
   {
     $comment = Comment::find($commentid);
 
@@ -141,7 +146,8 @@ class CommentController extends Controller
     return view('pages.event.editComment',[
       'comment'=>$comment
     ]);
-  }
+  } 
+  */
 
   public function like(int $id, int $commentid,$voted) 
   {

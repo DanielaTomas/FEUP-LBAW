@@ -23,10 +23,12 @@ class CommentPolicy
         return $user->userid == $comment->authorid;
     }
 
-    public function edit(User $user, Comment $comment)
+   /* 
+   public function edit(User $user, Comment $comment)
     {
         return $user->userid == $comment->authorid;
     }
+    */
 
     public function like(User $user, Comment $comment) 
     {

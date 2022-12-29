@@ -14,7 +14,16 @@ const createNewReply = (parent, eventid, parentid) => {
     sendAjaxRequest('post', url, { 'commentcontent': body, 'eventid': eventid, 'parentid': parentid }, newCommentHandler(true, parent, 'afterend', `#replyTextArea-${parentid}`));
 }
 
+/*
 const editComment = (commentId, editBox) => {
+    const body = select(`#edit_textarea_${commentId}`).value;
+    if (!body) return;
+
+    sendAjaxRequest('PUT', `/comment/${commentId}`, { body }, editCommentHandler(commentId, editBox));
+}
+*/
+
+const updateComment = (commentId, editBox) => {
     const body = select(`#edit_textarea_${commentId}`).value;
     if (!body) return;
 
