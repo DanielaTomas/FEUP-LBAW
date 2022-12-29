@@ -659,6 +659,7 @@ insert into poll ( eventid, pollcontent) values ( 6, 'Who are you going to the e
 insert into poll ( eventid, pollcontent) values ( 2, 'Were you able to connect with all of the things you wanted to during the event?');
 insert into poll ( eventid, pollcontent) values ( 7, 'How useful will the topics covered be to you in your course?');
 
+
 -- polloption --
 insert into polloption ( optioncontent, pollid) values ('History',1);
 insert into polloption ( optioncontent, pollid) values ('Sports',1);
