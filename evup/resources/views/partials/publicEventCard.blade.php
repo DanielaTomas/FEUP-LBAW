@@ -1,4 +1,4 @@
-<div data-id="{{ $event->eventid }}" class="flex flex-col w-full bg-white rounded shadow-lg sm:w-3/4 md:w-1/2 lg:w-2/5">
+<div data-id="{{ $event->eventid }}" class="flex flex-col justify-between w-full bg-white rounded shadow-lg sm:w-3/4 md:w-1/2 lg:w-2/5">
     <div class="w-full h-64 bg-top bg-cover rounded-t" style="background-image: url({{ asset('storage/images/image-'.$event->eventphoto.'.png')}})">
         @if (!$event->eventcanceled)
             @if (Auth::check())

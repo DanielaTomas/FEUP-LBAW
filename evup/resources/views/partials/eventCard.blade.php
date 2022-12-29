@@ -1,5 +1,5 @@
 <div id="eventCard{{ $event->eventid }}"
-    class="flex flex-col w-full bg-white rounded shadow-lg sm:w-3/4 md:w-1/2 lg:w-2/5">
+    class="flex flex-col w-full justify-between bg-white rounded shadow-lg sm:w-3/4 md:w-1/2 lg:w-2/5">
 
     <div class="w-full h-64 bg-top bg-cover rounded-t flex flex-col justify-between"
         style="background-image: url({{ asset('storage/images/image-'.$event->eventphoto.'.png')}})">
