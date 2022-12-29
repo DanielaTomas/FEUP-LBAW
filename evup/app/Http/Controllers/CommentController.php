@@ -126,11 +126,14 @@ class CommentController extends Controller
       $comment->commentcontent = $request->commentcontent . "[edited]";
       $comment->save();
   
+      /*
       return response()->json([
         'status' => 'OK',
-        'msg' => 'Removed comment successfully ',
+        'msg' => 'Edit comment successfully ',
         'id' => $id,
       ], 200);
+      */
+      return redirect()->route('show_event',[$event->eventid]);
   }
 
   /*
