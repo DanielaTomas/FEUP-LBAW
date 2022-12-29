@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS upload CASCADE;
 DROP TABLE IF EXISTS event_category CASCADE;
 DROP TABLE IF EXISTS event_tag CASCADE;
 DROP TABLE IF EXISTS contact CASCADE;
+DROP TABLE IF EXISTS appeal CASCADE;
 
 DROP TYPE IF EXISTS notificationtype;
 DROP TYPE IF EXISTS accountstatus;
@@ -170,6 +171,16 @@ CREATE TABLE contact(
   email TEXT NOT NULL,
   subject TEXT NOT NULL,
   message TEXT NOT NULL
+);
+
+-- Added during PA development
+CREATE TABLE appeal(
+  appealid SERIAL PRIMARY KEY,
+  userid INTEGER REFERENCES users (userid) ON DELETE SET NULL ON UPDATE CASCADE,
+  name VARCHAR(150) NOT NULL, 
+  email TEXT NOT NULL,
+  message TEXT NOT NULL,
+  appealstatus BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 -----------------------------------------
@@ -881,3 +892,8 @@ insert into contact (name, email, subject, message) values ( 'Micky Falcus', 'mf
 insert into contact (name, email, subject, message) values ( 'Elfrida Sergent', 'esergent1@trellian.com', 'Bug', 'I found a bug in the events page that happens when I...');
 insert into contact (name, email, subject, message) values ( 'Gaultiero Lanahan', 'glanahan2@rediff.com', 'Feature Idea', 'Please add more customization options for the profile');
 insert into contact (name, email, subject, message) values ( 'Darlene Blackader', 'dblackader3@shareasale.com', 'Question', 'How do I create polls as an event organizer?');
+
+
+-- appeal --
+insert into appeal (userid, name, email, message) values (12, 'Rafael Bucklee','rbuckleeb@china.com.cn', 'Could you please unban me :)?');
+

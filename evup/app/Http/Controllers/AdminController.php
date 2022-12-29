@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appeal;
 use App\Models\Contact;
 use App\Models\User;
 use App\Models\Event;
@@ -55,6 +56,7 @@ class AdminController extends UserController
         });
 
         $contacts = Contact::get();
+        $appeals = Appeal::get();
 
         return view('pages.admin.panel',[
             'admin' => $admin,
@@ -62,6 +64,7 @@ class AdminController extends UserController
             'reports' => $reports,
             'requests' => $organizer_requests,
             'contacts' => $contacts,
+            'appeals' => $appeals,
         ]);
     }
 
@@ -185,6 +188,19 @@ class AdminController extends UserController
     $user->accountstatus = 'Active';
 
     $user->save();
+
+    if ($request->appealid != null) {
+        $appeal = Appeal::find($request->appealid);
+        if (is_null($appeal))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'Unban Appeal not found, id: '.$request->appealid,
+                'errors' => ['appeal' => 'Appeal not found, id: '.$request->appealid]
+            ], 404);
+
+        $appeal->appealstatus = true;
+        $appeal->save();
+    }
 
     return response()->json([
         'status' => 'OK',

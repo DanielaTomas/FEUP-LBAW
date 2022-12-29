@@ -13,6 +13,11 @@ function unbanUser(id) {
     sendAjaxRequest('put', url, null, banHandler(false, id));
 }
 
+function appealUnbanUser(id, appealid) {
+    const url = '/admin/users/'+ id + '/unban';
+    sendAjaxRequest('put', url, { 'appealid': appealid }, appealUnbanHandler(id));
+}
+
 function delHandler(id) {
     if (this.status == 403) {
         window.location = '/login';
@@ -83,5 +88,41 @@ function banHandler(ban, id) {
 
         createAlert('success', 'You have unbanned this user successfully.')
     }
+
+}
+
+function appealUnbanHandler(id) {
+    if (this.status == 403) {
+        window.location = '/login';
+        return;
+    }
+
+    /* Deal with errors */
+                                /* Changes UNBAN btg to BAN btn after a user has ben UNbanned */
+    confirmBtn = select('#confirmunbanBtn-' + id)
+    confirmBtn.setAttribute('onclick','banUser(' + id + ')')
+    confirmBtn.id = 'confirmbanBtn-' + id
+
+    confirmTxt = select('#confirmunbanTxt-' + id)
+    confirmTxt.id = 'confirmbanTxt-' + id
+    confirmTxt.innerHTML = 'Would you like to ban this user?'
+
+    btn = select('#unbanBtn-' + id)
+    btn.id = 'banBtn-' + id
+    btn.innerHTML = 'Ban'
+    btn.classList = 'block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button" data-modal-toggle="staticModal-' + id
+
+    accstatus = select('#accstatus-' + id)
+    accstatus.innerHTML = 'Active'
+    accstatus.classList = 'bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs'
+
+
+    appealUnbanBtn = select('#appealUnbanBtn-' + id)
+    div = appealUnbanBtn.parentElement
+    appealUnbanBtn.remove()
+    div.insertAdjacentHTML('afterend','<div class="text-center font-bold mb-2 text-lg">Unban Appeal Accepted</div>')
+
+    createAlert('success', 'You have unbanned this user successfully.')
+    
 
 }

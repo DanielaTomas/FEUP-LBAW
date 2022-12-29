@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Appeal extends Model
 {
     public $timestamps  = false;
 
-    protected $table = 'contact';
-    protected $primaryKey = 'contactid';
+    protected $table = 'appeal';
+    protected $primaryKey = 'appealid';
 
     protected $fillable = [
-        'name', 'email', 'message'
+        'name', 'email', 'subject', 'message'
       ];
     
 }
