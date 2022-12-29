@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\Event;
 use App\Models\PollOption;
+
+use App\Models\Poll;
 use App\Models\User;
+use App\Models\Answer;
 
 class EventController extends Controller
 {
@@ -293,14 +296,56 @@ class EventController extends Controller
     return redirect("/event/$event->eventid");
   }
 
-  public function answerpoll(int $pollid){
-    $poll = PollOption::Find($pollid);
+  public function answerpoll(int $polloptionid){
     $user = User::find(Auth::id());
-    $poll->attach($user);
-
+    $answer = new Answer;
+    $answer->polloptionid=$polloptionid;
+    $answer->userid =$user->userid;
+    $answer->save();
     return response()->json([
       'status' => 'OK',
-      'msg' => 'Successfully added answer '
-  ], 200);
+      'msg' => 'Vote was successfully accepted',
+  ], 200); 
+  }
+
+  public function createPoll(Request $request, int $id)
+  {
+   $event = Event::find($id);
+   if (is_null($event))
+       return redirect()->back()->withErrors(['event' => 'Event not found, id: ' . $id]);
+
+    $validator = Validator::make(
+       $request->all(),
+       [
+         'question' => 'required|string|min:1|max:1000',
+       ]
+     );
+     
+     if ($validator->fails()) {
+       $errors = [];
+       foreach ($validator->errors()->messages() as $key => $value) {
+           $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+       }
+       return redirect()->back()->withInput()->withErrors($errors);
+    }
+ 
+     $poll = new Poll;
+     $poll->eventid = $id;
+     $poll->pollcontent = $request->question;
+     $poll->save();
+     
+    foreach($request->option as $option) {
+      $opt = new PollOption();
+      $opt->pollid = $poll->pollid;
+      $opt->optioncontent = $option;
+      $opt->save();
+    }
+    
+     //$comment->commentcontent = $request->input('commentcontent');
+     //$comment->commentcontent = $request->commentcontent;
+     //$comment->commentdate = date("Y-m-d");
+    
+ 
+     return redirect()->route('show_event',[$event->eventid]);
   }
 }

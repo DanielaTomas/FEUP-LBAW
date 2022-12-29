@@ -18,12 +18,12 @@ class PollOption extends Model
 
     public function answers()
     {
-        return $this->belongsToMany(User::class, 'answer', 'userid', 'polloptionid');
+        return $this->hasMany(Answer::class,'polloptionid');
     }
 
     public function nanswers()
     {
-        return $this->belongsToMany(User::class, 'answer', 'userid', 'polloptionid')->count();
+        return $this->hasMany(Answer::class,'polloptionid')->count();
     }
 
     public function notifications()

@@ -11,6 +11,9 @@ class Poll extends Model
     protected $table = 'poll';
     protected $primaryKey = 'pollid';
 
+    protected $fillable = [
+        'pollcontent'
+      ];
     public function event()
     {
         return $this->belongsTo(Event::class, 'eventid');

@@ -14,6 +14,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PollController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@list')->name('home');
@@ -68,7 +69,7 @@ Route::get('event/{id}/attendees', 'EventController@attendees')->where(['id' => 
 Route::get('event/{id}/adduser', 'EventController@view_add_user')->where(['id' => '[0-9]+'])->name('view_add_user');
 Route::post('event/{eventid}/adduser/{userid}', 'EventController@addUser')->where(['eventid' => '[0-9]+', 'userid' => '[0-9]+'])->name('add_user_event');
 Route::post('event/{eventid}/removeuser/{userid}', 'EventController@removeUser')->where(['eventid' => '[0-9]+', 'userid' => '[0-9]+'])->name('remove_user_event');
-
+Route::post('event/{id}/createPoll','EventController@createPoll')->where(['id' => '[0-9]+'])->name('create_poll'); 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
@@ -92,8 +93,7 @@ Route::post('event/{id}/create', 'CommentController@create')->where(['id' => '[0
 Route::post('event/{id}/editComment/{commentid}/update', 'CommentController@update')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('update_comment');
 Route::post('event/{id}/editComment/{commentid}', 'CommentController@edit')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('edit_comment');
 Route::post('api/requestToJoin', 'UserController@requestToJoin');
-Route::get('event/{id}/answerpoll','EventController@answerpoll')->where(['id' => '[0-9]+'])->name('answerpoll');
-
+Route::get('/event/{id}/answerpoll','EventController@answerpoll')->where(['id' => '[0-9]+'])->name('answerpoll');
 //Filter
 Route::post('api/filter_tag', 'HomeController@filterTag');
 

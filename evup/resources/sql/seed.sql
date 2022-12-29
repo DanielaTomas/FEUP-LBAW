@@ -536,7 +536,7 @@ insert into event ( userid, eventname, public, eventaddress, description, eventp
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 22, 'Lebsack, Hickle and Kassulke', false, '689 Debs Point', 'Other cyst of bone, left hand', 'http://dummyimage.com/234x100.png/5fa2dd/ffffff', '2022-12-23', '2022-12-25');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 28, 'Raynor, Durgan and Pfeffer', false, '5137 Bonner Junction', 'Diabetes mellitus due to underlying condition with proliferative diabetic retinopathy with combined traction retinal detachment and rhegmatogenous retinal detachment, unspecified eye', 'http://dummyimage.com/197x100.png/ff4444/ffffff', '2022-12-01', '2022-12-15');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Lehner-Yundt', false, '765 Prairie Rose Hill', 'Maternal care for other malpresentation of fetus', 'http://dummyimage.com/179x100.png/dddddd/000000', '2022-12-29', '2023-01-27');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Bauch-Pagac', true, '6762 Mallard Point', 'Laceration of unspecified urinary and pelvic organ, sequela', 'http://dummyimage.com/114x100.png/cc0000/ffffff', '2023-01-04', '2023-01-30');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 1, 'Bauch-Pagac', true, '6762 Mallard Point', 'Laceration of unspecified urinary and pelvic organ, sequela', 'http://dummyimage.com/114x100.png/cc0000/ffffff', '2023-01-04', '2023-01-30');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 13, 'Hermann-Stamm', true, '479 Duke Drive', 'Unspecified fracture of shaft of unspecified tibia, initial encounter for open fracture type IIIA, IIIB, or IIIC', 'http://dummyimage.com/200x100.png/dddddd/000000', '2023-03-09', '2023-03-12');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 17, 'Lowe, Renner and Hand', true, '726 Mallard Junction', 'Nondisplaced fracture of lower epiphysis (separation) of unspecified femur, initial encounter for open fracture type I or II', 'http://dummyimage.com/166x100.png/cc0000/ffffff', '2022-12-16', '2023-02-02');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 18, 'Kreiger-Leuschke', true, '7163 Maryland Park', 'Laceration of other blood vessels of thorax, left side, initial encounter', 'http://dummyimage.com/217x100.png/dddddd/000000', '2023-02-08', '2023-02-17');
@@ -652,14 +652,36 @@ insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values
 
 insert into poll ( eventid, pollcontent) values ( 4,'What topics interest you the most?');
 insert into poll ( eventid, pollcontent) values ( 4,'What day are you going to the event?');
-insert into poll ( eventid, pollcontent) values ( 19,'What are you most looking forward to during the event?');
-insert into poll ( eventid, pollcontent) values ( 26,'What place should we have our next event in?');
-insert into poll ( eventid, pollcontent) values ( 18,'Are you interested in a meet-up after the event for further discussion?');
+insert into poll ( eventid, pollcontent) values ( 5,'What are you most looking forward to during the event?');
+insert into poll ( eventid, pollcontent) values ( 6,'What place should we have our next event in?');
+insert into poll ( eventid, pollcontent) values ( 10,'Are you interested in a meet-up after the event for further discussion?');
 insert into poll ( eventid, pollcontent) values ( 6, 'Who are you going to the event with?');
-insert into poll ( eventid, pollcontent) values ( 5, 'Your reasons for attending this event:');
-insert into poll ( eventid, pollcontent) values ( 7, 'What made you decide to attend this event?');
-insert into poll ( eventid, pollcontent) values ( 27, 'Were you able to connect with all of the things you wanted to during the event?');
+insert into poll ( eventid, pollcontent) values ( 2, 'Were you able to connect with all of the things you wanted to during the event?');
 insert into poll ( eventid, pollcontent) values ( 7, 'How useful will the topics covered be to you in your course?');
+
+-- polloption --
+insert into polloption ( optioncontent, pollid) values ('History',1);
+insert into polloption ( optioncontent, pollid) values ('Sports',1);
+insert into polloption ( optioncontent, pollid) values ('Music',1);
+insert into polloption ( optioncontent, pollid) values ('Monday',2);
+insert into polloption ( optioncontent, pollid) values ('Tuesday',2);
+insert into polloption ( optioncontent, pollid) values ('Wednesday',2);
+insert into polloption ( optioncontent, pollid) values ('Talking to people',3);
+insert into polloption ( optioncontent, pollid) values ('Learning',3);
+insert into polloption ( optioncontent, pollid) values ('Dancing',3);
+insert into polloption ( optioncontent, pollid) values ('A theatre',4);
+insert into polloption ( optioncontent, pollid) values ('A school',4);
+insert into polloption ( optioncontent, pollid) values ('A hospital',4);
+insert into polloption ( optioncontent, pollid) values ('Yes',5);
+insert into polloption ( optioncontent, pollid) values ('No',5);
+insert into polloption ( optioncontent, pollid) values ('Maybe',5);
+insert into polloption ( optioncontent, pollid) values ('Friends',6);
+insert into polloption ( optioncontent, pollid) values ('Family',6);
+insert into polloption ( optioncontent, pollid) values ('Alone',6);
+insert into polloption ( optioncontent, pollid) values ('Yes',7);
+insert into polloption ( optioncontent, pollid) values ('No',7);
+insert into polloption ( optioncontent, pollid) values ('Not a Lot',8);
+insert into polloption ( optioncontent, pollid) values ('A Lot',8);
 
 -- comment --
 
@@ -726,20 +748,12 @@ insert into vote (voterid, commentid, type) values (13, 3, true);
 insert into vote (voterid, commentid, type) values (14, 9, false);
 insert into vote (voterid, commentid, type) values (15, 7, true);
 
--- polloption --
-insert into polloption ( optioncontent, pollid) values ('Yes',1);
-insert into polloption ( optioncontent, pollid) values ('No',1);
-insert into polloption ( optioncontent, pollid) values ('Not at all useful',1);
-insert into polloption ( optioncontent, pollid) values ('Somewhat useful',2);
-insert into polloption ( optioncontent, pollid) values ('Useful',2);
-insert into polloption ( optioncontent, pollid) values ('Very useful',2);
 
 -- answer --                            voteType??
 
-insert into answer (userid, polloptionid) values (1, 2);
-insert into answer (userid, polloptionid) values (7, 2);
-insert into answer (userid, polloptionid) values (2, 3);
-insert into answer (userid, polloptionid) values (4, 1);
+insert into answer (userid, polloptionid) values (2, 2);
+
+
 
 -- upload --
 

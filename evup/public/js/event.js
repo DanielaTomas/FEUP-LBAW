@@ -1,3 +1,75 @@
+const voteOption = (optionid,pollid) => {
+    sendAjaxRequest('get', `/event/${optionid}/answerpoll`, { 'optionid': event_id }, voteOptionHandler(optionid,pollid));
+}
+
+function voteOptionHandler(optionid,pollid){
+    const allvotes=document.getElementById("TotalVotes" + pollid)
+    const poll=document.getElementById("poll"+pollid)
+    const options=poll.querySelectorAll("div.option")
+    const beforeoptions=poll.querySelectorAll("div.beforeOption")
+    console.log(beforeoptions)
+    allvotes.textContent=parseInt(allvotes.textContent)+1
+    for(var i = 0; i < options.length; i++) {
+        const botao=options[i].querySelector("input")
+        const votos=options[i].querySelector("p")
+        if(botao.checked){
+            votos.textContent=parseInt(votos.textContent)+1
+        }
+        botao.disabled=true
+        const numero=document.createElement("div")
+        numero.innerHTML=`
+            <span class="text-sm font-medium text-blue-700 dark:text-white"></span>
+        `
+        numero.textContent=Math.round(parseInt(votos.textContent)/parseInt(allvotes.textContent)*100,2)+"%"
+        options[i].append(numero)
+        const barra=document.createElement("div")
+        barra.innerHTML=`
+        
+                    <div id="bar" class="bg-blue-600 h-2.5 rounded-full"></div>
+      
+        `
+        barra.classList.add("bg-gray-200")
+        barra.classList.add("rounded-full")
+        barra.classList.add("w-full")
+        barra.classList.add("dark:bg-gray-700")
+        const innerbarra=barra.querySelector("div")
+        innerbarra.style.width=Math.round(parseInt(votos.textContent)/parseInt(allvotes.textContent)*100,2)+"%"
+        beforeoptions[i].append(barra)
+    }
+}
+
+
+function createPoll(){
+    const createpollbutton=document.getElementById("CreatePoll")
+    const addhereform=document.getElementById("addhereform")
+    addhereform.style.display='none'
+
+    createpollbutton.addEventListener('click',function(){
+        addhereform.style.display='block'
+        createpollbutton.style.display='none'
+        addOption()
+    })
+}
+
+
+createPoll()
+
+function addOption(){
+    const addOption=document.getElementById("addOption")
+    const addHere=document.getElementById("addHere")
+     var i=2
+     addOption.addEventListener('click',function(){
+        i++
+        const pending = document.createElement('div')
+        pending.innerHTML= `
+        <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name=option[] type="text" required>`
+        addHere.prepend(pending)
+        if(i==4){
+            addOption.style.display='none'
+        }
+     })
+}
+
 const leaveEvent = (eventid) => {
     sendAjaxRequest('post', `myEvents/${eventid}`, { 'eventid': eventid }, leaveEventHandler(eventid));
 }
