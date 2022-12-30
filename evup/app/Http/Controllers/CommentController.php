@@ -122,18 +122,15 @@ class CommentController extends Controller
         }
         return redirect()->back()->withInput()->withErrors($errors);
      }
-  
-      $comment->commentcontent = $request->commentcontent . "[edited]";
+     
+      $comment->commentcontent = $request->commentcontent;
       $comment->save();
   
-      /*
       return response()->json([
         'status' => 'OK',
-        'msg' => 'Edit comment successfully ',
+        'msg' => 'Edited comment successfully',
         'id' => $id,
       ], 200);
-      */
-      return redirect()->route('show_event',[$event->eventid]);
   }
 
   /*
@@ -167,7 +164,7 @@ class CommentController extends Controller
 
     return response()->json([
       'status' => 'OK',
-      'msg' => 'Liked comment successfully ',
+      'msg' => 'Liked comment successfully',
       'id' => $id,
     ], 200);
   }

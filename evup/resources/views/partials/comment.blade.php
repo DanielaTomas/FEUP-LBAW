@@ -51,13 +51,13 @@
             </div>
         </div>
 
-        <p class="text-gray-500 dark:text-gray-400 whitespace-pre-wrap">{{ $comment->commentcontent }}</p>
+        <p id ="content-{{ $comment->commentid }}" class="text-gray-500 dark:text-gray-400 whitespace-pre-wrap">{{ $comment->commentcontent }}</p>
 
             <div class="w-full md:w-full px-3 mb-2 mt-2">
                 
                 <input id="replyTextArea-{{ $comment->commentid }}"
                     class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-500 focus:outline-none focus:bg-white"
-                    id="commentcontent" type="text" name="commentcontent"
+                    type="text" name="commentcontent"
                     placeholder="Type Your Reply" required>
                 <div class="w-full md:w-full flex items-start md:w-full px-3">
 

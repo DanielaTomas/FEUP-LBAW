@@ -108,7 +108,7 @@ Route::post('event/{id}/searchUsers', 'UserController@searchUsers');
 Route::post('event/{id}/inviteUsers', 'UserController@inviteUser'); 
 Route::post('event/{id}/delete/{commentid}', 'CommentController@deleteComment')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('delete_comment'); 
 Route::post('event/{id}/createComment/{parentid?}', 'CommentController@createComment')->where(['id' => '[0-9]+'])->name('create_comment'); 
-Route::post('event/{id}/editComment/{commentid}/update', 'CommentController@updateComment')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('update_comment');
+Route::post('event/{id}/editComment/{commentid}', 'CommentController@updateComment')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('update_comment');
 //Route::post('event/{id}/editComment/{commentid}', 'CommentController@editComment')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('edit_comment');
 Route::post('api/requestToJoin', 'UserController@requestToJoin');
 
