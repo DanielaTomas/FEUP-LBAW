@@ -102,6 +102,8 @@
                 <p class="py-4"> {{ $event->description }} </p>
                 <div class="mb-4"> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
 
+                @auth
+                @if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid))
                 <h3 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Polls</h2><br>
                     @if( $event->organizer()->first()->userid == $user->userid)
                     <button id="CreatePoll" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">Create Poll</button>
@@ -132,8 +134,8 @@
                         @endforeach
                     @endif
                     </div>
+                @endif
                 
-                @auth
                 @if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid))
                 <section>
                     <div class=" mx-auto ">
