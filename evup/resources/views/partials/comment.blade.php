@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <p id ="content-{{ $comment->commentid }}" class="text-gray-500 dark:text-gray-400 whitespace-pre-wrap">{{ $comment->commentcontent }}</p>
+        <p id ="content-{{ $comment->commentid }}" class="text-gray-500 dark:text-gray-400 comment-overflow">{{ $comment->commentcontent }}</p>
 
             <div class="w-full md:w-full px-3 mb-2 mt-2">
                 

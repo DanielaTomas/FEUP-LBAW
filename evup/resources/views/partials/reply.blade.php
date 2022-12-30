@@ -8,5 +8,5 @@
         </div>
 
     </div>
-    <p class="text-gray-500 dark:text-gray-400">{{ $comment->commentcontent }}</p>
+    <p class="text-gray-500 dark:text-gray-400 comment-overflow">{{ $comment->commentcontent }}</p>
 </article>

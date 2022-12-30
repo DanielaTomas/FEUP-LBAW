@@ -2362,8 +2362,9 @@ body {
     flex-wrap: wrap;
   }
 
-  .whitespace-pre-wrap {
+  .comment-overflow {
     white-space: pre-wrap;
+    overflow: auto;
   }
   
   .placeholder\:italic::-moz-placeholder {
