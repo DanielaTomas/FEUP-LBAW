@@ -684,6 +684,13 @@ insert into polloption ( optioncontent, pollid) values ('No',7);
 insert into polloption ( optioncontent, pollid) values ('Not a Lot',8);
 insert into polloption ( optioncontent, pollid) values ('A Lot',8);
 
+
+-- answer --                            voteType??
+
+insert into answer (userid, polloptionid) values (2, 2);
+
+
+
 -- comment --
 
 insert into comment (authorId, eventid, commentcontent, commentdate) values (4, 4, 'I am looking forward to it!!', CURRENT_TIMESTAMP);
@@ -725,11 +732,11 @@ insert into notification ( receiverid, joinrequestid, notificationdate, notifica
 insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values (1, 4, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', false);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 1, 11, CURRENT_TIMESTAMP, 'InviteReceived', false);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values (1, 6, CURRENT_TIMESTAMP, 'InviteAccepted', false);
-insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 1, 7, CURRENT_TIMESTAMP, 'NewPoll', false);
+insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 1, 2, CURRENT_TIMESTAMP, 'NewPoll', false);
 insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values ( 8, 2, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 9, 9, CURRENT_TIMESTAMP, 'InviteReceived', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 4, 3, CURRENT_TIMESTAMP, 'InviteAccepted', false);
-insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 3, 9, CURRENT_TIMESTAMP, 'NewPoll', false);
+insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 3, 2, CURRENT_TIMESTAMP, 'NewPoll', false);
 
 -- vote --
 
@@ -750,9 +757,7 @@ insert into vote (voterid, commentid, type) values (14, 9, false);
 insert into vote (voterid, commentid, type) values (15, 7, true);
 
 
--- answer --                            voteType??
 
-insert into answer (userid, polloptionid) values (2, 2);
 
 
 
