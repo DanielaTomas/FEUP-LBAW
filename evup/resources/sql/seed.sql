@@ -142,14 +142,15 @@ CREATE TABLE vote(
 );
 
 CREATE TABLE polloption(
-  polloptionid SERIAL NOT NULL,
+  polloptionid SERIAL PRIMARY KEY,
+  pollid INTEGER REFERENCES poll (pollid) ON UPDATE CASCADE ON DELETE CASCADE,
   optioncontent TEXT NOT NULL
 );
 
 CREATE TABLE answer(
   userid INTEGER REFERENCES users (userid) ON UPDATE CASCADE ON DELETE CASCADE,
-  pollid INTEGER REFERENCES poll (pollid) ON UPDATE CASCADE ON DELETE CASCADE,
-  PRIMARY KEY(userid, pollid)
+  polloptionid INTEGER REFERENCES polloption (polloptionid) ON UPDATE CASCADE ON DELETE CASCADE,
+  PRIMARY KEY(userid, polloptionid)
 );
 
 CREATE TABLE event_category(
@@ -652,14 +653,14 @@ insert into tag (tagid, tagname) values (15, 'Museologia');
 -- report --
 
 insert into report (reporterid, eventid, message, reportstatus) values ( 1, 1, 'This event is not suitable for up students.', false);
-insert into report (reporterid, eventid, message, reportstatus) values ( 3, 22, 'This event is abusive.', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 3, 2, 'This event is abusive.', true);
 insert into report (reporterid, eventid, message, reportstatus) values ( 2, 3, 'The organizer of this event was rude to me.', false);
 insert into report (reporterid, eventid, message, reportstatus) values ( 3, 1, 'This is spam!', false);
-insert into report (reporterid, eventid, message, reportstatus) values ( 1, 21, 'Wrong category', true);
-insert into report (reporterid, eventid, message, reportstatus) values ( 1, 23, 'The event image is inappropriate...', true);
-insert into report (reporterid, eventid, message, reportstatus) values ( 5, 28, 'Fraud', false);
+insert into report (reporterid, eventid, message, reportstatus) values ( 1, 3, 'Wrong category', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 1, 13, 'The event image is inappropriate...', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 5, 12, 'Fraud', false);
 insert into report (reporterid, eventid, message, reportstatus) values ( 3, 1, 'Should be tagged as adult content', true);
-insert into report (reporterid, eventid, message, reportstatus) values ( 6, 30, 'Should be tagged as adult content', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 6, 2, 'Should be tagged as adult content', true);
 
 --invitation --
 
@@ -687,16 +688,46 @@ insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values
 
 -- poll --
 
-insert into poll (pollid, eventid, pollcontent) values (1, 4,'What topics interest you the most?');
-insert into poll (pollid, eventid, pollcontent) values (2, 30,'What day are you going to the event?');
-insert into poll (pollid, eventid, pollcontent) values (3, 19,'What are you most looking forward to during the event?');
-insert into poll (pollid, eventid, pollcontent) values (4, 26,'What place should we have our next event in?');
-insert into poll (pollid, eventid, pollcontent) values (5, 18,'Are you interested in a meet-up after the event for further discussion?');
-insert into poll (pollid, eventid, pollcontent) values (6, 6, 'Who are you going to the event with?');
-insert into poll (pollid, eventid, pollcontent) values (7, 5, 'Your reasons for attending this event:');
-insert into poll (pollid, eventid, pollcontent) values (8, 7, 'What made you decide to attend this event?');
-insert into poll (pollid, eventid, pollcontent) values (9, 27, 'Were you able to connect with all of the things you wanted to during the event?');
-insert into poll (pollid, eventid, pollcontent) values (10, 7, 'How useful will the topics covered be to you in your course?');
+insert into poll ( eventid, pollcontent) values ( 4,'What topics interest you the most?');
+insert into poll ( eventid, pollcontent) values ( 4,'What day are you going to the event?');
+insert into poll ( eventid, pollcontent) values ( 5,'What are you most looking forward to during the event?');
+insert into poll ( eventid, pollcontent) values ( 6,'What place should we have our next event in?');
+insert into poll ( eventid, pollcontent) values ( 10,'Are you interested in a meet-up after the event for further discussion?');
+insert into poll ( eventid, pollcontent) values ( 6, 'Who are you going to the event with?');
+insert into poll ( eventid, pollcontent) values ( 2, 'Were you able to connect with all of the things you wanted to during the event?');
+insert into poll ( eventid, pollcontent) values ( 7, 'How useful will the topics covered be to you in your course?');
+
+
+-- polloption --
+insert into polloption ( optioncontent, pollid) values ('History',1);
+insert into polloption ( optioncontent, pollid) values ('Sports',1);
+insert into polloption ( optioncontent, pollid) values ('Music',1);
+insert into polloption ( optioncontent, pollid) values ('Monday',2);
+insert into polloption ( optioncontent, pollid) values ('Tuesday',2);
+insert into polloption ( optioncontent, pollid) values ('Wednesday',2);
+insert into polloption ( optioncontent, pollid) values ('Talking to people',3);
+insert into polloption ( optioncontent, pollid) values ('Learning',3);
+insert into polloption ( optioncontent, pollid) values ('Dancing',3);
+insert into polloption ( optioncontent, pollid) values ('A theatre',4);
+insert into polloption ( optioncontent, pollid) values ('A school',4);
+insert into polloption ( optioncontent, pollid) values ('A hospital',4);
+insert into polloption ( optioncontent, pollid) values ('Yes',5);
+insert into polloption ( optioncontent, pollid) values ('No',5);
+insert into polloption ( optioncontent, pollid) values ('Maybe',5);
+insert into polloption ( optioncontent, pollid) values ('Friends',6);
+insert into polloption ( optioncontent, pollid) values ('Family',6);
+insert into polloption ( optioncontent, pollid) values ('Alone',6);
+insert into polloption ( optioncontent, pollid) values ('Yes',7);
+insert into polloption ( optioncontent, pollid) values ('No',7);
+insert into polloption ( optioncontent, pollid) values ('Not a Lot',8);
+insert into polloption ( optioncontent, pollid) values ('A Lot',8);
+
+
+-- answer --                            voteType??
+
+insert into answer (userid, polloptionid) values (2, 2);
+
+
 
 -- comment --
 
@@ -750,7 +781,7 @@ insert into notification ( receiverid, pollid, notificationdate, notificationtyp
 insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values ( 8, 2, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 9, 9, CURRENT_TIMESTAMP, 'InviteReceived', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 4, 3, CURRENT_TIMESTAMP, 'InviteAccepted', false);
-insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 3, 9, CURRENT_TIMESTAMP, 'NewPoll', false);
+insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 3, 2, CURRENT_TIMESTAMP, 'NewPoll', false);
 
 -- vote --
 
@@ -770,56 +801,10 @@ insert into vote (voterid, commentid, type) values (13, 3, true);
 insert into vote (voterid, commentid, type) values (14, 9, false);
 insert into vote (voterid, commentid, type) values (15, 7, true);
 
--- polloption --
-insert into polloption (polloptionid, optioncontent) values (1, 'Yes');
-insert into polloption (polloptionid, optioncontent) values (2, 'No');
-insert into polloption (polloptionid, optioncontent) values (3, 'Not at all useful');
-insert into polloption (polloptionid, optioncontent) values (4, 'Somewhat useful');
-insert into polloption (polloptionid, optioncontent) values (5, 'Useful');
-insert into polloption (polloptionid, optioncontent) values (6, 'Very useful');
-insert into polloption (polloptionid, optioncontent) values (7, 'Friend(s)');
-insert into polloption (polloptionid, optioncontent) values (8, 'Family');
-insert into polloption (polloptionid, optioncontent) values (9, '10');
-insert into polloption (polloptionid, optioncontent) values (10, '11');
-insert into polloption (polloptionid, optioncontent) values (11, '12');
-insert into polloption (polloptionid, optioncontent) values (12, '13');
-insert into polloption (polloptionid, optioncontent) values (13, '14');
-insert into polloption (polloptionid, optioncontent) values (14, 'Other');
-insert into polloption (polloptionid, optioncontent) values (15, 'Have fun with friends');
-insert into polloption (polloptionid, optioncontent) values (16, 'Meet new people');
-insert into polloption (polloptionid, optioncontent) values (17, 'Can be useful for university subjects');
-insert into polloption (polloptionid, optioncontent) values (18, 'FEUP');
-insert into polloption (polloptionid, optioncontent) values (19, 'FCUP');
-insert into polloption (polloptionid, optioncontent) values (20, 'FCUL');
-insert into polloption (polloptionid, optioncontent) values (21, 'Computing in the Modern World');
-insert into polloption (polloptionid, optioncontent) values (22, 'UNIX/LINUX Fundamentals');
-insert into polloption (polloptionid, optioncontent) values (23, 'Introduction to Software Engineering.');
-insert into polloption (polloptionid, optioncontent) values (24, 'Operating Systems');
-insert into polloption (polloptionid, optioncontent) values (25, 'FMUP');
-insert into polloption (polloptionid, optioncontent) values (26, 'Maybe');
-insert into polloption (polloptionid, optioncontent) values (27, 'ICABAS');
-insert into polloption (polloptionid, optioncontent) values (28, 'None of the options');
-insert into polloption (polloptionid, optioncontent) values (29, 'Some');
-insert into polloption (polloptionid, optioncontent) values (30, 'All');
 
 
--- answer --                            voteType??
 
-insert into answer (userid, pollid) values (9, 2);
-insert into answer (userid, pollid) values (7, 2);
-insert into answer (userid, pollid) values (2, 3);
-insert into answer (userid, pollid) values (4, 1);
-insert into answer (userid, pollid) values (5, 9);
-insert into answer (userid, pollid) values (4, 6);
-insert into answer (userid, pollid) values (2, 1);
-insert into answer (userid, pollid) values (8, 10);
-insert into answer (userid, pollid) values (1, 5);
-insert into answer (userid, pollid) values (2, 7);
-insert into answer (userid, pollid) values (1, 9);
-insert into answer (userid, pollid) values (1, 2);
-insert into answer (userid, pollid) values (9, 8);
-insert into answer (userid, pollid) values (2, 4);
-insert into answer (userid, pollid) values (3, 3);
+
 
 -- event_category --
 

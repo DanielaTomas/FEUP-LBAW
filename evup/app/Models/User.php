@@ -112,7 +112,8 @@ class User extends Authenticatable
 
     public function answers()
     {
-        return $this->belongsToMany(PollOption::class, 'answer', 'userid', 'polloptionid');
+        return $this->hasMany(Answer::class, 'userid');
+
     }
     
     public function reports()
@@ -174,4 +175,5 @@ class User extends Authenticatable
         }
         return true;
     }
+    
 }
