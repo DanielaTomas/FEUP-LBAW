@@ -132,8 +132,9 @@
                         <?php } ?>
                         @endauth
                         <section id="comments">
-                            @each('partials.comment', $event->comments()->orderBy('commentdate','desc')->get(), 'comment',)
+                            @each('partials.comment',$comments, 'comment',)
                         </section>
+                        <span> {{$comments->links()}}</span>
                     </div>
                 </section>
 
