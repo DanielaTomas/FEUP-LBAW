@@ -89,7 +89,7 @@ Route::post('api/myEvents/leave_event', 'UserController@leaveEvent');
 Route::get('api/myEvents/organizing', 'EventController@organizerEvents');
 Route::post('api/myEvents/onMyAgenda', 'EventController@myEvents');
 
-Route::post('event/{id}/createPoll','EventController@createPoll')->where(['id' => '[0-9]+'])->name('create_poll'); 
+Route::post('event/{id}/createPoll','PollController@createPoll')->where(['id' => '[0-9]+'])->name('create_poll'); 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
@@ -119,7 +119,7 @@ Route::post('api/requestToJoin', 'UserController@requestToJoin');
 Route::post('event/{id}/like/{commentid}/voted/{voted}','CommentController@like')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('like');
 Route::post('event/{id}/dislike/{commentid}/voted/{voted}','CommentController@dislike')->where(['id' => '[0-9]+', 'commentid' => '[0-9]+'])->name('dislike');;
 
-Route::get('/event/{id}/answerpoll','EventController@answerpoll')->where(['id' => '[0-9]+'])->name('answerpoll');
+Route::get('/event/{id}/answerpoll','PollController@answerpoll')->where(['id' => '[0-9]+'])->name('answerpoll');
 //Filter
 Route::post('api/filter_tag', 'HomeController@filterTag');
 Route::post('api/filter_category', 'HomeController@filterCategory');

@@ -1,5 +1,5 @@
 const voteOption = (optionid,pollid) => {
-    sendAjaxRequest('get', `/event/${optionid}/answerpoll`, { 'optionid': optionid }, voteOptionHandler(optionid,pollid));
+    sendAjaxRequest('get', `/event/${optionid}/answerpoll`, null, voteOptionHandler(optionid,pollid));
 }
 
 function voteOptionHandler(optionid,pollid){
