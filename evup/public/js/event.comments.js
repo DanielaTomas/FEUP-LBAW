@@ -14,13 +14,6 @@ const createNewReply = (parent, eventid, parentid) => {
     sendAjaxRequest('post', url, { 'commentcontent': body, 'eventid': eventid, 'parentid': parentid }, newCommentHandler(true, parent, 'afterend', `#replyTextArea-${parentid}`));
 }
 
-const editComment = (commentId, editBox) => {
-    const body = select(`#edit_textarea_${commentId}`).value;
-    if (!body) return;
-
-    sendAjaxRequest('PUT', `/comment/${commentId}`, { body }, editCommentHandler(commentId, editBox));
-}
-
 const newCommentHandler = (reply, parent = select('#comments'), position = 'afterbegin', textarea = '#commentTextArea') => function () {
     const json = JSON.parse(this.responseText);
 
@@ -40,6 +33,31 @@ const newCommentHandler = (reply, parent = select('#comments'), position = 'afte
     initModal(selectors)
 }
 
+/*
+const editComment = (commentId, editBox) => {
+    const body = select(`#edit_textarea_${commentId}`).value;
+    if (!body) return;
+
+    sendAjaxRequest('PUT', `/comment/${commentId}`, { body }, editCommentHandler(commentId, editBox));
+}
+*/
+
+const updateComment = (eventid, commentid) => {
+    const url = '/event/'+ eventid + '/editComment/' + commentid;
+    const body = select(`#editCommentInput-${commentid}`).value;
+    if (!body) return;
+
+    sendAjaxRequest('post', url, { 'commentcontent': body, 'eventid': eventid, 'commentid': commentid }, editCommentHandler(body,commentid));
+}
+
+function editCommentHandler(body,commentid) {
+    
+    let element = document.getElementById('content-' + commentid);
+
+    element.innerHTML = body;
+
+    createAlert('success', 'You have edited your comment successfully.')
+}
 
 const deleteComment = (eventid,commentid) => {
     const url = '/event/'+ eventid + '/delete/' + commentid;
