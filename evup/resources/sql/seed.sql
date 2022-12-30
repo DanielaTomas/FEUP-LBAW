@@ -572,7 +572,6 @@ insert into event ( userid, eventname, public, eventaddress, description, eventp
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Festa de Quintal', false, '240 Avenida de Ramos Pinto 4400-261 Vila Nova de Gaia', 'Festa de quintal', 2, '2022-12-08', '2022-12-09');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'HackerX - Porto (Full-Stack) Employer Ticket - 02/23 (Onsite)', true, 'Praca do Bom Sucesso 4150 Porto', 'HackerX is an invite-only recruiting event for developers. We are active in >175+ cities globally with a community of over 100,000', 2, '2023-02-26', '2023-02-27');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Lionesa Yoga Sessions', true, 'Rua Lionesa 4465-671 Leça do Balio', 'Lionesa welcomes Yoga Sessions, every Monday at 18h in Jardim da Lionesa - in front of Hilti Academy - limited to 10 people per session.', 2, '2023-01-27', '2023-01-30');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 32, 'A Course on Finding Purpose in Work and Life in 2023', false, '206 Rua de Gonçalo Cristóvão #216 4000-265 Porto', 'A two-day course about finding passion at work and life.', 2, '2022-12-23', '2022-12-25');
 
 -- attendee --
 
@@ -585,15 +584,15 @@ insert into attendee (attendeeid, eventid) values (3, 3);
 insert into attendee (attendeeid, eventid) values (3, 13);
 insert into attendee (attendeeid, eventid) values (4, 14);
 insert into attendee (attendeeid, eventid) values (4, 4);
-insert into attendee (attendeeid, eventid) values (5, 5);
-insert into attendee (attendeeid, eventid) values (5, 15);
-insert into attendee (attendeeid, eventid) values (7, 7);
-insert into attendee (attendeeid, eventid) values (8, 8);
-insert into attendee (attendeeid, eventid) values (9, 9);
+insert into attendee (attendeeid, eventid) values (30, 5);
+insert into attendee (attendeeid, eventid) values (29, 13);
+insert into attendee (attendeeid, eventid) values (31, 7);
+insert into attendee (attendeeid, eventid) values (31, 8);
+insert into attendee (attendeeid, eventid) values (31, 9);
 insert into attendee (attendeeid, eventid) values (32, 2);
 insert into attendee (attendeeid, eventid) values (32, 7);
 insert into attendee (attendeeid, eventid) values (32, 8);
-insert into attendee (attendeeid, eventid) values (32, 15);
+insert into attendee (attendeeid, eventid) values (32, 13);
 
 -- Category --
 insert into Category ( categoryname) values ( 'Tudo');
@@ -640,7 +639,7 @@ insert into report (reporterid, eventid, message, reportstatus) values ( 1, 11, 
 insert into report (reporterid, eventid, message, reportstatus) values ( 1, 13, 'The event image is inappropriate...', true);
 insert into report (reporterid, eventid, message, reportstatus) values ( 5, 2, 'Fraud', false);
 insert into report (reporterid, eventid, message, reportstatus) values ( 3, 1, 'Should be tagged as adult content', true);
-insert into report (reporterid, eventid, message, reportstatus) values ( 6, 30, 'Should be tagged as adult content', true);
+insert into report (reporterid, eventid, message, reportstatus) values ( 6, 14, 'Should be tagged as adult content', true);
 
 --invitation --
 
@@ -716,11 +715,9 @@ insert into notification ( receiverid, joinrequestid, notificationdate, notifica
 insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values (1, 4, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', false);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 1, 11, CURRENT_TIMESTAMP, 'InviteReceived', false);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values (1, 6, CURRENT_TIMESTAMP, 'InviteAccepted', false);
-insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 1, 7, CURRENT_TIMESTAMP, 'NewPoll', false);
 insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values ( 8, 2, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 9, 9, CURRENT_TIMESTAMP, 'InviteReceived', true);
 insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 4, 3, CURRENT_TIMESTAMP, 'InviteAccepted', false);
-insert into notification ( receiverid, pollid, notificationdate, notificationtype, notificationstatus) values ( 3, 9, CURRENT_TIMESTAMP, 'NewPoll', false);
 
 -- vote --
 
@@ -760,7 +757,6 @@ insert into event_category (eventid, categoryid) values (11, 14);
 insert into event_category (eventid, categoryid) values (12, 11);
 insert into event_category (eventid, categoryid) values (13, 9);
 insert into event_category (eventid, categoryid) values (14, 13);
-insert into event_category (eventid, categoryid) values (15, 3);
 
 -- event_tag --
 insert into event_tag (eventid, tagid) values (1, 11);
@@ -777,7 +773,6 @@ insert into event_tag (eventid, tagid) values (11, 7);
 insert into event_tag (eventid, tagid) values (12, 15);
 insert into event_tag (eventid, tagid) values (13, 9);
 insert into event_tag (eventid, tagid) values (14, 14);
-insert into event_tag (eventid, tagid) values (15, 12);
 
 
 -- contact --
