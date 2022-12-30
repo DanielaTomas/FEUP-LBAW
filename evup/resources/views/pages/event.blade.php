@@ -123,7 +123,7 @@
                                 @endif
                             </div>
                         <section id="comments">
-                            @each('partials.comment', $event->comments()->orderBy('commentdate','desc')->get(), 'comment',)
+                            @each('partials.comment', $event->comments()->orderBy('commentdate','desc')->get(), 'comment')
                         </section>
                     </div>
                 </section>
