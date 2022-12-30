@@ -23,7 +23,7 @@
         <div class="px-6 ">
             <div class="text-center mt-2">
                 <div class="mr-2">
-                    <img class="mx-auto w-12 h-12 rounded-full" src="{{ asset('storage/images/image-'.$user->userphoto.'.png')}}" />
+                    <img alt="user_photo" class="mx-auto w-12 h-12 rounded-full" src="{{ asset('storage/images/image-'.$user->userphoto.'.png')}}">
                 </div>
                 <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">
                     {{ $user->name }}
@@ -72,21 +72,21 @@
                         </button>
                     </div>
                 </div>
-                <article>
+                <div>
                     <section id="myEventsHeader" class="m-4 text-center">
                         <h2 class="text-2xl font-semibold leading-tight">My Events</h2>
                     </section>
-                    <section id="Events" class="flex flex-wrap justify-center gap-2">
+                    <div id="Events" class="flex flex-wrap justify-center gap-2">
                         @each('partials.eventCard', $events, 'event')
-                    </section>
-                </article>
+                    </div>
+                </div>
                 <article>
                     <div id="myInvitationsHeader" class="m-4 text-center">
                         <h2 class="text-2xl font-semibold leading-tight">My Invitations</h2>
                     </div>
-                    <section id="myInvitationsProfile" class="flex flex-col p-5 max-w-2xl mx-auto">
+                    <div id="myInvitationsProfile" class="flex flex-col p-5 max-w-2xl mx-auto">
                         @each('partials.invitation', $invites, 'invite')
-                    </section>
+                    </div>
                 </article>
             </div>
         </div>

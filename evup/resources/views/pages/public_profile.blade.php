@@ -7,7 +7,7 @@
         <div class="px-6 ">
             <div class="text-center mt-2">
                 <div class="mr-2">
-                    <img class="mx-auto w-12 h-12 rounded-full" src="{{ asset('storage/images/image-'.$user->userphoto.'.png')}}" />
+                    <img alt="user_photo" class="mx-auto w-12 h-12 rounded-full" src="{{ asset('storage/images/image-'.$user->userphoto.'.png')}}">
                 </div>
                 <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">
                     {{ $user->name }}
@@ -25,15 +25,15 @@
                     <i class="text-slate-400 opacity-75"></i>{{ $user->username }} / {{ $user['email'] }}
                 </div>
             </div>
-        <div>
-    <article>
+    </div>
+    <div>
         <section id="myEventsHeader" class="m-4 text-center">
             <h2 class="text-2xl font-semibold leading-tight">My Events</h2>
         </section>
-        <section id="Events" class="flex flex-wrap justify-center gap-2">
+        <div id="Events" class="flex flex-wrap justify-center gap-2">
             @each('partials.eventCard', $events, 'event')
-        </section>
-    </article>
+        </div>
+    </div>
 </article>
 
 @endsection

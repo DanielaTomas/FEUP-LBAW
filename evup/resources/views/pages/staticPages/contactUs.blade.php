@@ -42,7 +42,7 @@
                     @csrf
                     <div class="flex flex-col">
                         <label for="name" class="hidden">Full Name</label>
-                        <input type="name" name="name" id="name" placeholder="Full Name" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
+                        <input type="text" name="name" id="name" placeholder="Full Name" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
                     </div>
 
                     <div class="flex flex-col mt-2">
@@ -52,7 +52,7 @@
 
                     <div class="flex flex-col mt-2">
                         <label for="subject" class="hidden">Subject</label>
-                        <input type="subject" name="subject" id="subject" placeholder="Subject" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
+                        <input type="text" name="subject" id="subject" placeholder="Subject" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
                     </div>
 
                     <div class="flex flex-col mt-2">
