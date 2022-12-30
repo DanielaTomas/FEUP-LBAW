@@ -138,8 +138,8 @@ class UserController extends Controller
 
         $this->authorize('profile', $user);
 
-        $ordered_events = $user->events()->get();
-        $ordered_invites = $user->invites_received()->get();
+        $ordered_events = $user->events()->paginate(2);
+        $ordered_invites = $user->invites_received()->paginate(4);
 
         return view('pages.profile', [
             'user' => $user,

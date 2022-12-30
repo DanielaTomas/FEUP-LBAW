@@ -78,7 +78,9 @@
                     </section>
                     <section id="Events" class="flex flex-wrap justify-center gap-2">
                         @each('partials.eventCard', $events, 'event')
+                        <span > {{$events->links()}}</span>
                     </section>
+                  
                 </article>
                 <article>
                     <div id="myInvitationsHeader" class="m-4 text-center">
@@ -86,7 +88,9 @@
                     </div>
                     <section id="myInvitationsProfile" class="flex flex-col p-5 max-w-2xl mx-auto">
                         @each('partials.invitation', $invites, 'invite')
+                        <span class="flex justify-center gap-2 max-w-2xl mx-auto mt-2"> {{$invites->links()}}</span>
                     </section>
+                    
                 </article>
             </div>
         </div>
