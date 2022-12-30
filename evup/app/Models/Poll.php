@@ -37,7 +37,7 @@ class Poll extends Model
     {
         
         foreach ($this->poll_options()->get() as $opt)
-            if ($opt->voted($id))
+            //if ($opt->voted($id))
                 return true;
 
         return false;

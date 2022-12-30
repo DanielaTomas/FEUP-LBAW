@@ -33,6 +33,7 @@ class PollOption extends Model
 
     public function voted($id)
     {
-        return $this->answers()->get()->contains($id);
+        $users = $this->answers()->where('userid','=', $id)->count();
+        return $users>0;
     }
 }
