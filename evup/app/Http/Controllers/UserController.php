@@ -177,6 +177,25 @@ class UserController extends Controller
             return abort(404, 'User not found, id: ' . $id);
 
         $this->authorize('update', $user);
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|min:1|max:1000',
+                'username' => 'required|string|min:1|max:1000',
+                'email' => 'required|string|min:5|max:1000',
+                'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:4096',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to create comment. Bad request',
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+
         $user->name = $request->name;
 
         $repeatedUsername = User::where('username', $user->username)->first();
@@ -192,13 +211,14 @@ class UserController extends Controller
         } else {
             return redirect()->back()->withInput();
         }
-
-        $name = $request->file('image')->getClientOriginalName();
-        $upload = new Upload();
-        $upload->filename = $name;
-        $upload->save();
-        $request->image->storeAs('public/images/', "image-$upload->uploadid.png");
-        $user->userphoto = $upload->uploadid;
+        if ($request->file('image') != NULL) {
+            $name = $request->file('image')->getClientOriginalName();
+            $upload = new Upload();
+            $upload->filename = $name;
+            $upload->save();
+            $request->image->storeAs('public/images/', "image-$upload->uploadid.png");
+            $user->userphoto = $upload->uploadid;
+        }
 
         $user->save();
         return redirect("/user/$user->userid");
@@ -284,7 +304,7 @@ class UserController extends Controller
     public function acceptRequest(int $id)
     {
         $request = Invitation::find($id);
-        
+
         if (is_null($request))
             return response()->json([
                 'status' => 'Not Found',
