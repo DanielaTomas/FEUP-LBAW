@@ -19,6 +19,7 @@ tags:
   - name: "M02: Profile and User Information"
   - name: "M03: Events"
   - name: "M04: User Administration"
+  - name: "M05: Static Pages"
 
 paths:
   # M01: Authentication
@@ -93,7 +94,7 @@ paths:
                   description: "Successful logout. Redirect to homepage."
                   value: "/"
 
-  /signup:
+  /register:
     get:
       operationId: R104
       summary: "R104: Sign-up Form"
@@ -146,6 +147,130 @@ paths:
                 302Failure:
                   description: "Failed registration. Redirect to sign-up form."
                   value: "/signup"
+
+/forgotPassord:
+    get:
+      operationId: R106
+      summary: "R106: Forgot password Form"
+      description: "Provides the 'forgot my password' form. Access: PUB"
+      tags:
+        - "M01: Authentication"
+
+      responses:
+        "200":
+          description: "Ok. Show forget password form"
+
+/forgot_password:
+    post:
+      operationId: R107
+      summary: "R107: Forgot password password action"
+      description: "Processes the forgot password form submission. Access: PUB"
+      tags:
+        - "M01: Authentication"
+
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files (avatar)
+          multipart/form-data:
+           schema:
+             type: object
+             properties:
+               email:
+                 type: string
+             required:
+                - email
+      responses:
+        "200":
+          description: "Ok. Email sent."
+
+  /reset:
+    get:
+        operationId: R108
+        summary: "R108: Reser password Form"
+        description: "Provides the 'reset my password' form. Access: PUB"
+        tags:
+          - "M01: Authentication"
+
+        responses:
+          "200":
+            description: "Ok. Show reset password form"
+    post:
+      operationId: R109
+      summary: "R109: Reset password password action"
+      description: "Processes the reset password form submission. Access: PUB"
+      tags:
+        - "M01: Authentication"
+
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files (avatar)
+          multipart/form-data:
+           schema:
+             type: object
+             properties:
+               newPassword:
+                 type: string
+             required:
+                - newPassword
+      responses:
+        "200":
+          description: "Ok. Password Reseted."
+
+  /appeal/{id}:
+    get:
+        operationId: R110
+        summary: "R110: Appeal Form"
+        description: "Provides the 'appeal' form. Access: PUB"
+        tags:
+          - "M01: Authentication"
+
+        parameters:
+                - in: path
+                  name: id
+                  schema:
+                    type: integer
+                  required: true
+
+        responses:
+          "200":
+            description: "Ok. Show appeal form"
+    post:
+      operationId: R111
+      summary: "R111: appeal action"
+      description: "Processes the appeal form submission. Access: PUB"
+      tags:
+        - "M01: Authentication"
+
+       parameters:
+                - in: path
+                  name: id
+                  schema:
+                    type: integer
+                  required: true
+
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files (avatar)
+          multipart/form-data:
+           schema:
+             type: object
+             properties:
+               message:
+                 type: string
+               email:
+                 type: string
+               password:
+                 type: string
+             required:
+                - name
+                - message
+                - password
+      responses:
+        "200":
+          description: "Ok. Appeal sent."
 
   # M02: Profile and User Information
   /user/{id}:
@@ -349,6 +474,39 @@ paths:
             description: "Ok. Creates a organizer request"
           "404":
             description: "User not found"
+
+/notifications:
+  put:
+    operationId: R209
+          summary: "R209: Marks all notifications as read"
+          description: "Marks all notifications of an user as read. Access: OWN"
+          tags:
+            - "M02: Profile and User Information"
+          responses:
+            "200":
+              description: "Ok. Successfully marked all notifications as read"
+
+/notifications/{id}/:
+      put:
+      operationId: R210
+          summary: "R210: Marks a notification as read"
+          description: "Marks a notification of an user as read. Access: OWN"
+          tags:
+            - "M02: Profile and User Information"
+
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "Ok.  Successfully marked notification as read"
+          "404":
+            description: "User not found"
+
 
   # M03 : Events
   /event/{id}:
@@ -1001,6 +1159,33 @@ paths:
           "200":
             description: "OK. Comment Desliked" 
 
+/event/{id}/createPoll:
+      post:
+        operationId: R326
+        description: "Creates a poll. Access: PUB"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+       requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+        responses:
+          "200":
+            description: "OK. Poll created" 
+
 
 
   # M04: User Administration
@@ -1185,7 +1370,7 @@ paths:
             "404":
               description: "Not found"
 
- /admin/{id}/view:
+ /admin/users/{id}/view:
         get:
           operationId: R409
           summary: "R409: View User Profile"
@@ -1277,29 +1462,6 @@ paths:
             "403":
               description: "Forbidden. No permissions"
 
- /admin/reports/{id}/close:
-        put:
-          operationId: R413
-          summary: "R413: Unbans an user"
-          description: "Closes a report . Access: ADM"
-          tags:
-            - "M04: User Administration"
-
-           parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-          responses:
-            "200":
-              description: "Ok. Report closed unbanned."
-            "401":
-              description: "Unauthorized. Not logged in"
-            "403":
-              description: "Forbidden. No permissions"
-
  /admin/events/{id}/delete:
         put:
           operationId: R414
@@ -1323,4 +1485,50 @@ paths:
             "403":
               description: "Forbidden. No permissions"
 
+# M05: Static Pages
 
+  /aboutUs:
+    get:
+      operationId: R501
+      summary: "R501: About us page"
+      description: "Shows the about us page. Access: PUB"
+      tags:
+        - "M05: Static Pages"
+
+      responses:
+        "200":
+          description: "Ok. Shows the about us page"
+
+  /contactUs:
+    get:
+      operationId: R502
+      summary: "R502: Contact us page"
+      description: "Shows the contact us page. Access: PUB"
+      tags:
+        - "M05: Static Pages"
+
+      responses:
+        "200":
+          description: "Ok. Shows the contact us page"
+    post:
+     operationId: R503
+      summary: "R503: Contact us form page"
+      description: "Sends the contact us form. Access: PUB"
+      tags:
+        - "M05: Static Pages"
+
+      responses:
+        "200":
+          description: "Ok. Form sent correctfully"
+
+  /faq:
+    get:
+      operationId: R504
+      summary: "R504: FAQ page"
+      description: "Shows the FAQ page. Access: PUB"
+      tags:
+        - "M05: Static Pages"
+
+      responses:
+        "200":
+          description: "Ok. Shows the FAQ page"
