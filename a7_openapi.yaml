@@ -255,7 +255,7 @@ paths:
                     value: "/user/{id}"
 
   /user/accept/{id}:
-      put:
+      post:
         operationId: R205
         summary: "R205: Accepts an invite"
         description: "Accepts an invite to an event that the user received. Access: OWN"
@@ -280,7 +280,7 @@ paths:
             description: "Invite not found"
       
   /user/deny/{id}:
-      put:
+      post:
         operationId: R206
         summary: "R206: Does not accept an invite"
         description: "Does not accept an invite to an event that the user received. Access: OWN"
@@ -304,6 +304,51 @@ paths:
           "404":
             description: "Invite not found"
 
+  /user/{id}/delete:
+      post:
+        operationId: R207
+        summary: "R207: Deletes an user"
+        description: "Deletes the user. Access: OWN"
+        tags:
+          - "M02: Profile and User Information"
+
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "Ok. Show user deleted"
+          "401":
+            description: "Unauthorized. Must be authenticated"
+          "403":
+            description: "Forbidden. Must be owner of the profile"
+          "404":
+            description: "Invite not found"
+
+/user/{id}/organizerRequest:
+      get:
+        operationId: R208
+        summary: "R208: Create an organizer request for the user"
+        description: "Creates a request asking to the user become an organizer. Access: OWN"
+        tags:
+          - "M02: Profile and User Information"
+
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "Ok. Creates a organizer request"
+          "404":
+            description: "User not found"
 
   # M03 : Events
   /event/{id}:
@@ -403,6 +448,8 @@ paths:
           "404":
             description: "Event not found"
 
+
+
   /event/{id}/searchUsers:
       post:
         operationId: R304
@@ -430,7 +477,7 @@ paths:
                     type: string
         responses:
           "200":
-            description: "OK."
+            description: "OK. Show the search Page."
 
   /event/{id}/inviteUsers:
       post:
@@ -459,25 +506,7 @@ paths:
                     type: string
         responses:
           "200":
-            description: "OK"
-
-  /event/{id}/attendees:
-      get:
-          operationId: R306
-          description: "Get attendees of an event. Access: ATT"
-          tags:
-            - "M03: Events"
-
-          parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-          responses:
-            "200":
-              description: "OK."
+            description: "OK. Invite sent correctfully"
     
   /event/{id}/adduser:
       get:
@@ -495,7 +524,7 @@ paths:
 
           responses:
             "200":
-              description: "OK."
+              description: "OK. Displays list of users not attending"
 
   /event/{eventid}/adduser/{userid}:
       post:
@@ -524,7 +553,7 @@ paths:
                     type: integer
         responses:
           "200":
-            description: "OK."
+            description: "OK. Adds user to event"
     
   /event/{eventid}/removeuser/{userid}:
       post:
@@ -553,7 +582,7 @@ paths:
                     type: integer
         responses:
           "200":
-            description: "OK."
+            description: "OK. Removes user from event"
     
   /myEvents:
       get:
@@ -564,32 +593,22 @@ paths:
 
           responses:
             "200":
-              description: "OK."
+              description: "OK. Show page Myevents"
     
-  /myEvents/organizing:
-      get:
-          operationId: R311
-          description: "Get events user is organizing. Access: ORG"
-          tags:
-            - "M03: Events"
-
-          responses:
-            "200":
-              description: "OK."
 
   /myEvents/createEvent:
       get:
-        operationId: R312
+        operationId: R311
         description: "Get forms to create event. Access: ORG"
         tags:
           - "M03: Events"
 
         responses:
           "200":
-            description: "OK."
+            description: "OK. Shows form"
       
       post:
-          operationId: R313
+          operationId: R312
           description: "Leave event user is attending/has attendend. Access: ORG"
           tags:
             - "M03: Events"
@@ -631,24 +650,13 @@ paths:
             "404":
               description: "Event not found"
 
-  /myEvents/{id}:
+ /event/{id}/report:
       post:
-        operationId: R314
-        summary: "R305: "
-        description: "Leave event user is attending/has attendend. Access: ORG"
+        operationId: R312
+        description: "Reports an event. Access: PUB"
         tags:
           - "M03: Events"
-
-        requestBody:
-          required: true
-          content:
-            multipart/form-data:
-              schema:
-                type: object
-                properties:
-                  eventid:
-                    type: integer
-
+        
         parameters:
           - in: path
             name: id
@@ -658,13 +666,343 @@ paths:
 
         responses:
           "200":
-              description: "OK."
-          "401":
-            description: "Unauthorized. Must be authenticated"
-          "403":
-            description: "Forbidden. Must be attendee of the event"
-          "404":
-            description: "Event not found"
+            description: "OK. Report made correctfully" 
+
+/event/{id}/dashboard:
+      post:
+        operationId: R313
+        description: ". Access: PUB"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "OK. " 
+
+/event/{eventid}/join_requests/{id}/deny:
+      put:
+        operationId: R314
+        description: "Denies a user request. Access: ORG"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: eventid
+            schema:
+              type: integer
+            required: true
+            
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  eventid:
+                    type: integer
+                  userid:
+                    type: integer
+        responses:
+          "200":
+            description: "OK. Join request denied"
+
+/event/{eventid}/join_requests/{id}/accept:
+      put:
+        operationId: R315
+        description: "Accept a user request. Access: ORG"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: eventid
+            schema:
+              type: integer
+            required: true
+            
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  eventid:
+                    type: integer
+                  userid:
+                    type: integer
+        responses:
+          "200":
+            description: "OK. Join request accepted"
+
+ /event/{id}/public:
+      put:
+        operationId: R316
+        description: "Makes an event public. Access: ORG"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "OK. Event is public" 
+
+ /event/{id}/private:
+      put:
+        operationId: R317
+        description: "Makes an event private. Access: ORG"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "OK. Event is private" 
+
+ /event/{id}/cancel:
+      put:
+        operationId: R318
+        description: "Cancels an event. Access: ORG"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "OK. Event is cancelled" 
+
+ /event/{id}/atendees:
+      get:
+        operationId: R319
+        description: "Shows an event atendees. Access: ORG"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "OK. List is showed" 
+
+ /event/{id}/adduser:
+      get:
+        operationId: R320
+        description: ". Access: ORG"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "OK. " 
+
+ /event/{id}/update:
+      get:
+        operationId: R321
+        description: "Updates an event. Access: ORG"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "OK. Event updated " 
+
+ /event/{id}/delete/{commentid}:
+      post:
+        operationId: R322
+        description: "Updates an event. Access: ORG"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+       requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  commentid:
+                    type: integer
+        responses:
+          "200":
+            description: "OK. Comment deleted" 
+
+ /event/{id}/editComment/{commentid}/update:
+      post:
+        operationId: R323
+        description: "Updates an comment. Access: OWN"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+       requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  commentid:
+                    type: integer
+        responses:
+          "200":
+            description: "OK. Comment updated" 
+
+ /event/{id}/editComment/{commentid}:
+      post:
+        operationId: R324
+        description: "Edits an comment. Access: OWN"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+       requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  commentid:
+                    type: integer
+        responses:
+          "200":
+            description: "OK. Comment edited" 
+
+ /event/{id}/like/{commentid}/voted/{voted}:
+      post:
+        operationId: R325
+        description: "Likes an comment. Access: PUB"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+       requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  commentid:
+                    type: integer
+                  voted:
+                    type: integer
+        responses:
+          "200":
+            description: "OK. Comment liked" 
+
+ /event/{id}/dislike/{commentid}/voted/{voted}:
+      post:
+        operationId: R325
+        description: "Dislikes an comment. Access: PUB"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+       requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  commentid:
+                    type: integer
+                  voted:
+                    type: integer
+        responses:
+          "200":
+            description: "OK. Comment Desliked" 
+
+
+
   # M04: User Administration
 
   /admin:
@@ -846,4 +1184,143 @@ paths:
               description: "Forbidden. No permissions"
             "404":
               description: "Not found"
+
+ /admin/{id}/view:
+        get:
+          operationId: R409
+          summary: "R409: View User Profile"
+          description: "Shows an user profile. Access: ADM"
+          tags:
+            - "M04: User Administration"
+
+           parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+          responses:
+            "200":
+              description: "Ok. Access to profile page"
+            "401":
+              description: "Unauthorized. Not logged in"
+            "403":
+              description: "Forbidden. No permissions"
+
+ /admin/users/{id}/delete:
+        put:
+          operationId: R410
+          summary: "R410: Deletes an user"
+          description: "Deletes an user . Access: ADM"
+          tags:
+            - "M04: User Administration"
+
+           parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+          responses:
+            "200":
+              description: "Ok. User deleted."
+            "401":
+              description: "Unauthorized. Not logged in"
+            "403":
+              description: "Forbidden. No permissions"
+
+ /admin/users/{id}/ban:
+        put:
+          operationId: R411
+          summary: "R411: Bans an user"
+          description: "Bans an user . Access: ADM"
+          tags:
+            - "M04: User Administration"
+
+           parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+          responses:
+            "200":
+              description: "Ok. User banned."
+            "401":
+              description: "Unauthorized. Not logged in"
+            "403":
+              description: "Forbidden. No permissions"
+
+ /admin/users/{id}/unban:
+        put:
+          operationId: R412
+          summary: "R412: Unbans an user"
+          description: "Unbans an user . Access: ADM"
+          tags:
+            - "M04: User Administration"
+
+           parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+          responses:
+            "200":
+              description: "Ok. User unbanned."
+            "401":
+              description: "Unauthorized. Not logged in"
+            "403":
+              description: "Forbidden. No permissions"
+
+ /admin/reports/{id}/close:
+        put:
+          operationId: R413
+          summary: "R413: Unbans an user"
+          description: "Closes a report . Access: ADM"
+          tags:
+            - "M04: User Administration"
+
+           parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+          responses:
+            "200":
+              description: "Ok. Report closed unbanned."
+            "401":
+              description: "Unauthorized. Not logged in"
+            "403":
+              description: "Forbidden. No permissions"
+
+ /admin/events/{id}/delete:
+        put:
+          operationId: R414
+          summary: "R414: Deletes an event"
+          description: "Deletes a event . Access: ADM"
+          tags:
+            - "M04: User Administration"
+
+           parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+          responses:
+            "200":
+              description: "Ok. Event deleted."
+            "401":
+              description: "Unauthorized. Not logged in"
+            "403":
+              description: "Forbidden. No permissions"
+
 
