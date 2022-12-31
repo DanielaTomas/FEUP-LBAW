@@ -23,9 +23,9 @@
         </svg></button>
     <!-- Dropdown menu -->
     <div id="dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
-        <ul class="py-1 text-sm text-gray-700" aria-labelledby="menu-item-2">
+
             @each('partials.categoryDropDown', $categories, 'category')
-        </ul>
+       
     </div>
 
 </div>
