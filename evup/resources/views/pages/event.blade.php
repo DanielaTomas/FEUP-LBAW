@@ -89,7 +89,7 @@
                 <div class="flex justify-center flex-col">
                     <div class="mb-3 xl:w-96">
                         <div class="input-group relative flex  items-stretch w-full mb-4">
-                            <input id="mySearch" name="search" type="search" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Enter user's email" aria-label="Search" aria-describedby="button-addon2">
+                            <input id="mySearch" name="search" type="search" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Enter user's email" aria-label="Search" aria-describedby="userResults">
                         </div>
                     </div>
                     <div id="userResults" class="flex  flex-col gap-5 max-w-xl"> </div>
@@ -132,6 +132,7 @@
                 @endauth
             </section>
         </section>
+    </section>
 </article>
 
 @endsection
