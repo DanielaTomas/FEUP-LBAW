@@ -3,21 +3,18 @@
     <article id="comment{{ $comment->commentid }}" class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900" data-id="{{ $comment->commentid }}">
         <div class="flex justify-between items-center mb-2">
             <div class="flex items-center">
-                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
+                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img alt="user_photo"
                         class="mr-2 w-6 h-6 rounded-full" src="{{ $comment->author()->first()->userphoto }}">
                     {{ $comment->author()->first()->username }}</p>
                 <p class="text-sm text-gray-600 dark:text-gray-400 mr-4">{{ $comment->time_diff() }}</p>
             @auth
                 @if (Auth::id() == $comment->authorid || Auth::user()->usertype == "Admin")
-                    <div id="deleteButton-{{ $comment->commentid }}">   
                             <!-- Delete Comment Modal toggle -->
-                            
                             <button id="deleteButton-{{ $comment->commentid }}" title="Delete this comment" class="block text-white bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-1.5 py-1.5 text-center m-1 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button" data-modal-toggle="staticModal-c{{ $comment->commentid }}">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                 </svg>
                             </button>  
-                    </div>
                 
                     @if(Auth::user()->usertype !== "Admin")
                         <button id="editCommentButton{{ $comment->commentid }}" data-modal-toggle="staticModal-editcomment{{ $comment->commentid }}"  type="submit" title="Edit this comment" class="block text-white bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-1.5 py-1.5 text-center m-1 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
@@ -72,6 +69,7 @@
                     </svg>
                     Post Reply
                 </button>
+                </div>
             </div>
         @endif
     </article>

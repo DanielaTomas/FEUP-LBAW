@@ -37,7 +37,7 @@
         <section class=" flex flex-row flex-wrap justify-between">
 
             <section class="flex flex-col grow p-6 max-w-xl">
-                <div class="flex flex-col gap-4  rounded">
+                <div class="flex flex-col gap-4 rounded">
                     <div class=" h-64 bg-top bg-cover rounded-t flex flex-col  shadow-lg" style="background-image: url({{ asset('storage/images/image-'.$event->eventphoto.'.png')}})">
                         @if (!$event->public)
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8  mt-2 ml-2">
@@ -77,7 +77,6 @@
                                 @endif
                             @endif
                         @endif
-
                     </div>
                 </div>
 
@@ -89,7 +88,7 @@
                 <div class="flex justify-center flex-col">
                     <div class="mb-3 xl:w-96">
                         <div class="input-group relative flex  items-stretch w-full mb-4">
-                            <input id="mySearch" name="search" type="search" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Enter user's email" aria-label="Search" aria-describedby="button-addon2">
+                            <input id="mySearch" name="search" type="search" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Enter user's email" aria-label="Search" aria-describedby="userResults">
                         </div>
                     </div>
                     <div id="userResults" class="flex  flex-col gap-5 max-w-xl"> </div>
@@ -115,7 +114,7 @@
                                     <div class="flex flex-wrap -mx-3 mb-6">
                                         <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Leave a comment</h2>
                                         <div class="w-full md:w-full px-3 mb-2 mt-2">
-                                            <input id="commentTextArea" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-500 focus:outline-none focus:bg-white" id="commentcontent" type="text" name="commentcontent" placeholder="Type Your Comment" required>
+                                            <input id="commentcontent" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-500 focus:outline-none focus:bg-white" type="text" name="commentcontent" placeholder="Type Your Comment" required>
                                         </div>
                                         <div class="w-full md:w-full flex items-start md:w-full px-3">
                                             <button onclick="createNewComment({{ $event->eventid }})" class="items-center font-bold px-3 py-1 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 text-white rounded-lg">Post Comment</button>
