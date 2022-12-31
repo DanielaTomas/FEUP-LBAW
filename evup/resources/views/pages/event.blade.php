@@ -111,9 +111,6 @@
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Comments</h2>
                         </div>
-                             @if(is_null($event->comments()->get()->first()))
-                            <p class="mb-4">There are no comments yet...</p>
-                            @endif
                             <div class="flex mx-auto items-center justify-center max-w-lg">
                                 @if (!$event->eventcanceled && Auth::user()->usertype !== "Admin")
                                     <div class="flex flex-wrap -mx-3 mb-6">
