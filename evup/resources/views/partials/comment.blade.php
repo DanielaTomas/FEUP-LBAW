@@ -61,7 +61,6 @@
                     class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-500 focus:outline-none focus:bg-white"
                     type="text" name="commentcontent"
                     placeholder="Type Your Reply" required>
-                <div class="w-full md:w-full flex items-start md:w-full px-3">
 
                 <button onclick="createNewReply(select('#comment{{$comment->commentid}}'), {{$comment->eventid}}, {{$comment->commentid}})" title="Reply to this comment" class="flex items-center mt-4 text-white bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-1.5 py-1.5 text-center m-1 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
                     <svg aria-hidden="true" class="mr-1 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
