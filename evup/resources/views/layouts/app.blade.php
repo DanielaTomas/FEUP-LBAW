@@ -41,12 +41,12 @@
 <body>
     <main>
         @include('partials.navbar')
-        <div id="alertcontainer" class="w-3q p-4 mt-4 ml-auto mr-auto">
+        <section id="alertcontainer" class="w-3q p-4 mt-4 ml-auto mr-auto">
             @include('partials.alerts')
-        </div>
-        <div id="content" class="mx-20">
+        </section>
+        <section id="content" class="mx-20">
             @yield('content')
-        </div>
+        </section>
         @include('partials.footer')
     </main>
     <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
