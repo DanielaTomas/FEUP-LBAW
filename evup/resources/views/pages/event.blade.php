@@ -56,7 +56,7 @@
 
                     <div class="flex flex-row justify-around">
                         @if (Auth::check())
-                            @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && !Auth::user()->isAttending($event->eventid))
+                            @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && !Auth::user()->isAttending($event->eventid) && Auth::user()->usertype !== "Admin")
                                 <!-- Request to Join Event Modal toggle -->
                                 <button id="requestToJoinButton{{ $event->eventid }}" data-modal-toggle="staticModal-jr{{ $event->eventid }}" title="Request to join this event" class="items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Request to join</button>
                                 @include('partials.join_request_modal', ['event' => $event])
@@ -71,9 +71,11 @@
                                         <button id="leaveEventButton{{ $event->eventid }}" disabled title="You cannot leave your own event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-600 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
                                     @endif
                                 @endif
-                                <!-- Report Event Modal toggle -->
-                                <button id="reportEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" title="Report this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Report Event</button>
-                                @include('partials.report_event_modal', ['event' => $event])
+                                @if (Auth::user()->usertype !== "Admin")
+                                    <!-- Report Event Modal toggle -->
+                                    <button id="reportEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" title="Report this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Report Event</button>
+                                    @include('partials.report_event_modal', ['event' => $event])
+                                @endif
                             @endif
                         @endif
 
@@ -103,14 +105,17 @@
                 <div class="mb-4"> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
 
                 @auth
-                @if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid))
+                @if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid) || Auth::user()->usertype === "Admin")
                 <section>
                     <div class=" mx-auto ">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Comments</h2>
                         </div>
+                             @if(is_null($event->comments()->get()->first()))
+                            <p class="mb-4">There are no comments yet...</p>
+                            @endif
                             <div class="flex mx-auto items-center justify-center max-w-lg">
-                                @if (!$event->eventcanceled)
+                                @if (!$event->eventcanceled && Auth::user()->usertype !== "Admin")
                                     <div class="flex flex-wrap -mx-3 mb-6">
                                         <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Leave a comment</h2>
                                         <div class="w-full md:w-full px-3 mb-2 mt-2">
