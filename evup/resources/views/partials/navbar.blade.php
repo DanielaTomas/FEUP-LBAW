@@ -35,7 +35,7 @@
         <!-- Login / Register      -->
     </div>
     <!-- Responsive navbar -->
-    <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar2"
+    <button id="dropdownNavbarLink1" data-dropdown-toggle="dropdownNavbar2"
         class="xl:hidden p-4 self-center hover:text-indigo-300 transition ease-in-out">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-indigo-300 transition ease-in-out " fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
@@ -91,7 +91,7 @@
         </div>
 
     
-        <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
+        <button id="dropdownNavbarLink2" data-dropdown-toggle="dropdownNavbar"
             class="flex mr-6 p-4 self-center hover:text-indigo-300 transition ease-in-out">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                 <path fill-rule="evenodd"
