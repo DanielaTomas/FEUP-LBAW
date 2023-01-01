@@ -9,9 +9,9 @@
                 <div class="flex justify-between mb-1">
                     <span class="text-base font-medium text-blue-700 dark:text-white">
                     @if($opt->voted($user->userid))
-                    <input id='button' type="radio"  checked disabled> {{$opt->optioncontent}}</span>
+                    <input type="radio"  checked disabled> {{$opt->optioncontent}}</span>
                     @else
-                    <input id='button'  type="radio"  value="0" disabled> {{$opt->optioncontent}}</span>
+                    <input  type="radio"  value="0" disabled> {{$opt->optioncontent}}</span>
                     @endif
 
                     <span class="text-sm font-medium text-blue-700 dark:text-white">{{round($opt->nanswers()/$poll->nranswers()*100,2)}} %</span>
@@ -28,8 +28,8 @@
 			<div  class='beforeOption relative w-full h-8'>
                 <div class="option flex justify-between mb-1">
                     <span class="text-base font-medium text-blue-700 dark:text-white">
-                    <input id='button' type="radio" onclick="voteOption({{ $opt->polloptionid }},{{$poll->pollid}})" value="0"> {{$opt->optioncontent}}</span>
-                    <p id="totalopt" class="invisible">{{$opt->nanswers()}} </p>
+                    <input type="radio" onclick="voteOption({{ $opt->polloptionid }},{{$poll->pollid}})" value="0"> {{$opt->optioncontent}}</span>
+                    <p class="invisible">{{$opt->nanswers()}} </p>
                 </div>
 		    </div>
             @endforeach

@@ -106,16 +106,16 @@
                 @auth
 
                 @if(($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) && Auth::user()->usertype !== "Admin")
-                <h3 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Polls</h2><br>
+                <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Polls</h2><br>
                     @if( $event->organizer()->first()->userid == $user->userid)
                     <button id="CreatePoll" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">Create Poll</button>
                     <div id="addhereform">
                         <form method="post" class="mb-6" action="{{ route('create_poll', $event->eventid) }}">
                         @csrf
                         <div class="rounded-lg bg-grey-500 mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="Question" >Question</label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Question</label>
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="question" type="text" required>
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="option">Options</label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Options</label>
                             <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name=option[] type="text" required>
                             <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name=option[] type="text" required>
                             <div id="addHere"></div>
