@@ -726,7 +726,10 @@ insert into polloption ( optioncontent, pollid) values ('A Lot',8);
 -- answer --                            voteType??
 
 insert into answer (userid, polloptionid) values (2, 2);
-
+insert into answer (userid, polloptionid) values (2, 4);
+insert into answer (userid, polloptionid) values (1, 1);
+insert into answer (userid, polloptionid) values (2, 7);
+insert into answer (userid, polloptionid) values (5, 4);
 
 
 -- comment --

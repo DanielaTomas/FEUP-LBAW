@@ -108,10 +108,10 @@
                 @if(($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) && Auth::user()->usertype !== "Admin")
                 <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Polls</h2><br>
                     @if( $event->organizer()->first()->userid == $user->userid)
-                    <button id="CreatePoll" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">Create Poll</button>
+                    <button id="CreatePoll" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-bold py-2 px-4 rounded-lg">Create Poll</button>
                     <div id="addhereform">
                         <form method="post" class="mb-6" action="{{ route('create_poll', $event->eventid) }}">
-                        @csrf
+                        @csrf   
                         <div class="rounded-lg bg-grey-500 mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Question</label>
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="question" type="text" required>
@@ -119,21 +119,19 @@
                             <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name=option[] type="text" required>
                             <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name=option[] type="text" required>
                             <div id="addHere"></div>
-                            <button id="addOption" type="button" class="items-center font-bold px-3 py-1 bg-gray-500 text-black rounded-full">Add Option</button>
+                            <button id="addOption" type="button" class="items-center font-bold px-3 py-1 bg-gray-500 hover:bg-gray-900 hover:text-white transition ease-in-out duration-300 text-black rounded-lg">Add Option</button>
                         </div>
-                        <button class="items-center font-bold px-3 py-1 bg-gray-900 text-white rounded-full" type="submit">Create Poll</button>
+                        <button class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-bold py-2 px-4 rounded-lg" type="submit">Create Poll</button>
                         </form>
                     </div>
                     @endif
                     <br>
                     <div class="mb-4">
-                    @if($polls->count()==0)
+                    @if($event->polls()->count()==0)
                       <p class="text-center text-xl leading-none tracking-tight text-gray-800">No polls available</p>
                     @endif
                     @if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid))
-                        @foreach($polls as $poll)
-                            @include('partials.poll',['poll'=>$poll,'user'=>$user])
-                        @endforeach
+                        @each('partials.poll', $event->polls()->get(), 'poll')
                     @endif
                     </div>
                 @endif

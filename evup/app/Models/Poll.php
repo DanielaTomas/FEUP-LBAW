@@ -33,28 +33,22 @@ class Poll extends Model
         return $this->hasMany(Notification::class, 'pollid');
     }
 
-    public function hasAnswered($id){
+    public function hasAnswered($id)
+    {
         
-        $req = $this->poll_options()->get();
-        
-        for($i = 0; $i < $req->count(); ++$i) {
-            $answers = $req[$i]->answers()->get();
-            for ($m = 0; $m < $answers->count(); ++$m) {
-            if($answers[$m]->userid==$id){
+        foreach ($this->poll_options()->get() as $opt)
+            if ($opt->voted($id))
                 return true;
-             }
-            }
-        }
+
         return false;
     }
 
     public function nranswers(){
         
-        $req = $this->poll_options()->get();
         $count = 0;
-        for($i = 0; $i < $req->count(); ++$i) {
-            $count = $count + $req[$i]->answers()->get()->count(); 
-        }
+        foreach ($this->poll_options()->get() as $opt)
+            $count += $opt->answers()->count(); 
+        
         return $count;
     }
     

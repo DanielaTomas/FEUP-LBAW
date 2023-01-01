@@ -11,19 +11,19 @@ class PollOption extends Model
     protected $table = 'polloption';
     protected $primaryKey = 'polloptionid';
 
-    public function event()
+    public function poll()
     {
         return $this->belongsTo(Poll::class, 'pollid');
     }
 
     public function answers()
     {
-        return $this->hasMany(Answer::class,'polloptionid');
+        return $this->belongsToMany(User::class, 'answer', 'polloptionid', 'userid');
     }
 
     public function nanswers()
     {
-        return $this->hasMany(Answer::class,'polloptionid')->count();
+        return $this->answers()->count();
     }
 
     public function notifications()
@@ -33,11 +33,6 @@ class PollOption extends Model
 
     public function voted($id)
     {
-        $eq = $this->answers()->get();
-        for($i = 0; $i < $eq->count(); ++$i) {
-            if ($eq[$i]->userid == $id)
-                return true;
-        }
-        return false;
+        return $this->answers()->get()->contains($id);
     }
 }

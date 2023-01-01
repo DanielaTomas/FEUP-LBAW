@@ -2877,6 +2877,10 @@ body {
   
   @media (min-width: 640px) {
 
+  #evuplogo {
+    transform: scale(0.8);
+  }
+
   .sm\:w-auto {
     width: auto;
   }
