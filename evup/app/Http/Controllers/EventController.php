@@ -48,7 +48,7 @@ class EventController extends Controller
       return view('pages.event', [
         'event' => $event
       ]);
-    } else if ($user->isAttendee($event) || $event->public || $user->userid == $event->userid)
+    } else if (Auth::check() && ($user->isAttendee($event) || $event->public || $user->userid == $event->userid))
       return view('pages.event', [
         'event' => $event, 'user' => $user
       ]);
