@@ -65,10 +65,15 @@ const deleteComment = (eventid,commentid) => {
 }
 
 function deleteCommentHandler(commentid) {
-    const comment = document.querySelectorAll('#comment' + commentid)
-    for(var i = 0; i < comment.length; i++) {
-        comment[i].remove()        
+    const comment = document.getElementById('comment' + commentid)
+    const child = document.querySelectorAll('#child' + commentid)
+
+    comment.remove()        
+
+    for(var i = 0; i < child.length; i++) {
+        child[i].remove()        
     }
+
     createAlert('success', 'You have removed this comment successfully.')
 }
 

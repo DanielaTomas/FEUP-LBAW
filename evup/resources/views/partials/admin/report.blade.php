@@ -2,7 +2,7 @@
     <td class="py-3 px-6 text-left">
         <div class="flex items-center">
             <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" src="{{$report['event']->eventphoto}}"/>
+                <img alt="" class="w-6 h-6 rounded-full" src="{{$report['event']->eventphoto}}">
             </div>
             <p>{{$report['event']->eventname}}</p>
         </div>
@@ -23,13 +23,13 @@
     <td class="py-3 px-6 text-center">
         <div class="flex justify-center">
             <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" 
+                <img alt="" class="w-6 h-6 rounded-full" 
                 @if ($report['reporter']->accountstatus !== 'Disabled')
                     src="{{ asset('storage/images/image-'.$report['reporter']->userphoto.'.png')}}"
                 @else
                     src="{{ asset('storage/images/image-1.png')}}"
                 @endif
-                />
+                >
             </div>
             <p>{{$report['reporter']->name}}</p>
         </div>

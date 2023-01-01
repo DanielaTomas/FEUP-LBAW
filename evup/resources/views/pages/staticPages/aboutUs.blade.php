@@ -13,8 +13,8 @@
                     <p class="mt-4 text-gray-600"> The main goal of this platform is to allow Student Organizations and other academic entities to have a single space to advertise and manage upcoming events whilst giving the opportunity to offer some interaction with the users. This tool would boost the popularity of these events among students and also facilitate their promotion for the organizers.</p>
                     <p class="mt-4 text-gray-600"> This web application was developed by the following students.</p>
                 </div>
-            </div>
-          </div>
+        </div>
+    </div>
 
 
         <div class="flex md:gap-8 justify-center mt-8 mb-8">
@@ -50,7 +50,6 @@
                 <div class="px-6 text-center mt-2 font-normal  text-sm mb-4"><p>Description</p></div>
             </div>
         </div>
-    </div>
 
 
     <div id="accordion-open" class="mt-16 mb-8" data-accordion="open" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">

@@ -22,11 +22,8 @@
     </div>
 </div>
 <div>
-    <article>
-        <div></div>
-
-        <section id="myeventsarea" class="flex flex-wrap justify-center gap-2 ">
+        <div id="myeventsarea" class="flex flex-wrap justify-center gap-2 ">
             @each('partials.eventCard', $events, 'event')
-        </section>
-    </article>
+</div>
+</div>
     @endsection

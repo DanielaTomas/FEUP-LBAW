@@ -2,11 +2,11 @@
 
 @section('content')
 
-<section id="homeTop" class="flex justify-between">
+<div id="homeTop" class="flex justify-between">
 
     <div class="flex-auto max-w-xl mb-4">
         <form id="searchForm" action="{{ route('search') }}">
-            <label for="event-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search Events</label>
+            <label for="publicSearch" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search Events</label>
             <div class="relative">
                 <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -23,22 +23,22 @@
         </svg></button>
     <!-- Dropdown menu -->
     <div id="dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
-        <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownDefault">
+
             @each('partials.categoryDropDown', $categories, 'category')
-        </ul>
+       
     </div>
 
-</section>
+</div>
 <article class="rounded-t-3xl">
-    <section id="homeTagsSection">
+    <div id="homeTagsSection">
         <p id="homeTagHeader" class="pt-6 font-bold text-lg">Select your interests to get event suggestions based on what you love</p>
         <div id="homeTags">
             @each('partials.tag', $tags, 'tag')
         </div>
-    </section>
-    <section id="homeEvents">
+    </div>
+    <div id="homeEvents">
         @include('partials.content.publicEvents', ['events' => $events])
-    </section>
+    </div>
 </article>
 
 @endsection

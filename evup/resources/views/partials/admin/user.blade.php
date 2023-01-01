@@ -2,13 +2,13 @@
     <td class="py-3 px-6 text-left">
         <div class="flex items-center">
             <div class="mr-2">
-                <img class="w-6 h-6 rounded-full" 
+                <img alt="" class="w-6 h-6 rounded-full" 
                 @if($user->accountstatus !== 'Disabled')
                     src="{{ asset('storage/images/image-'.$user->userphoto.'.png')}}"
                 @else
                     src="{{ asset('storage/images/image-1.png')}}"
                 @endif
-                />
+                >
             </div>
             <p>{{$user->name}}</p>
         </div>

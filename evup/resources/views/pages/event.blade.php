@@ -30,7 +30,6 @@
         @endif
         @endauth
         @endif
-        <button><i class="fa-solid fa-triangle-exclamation fa-2x"></i></button>
     </div>
 
     <section>
@@ -56,7 +55,7 @@
 
                     <div class="flex flex-row justify-around">
                         @if (Auth::check())
-                            @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && !Auth::user()->isAttending($event->eventid))
+                            @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && !Auth::user()->isAttending($event->eventid) && Auth::user()->usertype !== "Admin")
                                 <!-- Request to Join Event Modal toggle -->
                                 <button id="requestToJoinButton{{ $event->eventid }}" data-modal-toggle="staticModal-jr{{ $event->eventid }}" title="Request to join this event" class="items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Request to join</button>
                                 @include('partials.join_request_modal', ['event' => $event])
@@ -71,9 +70,11 @@
                                         <button id="leaveEventButton{{ $event->eventid }}" disabled title="You cannot leave your own event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-600 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
                                     @endif
                                 @endif
-                                <!-- Report Event Modal toggle -->
-                                <button id="reportEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" title="Report this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Report Event</button>
-                                @include('partials.report_event_modal', ['event' => $event])
+                                @if (Auth::user()->usertype !== "Admin")
+                                    <!-- Report Event Modal toggle -->
+                                    <button id="reportEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" title="Report this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Report Event</button>
+                                    @include('partials.report_event_modal', ['event' => $event])
+                                @endif
                             @endif
                         @endif
 
@@ -88,7 +89,7 @@
                 <div class="flex justify-center flex-col">
                     <div class="mb-3 xl:w-96">
                         <div class="input-group relative flex  items-stretch w-full mb-4">
-                            <input id="mySearch" name="search" type="search" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Enter user's email" aria-label="Search" aria-describedby="button-addon2">
+                            <input id="mySearch" name="search" type="search" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Enter user's email" aria-label="Search" aria-describedby="userResults">
                         </div>
                     </div>
                     <div id="userResults" class="flex  flex-col gap-5 max-w-xl"> </div>
@@ -103,7 +104,8 @@
                 <div class="mb-4"> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
 
                 @auth
-                @if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid))
+
+                @if(($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid)) && Auth::user()->usertype !== "Admin")
                 <h3 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Polls</h2><br>
                     @if( $event->organizer()->first()->userid == $user->userid)
                     <button id="CreatePoll" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">Create Poll</button>
@@ -136,18 +138,18 @@
                     </div>
                 @endif
                 
-                @if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid))
+                @if($event->organizer()->first()->userid == $user->userid || Auth::user()->isAttending($event->eventid) || Auth::user()->usertype === "Admin")
                 <section>
                     <div class=" mx-auto ">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Comments</h2>
                         </div>
                             <div class="flex mx-auto items-center justify-center max-w-lg">
-                                @if (!$event->eventcanceled)
+                                @if (!$event->eventcanceled && Auth::user()->usertype !== "Admin")
                                     <div class="flex flex-wrap -mx-3 mb-6">
                                         <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Leave a comment</h2>
                                         <div class="w-full md:w-full px-3 mb-2 mt-2">
-                                            <input id="commentTextArea" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-500 focus:outline-none focus:bg-white" id="commentcontent" type="text" name="commentcontent" placeholder="Type Your Comment" required>
+                                            <input id="commentTextArea" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-500 focus:outline-none focus:bg-white" type="text" name="commentcontent" placeholder="Type Your Comment" required>
                                         </div>
                                         <div class="w-full md:w-full flex items-start md:w-full px-3">
                                             <button onclick="createNewComment({{ $event->eventid }})" class="items-center font-bold px-3 py-1 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 text-white rounded-lg">Post Comment</button>
@@ -164,6 +166,7 @@
                 @endauth
             </section>
         </section>
+    </section>
 </article>
 
 @endsection

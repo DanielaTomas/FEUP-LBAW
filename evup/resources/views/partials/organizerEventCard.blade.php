@@ -39,11 +39,11 @@
             <a href="{{ route('show_event', $event->eventid) }}" title="View event page">
                 <h1 class="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-800 hover:text-indigo-600 transition ease-in-out duration-300">{{ $event->eventname }}</h1>
             </a>
-            <div id=eventCardCategories> @each('partials.category', $event->eventcategories()->get(), 'category') </div>
+            <div id="eventCardCategories{{ $event->eventid }}"> @each('partials.category', $event->eventcategories()->get(), 'category') </div>
             <p class="leading-normal">{{ $event->description }}</p>
             <div class="flex flex-column items-center mt-4 ">
                 <div class="w-1/2 text-gray-700"> {{ $event->eventaddress }} </div>
-                <div id=eventCardTags> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
+                <div id="eventCardTags{{ $event->eventid }}"> @each('partials.tag', $event->eventTags()->get(), 'tag') </div>
             </div>
         </div>
     </div>

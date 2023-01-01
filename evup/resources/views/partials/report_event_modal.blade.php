@@ -19,16 +19,15 @@
                     <h3 id="confirmrepTxt-{{ $event->eventid }}">Would you like to report this event?</h3>
                 </div>
                 <div class="p-6 space-y-6">
-                    <textarea id="message" type="text" name="message" required placeholder="Type your reason here..."
+                    <textarea id="message" name="message" required placeholder="Type your reason here..."
                     class="w-full bg-transparent outline-none focus:outline-none"></textarea>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                        <button type="submit" id="confirmrepBtn-{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" type="button" class="ban-button text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Yes</button>
+                        <button type="submit" id="confirmrepBtn-{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" class="ban-button text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Yes</button>
                         <button data-modal-toggle="staticModal-re{{ $event->eventid }}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Go Back</button>
                 </div>
             </form>
-        </div>
         </div>
     </div>
 </div>

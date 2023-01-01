@@ -28,7 +28,6 @@
                     </svg>
                 </a>
             @endif
-            <button><i class="fa-solid fa-triangle-exclamation fa-2x"></i></button>
         </div>
 
         <section>

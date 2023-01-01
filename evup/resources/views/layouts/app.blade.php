@@ -12,7 +12,7 @@
     <title>{{ config('app.name', 'Laravel') }}  @yield('title')</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script type="text/javascript">
         // Fix for Firefox autofocus CSS bug
@@ -34,7 +34,7 @@
     <script type="text/javascript" src={{ asset('js/notifications.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/flowbite.modal.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/myEvents.js') }} defer></script>
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/e93bc86ff0.js" crossorigin="anonymous"></script>
 </head>
 
@@ -52,7 +52,7 @@
     <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
     
     @auth
-        <script type="text/javascript" defer> setTimeout(() => { fetchNotifications(); }, "5000") </script>
+        <script type="text/javascript"> setTimeout(() => { fetchNotifications(); }, "5000") </script>
     @endauth
 </body>
 
