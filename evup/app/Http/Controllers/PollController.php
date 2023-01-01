@@ -39,7 +39,7 @@ class PollController extends Controller
             'errors' => ['forbidden' => 'Polloption alrady as a vote from this user, id: '.$id]
           ], 403);
     
-        $polloption->answers()->attach($id);
+        $polloption->answers()->attach(Auth::id());
         
         return response()->json([
           'status' => 'OK',
