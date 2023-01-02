@@ -159,7 +159,6 @@ class CommentController extends Controller
     $this->authorize('like',$comment);
     $user = Auth::id();
     
- 
     $comment->votes()->attach(Auth::id(),['commentid' => $commentid, 'voterid' => $user, 'type' => true]);
 
     return response()->json([
@@ -184,7 +183,7 @@ class CommentController extends Controller
 
     return response()->json([
       'status' => 'OK',
-      'msg' => 'Disliked comment successfully ',
+      'msg' => 'Disliked comment successfully',
       'id' => $id,
     ], 200);
   }
