@@ -71,7 +71,7 @@
             <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
                 <input type="email" name="email" value="{{ old('email') }}" required type="text"
                     placeholder="Email"
-                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none">
                 @if ($errors->has('email'))
                     <span class="error">
                         {{ $errors->first('email') }}
@@ -81,7 +81,7 @@
 
             <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
                 <input type="password" name="password" required placeholder="Password"
-                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none">
                 @if ($errors->has('password'))
                     <span class="error">
                         {{ $errors->first('password') }}
