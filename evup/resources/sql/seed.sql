@@ -519,6 +519,17 @@ CREATE TRIGGER user_search_update
 
 insert into upload (filename) values ('userDefault.png');
 insert into upload (filename) values ('eventDefault.jpeg');
+insert into upload (filename) values ('image-3.png');
+insert into upload (filename) values ('image-4.png');
+
+insert into upload (filename) values ('image-5.png');
+insert into upload (filename) values ('image-6.png');
+insert into upload (filename) values ('image-7.png');
+insert into upload (filename) values ('image-8.png');
+insert into upload (filename) values ('image-9.png');
+insert into upload (filename) values ('image-10.png');
+insert into upload (filename) values ('image-11.png');
+insert into upload (filename) values ('image-12.png');
 
 ---1234
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('mfalcus0', 'Micky Falcus', 'mfalcus0@google.com.hk', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
@@ -559,37 +570,21 @@ insert into users (username, name, email, password, userphoto,accountstatus, use
 
 
 -- event --
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Kovacek-Conn', false, '16 Brentwood Park', 'Nondisplaced fracture of base of neck of left femur', 2, '2023-11-08', '2023-11-30');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Wilkinson-Klein', false, '21812 Ohio Alley', 'Benign neoplasm of scrotum',2, '2023-02-06', '2023-02-16');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'McDermott, Hammes and Medhurst', true, '52 Onsgard Trail', 'Other injury of superior mesenteric artery', 2, '2023-01-03', '2023-01-31');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 18, 'Marquardt and Sons', false, '0752 Mayfield Park', 'Nondisplaced fracture of distal phalanx of right ring finger, sequela',2, '2023-01-24', '2023-01-25');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 20, 'Rutherford, DuBuque and MacGyver', false, '3926 Montana Avenue', 'Person boarding or alighting a three-wheeled motor vehicle injured in collision with two- or three-wheeled motor vehicle', 2, '2023-01-03', '2023-02-15');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 21, 'Mohr, Cummerata and Rempel', false, '902 Springview Center', 'Unspecified intracranial injury with loss of consciousness of 1 hour to 5 hours 59 minutes, sequela', 2, '2023-12-02', '2023-12-03');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 22, 'Trantow-Zieme', false, '96 Sauthoff Center', 'Corrosion of unspecified degree of multiple right fingers (nail), not including thumb, initial encounter', 2, '2022-11-29', '2022-12-29');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 28, 'Beahan, Brakus and Schultz', true, '5 1st Circle', 'Displaced fracture of fifth metatarsal bone, left foot, subsequent encounter for fracture with nonunion', 2, '2023-01-03', '2023-02-17');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Stiedemann, Heidenreich and Bradtke', false, '73 Miller Terrace', 'Other specified and unspecified injuries of neck', 2, '2023-01-19', '2023-01-24');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Lesch Inc', false, '94086 Vahlen Avenue', 'Breakdown (mechanical) of surgically created arteriovenous fistula, subsequent encounter', 2, '2022-12-22', '2022-12-23');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 17, 'Haag, Reinger and Hegmann', true, '61 Forest Park', 'Periprosthetic osteolysis of internal prosthetic right knee joint, sequela', 2, '2022-11-29', '2023-01-01');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 18, 'Reynolds, Mertz and Adams', false, '18331 Bonner Alley', 'Other superficial bite of right upper arm, initial encounter', 2, '2022-12-08', '2022-12-09');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 20, 'Bauch, Mitchell and Mraz', true, '583 Heffernan Junction', 'Ataxia following unspecified cerebrovascular disease', 2, '2023-02-26', '2023-02-27');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 21, 'Leannon and Sons', true, '4626 Claremont Junction', 'Type AB blood, Rh positive', 2, '2023-01-27', '2023-01-30');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 22, 'Lebsack, Hickle and Kassulke', false, '689 Debs Point', 'Other cyst of bone, left hand', 2, '2022-12-23', '2022-12-25');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 28, 'Raynor, Durgan and Pfeffer', false, '5137 Bonner Junction', 'Diabetes mellitus due to underlying condition with proliferative diabetic retinopathy with combined traction retinal detachment and rhegmatogenous retinal detachment, unspecified eye', 2, '2022-12-01', '2022-12-15');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Lehner-Yundt', false, '765 Prairie Rose Hill', 'Maternal care for other malpresentation of fetus', 2, '2022-12-29', '2023-01-27');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Bauch-Pagac', true, '6762 Mallard Point', 'Laceration of unspecified urinary and pelvic organ, sequela', 2, '2023-01-04', '2023-01-30');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 13, 'Hermann-Stamm', true, '479 Duke Drive', 'Unspecified fracture of shaft of unspecified tibia, initial encounter for open fracture type IIIA, IIIB, or IIIC', 2, '2023-03-09', '2023-03-12');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 17, 'Lowe, Renner and Hand', true, '726 Mallard Junction', 'Nondisplaced fracture of lower epiphysis (separation) of unspecified femur, initial encounter for open fracture type I or II', 2, '2022-12-16', '2023-02-02');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 18, 'Kreiger-Leuschke', true, '7163 Maryland Park', 'Laceration of other blood vessels of thorax, left side, initial encounter', 2, '2023-02-08', '2023-02-17');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 20, 'Schneider and Sons', true, '498 Miller Trail', 'Pedestrian injured in unspecified nontraffic accident', 2, '2022-11-21', '2022-11-29');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 21, 'pollich LLC', false, '280 Banding Parkway', 'Activities involving personal hygiene and interior property and clothing maintenance', 2, '2023-10-25', '2023-10-30');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 22, 'Brown LLC', true, '3548 Crest Line Plaza', 'Adverse effect of predominantly alpha-adrenoreceptor agonists', 2, '2022-12-02', '2022-12-16');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 28, 'Hermiston and Sons', true, '06 Summerview Lane', 'Sepsis due to Methicillin resistant Staphylococcus aureus', 2, '2023-01-17', '2023-01-18');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Ratke-Conn', true, '5 Dovetail Park', 'Person boarding or alighting from bus injured in collision with fixed or stationary object', 2, '2023-11-17', '2023-12-06');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Green, Walter and Boyle', true, '81 Upham Road', 'Displaced supracondylar fracture with intracondylar extension of lower end of unspecified femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with malunion', 2, '2022-11-11', '2022-11-21');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 13, 'Sauer, Gerlach and Kiehn', true, '002 Lindbergh Center', 'Asphyxiation due to plastic bag, accidental, sequela', 2, '2023-12-01', '2023-12-15');
-insert into event ( userid, eventname, public, eventaddress, description, eventcanceled, eventphoto, startdate, enddate) values ( 17, 'Graham-Lemke', true, '7585 Oriole Terrace', 'Flaccid hemiplegia', false, 2, '2023-01-06', '2023-01-08');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 32, 'Christmas Party', true, '001 North Pole', 'Christmas Party in Santa house. Everyone can join!', 2, '2022-12-24', '2022-12-25');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 13, 'Jerde Inc', false, '519 Arapahoe Parkway', 'Unspecified parasitic disease', 2, '2022-12-19', '2023-02-13');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Porto Pub Crawl', false, '159 Praça Guilherme Gomes Fernandes 4050-526 Porto', 'A fun & eccentric mix between a tour and a bar hop! 6 drinks included PLUS entry to one of Porto most popular clubs!', 9, '2023-11-08', '2023-11-30');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Nature Bath in the Parque da Cidade - Porto', false, 'Entrada Boavista (Avenida do Parque) 4100 Porto', '2 hours guided Nature Bath in the Parque da Cidade',10, '2023-02-06', '2023-02-16');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Romantic Porto: Outdoor Escape Game for Couples - The Love Novel', true, '10 Praça de Gomes Teixeira 4050-161 Porto', 'If you’re looking for a new and exciting way of spending time with your one and only, family or friends, this is your Eureka moment!', 4, '2023-01-03', '2023-01-31');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 18, 'African Heritage and Colonial Roots Tour', false, 'Praça do Marquês de Pombal Porto', 'A Portuguese black woman talking about the history of colonization through an African perspective.',11, '2023-01-24', '2023-01-25');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 20, 'Tratar o cancro por tu - Porto', false, 'Rua de Dom Manuel II 4050-346 Porto', 'Sessão para a literacia no cancro promovida pelo IPATIMUP. Diagnóstico e Tratamento – Tumores Pediátricos.', 12, '2023-01-03', '2023-02-15');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 21, 'A Course on Finding Purpose in Work and Life in 2023', false, '206 Rua de Gonçalo Cristóvão #216 4000-265 Porto', 'A two-day course about finding passion at work and life.', 3, '2023-12-02', '2023-12-03');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 22, 'Healthy Vegan Workshop in Porto', false, '3 Rua Formosa 4000-250 Porto', 'Healthy Kick of for 2023 and Veganuary!', 4, '2022-11-29', '2022-12-29');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 28, 'Best of Classical Guitar Concert', true, 'Rua de Passos Manuel, 219 - Loja 4 - 4000-041 Porto', 'Enjoy an evening immersing yourself in a classical music at our intimate event hall, the program is presented by most talented artist.', 6, '2023-01-03', '2023-02-17');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Bossa Nova Jazz Night', false, 'Rua de Passos Manuel, 219 - Loja 4 4000-041 Porto', 'Program: Wave; Chega de saudade; Influência do Jazz; Samba de Verão; Meu bem querer; Garota de Ipanema; Insensatez; Corcovado; Só danço samb', 4, '2023-01-19', '2023-01-24');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Samba Jazz Night', false, 'Rua de Passos Manuel, 219 - Loja 4 - 4000-041 Porto', 'Samba Jazz por Gabi Yong e Andre Multini',6, '2022-12-22', '2022-12-23');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 17, '[Open Day] Come visit our campus in Porto', true, 'Av. Serpa Pinto 311 4450-718 Matosinhos', 'Come meet the team on our Porto campus!', 3, '2022-11-29', '2023-01-01');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Festa de Quintal', false, '240 Avenida de Ramos Pinto 4400-261 Vila Nova de Gaia', 'Festa de quintal', 4, '2022-12-08', '2022-12-09');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'HackerX - Porto (Full-Stack) Employer Ticket - 02/23 (Onsite)', true, 'Praca do Bom Sucesso 4150 Porto', 'HackerX is an invite-only recruiting event for developers. We are active in >175+ cities globally with a community of over 100,000', 7, '2023-02-26', '2023-02-27');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Lionesa Yoga Sessions', true, 'Rua Lionesa 4465-671 Leça do Balio', 'Lionesa welcomes Yoga Sessions, every Monday at 18h in Jardim da Lionesa - in front of Hilti Academy - limited to 10 people per session.', 8, '2023-01-27', '2023-01-30');
+
 -- attendee --
 
 insert into attendee (attendeeid, eventid) values (1, 1);
@@ -602,18 +597,12 @@ insert into attendee (attendeeid, eventid) values (3, 13);
 insert into attendee (attendeeid, eventid) values (4, 14);
 insert into attendee (attendeeid, eventid) values (4, 4);
 insert into attendee (attendeeid, eventid) values (5, 5);
-insert into attendee (attendeeid, eventid) values (5, 15);
 insert into attendee (attendeeid, eventid) values (7, 7);
 insert into attendee (attendeeid, eventid) values (8, 8);
 insert into attendee (attendeeid, eventid) values (9, 9);
-insert into attendee (attendeeid, eventid) values (1, 30);
-insert into attendee (attendeeid, eventid) values (4, 30);
-insert into attendee (attendeeid, eventid) values (6, 30);
-insert into attendee (attendeeid, eventid) values (12, 30);
 insert into attendee (attendeeid, eventid) values (32, 2);
 insert into attendee (attendeeid, eventid) values (32, 7);
 insert into attendee (attendeeid, eventid) values (32, 8);
-insert into attendee (attendeeid, eventid) values (32, 15);
 
 -- Category --
 insert into Category ( categoryname) values ( 'Tudo');
@@ -751,15 +740,11 @@ insert into Comment (authorId, eventId, parentId, commentContent, commentDate) v
 
 -- joinrequest --
 
-insert into joinrequest ( requesterid, eventid, requeststatus) values ( 1, 29, true);
 insert into joinrequest ( requesterid, eventid, requeststatus) values ( 4, 10, false);
-insert into joinrequest ( requesterid, eventid, requeststatus) values ( 4, 16, false);
 insert into joinrequest ( requesterid, eventid, requeststatus) values ( 2, 9, false);
 insert into joinrequest ( requesterid, eventid, requeststatus) values ( 1, 10, true);
 insert into joinrequest ( requesterid, eventid, requeststatus) values ( 2, 12, false);
 insert into joinrequest ( requesterid, eventid, requeststatus) values ( 3, 2, true);
-insert into joinrequest ( requesterid, eventid, requeststatus) values ( 1, 17, true);
-insert into joinrequest ( requesterid, eventid, requeststatus) values ( 3, 23, true);
 insert into joinrequest ( requesterid, eventid) values ( 1, 9);
 insert into joinrequest ( requesterid, eventid) values ( 4, 10);
 insert into joinrequest ( requesterid, eventid) values ( 8, 10);
@@ -772,6 +757,17 @@ insert into organizerrequest ( requesterid, requeststatus) values ( 9, true);
 insert into organizerrequest ( requesterid, requeststatus) values ( 4, true);
 insert into organizerrequest ( requesterid, requeststatus) values (1, true);
 insert into organizerrequest ( requesterid) values (8);
+
+-- notification --
+
+insert into notification ( receiverid, eventid, notificationdate, notificationtype, notificationstatus) values (1, 5, CURRENT_TIMESTAMP, 'EventChange', false);
+insert into notification ( receiverid, joinrequestid, notificationdate, notificationtype, notificationstatus) values ( 1, 1, CURRENT_TIMESTAMP, 'JoinRequestReviewed', false);
+insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values (1, 4, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', false);
+insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 1, 11, CURRENT_TIMESTAMP, 'InviteReceived', false);
+insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values (1, 6, CURRENT_TIMESTAMP, 'InviteAccepted', false);
+insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values ( 8, 2, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
+insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 9, 9, CURRENT_TIMESTAMP, 'InviteReceived', true);
+insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 4, 3, CURRENT_TIMESTAMP, 'InviteAccepted', false);
 
 -- vote --
 
@@ -812,22 +808,6 @@ insert into event_category (eventid, categoryid) values (11, 14);
 insert into event_category (eventid, categoryid) values (12, 11);
 insert into event_category (eventid, categoryid) values (13, 9);
 insert into event_category (eventid, categoryid) values (14, 13);
-insert into event_category (eventid, categoryid) values (15, 3);
-insert into event_category (eventid, categoryid) values (16, 15);
-insert into event_category (eventid, categoryid) values (17, 11);
-insert into event_category (eventid, categoryid) values (18, 9);
-insert into event_category (eventid, categoryid) values (19, 6);
-insert into event_category (eventid, categoryid) values (20, 10);
-insert into event_category (eventid, categoryid) values (21, 11);
-insert into event_category (eventid, categoryid) values (22, 13);
-insert into event_category (eventid, categoryid) values (23, 3);
-insert into event_category (eventid, categoryid) values (24, 13);
-insert into event_category (eventid, categoryid) values (25, 9);
-insert into event_category (eventid, categoryid) values (26, 10);
-insert into event_category (eventid, categoryid) values (27, 9);
-insert into event_category (eventid, categoryid) values (28, 11);
-insert into event_category (eventid, categoryid) values (29, 6);
-insert into event_category (eventid, categoryid) values (30, 10);
 
 -- event_tag --
 insert into event_tag (eventid, tagid) values (1, 11);
@@ -844,22 +824,6 @@ insert into event_tag (eventid, tagid) values (11, 7);
 insert into event_tag (eventid, tagid) values (12, 15);
 insert into event_tag (eventid, tagid) values (13, 9);
 insert into event_tag (eventid, tagid) values (14, 14);
-insert into event_tag (eventid, tagid) values (15, 12);
-insert into event_tag (eventid, tagid) values (16, 6);
-insert into event_tag (eventid, tagid) values (17, 11);
-insert into event_tag (eventid, tagid) values (18, 13);
-insert into event_tag (eventid, tagid) values (19, 3);
-insert into event_tag (eventid, tagid) values (20, 2);
-insert into event_tag (eventid, tagid) values (21, 15);
-insert into event_tag (eventid, tagid) values (22, 5);
-insert into event_tag (eventid, tagid) values (23, 14);
-insert into event_tag (eventid, tagid) values (24, 10);
-insert into event_tag (eventid, tagid) values (25, 10);
-insert into event_tag (eventid, tagid) values (26, 3);
-insert into event_tag (eventid, tagid) values (27, 12);
-insert into event_tag (eventid, tagid) values (28, 4);
-insert into event_tag (eventid, tagid) values (29, 7);
-insert into event_tag (eventid, tagid) values (30, 9);
 
 
 -- contact --
