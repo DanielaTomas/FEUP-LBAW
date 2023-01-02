@@ -22,8 +22,14 @@
     </div>
 </div>
 <div>
-        <div id="myeventsarea" class="flex flex-wrap justify-center gap-2 ">
-            @each('partials.eventCard', $events, 'event')
+    @if ($events->count() != 0)
+    <div id="myeventsarea" class="flex flex-wrap justify-center gap-2 ">
+        @each('partials.eventCard', $events, 'event')
+    </div>
+    @else
+    <div class="flex flex-wrap justify-center m-10 text-xl">
+        You are currently not participating in any event! Check your invitations or ask to join an event in the main page.
+    </div>
+    @endif
 </div>
-</div>
-    @endsection
+@endsection
