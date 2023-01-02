@@ -8,7 +8,7 @@
         </div>
     </td>
     <td class="py-3 px-6 text-center">
-        <span id="eventstatus-{{$report['event']->eventid}}"
+        <span id="eventstatus-{{$report['report'] -> reportid}}{{$report['event'] -> eventid}}"
         <?php if ($report['event']->eventcanceled === True) { $status = 'Canceled'; ?>
             class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs"
         <?php  } else  { $status = 'Active'; ?>
