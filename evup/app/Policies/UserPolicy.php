@@ -28,9 +28,13 @@ class UserPolicy
         return ($user->userid == $userprofile->userid);
     }
 
-    public function delete(User $user, User $userprofile)
+    public function delete(User $user)
     {
-        return ($user->userid == $userprofile->userid || $userprofile->usertype == 'Admin');
+        return (Auth::check());
+    }
+    public function deleteUser(User $user)
+    {
+        return (Auth::user()->usertype == 'Admin');
     }
 
     public function showEditForms(User $user, User $userprofile)

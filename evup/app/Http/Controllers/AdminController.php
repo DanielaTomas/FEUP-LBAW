@@ -106,7 +106,7 @@ class AdminController extends UserController
                 'errors' => ['user' => 'User not found, id: '.$id]
             ], 404);
 
-        $this->authorize('delete', $admin);
+        $this->authorize('deleteUser', $admin);
 
         if ($user->usertype == 'Organizer') {
             // Cancels events created by the user

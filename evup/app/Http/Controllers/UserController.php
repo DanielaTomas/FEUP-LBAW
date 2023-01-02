@@ -231,7 +231,7 @@ class UserController extends Controller
             $createdEvents = $user->createdEvents()->get();
 
             foreach ($createdEvents as $event) {
-                (new AdminController)->cancelEvent($event->eventid);
+                (new EventController)->cancelEvent($event->eventid);
             }
         }
 
