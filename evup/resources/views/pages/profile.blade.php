@@ -42,7 +42,7 @@
         <div class="flex justify-end">
             @if (Auth::user()->usertype != 'Organizer' && Auth::user()->hasRequest() == false)
             <div class="mr-6 transform hover:text-gray-900 transition duration-300">
-                <button class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
+                <button onclick="askOrganizer(Auth::id())" class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
                     Request To Be Organizer
                 </button>
             </div>

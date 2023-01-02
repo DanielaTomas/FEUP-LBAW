@@ -319,12 +319,10 @@ class UserController extends Controller
 
     public function organizerRequest(int $id)
     {
-
+        $this->authorize('organizerRequest');
         $request = new OrganizerRequest;
         $request->requesterid = $id;
         $request->save();
-
-        $this->authorize('organizerRequest');
 
         return response()->json([
             'status' => 'OK',
