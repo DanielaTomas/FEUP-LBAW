@@ -9,15 +9,15 @@
                     <div class="flex justify-between mb-1">
                         <span class="text-base font-medium text-blue-700 dark:text-white">
                         @if($opt->voted(Auth::id()))
-                        <input id='button' type="radio"  checked disabled> {{$opt->optioncontent}}</span>
+                        <input type="radio"  checked disabled> {{$opt->optioncontent}}</span>
                         @else
-                        <input id='button'  type="radio"  value="0" disabled> {{$opt->optioncontent}}</span>
+                        <input type="radio"  value="0" disabled> {{$opt->optioncontent}}</span>
                         @endif
 
                         <span class="text-sm font-medium text-blue-700 dark:text-white">{{round($opt->nanswers()/$poll->nranswers()*100,2)}} %</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                        <div id="bar" class="bg-blue-600 h-2.5 rounded-full" style="width: {{round($opt->nanswers()/$poll->nranswers()*100,2)}}%"></div>
+                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{round($opt->nanswers()/$poll->nranswers()*100,2)}}%"></div>
                     </div>
                 </div>
                 @endforeach
@@ -28,8 +28,8 @@
                 <div  class='beforeOption relative w-full h-8'>
                     <div class="option flex justify-between mb-1">
                         <span class="text-base font-medium text-blue-700 dark:text-white">
-                        <input id='button' type="radio" onclick="voteOption({{ $opt->polloptionid }},{{$poll->pollid}})" value="0"> {{$opt->optioncontent}}</span>
-                        <p id="totalopt" class="invisible">{{$opt->nanswers()}} </p>
+                        <input type="radio" onclick="voteOption({{ $opt->polloptionid }},{{$poll->pollid}})" value="0"> {{$opt->optioncontent}}</span>
+                        <p class="invisible">{{$opt->nanswers()}} </p>
                     </div>
                 </div>
                 @endforeach

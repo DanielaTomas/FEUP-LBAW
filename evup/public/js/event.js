@@ -25,7 +25,7 @@ function voteOptionHandler(optionid,pollid){
         const barra=document.createElement("div")
         barra.innerHTML=`
         
-                    <div id="bar" class="bg-blue-600 h-2.5 rounded-full"></div>
+                    <div class="bg-blue-600 h-2.5 rounded-full"></div>
       
         `
         barra.classList.add("bg-gray-200")
