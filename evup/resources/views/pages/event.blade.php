@@ -15,7 +15,7 @@
     <div class="flex flex-row items-center p-6">
         <h1 class=" text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
         @if (Auth::check())
-        @if($event->userid==Auth::id())
+        @if($event->userid==Auth::id() || Auth::user()->isAttending($event->eventid))
         <a href="{{ route('attendees', ['id' => $event->eventid]) }}" class="self-end text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">View Participants</a>
         @endif
         @endif
