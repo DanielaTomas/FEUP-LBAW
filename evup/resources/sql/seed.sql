@@ -541,8 +541,8 @@ insert into upload (filename) values ('image-11.png');
 insert into upload (filename) values ('image-12.png');
 
 ---1234
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('evupuser', 'User', 'evupuser@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('evuporganizer', 'Organizer', 'evuporganizer@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'Organizer');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('user', 'User', 'user@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('organizer', 'Organizer', 'organizer@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('glanahan2', 'Gaultiero Lanahan', 'glanahan2@rediff.com', '$2a$12$aIJGp62nFW6Qz2Bmyo.2ouzpalZjMqLZs2s06H2tYqcCLgpSQt0zG', 1, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('dblackader3', 'Darlene Blackader', 'dblackader3@shareasale.com', '$2a$12$rkOFfYybMiOktfTnAX6VAewV7hKHGF.HvVKk6sWofjWUE6ufylRYS', 1, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('hhead4', 'Harald Head', 'hhead4@apple.com', '$2a$12$nbHqkY.0JP6.N1d4BTj7mu5W9tRdfzI/V81q61o.RMRhY32c/vy9G', 1, 'Disabled', 'User');
@@ -571,8 +571,8 @@ insert into users (username, name, email, password, userphoto, accountstatus, us
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('dclemensens', 'Davine Clemensen', 'dclemensens@sina.com.cn', '$2a$12$q5FruFlJfr1T0top08UHg.Vr9hZSJ2ZjGy1SHCC8yeEfxVPHfm2SG', 1, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('radamskit', 'Roddie Adamski', 'radamskit@opensource.org', '$2a$12$TVx9ET0bVi/nFgkDSM5cGeg8s3GyE8yVtjeJ3p2CFPaHF6dlqgVna', 1, 'Active', 'Organizer');
 
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('evupadmin', 'Administrator', 'evupadmin@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'Admin');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('evupblocked', 'Blocked user', 'evupblocked@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Blocked', 'User');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('admin', 'Administrator', 'admin@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'Admin');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('blocked', 'Blocked user', 'blocked@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Blocked', 'User');
 
 
 
