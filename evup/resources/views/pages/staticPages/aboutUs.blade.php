@@ -43,11 +43,11 @@
             </div>
 
             <div class="card w-96 rounded-xl p-8 bg-gray-900 text-white shadow-xl hover:shadow">
-                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="{{asset('storage/images/image-1.png')}}" alt="Sara Moreira Reis's Avatar">
+                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="{{asset('storage/up202005388.png')}}" alt="Sara Moreira Reis's Avatar">
                 <div class="text-center mt-2 text-3xl font-medium">Sara Moreira Reis</div>
-                <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="">@sara</a></div>
+                <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="">@srissirs</a></div>
                 <div class="text-center font-normal text-lg">up202005388@edu.fe.up.pt</div>
-                <div class="px-6 text-center mt-2 font-normal  text-sm mb-4"><p>Description</p></div>
+                <div class="px-6 text-center mt-2 font-normal  text-sm mb-4"><p>Informatic's Engineering Student @ FEUP.</p></div>
             </div>
         </div>
 
