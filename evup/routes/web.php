@@ -89,7 +89,7 @@ Route::post('api/myEvents/leave_event', 'UserController@leaveEvent');
 Route::get('api/myEvents/organizing', 'EventController@organizerEvents');
 Route::post('api/myEvents/onMyAgenda', 'EventController@myEvents');
 
-Route::post('event/{id}/createPoll','EventController@createPoll')->where(['id' => '[0-9]+'])->name('create_poll'); 
+Route::post('event/{id}/createPoll','PollController@createPoll')->where(['id' => '[0-9]+'])->name('create_poll'); 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
