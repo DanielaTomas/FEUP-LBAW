@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}  @yield('title')</title>
+    <title>{{ config('app.name', 'Laravel') }} @yield('title')</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.4/dist/flowbite.min.css">
@@ -34,25 +34,32 @@
     <script type="text/javascript" src={{ asset('js/notifications.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/flowbite.modal.js') }} defer></script>
     <script type="text/javascript" src={{ asset('js/myEvents.js') }} defer></script>
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/e93bc86ff0.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <main>
-        @include('partials.navbar')
-        <section id="alertcontainer" class="w-3q p-4 mt-4 ml-auto mr-auto">
-            @include('partials.alerts')
-        </section>
-        <section id="content" class="mx-20">
-            @yield('content')
-        </section>
+    <main class="flex flex-col justify-between  min-h-screen ">
+        <div class="flex flex-col grow">
+            @include('partials.navbar')
+            <section id="alertcontainer" class="w-3q p-4 mt-4 ml-auto mr-auto">
+                @include('partials.alerts')
+            </section>
+            <section id="content" class="flex flex-col mx-20 grow">
+                @yield('content')
+            </section>
+        </div>
+
         @include('partials.footer')
     </main>
     <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
-    
+
     @auth
-        <script type="text/javascript"> setTimeout(() => { fetchNotifications(); }, "5000") </script>
+    <script type="text/javascript">
+        setTimeout(() => {
+            fetchNotifications();
+        }, "5000")
+    </script>
     @endauth
 </body>
 

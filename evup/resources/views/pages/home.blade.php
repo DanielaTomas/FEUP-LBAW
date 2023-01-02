@@ -36,7 +36,7 @@
             @each('partials.tag', $tags, 'tag')
         </div>
     </div>
-    <div id="homeEvents">
+    <div id="homeEvents" class="mb-10">
         @include('partials.content.publicEvents', ['events' => $events])
     </div>
 </article>
