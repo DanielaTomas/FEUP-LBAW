@@ -1,10 +1,88 @@
+const voteOption = (optionid,pollid) => {
+    sendAjaxRequest('get', `/event/${optionid}/answerpoll`, null, voteOptionHandler(optionid,pollid));
+}
+
+function voteOptionHandler(optionid,pollid){
+    const allvotes=document.getElementById("TotalVotes" + pollid)
+    const poll=document.getElementById("poll"+pollid)
+    const options=poll.querySelectorAll("div.option")
+    const beforeoptions=poll.querySelectorAll("div.beforeOption")
+    console.log(beforeoptions)
+    allvotes.textContent=parseInt(allvotes.textContent)+1
+    for(var i = 0; i < options.length; i++) {
+        const botao=options[i].querySelector("input")
+        const votos=options[i].querySelector("p")
+        if(botao.checked){
+            votos.textContent=parseInt(votos.textContent)+1
+        }
+        botao.disabled=true
+        const numero=document.createElement("div")
+        numero.innerHTML=`
+            <span class="text-sm font-medium text-blue-700 dark:text-white"></span>
+        `
+        numero.textContent=Math.round(parseInt(votos.textContent)/parseInt(allvotes.textContent)*100,2)+"%"
+        options[i].append(numero)
+        const barra=document.createElement("div")
+        barra.innerHTML=`
+        
+                    <div class="bg-blue-600 h-2.5 rounded-full"></div>
+      
+        `
+        barra.classList.add("bg-gray-200")
+        barra.classList.add("rounded-full")
+        barra.classList.add("w-full")
+        barra.classList.add("dark:bg-gray-700")
+        const innerbarra=barra.querySelector("div")
+        innerbarra.style.width=Math.round(parseInt(votos.textContent)/parseInt(allvotes.textContent)*100,2)+"%"
+        beforeoptions[i].append(barra)
+    }
+}
+
+
+function createPoll(){
+    const createpollbutton=document.getElementById("CreatePoll")
+    const addhereform=document.getElementById("addhereform")
+    if(addhereform!=null){ 
+        addhereform.style.display='none'
+        createpollbutton.addEventListener('click',function(){
+            addhereform.style.display='block'
+            createpollbutton.style.display='none'
+            addOption()
+        })
+    }
+    
+}
+
+
+createPoll()
+
+function addOption(){
+    const addOption=document.getElementById("addOption")
+    const addHere=document.getElementById("addHere")
+     var i=2
+     addOption.addEventListener('click',function(){
+        i++
+        const pending = document.createElement('div')
+        pending.innerHTML= `
+        <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name=option[] type="text" required>`
+        addHere.prepend(pending)
+        if(i==4){
+            addOption.style.display='none'
+        }
+     })
+}
+
 const leaveEvent = (eventid) => {
-    sendAjaxRequest('post', `myEvents/${eventid}`, { 'eventid': eventid }, leaveEventHandler(eventid));
+    sendAjaxRequest('post', '/api/myEvents/leave_event', { 'eventid': eventid }, leaveEventHandler(eventid));
 }
 
 function leaveEventHandler(eventid) {
-    const event = document.getElementById("eventCard" + eventid)
-    event.remove()
+    if(window.location.pathname==='/myEvents'){
+        const event = document.getElementById("eventCard" + eventid)
+        event.remove()
+    }else{
+       window.location.reload()
+    }
 }
 
 const event_id = window.location.pathname.substring(7);
@@ -15,34 +93,18 @@ search.addEventListener("keyup",function(){
 })
 
 function searchUserHandler(){
-    const users = JSON.parse(this.responseText);
+    const users = JSON.parse(this.responseText)
     const area = document.getElementById("userResults")
-    area.innerHTML=" "
-    for(const user of users){
-        const card = document.createElement('div');
-        card.innerHTML = `
-        <div class="w-full p-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex flex-col items-center pb-10">
-                <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="${user.userphoto}" alt="Bonnie image"/>
-                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">${user.name}</h5>
-                <span class="text-sm text-gray-500 dark:text-gray-400">${user.email}</span>
-                <div id="class="flex mt-4 space-x-3 md:mt-6">
-                    <button onclick="inviteUser()" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Invite User</button>
-                </div>
-            </div>
-        </div>
-        `
-        area.appendChild(card)
-    }
+    area.innerHTML = users
 }
 
 
-function inviteUser(){
+function inviteUser(userid){
     const event_id2 = window.location.pathname.substring(7)
-    const email = event.target.parentElement.parentElement.children[2].textContent
+    const email = select("#email-" + userid).textContent
  
     sendAjaxRequest('post', `/event/${event_id}/inviteUsers`, { 'email': email, 'eventid':event_id2 });
-    const card = event.target.parentElement.parentElement.parentElement
+    const card = select("#usercard-" + userid)
     card.remove()
 }
 

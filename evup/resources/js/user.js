@@ -1,3 +1,23 @@
+
+const askOrganizer = (userid) => {
+    sendAjaxRequest('get', `${userid}/organizerRequest`, { 'userid': userid }, askOrganizerHandler(userid));
+}
+
+function askOrganizerHandler(userid){
+    const request = document.getElementById("botao")
+    const diva= document.getElementById("request"+userid)
+    const pending = document.createElement('button')
+    pending.innerHTML=`
+            <button id="pending{{ $user->userid }}" class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
+                Pending
+            </button>
+        `
+    diva.append(pending)
+    request.remove()
+    
+    
+}
+
 const acceptInvite = (inviteid) => {
     sendAjaxRequest('post', `/user/accept/${inviteid}`, { 'inviteid': inviteid }, acceptInviteHandler(inviteid));
 }
@@ -40,4 +60,12 @@ function declineInviteHandler(eventid) {
     const space=document.getElementById("here"+eventid)
     space.append(newButtonD)
 
+}
+const requestToJoin = (eventid) => {
+    sendAjaxRequest('post', `/api/requestToJoin`, { 'eventid': eventid }, requestToJoinHandler(eventid));
+}
+
+function requestToJoinHandler(eventid) {
+    button = select('#requestToJoinButton' + eventid)
+    button.remove()
 }

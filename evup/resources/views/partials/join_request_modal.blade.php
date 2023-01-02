@@ -13,7 +13,7 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <h3 id="confirmcloseTxt-{{$event-> eventid}}">Would you like to request to join this event?</h3>
+                <h3 id="confirmdenyTxt-{{$event-> eventid}}">Would you like to request to join this event?</h3>
             </div>
             <!-- Modal footer -->
             <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">

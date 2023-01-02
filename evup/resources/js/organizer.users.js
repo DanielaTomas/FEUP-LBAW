@@ -5,16 +5,29 @@ if (window.location.pathname.includes('/event/')) {
     if (window.location.pathname.includes('/adduser'))
         setgoBackBtn()
     
-    if (window.location.pathname.includes('/attendees'))
-        setgoAddUserBtn()
+    if (window.location.pathname.includes('/attendees')) {
+        setAddUserBtn()
+        setgoBackToEventBtn()
+    }
+
+    if (window.location.pathname.includes('/dashboard')) 
+        setAddUserBtn()
+
 }
 
 function setgoBackBtn() {
-    select('#goback').href = 'http://' + window.location.host + '/event/' + eventid + '/attendees'
+    select('#goback').href = 'http://' + window.location.host + '/event/' + eventid + '/dashboard'
 }
 
-function setgoAddUserBtn() {
-    select('#adduser').href = select('#adduser').href.replace('id', eventid)
+function setgoBackToEventBtn() {
+    select('#goback').href = 'http://' + window.location.host + '/event/' + eventid
+}
+
+function setAddUserBtn() {
+    if (select('#adduser'))
+        select('#adduser').href = select('#adduser').href.replace('id', eventid)
+    else
+        return
 }
 
 function addUser(userid, eventid = localStorage.getItem("eventid")) {
@@ -50,11 +63,9 @@ function userHandler(add, userid) {
         elem.remove()
     }
 
-    /*
     if (add) 
         createAlert('success', 'You have added this user successfully.')
     else
         createAlert('success', 'You have removed this user successfully.')
-    */
-
+        
 }
