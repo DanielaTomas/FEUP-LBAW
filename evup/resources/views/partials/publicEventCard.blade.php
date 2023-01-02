@@ -16,7 +16,7 @@
             </div>
         @endif
     </div>
-    <div class="flex flex-col w-full md:flex-row">
+    <div class="flex flex-col w-full md:flex-row grow">
         <div
             class="flex flex-row justify-around p-4 font-bold leading-none text-gray-800 uppercase bg-gray-400 rounded md:flex-col md:items-center md:justify-center md:w-1/4">
             <div class="md:text-3xl">{{ $event->getDate()['startmonth'] }}</div>

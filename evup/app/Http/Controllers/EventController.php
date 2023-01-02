@@ -45,13 +45,14 @@ class EventController extends Controller
 
     $user = User::find(Auth::id());
     $polls = $event->polls()->get();
+    $comments = $event->comments()->orderBy('commentdate','desc')->paginate(3);
     if ($event->public && !Auth::check()) {
       return view('pages.event', [
         'event' => $event
       ]);
     } else if (Auth::check() && ($user->isAttendee($event) || $event->public || $user->userid == $event->userid))
       return view('pages.event', [
-        'event' => $event, 'user' => $user
+        'event' => $event, 'user' => $user, 'comments' => $comments,
       ]);
     else
       return abort(403, 'THIS ACTION IS UNAUTHORIZED.');

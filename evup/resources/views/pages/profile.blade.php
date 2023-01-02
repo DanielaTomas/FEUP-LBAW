@@ -39,18 +39,18 @@
 
     <div class="flex flex-col grow">
 
-        <div class="flex justify-end">
-            @if (Auth::user()->usertype != 'Organizer' && Auth::user()->hasRequest() == false)
-            <div class="mr-6 transform hover:text-gray-900 transition duration-300">
-                <button onclick="askOrganizer(Auth::id())" class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
+        <div class="flex justify-end gap-4">
+            @if (Auth::user()->usertype != 'Organizer' && Auth::user()->usertype != 'Admin' && Auth::user()->hasRequest() == false)
+            <div id="orgRequest" class="mr-6 transform hover:text-gray-900 transition duration-300">
+                <button id="organizerRequestButton" onclick="askOrganizer({{Auth::id()}})" class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
                     Request To Be Organizer
                 </button>
             </div>
             @endif
             @if (Auth::user()->usertype != 'Organizer' && Auth::user()->hasRequest() == true)
-            <button id="pending{{ $user->userid }}" class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
-                Pending
-            </button>
+            <div id="pending{{ $user->userid }}" class="block text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                Organizer Request Pending
+            </div>
             @endif
             <div class="mr-6 transform hover:text-gray-900 transition duration-300">
                 <!-- Delete Modal toggle -->
@@ -67,30 +67,36 @@
                 @if ($events->count() != 0)
                 <div id="Events" class="flex flex-wrap justify-center gap-2">
                     @each('partials.eventCard', $events, 'event')
+
+                    @else
+                    <div class="flex flex-wrap justify-center m-10 text-xl">
+                        You are currently not participating in any event! Check your invitations or ask to join an event in the main page.
+                    </div>
+                    @endif
                 </div>
-                @else
-                <div class="flex flex-wrap justify-center m-10 text-xl">
-                    You are currently not participating in any event! Check your invitations or ask to join an event in the main page.
+                </span class="flex m-auto">
+                {{ $events->links() }}
+                </span>
+                <div class="mb-6">
+                    <div id="myInvitationsHeader" class="m-4 text-center">
+                        <h2 class="text-2xl font-semibold leading-tight">My Invitations</h2>
+                    </div>
+                    @if ($invites->count() != 0)
+                    <div id="myInvitationsProfile" class="flex flex-col p-5 max-w-2xl mx-auto">
+                        @each('partials.invitation', $invites, 'invite')
+                    </div>
+                    <div>
+                        {{ $invites->links() }}
+                    </div>
+                    @else
+                    <div class="flex flex-wrap justify-center m-10 text-xl">
+                        You currently have no invites to events!
+                    </div>
+                    @endif
+
                 </div>
-                @endif
-            </div>
-            <div>
-                <div id="myInvitationsHeader" class="m-4 text-center">
-                    <h2 class="text-2xl font-semibold leading-tight">My Invitations</h2>
-                </div>
-                @if ($invites->count() != 0)
-                <div id="myInvitationsProfile" class="flex flex-col p-5 max-w-2xl mx-auto">
-                    @each('partials.invitation', $invites, 'invite')
-                </div>
-                @else
-                <div class="flex flex-wrap justify-center m-10 text-xl">
-                    You currently have no invites to events!
-                </div>
-                @endif
-              
             </div>
         </div>
-    </div>
 
 </article>
 

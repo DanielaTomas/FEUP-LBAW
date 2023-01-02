@@ -82,8 +82,9 @@ class UserPolicy
         return Auth::check() && $user->userid == $invitee->userid;
     }
 
-    public function organizerRequest(User $user)
+    public function organizer_request(User $user)
     {
+        return Auth::check();
         return $user->usertype != 'Organizer' && $user->usertype != 'Admin';
     }
 

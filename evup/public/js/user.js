@@ -1,20 +1,18 @@
 
 const askOrganizer = (userid) => {
-    sendAjaxRequest('get', `${userid}/organizerRequest`, { 'userid': userid }, askOrganizerHandler(userid));
+
+    sendAjaxRequest('get', `${userid}/organizerRequest`, null, askOrganizerHandler(userid));
 }
 
 function askOrganizerHandler(userid){
-    const request = document.getElementById("botao")
-    const diva= document.getElementById("request"+userid)
-    const pending = document.createElement('button')
-    pending.innerHTML=`
-            <button id="pending{{ $user->userid }}" class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
-                Pending
-            </button>
-        `
-    diva.append(pending)
+    const request = document.getElementById("organizerRequestButton")
+    const div= document.getElementById("orgRequest")
+    const pending = document.createElement('div')
+    pending.className = "block text-white bg-gray-700  font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+    pending.id = "pending{{ $user->userid }}"
+    pending.innerHTML=`Organizer Request Pending`
+    div.append(pending)
     request.remove()
-    
     
 }
 
