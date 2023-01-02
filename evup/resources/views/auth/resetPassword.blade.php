@@ -43,12 +43,12 @@
 
                 <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
                     <input id="password" type="password" name="password" required placeholder="Password"
-                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none">
                 </div>
 
                 <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
                     <input id="password-confirm" type="password" name="password_confirmation" required placeholder="Confirm Password"
-                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" />
+                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none">
                 </div>
 
                 <input type="hidden" name="token" value="{{ request()->token }}">
