@@ -20,8 +20,9 @@
                 class="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-xs"
             <?php  } else if ($user->usertype == "Organizer") { ?>
                 class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs"
-            <?php } else ?>
+            <?php } else { ?>
                 class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs" 
+            <?php } ?>
             >{{$user->usertype}}
             </span>
         </div>
@@ -32,8 +33,9 @@
             class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs"
         <?php  } else if ($user->accountstatus == "Blocked") { ?>
             class="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs"
-        <?php } else ?>
+        <?php } else { ?>
             class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs" 
+        <?php } ?>
         >{{$user->accountstatus}}
         </span>
     </td>
