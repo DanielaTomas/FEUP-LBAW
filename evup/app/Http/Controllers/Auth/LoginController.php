@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 
+
 class LoginController extends Controller
 {
     /*
@@ -73,7 +74,7 @@ class LoginController extends Controller
 
     //Google Login
     public function redirectToGoogle(){
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->stateless()->redirect();
         }
         
     //Google callback  
