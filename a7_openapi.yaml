@@ -20,6 +20,10 @@ tags:
   - name: "M03: Events"
   - name: "M04: User Administration"
   - name: "M05: Static Pages"
+  - name: "M06: Notifications"
+  - name: "M07: Polls"
+  - name: "M08: Comments"
+  - name: "M09: Filter"
 
 paths:
   # M01: Authentication
@@ -472,38 +476,6 @@ paths:
         responses:
           "200":
             description: "Ok. Creates a organizer request"
-          "404":
-            description: "User not found"
-
-/notifications:
-  put:
-    operationId: R209
-          summary: "R209: Marks all notifications as read"
-          description: "Marks all notifications of an user as read. Access: OWN"
-          tags:
-            - "M02: Profile and User Information"
-          responses:
-            "200":
-              description: "Ok. Successfully marked all notifications as read"
-
-/notifications/{id}/:
-      put:
-      operationId: R210
-          summary: "R210: Marks a notification as read"
-          description: "Marks a notification of an user as read. Access: OWN"
-          tags:
-            - "M02: Profile and User Information"
-
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-
-        responses:
-          "200":
-            description: "Ok.  Successfully marked notification as read"
           "404":
             description: "User not found"
 
@@ -1159,10 +1131,10 @@ paths:
           "200":
             description: "OK. Comment Desliked" 
 
-/event/{id}/createPoll:
-      post:
+/event/{id}/searchUsers:
+    post:
         operationId: R326
-        description: "Creates a poll. Access: PUB"
+        description: "Searches users tha aren't invited or atending the event. Access: PUB"
         tags:
           - "M03: Events"
         
@@ -1173,21 +1145,32 @@ paths:
               type: integer
             required: true
 
-       requestBody:
-          required: true
-          content:
-            multipart/form-data:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
         responses:
           "200":
-            description: "OK. Poll created" 
+            description: "OK. Show users" 
 
+/event/{id}/inviteUsers:
+    post:
+        operationId: R327
+        description: "Invites an user to the event. Access: PUB"
+        tags:
+          - "M03: Events"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
 
-
+        responses:
+          "404":
+            description: "User not found" 
+          "400":
+            description: "User already invited" 
+          "200":
+            description: "OK. Show users" 
+          
   # M04: User Administration
 
   /admin:
@@ -1248,6 +1231,7 @@ paths:
         responses:
           "200":
             description: "Ok. Organizer Request denied successfully."
+
 
   /admin/organizerRequests/{organizerRequests_id}/accept:
       put:
@@ -1532,3 +1516,288 @@ paths:
       responses:
         "200":
           description: "Ok. Shows the FAQ page"
+
+
+# M06: Notifications
+
+/notifications:
+  put:
+    operationId: R209
+          summary: "R209: Marks all notifications as read"
+          description: "Marks all notifications of an user as read. Access: OWN"
+          tags:
+            - "M02: Profile and User Information"
+          responses:
+            "200":
+              description: "Ok. Successfully marked all notifications as read"
+
+/notifications/{id}:
+      put:
+      operationId: R210
+          summary: "R210: Marks a notification as read"
+          description: "Marks a notification of an user as read. Access: OWN"
+          tags:
+            - "M02: Profile and User Information"
+
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "200":
+            description: "Ok.  Successfully marked notification as read"
+          "404":
+            description: "User not found"
+
+# M07: Polls
+
+
+/event/{id}/createPoll:
+      post:
+        operationId: R701
+        description: "Creates a poll. Access: PUB"
+        tags:
+          - "M07: Polls"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+       requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  question:
+                    type: string
+                  options[]:
+                    type: string
+        responses:
+          "200":
+            description: "OK. Poll created" 
+
+/event/{id}/answerpoll:
+  get:
+   operationId: R702
+        description: "Answers a poll. Access: PUB"
+        tags:
+          - "M07: Polls"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+
+       requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  question:
+                    type: string
+                  options[]:
+                    type: string
+        responses:
+          "404":
+            description: "User not found"
+          "404":
+            description: "Poll option not found"
+          "404":
+            description: "Polloption alrady as a vote from this user"
+          "200":
+            description: "OK. Vote was successfully accepted" 
+
+# M08: Comments
+
+event/{id}/createComment/{parentid?}:
+      post:
+        operationId: R801
+        description: "Creates a comment. Access: PUB"
+        tags:
+          - "M08: Comments"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+          - in: path
+            name: parentid?
+            schema:
+              type: integer
+            required: false
+
+       requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  commentcontent:
+                    type: string
+
+        responses:
+          "404":
+            description: "Event not found"
+          "404":
+            description: "User not found"
+          "404":
+            description: "Parent comment not found"
+          "200":
+            description: "OK. Successfully created reply" 
+
+event/{id}/delete/{commentid}:
+      post:
+        operationId: R802
+        description: "Deletes a comment. Access: OWN"
+        tags:
+          - "M08: Comments"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+          - in: path
+            name: commentid
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "404":
+            description: "Event not found"
+          "404":
+            description: "Comment not found"
+          "200":
+            description: "OK. Successfully deleted comment" 
+
+event/{id}/editComment/{commentid}:
+      post:
+        operationId: R803
+        description: "Edits a comment. Access: OWN"
+        tags:
+          - "M08: Comments"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+          - in: path
+            name: commentid
+            schema:
+              type: integer
+            required: true
+
+        responses:
+          "404":
+            description: "Event not found"
+          "404":
+            description: "Comment not found"
+          "200":
+            description: "OK. Comment removed successfully" 
+
+/event/{id}/like/{commentid}/voted/{voted}:
+      post:
+        operationId: R804
+        description: "Likes a comment. Access: PUB"
+        tags:
+          - "M08: Comments"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+          - in: path
+            name: commentid
+            schema:
+              type: integer
+            required: true
+          - in: path
+            name: voted
+            schema:
+              type: integer
+            required: false
+
+        responses:
+          "404":
+            description: "Comment not found"
+          "200":
+            description: "OK. Liked comment successfully" 
+
+/event/{id}/dislike/{commentid}/voted/{voted}:
+      post:
+        operationId: R804
+        description: "Deslikes a comment. Access: PUB"
+        tags:
+          - "M08: Comments"
+        
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+          - in: path
+            name: commentid
+            schema:
+              type: integer
+            required: true
+          - in: path
+            name: voted
+            schema:
+              type: integer
+            required: false
+
+        responses:
+          "404":
+            description: "Comment not found"
+          "200":
+            description: "OK. Disliked comment successfully" 
+
+# M09: Filter
+
+/upload:
+    get:
+      operationId: R901
+      description: ". Access: PUB"
+      tags:
+        - "M09: Filter"
+
+    post:
+      operationId: R902
+      description: "Processes the login form submission. Access: PUB"
+      tags:
+        - "M09: Filter"
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: string
+              required:
+                - filename
+
