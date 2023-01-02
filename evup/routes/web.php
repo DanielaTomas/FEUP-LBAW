@@ -89,7 +89,8 @@ Route::post('api/myEvents/leave_event', 'UserController@leaveEvent');
 Route::get('api/myEvents/organizing', 'EventController@organizerEvents');
 Route::post('api/myEvents/onMyAgenda', 'EventController@myEvents');
 
-Route::post('event/{id}/createPoll','PollController@createPoll')->where(['id' => '[0-9]+'])->name('create_poll'); 
+Route::post('event/{id}/createPoll','EventController@createPoll')->where(['id' => '[0-9]+'])->name('create_poll'); 
+
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
@@ -102,6 +103,9 @@ Route::get('reset', 'Auth\ResetPasswordController@showResetPasswordForm')->name(
 Route::post('reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 Route::get('appeal/{id}', 'AppealController@getAppeal')->where(['id' => '[0-9]+'])->name('appeal');
 Route::post('appeal/{id}', 'AppealController@saveAppeal')->where(['id' => '[0-9]+'])->name('appeal_save');
+//Google
+Route::get('/login/google', 'Auth\LoginController@redirectToGoogle')->name('login.google');
+Route::get('/login/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
 // Event
 

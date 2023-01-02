@@ -70,6 +70,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'accountstatus' => "Active",
             'usertype' => "User",
+            'userphoto' => 1,
         ]);
     }
 }
