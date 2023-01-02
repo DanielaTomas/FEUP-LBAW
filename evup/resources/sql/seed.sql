@@ -532,8 +532,8 @@ insert into upload (filename) values ('image-11.png');
 insert into upload (filename) values ('image-12.png');
 
 ---1234
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('mfalcus0', 'Micky Falcus', 'mfalcus0@google.com.hk', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('esergent1', 'Elfrida Sergent', 'esergent1@trellian.com', '$2a$12$GNYQT3cnVKmhgi5FMyjBuekVSDuYQ9J3brx.1YDQ9vyDOhzX5/4U6', 1, 'Active', 'Organizer');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('user', 'User', 'user@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('organizer', 'Organizer', 'organizer@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('glanahan2', 'Gaultiero Lanahan', 'glanahan2@rediff.com', '$2a$12$aIJGp62nFW6Qz2Bmyo.2ouzpalZjMqLZs2s06H2tYqcCLgpSQt0zG', 1, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('dblackader3', 'Darlene Blackader', 'dblackader3@shareasale.com', '$2a$12$rkOFfYybMiOktfTnAX6VAewV7hKHGF.HvVKk6sWofjWUE6ufylRYS', 1, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('hhead4', 'Harald Head', 'hhead4@apple.com', '$2a$12$nbHqkY.0JP6.N1d4BTj7mu5W9tRdfzI/V81q61o.RMRhY32c/vy9G', 1, 'Disabled', 'User');
@@ -562,17 +562,15 @@ insert into users (username, name, email, password, userphoto, accountstatus, us
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('dclemensens', 'Davine Clemensen', 'dclemensens@sina.com.cn', '$2a$12$q5FruFlJfr1T0top08UHg.Vr9hZSJ2ZjGy1SHCC8yeEfxVPHfm2SG', 1, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('radamskit', 'Roddie Adamski', 'radamskit@opensource.org', '$2a$12$TVx9ET0bVi/nFgkDSM5cGeg8s3GyE8yVtjeJ3p2CFPaHF6dlqgVna', 1, 'Active', 'Organizer');
 
-insert into users (username, name, email, password, userphoto,accountstatus, usertype) values ('admin', 'Administrator', 'admin@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'Admin');
-insert into users (username, name, email, password, userphoto,accountstatus, usertype) values ('organizer', 'Organizer', 'organizer@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'Organizer');
-insert into users (username, name, email, password, userphoto,accountstatus, usertype) values ('user', 'User', 'user@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
-insert into users (username, name, email, password, userphoto,accountstatus, usertype) values ('password', 'Password Test', 'cisat14362@nubotel.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('admin', 'Administrator', 'admin@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'Admin');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('blocked', 'Blocked user', 'blocked@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Blocked', 'User');
 
 
 
 -- event --
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Porto Pub Crawl', false, '159 Praça Guilherme Gomes Fernandes 4050-526 Porto', 'A fun & eccentric mix between a tour and a bar hop! 6 drinks included PLUS entry to one of Porto most popular clubs!', 9, '2023-11-08', '2023-11-30');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Nature Bath in the Parque da Cidade - Porto', false, 'Entrada Boavista (Avenida do Parque) 4100 Porto', '2 hours guided Nature Bath in the Parque da Cidade',10, '2023-02-06', '2023-02-16');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Romantic Porto: Outdoor Escape Game for Couples - The Love Novel', true, '10 Praça de Gomes Teixeira 4050-161 Porto', 'If you’re looking for a new and exciting way of spending time with your one and only, family or friends, this is your Eureka moment!', 4, '2023-01-03', '2023-01-31');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Porto Pub Crawl', false, '159 Praça Guilherme Gomes Fernandes 4050-526 Porto', 'A fun & eccentric mix between a tour and a bar hop! 6 drinks included PLUS entry to one of Porto most popular clubs!', 9, '2023-11-08', '2023-11-30');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Nature Bath in the Parque da Cidade - Porto', false, 'Entrada Boavista (Avenida do Parque) 4100 Porto', '2 hours guided Nature Bath in the Parque da Cidade',10, '2023-02-06', '2023-02-16');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Romantic Porto: Outdoor Escape Game for Couples - The Love Novel', true, '10 Praça de Gomes Teixeira 4050-161 Porto', 'If you’re looking for a new and exciting way of spending time with your one and only, family or friends, this is your Eureka moment!', 4, '2023-01-03', '2023-01-31');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 18, 'African Heritage and Colonial Roots Tour', false, 'Praça do Marquês de Pombal Porto', 'A Portuguese black woman talking about the history of colonization through an African perspective.',11, '2023-01-24', '2023-01-25');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 20, 'Tratar o cancro por tu - Porto', false, 'Rua de Dom Manuel II 4050-346 Porto', 'Sessão para a literacia no cancro promovida pelo IPATIMUP. Diagnóstico e Tratamento – Tumores Pediátricos.', 12, '2023-01-03', '2023-02-15');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 21, 'A Course on Finding Purpose in Work and Life in 2023', false, '206 Rua de Gonçalo Cristóvão #216 4000-265 Porto', 'A two-day course about finding passion at work and life.', 3, '2023-12-02', '2023-12-03');
@@ -583,14 +581,18 @@ insert into event ( userid, eventname, public, eventaddress, description, eventp
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 17, '[Open Day] Come visit our campus in Porto', true, 'Av. Serpa Pinto 311 4450-718 Matosinhos', 'Come meet the team on our Porto campus!', 3, '2022-11-29', '2023-01-01');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Festa de Quintal', false, '240 Avenida de Ramos Pinto 4400-261 Vila Nova de Gaia', 'Festa de quintal', 4, '2022-12-08', '2022-12-09');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'HackerX - Porto (Full-Stack) Employer Ticket - 02/23 (Onsite)', true, 'Praca do Bom Sucesso 4150 Porto', 'HackerX is an invite-only recruiting event for developers. We are active in >175+ cities globally with a community of over 100,000', 7, '2023-02-26', '2023-02-27');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 31, 'Lionesa Yoga Sessions', true, 'Rua Lionesa 4465-671 Leça do Balio', 'Lionesa welcomes Yoga Sessions, every Monday at 18h in Jardim da Lionesa - in front of Hilti Academy - limited to 10 people per session.', 8, '2023-01-27', '2023-01-30');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Lionesa Yoga Sessions', true, 'Rua Lionesa 4465-671 Leça do Balio', 'Lionesa welcomes Yoga Sessions, every Monday at 18h in Jardim da Lionesa - in front of Hilti Academy - limited to 10 people per session.', 8, '2023-01-27', '2023-01-30');
 
 -- attendee --
 
 insert into attendee (attendeeid, eventid) values (1, 1);
+insert into attendee (attendeeid, eventid) values (1, 2);
+insert into attendee (attendeeid, eventid) values (1, 3);
+insert into attendee (attendeeid, eventid) values (1, 5);
+insert into attendee (attendeeid, eventid) values (1, 7);
+insert into attendee (attendeeid, eventid) values (1, 8);
 insert into attendee (attendeeid, eventid) values (1, 10);
 insert into attendee (attendeeid, eventid) values (1, 11);
-insert into attendee (attendeeid, eventid) values (2, 2);
 insert into attendee (attendeeid, eventid) values (3, 1);
 insert into attendee (attendeeid, eventid) values (3, 3);
 insert into attendee (attendeeid, eventid) values (3, 13);
@@ -600,9 +602,6 @@ insert into attendee (attendeeid, eventid) values (5, 5);
 insert into attendee (attendeeid, eventid) values (7, 7);
 insert into attendee (attendeeid, eventid) values (8, 8);
 insert into attendee (attendeeid, eventid) values (9, 9);
-insert into attendee (attendeeid, eventid) values (32, 2);
-insert into attendee (attendeeid, eventid) values (32, 7);
-insert into attendee (attendeeid, eventid) values (32, 8);
 
 -- Category --
 insert into Category ( categoryname) values ( 'Tudo');
@@ -657,32 +656,30 @@ insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values
 insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (4, 7, 2, null);
 insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (7, 4, 3, null);
 insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (9, 3, 4, null);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (1, 2, 5, true);
-insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (1, 4, 6, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (1, 2, 5, null);
+insert into invitation (inviterid, inviteeid, eventid, invitationstatus) values (1, 4, 6, false);
 insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 22, 7, false);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 22, 8, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 22, 8, false);
 insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (4, 3, 8, false);
 insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 8, 9, false);
 
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 2, null);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 3, null);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 3, null);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 2, null);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 5, null);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 8, null);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 2, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 1, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 2, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 3, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (20, 1, 5, true);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 14, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (2, 1, 13, null);
+insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 13, null);
 insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 4, null);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (4, 1, 4, false);
-insert into invitation ( inviterid, inviteeid, eventid, invitationstatus) values (3, 1, 1, false);
 
 -- poll --
 
-insert into poll ( eventid, pollcontent) values ( 4,'What topics interest you the most?');
-insert into poll ( eventid, pollcontent) values ( 4,'What day are you going to the event?');
+insert into poll ( eventid, pollcontent) values ( 1,'What topics interest you the most?');
+insert into poll ( eventid, pollcontent) values ( 2,'What day are you going to the event?');
 insert into poll ( eventid, pollcontent) values ( 5,'What are you most looking forward to during the event?');
 insert into poll ( eventid, pollcontent) values ( 6,'What place should we have our next event in?');
 insert into poll ( eventid, pollcontent) values ( 10,'Are you interested in a meet-up after the event for further discussion?');
-insert into poll ( eventid, pollcontent) values ( 6, 'Who are you going to the event with?');
+insert into poll ( eventid, pollcontent) values ( 3, 'Who are you going to the event with?');
 insert into poll ( eventid, pollcontent) values ( 2, 'Were you able to connect with all of the things you wanted to during the event?');
 insert into poll ( eventid, pollcontent) values ( 7, 'How useful will the topics covered be to you in your course?');
 
@@ -714,11 +711,8 @@ insert into polloption ( optioncontent, pollid) values ('A Lot',8);
 
 -- answer --                            voteType??
 
-insert into answer (userid, polloptionid) values (2, 2);
-insert into answer (userid, polloptionid) values (2, 4);
 insert into answer (userid, polloptionid) values (1, 1);
-insert into answer (userid, polloptionid) values (2, 7);
-insert into answer (userid, polloptionid) values (5, 4);
+insert into answer (userid, polloptionid) values (1, 5);
 
 
 -- comment --
@@ -726,13 +720,13 @@ insert into answer (userid, polloptionid) values (5, 4);
 insert into Comment (authorId, eventId, commentContent, commentDate) values (4, 4, 'I am looking forward to it!!', '2022-12-20');
 insert into Comment (authorId, eventId, commentContent, commentDate) values (8, 8, 'I have some questions about the event. Someone can help me?', '2022-10-10');
 insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Looks very useful', '2022-11-10');
-insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, ':)', '2022-11-30');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (1, 1, ':)', '2022-11-30');
 insert into Comment (authorId, eventId, commentContent, commentDate) values (5, 5, ':(', '2022-12-22');
 insert into Comment (authorId, eventId, commentContent, commentDate) values (1, 1, 'It was fun', '2022-12-02');
 insert into Comment (authorId, eventId, commentContent, commentDate) values (9, 9, 'This event changed my life!', '2022-12-20');
-insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 2, 'I did not like the event. I am disappointed.', '2022-12-20');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (10, 2, 'I did not like the event. I am disappointed.', '2022-12-20');
 insert into Comment (authorId, eventId, commentContent, commentDate) values (7, 7, 'Where is the event?', '2022-11-06');
-insert into Comment (authorId, eventId, commentContent, commentDate) values (2, 1, 'Nice!', '2022-11-19');
+insert into Comment (authorId, eventId, commentContent, commentDate) values (6, 1, 'Nice!', '2022-11-19');
 
 insert into Comment (authorId, eventId, parentId, commentContent, commentDate) values (2, 1, 6, 'Much appreciated! Glad you liked it ☺️', '2022-12-03');
 insert into Comment (authorId, eventId, parentId, commentContent, commentDate) values (1, 1, 10, ':) :)', '2022-11-20');
@@ -755,19 +749,7 @@ insert into joinrequest ( requesterid, eventid) values ( 17, 10);
 insert into organizerrequest ( requesterid, requeststatus) values ( 5, false);
 insert into organizerrequest ( requesterid, requeststatus) values ( 9, true);
 insert into organizerrequest ( requesterid, requeststatus) values ( 4, true);
-insert into organizerrequest ( requesterid, requeststatus) values (1, true);
 insert into organizerrequest ( requesterid) values (8);
-
--- notification --
-
-insert into notification ( receiverid, eventid, notificationdate, notificationtype, notificationstatus) values (1, 5, CURRENT_TIMESTAMP, 'EventChange', false);
-insert into notification ( receiverid, joinrequestid, notificationdate, notificationtype, notificationstatus) values ( 1, 1, CURRENT_TIMESTAMP, 'JoinRequestReviewed', false);
-insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values (1, 4, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', false);
-insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 1, 11, CURRENT_TIMESTAMP, 'InviteReceived', false);
-insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values (1, 6, CURRENT_TIMESTAMP, 'InviteAccepted', false);
-insert into notification ( receiverid, organizerrequestid, notificationdate, notificationtype, notificationstatus) values ( 8, 2, CURRENT_TIMESTAMP, 'OrganizerRequestReviewed', true);
-insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 9, 9, CURRENT_TIMESTAMP, 'InviteReceived', true);
-insert into notification ( receiverid, invitationid, notificationdate, notificationtype, notificationstatus) values ( 4, 3, CURRENT_TIMESTAMP, 'InviteAccepted', false);
 
 -- vote --
 
