@@ -19,9 +19,9 @@
 
         <div class="flex md:gap-8 justify-center mt-8 mb-8">
             <div class="card w-96 rounded-xl p-8 bg-gray-900 text-white shadow-xl hover:shadow">
-                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="{{asset('storage/images/image-1.png')}}" alt="Daniela Tomás's Avatar">
-                <div class="text-center mt-2 text-3xl font-medium">Daniela Tomás</div>
-                <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="">@daniela</a></div>
+                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="storage/up202004946.png" alt="Daniela Tomás's Avatar">
+                <div class="text-center mt-2 text-3xl font-medium">Daniela Santos Tomás</div>
+                <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="https://github.com/DanielaTomas">@DanielaTomas</a></div>
                 <div class="text-center font-normal text-lg">up202004946@edu.fc.up.pt</div>
                 <div class="px-6 text-center mt-2 font-normal text-sm mb-4">3rd year student of Informatics and Computing Engineering at FEUP</div>
             </div>
