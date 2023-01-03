@@ -44,7 +44,7 @@ class HomeController extends Controller
     if($tagid==1){
       $events = EventController::getPublicEvents();
     }else{
-      $events = $tag->eventTags()->get();
+      $events = $tag->eventTags()->where('public',true)->get();
     }
 
     return response()->json(view('partials.content.publicEvents', ['events' => $events])->render()
@@ -59,7 +59,7 @@ class HomeController extends Controller
     if($categoryid==1){
       $events = EventController::getPublicEvents();
     }else{
-      $events = $category->eventCategories()->get();
+      $events = $category->eventCategories()->where('public',true)->get();
     }
     return response()->json(view('partials.content.publicEvents', ['events' => $events])->render()
   , 200);
