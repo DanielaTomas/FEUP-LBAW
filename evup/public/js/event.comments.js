@@ -33,15 +33,6 @@ const newCommentHandler = (reply, parent = select('#comments'), position = 'afte
     initModal(selectors)
 }
 
-/*
-const editComment = (commentId, editBox) => {
-    const body = select(`#edit_textarea_${commentId}`).value;
-    if (!body) return;
-
-    sendAjaxRequest('PUT', `/comment/${commentId}`, { body }, editCommentHandler(commentId, editBox));
-}
-*/
-
 const updateComment = (eventid, commentid) => {
     const url = '/event/'+ eventid + '/editComment/' + commentid;
     const body = select(`#editCommentInput-${commentid}`).value;
