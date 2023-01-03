@@ -151,7 +151,7 @@ paths:
                   description: "Failed registration. Redirect to sign-up form."
                   value: "/signup"
 
-/forgotPassord:
+/forgotPassword:
     get:
       operationId: R106
       summary: "R106: Forgot password Form"
