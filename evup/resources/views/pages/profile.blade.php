@@ -5,17 +5,6 @@
 @section('content')
 <article class="rounded-t-3xl flex flex-col grow px-6 ">
 
-
-    @foreach ($errors->all() as $error)
-    <div class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200"> <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-red-700 dark:text-red-800" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd"></path>
-        </svg> <span class="sr-only">Info</span>
-        <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800"> <span class="font-medium">Error!</span> {{ $error }} </div>
-    </div>
-    @endforeach
-
-
-
     <div class="text-center mt-2 ">
         <div class="mr-2">
             <img alt="user_photo" class="mx-auto w-12 h-12 rounded-full" src="{{ asset('storage/images/image-'.$user->userphoto.'.png')}}">
