@@ -54,11 +54,11 @@
                         @endif
                     </div>
 
-                    <section class="flex flex-col p-4 font-bold  text-gray-800 items-start bg-gray-500">
-                        <p> Start: {{ $event->startdate }} </p>
-                        <p> End: {{ $event->enddate }} </p>
-                        <p> Address: {{ $event->eventaddress }} </p>
-                        <p> Organizer: {{ $event->organizer()->first()->username }} </p>
+                    <section class="flex flex-col p-4 font-medium text-gray-900 items-start bg-gray-400 rounded-md">
+                        <p> <span class="font-bold"> Start Date: </span> {{ $event->startdate }} </p>
+                        <p> <span class="font-bold"> End Date: </span> {{ $event->enddate }} </p>
+                        <p> <span class="font-bold"> Address: </span> {{ $event->eventaddress }} </p>
+                        <p> <span class="font-bold"> Organizer: </span> {{ $event->organizer()->first()->name }} </p>
                     </section>
 
                     <div class="flex flex-row justify-around">
