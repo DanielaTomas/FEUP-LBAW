@@ -27,11 +27,11 @@
             </div>
 
             <div class="card w-96 rounded-xl p-8 bg-gray-900 text-white shadow-xl hover:shadow">
-                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="{{asset('storage/images/image-1.png')}}" alt="Hugo Almeida's Avatar">
+                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" src="storage/up202006814.png" alt="Hugo Almeida's Avatar">
                 <div class="text-center mt-2 text-3xl font-medium">Hugo Almeida</div>
-                <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="">@hugo</a></div>
+                <div class="text-center mt-2 font-medium text-sm"><a class="text-gray-500 hover:text-indigo-900" href="https://github.com/Crackugo">@Crackugo</a></div>
                 <div class="text-center font-normal text-lg">up202006814@edu.fe.up.pt</div>
-                <div class="px-6 text-center mt-2 font-normal text-sm mb-4"><p>Description</p></div>
+                <div class="px-6 text-center mt-2 font-normal text-sm mb-4"><p>LEIC @ FEUP</p></div>
             </div>
 
             <div class="card w-96 rounded-xl p-8 bg-gray-900 text-white shadow-xl hover:shadow">
