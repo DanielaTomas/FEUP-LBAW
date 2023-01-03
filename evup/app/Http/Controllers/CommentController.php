@@ -133,22 +133,6 @@ class CommentController extends Controller
       ], 200);
   }
 
-  /*
-  public function editComment(int $id, int $commentid) 
-  {
-    $comment = Comment::find($commentid);
-
-    if(is_null($comment))
-      return abort(404,'Comment not found');
-
-    $this->authorize('edit',$comment);
-
-    return view('pages.event.editComment',[
-      'comment'=>$comment
-    ]);
-  } 
-  */
-
   public function like(int $id, int $commentid,$voted) 
   {
     $comment = Comment::find($commentid);
