@@ -45,7 +45,7 @@ class EventController extends Controller
 
     $user = User::find(Auth::id());
     $polls = $event->polls()->get();
-    $comments = $event->comments()->orderBy('commentdate','desc')->paginate(3);
+    $comments = $event->comments()->orderBy('commentdate', 'desc')->paginate(3);
     if ($event->public && !Auth::check()) {
       return view('pages.event', [
         'event' => $event
@@ -59,23 +59,23 @@ class EventController extends Controller
   }
 
   /**
-     * Display the Administration Panel
-     *
-     * @return View
-     */
-    public function show_dashboard(int $eventid)
-    {
-      $organizer = User::find(Auth::id());
-      if (is_null($organizer))
-          return abort(404, 'User not found');
+   * Display the Administration Panel
+   *
+   * @return View
+   */
+  public function show_dashboard(int $eventid)
+  {
+    $organizer = User::find(Auth::id());
+    if (is_null($organizer))
+      return abort(404, 'User not found');
 
-      $event = Event::find($eventid);
-      if (is_null($event))
-          return abort(404, 'Event not found');
+    $event = Event::find($eventid);
+    if (is_null($event))
+      return abort(404, 'Event not found');
 
-      $this->authorize('dashboard', $event);
-      
-      $attendees = DB::table('attendee')
+    $this->authorize('dashboard', $event);
+
+    $attendees = DB::table('attendee')
       ->select('attendeeid', 'eventid')
       ->where('eventid', $eventid)
       ->get()
@@ -90,72 +90,72 @@ class EventController extends Controller
         ];
       });
 
-      $join_requests = JoinRequest::orderByDesc('joinrequestid')->get()
+    $join_requests = JoinRequest::orderByDesc('joinrequestid')->get()
       ->where('eventid', '=', $eventid)
       ->map(function ($request) {
 
-          $requester = User::find($request->requesterid);
+        $requester = User::find($request->requesterid);
 
-          return [
-              'request' => $request,
-              'requester' => $requester,
-          ];
+        return [
+          'request' => $request,
+          'requester' => $requester,
+        ];
       });
 
-      return view('pages.event.dashboard',[
-          'organizer' => $organizer,
-          'event' => $event,
-          'attendees' => $attendees,
-          'requests' => $join_requests,
-      ]);
+    return view('pages.event.dashboard', [
+      'organizer' => $organizer,
+      'event' => $event,
+      'attendees' => $attendees,
+      'requests' => $join_requests,
+    ]);
   }
 
 
   public function denyJoinRequest(int $eventid, int $id)
   {
-      $organizer = User::find(Auth::id());
-      if (is_null($organizer))
-        return response()->json([
-          'status' => 'Not Found',
-          'msg' => 'User not found, id: '.Auth::id(),
-          'errors' => ['user' => 'User not found, id: '.Auth::id()]
-        ], 404);
-      $event = Event::find($eventid);
-      if (is_null($event))
-        return response()->json([
-          'status' => 'Not Found',
-          'msg' => 'Event not found, id: '.$eventid,
-          'errors' => ['event' => 'Event not found, id: '.$eventid]
-        ], 404);
-      $request = JoinRequest::find($id);
-      if (is_null($request))
-        return response()->json([
-            'status' => 'Not Found',
-            'msg' => 'Request not found, id: '.$id,
-            'errors' => ['request' => 'Request not found, id: '.$id]
-        ], 404);
-
-
-      if ($event->userid !== $organizer->userid || $request->eventid !== $event->eventid)
-        return response()->json([
-          'status' => 'Forbidden',
-          'msg' => 'Resource cannot be accessed',
-          'errors' => ['request' => 'Request cannot be accessed']
-        ], 403);
-
-      if ($request->requestStatus)
-          return response()->json([
-              'status' => 'OK',
-              'msg' => 'Request was already denied',
-          ], 200);
-
-      $request->requeststatus = false;
-      $request->save();
-
+    $organizer = User::find(Auth::id());
+    if (is_null($organizer))
       return response()->json([
-          'status' => 'OK',
-          'msg' => 'Request was successfully denied',
+        'status' => 'Not Found',
+        'msg' => 'User not found, id: ' . Auth::id(),
+        'errors' => ['user' => 'User not found, id: ' . Auth::id()]
+      ], 404);
+    $event = Event::find($eventid);
+    if (is_null($event))
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'Event not found, id: ' . $eventid,
+        'errors' => ['event' => 'Event not found, id: ' . $eventid]
+      ], 404);
+    $request = JoinRequest::find($id);
+    if (is_null($request))
+      return response()->json([
+        'status' => 'Not Found',
+        'msg' => 'Request not found, id: ' . $id,
+        'errors' => ['request' => 'Request not found, id: ' . $id]
+      ], 404);
+
+
+    if ($event->userid !== $organizer->userid || $request->eventid !== $event->eventid)
+      return response()->json([
+        'status' => 'Forbidden',
+        'msg' => 'Resource cannot be accessed',
+        'errors' => ['request' => 'Request cannot be accessed']
+      ], 403);
+
+    if ($request->requestStatus)
+      return response()->json([
+        'status' => 'OK',
+        'msg' => 'Request was already denied',
       ], 200);
+
+    $request->requeststatus = false;
+    $request->save();
+
+    return response()->json([
+      'status' => 'OK',
+      'msg' => 'Request was successfully denied',
+    ], 200);
   }
 
 
@@ -166,22 +166,22 @@ class EventController extends Controller
     if (is_null($organizer))
       return response()->json([
         'status' => 'Not Found',
-        'msg' => 'User not found, id: '.Auth::id(),
-        'errors' => ['user' => 'User not found, id: '.Auth::id()]
+        'msg' => 'User not found, id: ' . Auth::id(),
+        'errors' => ['user' => 'User not found, id: ' . Auth::id()]
       ], 404);
     $event = Event::find($eventid);
     if (is_null($event))
       return response()->json([
         'status' => 'Not Found',
-        'msg' => 'Event not found, id: '.$eventid,
-        'errors' => ['event' => 'Event not found, id: '.$eventid]
+        'msg' => 'Event not found, id: ' . $eventid,
+        'errors' => ['event' => 'Event not found, id: ' . $eventid]
       ], 404);
     $request = JoinRequest::find($id);
     if (is_null($request))
       return response()->json([
-          'status' => 'Not Found',
-          'msg' => 'Request not found, id: '.$id,
-          'errors' => ['request' => 'Request not found, id: '.$id]
+        'status' => 'Not Found',
+        'msg' => 'Request not found, id: ' . $id,
+        'errors' => ['request' => 'Request not found, id: ' . $id]
       ], 404);
 
     if ($event->userid !== $organizer->userid || $request->eventid !== $event->eventid)
@@ -192,17 +192,17 @@ class EventController extends Controller
       ], 403);
 
     if ($request->requeststatus)
-        return response()->json([
-            'status' => 'OK',
-            'msg' => 'Request was already accepted',
-        ], 200);
+      return response()->json([
+        'status' => 'OK',
+        'msg' => 'Request was already accepted',
+      ], 200);
 
     $request->requeststatus = true;
     $request->save();
 
     return response()->json([
-        'status' => 'OK',
-        'msg' => 'Request was successfully accepted',
+      'status' => 'OK',
+      'msg' => 'Request was successfully accepted',
     ], 200);
   }
 
@@ -488,7 +488,7 @@ class EventController extends Controller
     $validator = Validator::make($request->all(), [
       'eventname' => 'required|string|max:255',
       'description' => 'required|string|max:255',
-      //TODO 'eventphoto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
+      'eventphoto' => 'image|mimes:jpg,png,jpeg,gif,svg|max:4096',
       'eventaddress' => 'required|string|max:255',
       'startdate' => 'required|date',
       'enddate' => 'required|date|after:startdate',
@@ -503,13 +503,27 @@ class EventController extends Controller
       return redirect()->back()->withInput()->withErrors($errors);
     }
 
-    if (isset($request->eventname)) $event->eventname = $request->eventname;
+    $repeatedName = Event::where('eventname', $request->eventname)->first();
+
+    if (isset($request->eventname) && $repeatedName == null) {
+      $event->eventname = $request->eventname;
+    } else {
+      return redirect()->back()->withInput()->withErrors(['event_repeated' => 'Event name already exists']);
+    }
+
     if (isset($request->description)) $event->description = $request->description;
-    if (isset($request->eventphoto)) $event->eventphoto = $request->eventphoto;
     if (isset($request->eventaddress)) $event->eventaddress = $request->eventaddress;
     if (isset($request->startdate)) $event->startdate = $request->startdate;
     if (isset($request->enddate)) $event->enddate = $request->enddate;
 
+    if ($request->file('image') != null) {
+      $name = $request->file('image')->getClientOriginalName();
+      $upload = new Upload();
+      $upload->filename = $name;
+      $upload->save();
+      $request->image->storeAs('public/images/', "image-$upload->uploadid.png");
+      $event->eventphoto = $upload->uploadid;
+    }
     $event->save();
 
     return redirect()->route('show_event', [$event->eventid]);
@@ -529,7 +543,7 @@ class EventController extends Controller
     if (is_null($organizer))
       return abort(404, 'User not found');
 
-    $this->authorize('createEvent',$organizer);
+    $this->authorize('createEvent', $organizer);
 
     $validator = Validator::make(
       $request->all(),
@@ -545,7 +559,7 @@ class EventController extends Controller
 
     $errors = [];
     if ($validator->fails()) {
-  
+
       foreach ($validator->errors()->messages() as $key => $value) {
         $errors[$key] = is_array($value) ? implode(',', $value) : $value;
       }
@@ -560,7 +574,7 @@ class EventController extends Controller
     if (isset($request->name) && $repeatedName == null) {
       $event->eventname = $request->name;
     } else {
-      return redirect()->back()->withInput()->withErrors();
+      return redirect()->back()->withInput()->withErrors(['event_repeated' => 'Event name already exists']);
     }
 
     $event->eventaddress = $request->eventaddress;
@@ -589,13 +603,13 @@ class EventController extends Controller
     $tags = TagController::getAllTags();
     $categories = CategoryController::getAllCategories();
     $event->save();
-    foreach ($categories as $category){
+    foreach ($categories as $category) {
       if ($request->has("category-$category->categoryid")) {
         $event->eventCategories()->attach($category->categoryid);
       }
     }
 
-    foreach ($tags as $tag){
+    foreach ($tags as $tag) {
       if ($request->has("tag-$tag->tagid")) {
         $event->eventTags()->attach($tag->tagid);
       }
@@ -614,7 +628,7 @@ class EventController extends Controller
     if (is_null($event))
       return abort(404, 'Event not found');
 
-    $this->authorize('reportEvent',$user);
+    $this->authorize('reportEvent', $user);
 
     $validator = Validator::make(
       $request->all(),
@@ -625,14 +639,14 @@ class EventController extends Controller
 
     $errors = [];
     if ($validator->fails()) {
-  
+
       foreach ($validator->errors()->messages() as $key => $value) {
         $errors[$key] = is_array($value) ? implode(',', $value) : $value;
       }
 
       return redirect()->back()->withInput()->withErrors($errors);
     }
-    
+
     $report = new Report();
 
     $report->reporterid = Auth::id();
@@ -641,7 +655,6 @@ class EventController extends Controller
 
     $report->save();
 
-    return redirect()->route('show_event' , $eventid)->with('success', 'Your report has been submited.');
+    return redirect()->route('show_event', $eventid)->with('success', 'Your report has been submited.');
   }
-
 }

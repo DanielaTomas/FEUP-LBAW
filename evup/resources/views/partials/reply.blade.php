@@ -2,7 +2,7 @@
     <div class="flex justify-between items-center mb-2">
         <div class="flex items-center">
             <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img alt=""
-                    class="mr-2 w-6 h-6 rounded-full" src="{{ $comment->author()->first()->userphoto }}">
+                    class="mr-2 w-6 h-6 rounded-full" src="{{ asset('storage/images/image-'. $comment->author()->first()->userphoto.'.png')}}">
                 {{ $comment->author()->first()->username }}</p>
             <p class="text-sm text-gray-600 dark:text-gray-400">{{ $comment->time_diff() }}</p>
         </div>

@@ -29,7 +29,7 @@
     </div>
 
 </div>
-<article class="rounded-t-3xl">
+<article class="rounded-t-3xl grow">
     <div id="homeTagsSection">
         <p id="homeTagHeader" class="pt-6 font-bold text-lg">Select your interests to get event suggestions based on what you love</p>
         <div id="homeTags">

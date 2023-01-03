@@ -192,14 +192,14 @@ class UserController extends Controller
         } else {
             return redirect()->back()->withInput();
         }
-
-        $name = $request->file('image')->getClientOriginalName();
-        $upload = new Upload();
-        $upload->filename = $name;
-        $upload->save();
-        $request->image->storeAs('public/images/', "image-$upload->uploadid.png");
-        $user->userphoto = $upload->uploadid;
-
+        if ($request->file('image') != null) {
+            $name = $request->file('image')->getClientOriginalName();
+            $upload = new Upload();
+            $upload->filename = $name;
+            $upload->save();
+            $request->image->storeAs('public/images/', "image-$upload->uploadid.png");
+            $user->userphoto = $upload->uploadid;
+        }
         $user->save();
         return redirect("/user/$user->userid");
     }
@@ -284,7 +284,7 @@ class UserController extends Controller
     public function acceptRequest(int $id)
     {
         $request = Invitation::find($id);
-        
+
         if (is_null($request))
             return response()->json([
                 'status' => 'Not Found',
@@ -319,7 +319,7 @@ class UserController extends Controller
 
     public function organizerRequest(int $id)
     {
-        $this->authorize('organizer_request',Auth::user() );
+        $this->authorize('organizer_request', Auth::user());
         $request = new OrganizerRequest;
         $request->requesterid = $id;
         $request->save();
@@ -333,13 +333,13 @@ class UserController extends Controller
 
     public function requestToJoin(Request $request)
     {
-        $this->authorize('requestToJoin',Auth::user());
+        $this->authorize('requestToJoin', Auth::user());
         $joinRequest = new JoinRequest();
         $joinRequest->requesterid = Auth::id();
         $joinRequest->eventid = $request->eventid;
         $joinRequest->save();
 
-       
+
 
         return response()->json([
             'status' => 'OK',
