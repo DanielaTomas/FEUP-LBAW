@@ -529,9 +529,9 @@ CREATE TRIGGER user_search_update
 insert into upload (filename) values ('image-1.png'); /* Default image for users*/
 insert into upload (filename) values ('image-2.png'); /* Default image for events*/
 
+-- events stock images --
 insert into upload (filename) values ('image-3.png');
 insert into upload (filename) values ('image-4.png');
-
 insert into upload (filename) values ('image-5.png');
 insert into upload (filename) values ('image-6.png');
 insert into upload (filename) values ('image-7.png');
@@ -547,27 +547,37 @@ insert into upload (filename) values ('image-16.png');
 insert into upload (filename) values ('image-17.png');
 insert into upload (filename) values ('image-18.png');
 
+-- users stock images --
+insert into upload (filename) values ('image-19.jpg');
+insert into upload (filename) values ('image-20.jpg');
+insert into upload (filename) values ('image-21.jpg');
+insert into upload (filename) values ('image-22.jpg');
+insert into upload (filename) values ('image-23.jpg');
+insert into upload (filename) values ('image-24.jpg');
+insert into upload (filename) values ('image-25.jpg');
+
+
 ---1234
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('user', 'User', 'user@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('organizer', 'Organizer', 'organizer@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'Organizer');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('glanahan2', 'Gaultiero Lanahan', 'glanahan2@rediff.com', '$2a$12$aIJGp62nFW6Qz2Bmyo.2ouzpalZjMqLZs2s06H2tYqcCLgpSQt0zG', 1, 'Active', 'User');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('dblackader3', 'Darlene Blackader', 'dblackader3@shareasale.com', '$2a$12$rkOFfYybMiOktfTnAX6VAewV7hKHGF.HvVKk6sWofjWUE6ufylRYS', 1, 'Active', 'User');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('user', 'User', 'user@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 19, 'Active', 'User');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('organizer', 'Organizer', 'organizer@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 20, 'Active', 'Organizer');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('glanahan2', 'Gaultiero Lanahan', 'glanahan2@rediff.com', '$2a$12$aIJGp62nFW6Qz2Bmyo.2ouzpalZjMqLZs2s06H2tYqcCLgpSQt0zG', 21, 'Active', 'User');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('dblackader3', 'Darlene Blackader', 'dblackader3@shareasale.com', '$2a$12$rkOFfYybMiOktfTnAX6VAewV7hKHGF.HvVKk6sWofjWUE6ufylRYS', 22, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('hhead4', 'Harald Head', 'hhead4@apple.com', '$2a$12$nbHqkY.0JP6.N1d4BTj7mu5W9tRdfzI/V81q61o.RMRhY32c/vy9G', 1, 'Disabled', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('ckirtland5', 'Cathrin Kirtland', 'ckirtland5@fotki.com', '$2a$12$FNoX/oiWL6YfIpa/AyYUZu/RyE65BxRRYCVgNmwmOwZCjZ3xU2nT.', 1, 'Active', 'Admin');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('mdougary6', 'Merilee Dougary', 'mdougary6@artisteer.com', '$2a$12$x..4MPUpLKYfrL.b6md3AO/gMGPRVtxbaIoreHQEH1K34MyCb1R8e', 1, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('bbullman7', 'Brandyn Bullman', 'bbullman7@amazon.co.jp', '$2a$12$uQ6hxS1VICoKLTAxN4VIvOCN9GOJYWrL.50xiecGDx4HsOJLuMLHK', 1, 'Active', 'User');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('dwhatmough8', 'Dierdre Whatmough', 'dwhatmough8@va.gov', '$2a$12$WTeWqqwBQY52XF3IrwsUCOMzXit0Oa705TOME9TAeJ.wuudg8Z28G', 1, 'Active', 'User');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('dwhatmough8', 'Dierdre Whatmough', 'dwhatmough8@va.gov', '$2a$12$WTeWqqwBQY52XF3IrwsUCOMzXit0Oa705TOME9TAeJ.wuudg8Z28G', 21, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('jsteptoe9', 'Jojo Steptoe', 'jsteptoe9@theglobeandmail.com', '$2a$12$MPeic3/aCWO8Fqujw86EbOwI4EZW4nWoHeH/34BFdVHzC4KXnRw4u',1, 'Active', 'Admin');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('pbentkea', 'Patty Bentke', 'pbentkea@hp.com', '$2a$12$H3ksZb9D2lgfH5jS5EFJd.mM7JM.j1CFGCujDM6ojPyviM82Zw1bG', 1, 'Active', 'Admin');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('rbuckleeb', 'Rafael Bucklee', 'rbuckleeb@china.com.cn', '$2a$12$7CItKvaiiEGrW9GdxMDOSe/m0h76BeEY36Ths41IVGQhuDBn29CiO', 1, 'Blocked', 'User');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('rbuckleeb', 'Rafael Bucklee', 'rbuckleeb@china.com.cn', '$2a$12$7CItKvaiiEGrW9GdxMDOSe/m0h76BeEY36Ths41IVGQhuDBn29CiO', 23, 'Blocked', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('bbeckerc', 'Barbabas Becker', 'bbeckerc@mysql.com', '$2a$12$6grWpzjqrUWQUu1R.qP5.OKY2Y4KYCMyR7BEe4wAnTNVLB36m6SVS', 1, 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('pbromwichd', 'Pooh Bromwich', 'pbromwichd@delicious.com', '$2a$12$vGby4k2Q9bSVctmk6qJBQ.T.KnYLBMTvjTu94c1dvKxW/D8VDBKZq', 1, 'Active', 'User');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('cgirardettie', 'Cyrillus Girardetti', 'cgirardettie@dropbox.com', '$2a$12$Bae4xKFJke0VCq/toEP2n.gdv30onGj9tf7bDTCcWUK5JZrb40eFq', 1, 'Active', 'Admin');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('rdacheyf', 'Rollin Dachey', 'rdacheyf@gizmodo.com', '$2a$12$viNjoc/pkk2tb8Rw98sxD.KsvS3KeHERGQscVESkhDOmPgHHAfNPK', 1, 'Active', 'Admin');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('rdacheyf', 'Rollin Dachey', 'rdacheyf@gizmodo.com', '$2a$12$viNjoc/pkk2tb8Rw98sxD.KsvS3KeHERGQscVESkhDOmPgHHAfNPK', 24, 'Active', 'Admin');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('nmayg', 'Noe May', 'nmayg@tmall.com', '$2a$12$SAaRbpQ/X8E28i/HKGVx3eG4o8cSwRwZ1zYVZdYAVfLRYz404fmkO', 1, 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('oarnelyh', 'Ofelia Arnely', 'oarnelyh@furl.net', '$2a$12$ykFgvUQSzcn4qTbqs72GaO0dGZ8sm.hdfAY54FQycqvH.wnuHsh.e', 1, 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('hkohneni', 'Hilliard Kohnen', 'hkohneni@flickr.com', '$2a$12$H79gHsKwoLIWXSZASHEOq.EM3N0lMmL2886H5UdvQj4pRTiuYc5Ie', 1, 'Active', 'User');
-insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('lsommervillej', 'Lindsey Sommerville', 'lsommervillej@ihg.com', '$2a$12$R1zkONLvhzMVC6sOdHcGHOQv5zxv2vGNc6j5FN/MAb0cMV68h2LCq', 1, 'Active', 'Organizer');
+insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('lsommervillej', 'Lindsey Sommerville', 'lsommervillej@ihg.com', '$2a$12$R1zkONLvhzMVC6sOdHcGHOQv5zxv2vGNc6j5FN/MAb0cMV68h2LCq', 25, 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('bbuzzingk', 'Berke Buzzing', 'bbuzzingk@vinaora.com', '$2a$12$URLkNk9xF.ZLswkDJI3SHOkIP.ldeVTkkeDEAWhYIssAi2sVwBMzi', 1, 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('wkensettl', 'Wren Kensett', 'wkensettl@freewebs.com', '$2a$12$xCMI5mdm2MlEdGOyiNpEf.Sw9FJuMkyW6zjspo6PY/3wgnjA1fn0K', 1, 'Active', 'Organizer');
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('mpietrowskim', 'Murial Pietrowski', 'mpietrowskim@hibu.com', '$2a$12$JrfRlgEHwCaThx0Rrg70eea5M6WsIpZEdhLTPgmiAEQqaP.IThVPy', 1, 'Active', 'User');
