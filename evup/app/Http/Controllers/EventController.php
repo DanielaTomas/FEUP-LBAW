@@ -487,7 +487,7 @@ class EventController extends Controller
 
     $validator = Validator::make($request->all(), [
       'eventname' => 'required|string|max:255',
-      'description' => 'required|string|max:255',
+      'description' => 'required|string|max:500',
       'eventphoto' => 'image|mimes:jpg,png,jpeg,gif,svg|max:4096',
       'eventaddress' => 'required|string|max:255',
       'startdate' => 'required|date',
@@ -548,9 +548,9 @@ class EventController extends Controller
     $validator = Validator::make(
       $request->all(),
       [
-        'name' => 'required|string|min:3|max:100',
-        'eventaddress' => 'required|string|min:3|max:200',
-        'description' => 'required|string|min:3|max:100',
+        'name' => 'required|string|min:3|max:255',
+        'eventaddress' => 'required|string|min:3|max:255',
+        'description' => 'required|string|min:3|max:500',
         'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
         'endDate' => 'required|date',
         'startDate' => 'required|date',

@@ -647,22 +647,22 @@ insert into event_tag (eventid, tagid) values (12, 5);
 insert into event_tag (eventid, tagid) values (13, 7);
 insert into event_tag (eventid, tagid) values (14, 4);
 
--- Category --
-insert into Category ( categoryname) values ( 'Tudo');
-insert into Category ( categoryname) values ( 'Cinema');
-insert into Category ( categoryname) values ( 'Ar livre');
-insert into Category ( categoryname) values ( 'Música');
-insert into Category ( categoryname) values ( 'Família');
-insert into Category ( categoryname) values ( 'Exposição');
-insert into Category ( categoryname) values ( 'Literatura');
-insert into Category ( categoryname) values ( 'Conferência');
-insert into Category ( categoryname) values ( 'Congresso');
-insert into Category ( categoryname) values ( 'Seminário');
-insert into Category ( categoryname) values ( 'Encontro');
-insert into Category ( categoryname) values ( 'Online');
-insert into Category ( categoryname) values ( 'Palestra');
-insert into Category ( categoryname) values ( 'Teatro');
-insert into Category ( categoryname) values ( 'Desporto');
+-- category --
+insert into category ( categoryname) values ( 'Tudo');
+insert into category ( categoryname) values ( 'Cinema');
+insert into category ( categoryname) values ( 'Ar livre');
+insert into category ( categoryname) values ( 'Música');
+insert into category ( categoryname) values ( 'Família');
+insert into category ( categoryname) values ( 'Exposição');
+insert into category ( categoryname) values ( 'Literatura');
+insert into category ( categoryname) values ( 'Conferência');
+insert into category ( categoryname) values ( 'Congresso');
+insert into category ( categoryname) values ( 'Seminário');
+insert into category ( categoryname) values ( 'Encontro');
+insert into category ( categoryname) values ( 'Online');
+insert into category ( categoryname) values ( 'Palestra');
+insert into category ( categoryname) values ( 'Teatro');
+insert into category ( categoryname) values ( 'Desporto');
 
 -- event_category --
 
@@ -710,7 +710,9 @@ insert into attendee (attendeeid, eventid) values (4, 4);
 insert into attendee (attendeeid, eventid) values (5, 5);
 insert into attendee (attendeeid, eventid) values (7, 7);
 insert into attendee (attendeeid, eventid) values (8, 8);
+insert into attendee (attendeeid, eventid) values (9, 3);
 insert into attendee (attendeeid, eventid) values (9, 9);
+
 
 -- report --
 
@@ -815,7 +817,10 @@ insert into joinrequest ( requesterid, eventid, requeststatus) values ( 2, 12, f
 insert into joinrequest ( requesterid, eventid, requeststatus) values ( 3, 2, true);
 insert into joinrequest ( requesterid, eventid) values ( 1, 9);
 insert into joinrequest ( requesterid, eventid) values ( 4, 10);
+insert into joinrequest ( requesterid, eventid) values ( 7, 3);
+insert into joinrequest ( requesterid, eventid) values ( 8, 3);
 insert into joinrequest ( requesterid, eventid) values ( 8, 10);
+insert into joinrequest ( requesterid, eventid) values ( 17, 3);
 insert into joinrequest ( requesterid, eventid) values ( 17, 10);
 
 -- organizerrequest --
