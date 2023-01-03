@@ -539,6 +539,12 @@ insert into upload (filename) values ('image-9.png');
 insert into upload (filename) values ('image-10.png');
 insert into upload (filename) values ('image-11.png');
 insert into upload (filename) values ('image-12.png');
+insert into upload (filename) values ('image-13.png');
+insert into upload (filename) values ('image-14.png');
+insert into upload (filename) values ('image-15.png');
+insert into upload (filename) values ('image-16.png');
+insert into upload (filename) values ('image-17.png');
+insert into upload (filename) values ('image-18.png');
 
 ---1234
 insert into users (username, name, email, password, userphoto, accountstatus, usertype) values ('user', 'User', 'user@evup.com', '$2a$12$MKHXzV7jJJNlWeOYhwOSLe.ukGW.UGu..wXVth0SwWI8Ewn5EZnwe', 1, 'Active', 'User');
@@ -579,18 +585,101 @@ insert into users (username, name, email, password, userphoto, accountstatus, us
 -- event --
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Porto Pub Crawl', false, '159 Praça Guilherme Gomes Fernandes 4050-526 Porto', 'A fun & eccentric mix between a tour and a bar hop! 6 drinks included PLUS entry to one of Porto most popular clubs!', 9, '2023-11-08', '2023-11-30');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Nature Bath in the Parque da Cidade - Porto', false, 'Entrada Boavista (Avenida do Parque) 4100 Porto', '2 hours guided Nature Bath in the Parque da Cidade',10, '2023-02-06', '2023-02-16');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Romantic Porto: Outdoor Escape Game for Couples - The Love Novel', true, '10 Praça de Gomes Teixeira 4050-161 Porto', 'If you’re looking for a new and exciting way of spending time with your one and only, family or friends, this is your Eureka moment!', 4, '2023-01-03', '2023-01-31');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Romantic Porto: Outdoor Escape Game for Couples - The Love Novel', true, '10 Praça de Gomes Teixeira 4050-161 Porto', 'If you’re looking for a new and exciting way of spending time with your one and only, family or friends, this is your Eureka moment!', 5, '2023-01-03', '2023-01-31');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 18, 'African Heritage and Colonial Roots Tour', false, 'Praça do Marquês de Pombal Porto', 'A Portuguese black woman talking about the history of colonization through an African perspective.',11, '2023-01-24', '2023-01-25');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 20, 'Tratar o cancro por tu - Porto', false, 'Rua de Dom Manuel II 4050-346 Porto', 'Sessão para a literacia no cancro promovida pelo IPATIMUP. Diagnóstico e Tratamento – Tumores Pediátricos.', 12, '2023-01-03', '2023-02-15');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 21, 'A Course on Finding Purpose in Work and Life in 2023', false, '206 Rua de Gonçalo Cristóvão #216 4000-265 Porto', 'A two-day course about finding passion at work and life.', 3, '2023-12-02', '2023-12-03');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 22, 'Healthy Vegan Workshop in Porto', false, '3 Rua Formosa 4000-250 Porto', 'Healthy Kick of for 2023 and Veganuary!', 4, '2022-11-29', '2022-12-29');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 21, 'A Course on Finding Purpose in Work and Life in 2023', false, '206 Rua de Gonçalo Cristóvão #216 4000-265 Porto', 'A two-day course about finding passion at work and life.', 13, '2023-12-02', '2023-12-03');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 22, 'Healthy Vegan Workshop in Porto', false, '3 Rua Formosa 4000-250 Porto', 'Healthy Kick of for 2023 and Veganuary!', 14, '2022-11-29', '2022-12-29');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 28, 'Best of Classical Guitar Concert', true, 'Rua de Passos Manuel, 219 - Loja 4 - 4000-041 Porto', 'Enjoy an evening immersing yourself in a classical music at our intimate event hall, the program is presented by most talented artist.', 6, '2023-01-03', '2023-02-17');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Bossa Nova Jazz Night', false, 'Rua de Passos Manuel, 219 - Loja 4 4000-041 Porto', 'Program: Wave; Chega de saudade; Influência do Jazz; Samba de Verão; Meu bem querer; Garota de Ipanema; Insensatez; Corcovado; Só danço samb', 4, '2023-01-19', '2023-01-24');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Samba Jazz Night', false, 'Rua de Passos Manuel, 219 - Loja 4 - 4000-041 Porto', 'Samba Jazz por Gabi Yong e Andre Multini',6, '2022-12-22', '2022-12-23');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 17, '[Open Day] Come visit our campus in Porto', true, 'Av. Serpa Pinto 311 4450-718 Matosinhos', 'Come meet the team on our Porto campus!', 3, '2022-11-29', '2023-01-01');
-insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Festa de Quintal', false, '240 Avenida de Ramos Pinto 4400-261 Vila Nova de Gaia', 'Festa de quintal', 4, '2022-12-08', '2022-12-09');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Bossa Nova Jazz Night', false, 'Rua de Passos Manuel, 219 - Loja 4 4000-041 Porto', 'Program: Wave; Chega de saudade; Influência do Jazz; Samba de Verão; Meu bem querer; Garota de Ipanema; Insensatez; Corcovado; Só danço samb', 17, '2023-01-19', '2023-01-24');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Samba Jazz Night', false, 'Rua de Passos Manuel, 219 - Loja 4 - 4000-041 Porto', 'Samba Jazz por Gabi Yong e Andre Multini',16, '2022-12-22', '2022-12-23');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 17, '[Open Day] Come visit our campus in Porto', true, 'Av. Serpa Pinto 311 4450-718 Matosinhos', 'Come meet the team on our Porto campus!', 15, '2022-11-29', '2023-01-01');
+insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'Festa de Quintal', false, '240 Avenida de Ramos Pinto 4400-261 Vila Nova de Gaia', 'Festa de quintal', 18, '2022-12-08', '2022-12-09');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 30, 'HackerX - Porto (Full-Stack) Employer Ticket - 02/23 (Onsite)', true, 'Praca do Bom Sucesso 4150 Porto', 'HackerX is an invite-only recruiting event for developers. We are active in >175+ cities globally with a community of over 100,000', 7, '2023-02-26', '2023-02-27');
 insert into event ( userid, eventname, public, eventaddress, description, eventphoto, startdate, enddate) values ( 2, 'Lionesa Yoga Sessions', true, 'Rua Lionesa 4465-671 Leça do Balio', 'Lionesa welcomes Yoga Sessions, every Monday at 18h in Jardim da Lionesa - in front of Hilti Academy - limited to 10 people per session.', 8, '2023-01-27', '2023-01-30');
+-- tag --
+
+insert into tag (tagid, tagname) values (1, 'Tudo'); 
+insert into tag (tagid, tagname) values (2, 'Reitoria');
+insert into tag (tagid, tagname) values (3, 'ICBAS');
+insert into tag (tagid, tagname) values (4, 'FMUP');
+insert into tag (tagid, tagname) values (5, 'Porto');
+insert into tag (tagid, tagname) values (6, 'FCUP');
+insert into tag (tagid, tagname) values (7, 'INESC TEC');
+insert into tag (tagid, tagname) values (8, 'FLUP');
+insert into tag (tagid, tagname) values (9, 'Sociologia');
+insert into tag (tagid, tagname) values (10, 'Concerto');
+insert into tag (tagid, tagname) values (11, 'Solidariedade');
+insert into tag (tagid, tagname) values (12, 'Arte');
+insert into tag (tagid, tagname) values (13, 'Cinema');
+insert into tag (tagid, tagname) values (14, 'Literatura');
+insert into tag (tagid, tagname) values (15, 'Museologia');
+
+-- event_tag --
+insert into event_tag (eventid, tagid) values (1, 5); 
+insert into event_tag (eventid, tagid) values (2, 5); 
+insert into event_tag (eventid, tagid) values (2, 3); 
+insert into event_tag (eventid, tagid) values (3, 5);
+insert into event_tag (eventid, tagid) values (3, 11);
+insert into event_tag (eventid, tagid) values (4, 9); 
+insert into event_tag (eventid, tagid) values (4, 5); 
+insert into event_tag (eventid, tagid) values (4, 11); 
+insert into event_tag (eventid, tagid) values (4, 14); 
+insert into event_tag (eventid, tagid) values (5, 15);
+insert into event_tag (eventid, tagid) values (6, 11);
+insert into event_tag (eventid, tagid) values (7, 4);
+insert into event_tag (eventid, tagid) values (8, 10);
+insert into event_tag (eventid, tagid) values (9, 10);
+insert into event_tag (eventid, tagid) values (10, 10);
+insert into event_tag (eventid, tagid) values (11, 7);
+insert into event_tag (eventid, tagid) values (12, 5);
+insert into event_tag (eventid, tagid) values (13, 7);
+insert into event_tag (eventid, tagid) values (14, 4);
+
+-- Category --
+insert into Category ( categoryname) values ( 'Tudo');
+insert into Category ( categoryname) values ( 'Cinema');
+insert into Category ( categoryname) values ( 'Ar livre');
+insert into Category ( categoryname) values ( 'Música');
+insert into Category ( categoryname) values ( 'Família');
+insert into Category ( categoryname) values ( 'Exposição');
+insert into Category ( categoryname) values ( 'Literatura');
+insert into Category ( categoryname) values ( 'Conferência');
+insert into Category ( categoryname) values ( 'Congresso');
+insert into Category ( categoryname) values ( 'Seminário');
+insert into Category ( categoryname) values ( 'Encontro');
+insert into Category ( categoryname) values ( 'Online');
+insert into Category ( categoryname) values ( 'Palestra');
+insert into Category ( categoryname) values ( 'Teatro');
+insert into Category ( categoryname) values ( 'Desporto');
+
+-- event_category --
+
+insert into event_category (eventid, categoryid) values (1, 3);
+insert into event_category (eventid, categoryid) values (2, 3);
+insert into event_category (eventid, categoryid) values (2, 11);
+insert into event_category (eventid, categoryid) values (3, 3);
+insert into event_category (eventid, categoryid) values (3, 11);
+insert into event_category (eventid, categoryid) values (3, 9);
+insert into event_category (eventid, categoryid) values (4, 3);
+insert into event_category (eventid, categoryid) values (4, 5);
+insert into event_category (eventid, categoryid) values (4, 6);
+insert into event_category (eventid, categoryid) values (5, 14);
+insert into event_category (eventid, categoryid) values (5, 6);
+insert into event_category (eventid, categoryid) values (5, 9);
+insert into event_category (eventid, categoryid) values (5, 10);
+insert into event_category (eventid, categoryid) values (6, 10);
+insert into event_category (eventid, categoryid) values (6, 12);
+insert into event_category (eventid, categoryid) values (7, 12);
+insert into event_category (eventid, categoryid) values (7, 9);
+insert into event_category (eventid, categoryid) values (8, 4);
+insert into event_category (eventid, categoryid) values (9, 4);
+insert into event_category (eventid, categoryid) values (10, 4);
+insert into event_category (eventid, categoryid) values (11, 4);
+insert into event_category (eventid, categoryid) values (12, 11);
+insert into event_category (eventid, categoryid) values (13, 11);
+insert into event_category (eventid, categoryid) values (14, 11);
+insert into event_category (eventid, categoryid) values (14, 12);
 
 -- attendee --
 
@@ -611,41 +700,6 @@ insert into attendee (attendeeid, eventid) values (5, 5);
 insert into attendee (attendeeid, eventid) values (7, 7);
 insert into attendee (attendeeid, eventid) values (8, 8);
 insert into attendee (attendeeid, eventid) values (9, 9);
-
--- Category --
-insert into Category ( categoryname) values ( 'Tudo');
-insert into Category ( categoryname) values ( 'Cinema');
-insert into Category ( categoryname) values ( 'Ar livre');
-insert into Category ( categoryname) values ( 'Música');
-insert into Category ( categoryname) values ( 'Família');
-insert into Category ( categoryname) values ( 'Exposição');
-insert into Category ( categoryname) values ( 'Literatura');
-insert into Category ( categoryname) values ( 'Conferência');
-insert into Category ( categoryname) values ( 'Congresso');
-insert into Category ( categoryname) values ( 'Seminário');
-insert into Category ( categoryname) values ( 'Encontro');
-insert into Category ( categoryname) values ( 'Online');
-insert into Category ( categoryname) values ( 'Palestra');
-insert into Category ( categoryname) values ( 'Teatro');
-insert into Category ( categoryname) values ( 'Desporto');
-
--- tag --
-
-insert into tag (tagid, tagname) values (1, 'Tudo');
-insert into tag (tagid, tagname) values (2, 'Reitoria');
-insert into tag (tagid, tagname) values (3, 'ICBAS');
-insert into tag (tagid, tagname) values (4, 'FMUP');
-insert into tag (tagid, tagname) values (5, 'Porto');
-insert into tag (tagid, tagname) values (6, 'FCUP');
-insert into tag (tagid, tagname) values (7, 'INESC TEC');
-insert into tag (tagid, tagname) values (8, 'FLUP');
-insert into tag (tagid, tagname) values (9, 'Sociologia');
-insert into tag (tagid, tagname) values (10, 'Concerto');
-insert into tag (tagid, tagname) values (11, 'Solidariedade');
-insert into tag (tagid, tagname) values (12, 'Arte');
-insert into tag (tagid, tagname) values (13, 'Cinema');
-insert into tag (tagid, tagname) values (14, 'Literatura');
-insert into tag (tagid, tagname) values (15, 'Museologia');
 
 -- report --
 
@@ -783,38 +837,7 @@ insert into vote (voterid, commentid, type) values (15, 7, true);
 
 
 
--- event_category --
 
-insert into event_category (eventid, categoryid) values (1, 7);
-insert into event_category (eventid, categoryid) values (2, 13);
-insert into event_category (eventid, categoryid) values (3, 10);
-insert into event_category (eventid, categoryid) values (4, 13);
-insert into event_category (eventid, categoryid) values (5, 12);
-insert into event_category (eventid, categoryid) values (6, 2);
-insert into event_category (eventid, categoryid) values (7, 2);
-insert into event_category (eventid, categoryid) values (8, 10);
-insert into event_category (eventid, categoryid) values (9, 5);
-insert into event_category (eventid, categoryid) values (10, 3);
-insert into event_category (eventid, categoryid) values (11, 14);
-insert into event_category (eventid, categoryid) values (12, 11);
-insert into event_category (eventid, categoryid) values (13, 9);
-insert into event_category (eventid, categoryid) values (14, 13);
-
--- event_tag --
-insert into event_tag (eventid, tagid) values (1, 11);
-insert into event_tag (eventid, tagid) values (2, 4);
-insert into event_tag (eventid, tagid) values (3, 3);
-insert into event_tag (eventid, tagid) values (4, 6);
-insert into event_tag (eventid, tagid) values (5, 15);
-insert into event_tag (eventid, tagid) values (6, 9);
-insert into event_tag (eventid, tagid) values (7, 2);
-insert into event_tag (eventid, tagid) values (8, 13);
-insert into event_tag (eventid, tagid) values (9, 5);
-insert into event_tag (eventid, tagid) values (10, 10);
-insert into event_tag (eventid, tagid) values (11, 7);
-insert into event_tag (eventid, tagid) values (12, 15);
-insert into event_tag (eventid, tagid) values (13, 9);
-insert into event_tag (eventid, tagid) values (14, 14);
 
 
 -- contact --
