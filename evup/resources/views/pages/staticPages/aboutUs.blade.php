@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container mx-auto">
         <img class="mx-auto" src="storage/logo3d.png" alt="EVUP Logo 3D">
         <div class="text-left my-5 p-5 bg-secondary">  
                 <div class="flex flex-col md:gap-6 ">
