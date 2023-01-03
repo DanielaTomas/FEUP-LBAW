@@ -138,8 +138,8 @@ class UserController extends Controller
 
         $this->authorize('profile', $user);
 
-        $ordered_events = $user->events()->get();
-        $ordered_invites = $user->invites_received()->get();
+        $ordered_events = $user->events()->paginate(2);
+        $ordered_invites = $user->invites_received()->paginate(5);
 
         return view('pages.profile', [
             'user' => $user,
@@ -319,12 +319,11 @@ class UserController extends Controller
 
     public function organizerRequest(int $id)
     {
-
+        $this->authorize('organizer_request',Auth::user() );
         $request = new OrganizerRequest;
         $request->requesterid = $id;
         $request->save();
-
-        $this->authorize('organizerRequest');
+        dump($request->requesterid);
 
         return response()->json([
             'status' => 'OK',
@@ -334,13 +333,13 @@ class UserController extends Controller
 
     public function requestToJoin(Request $request)
     {
-
+        $this->authorize('requestToJoin',Auth::user());
         $joinRequest = new JoinRequest();
         $joinRequest->requesterid = Auth::id();
         $joinRequest->eventid = $request->eventid;
         $joinRequest->save();
 
-        $this->authorize('requestToJoin');
+       
 
         return response()->json([
             'status' => 'OK',
