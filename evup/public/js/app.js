@@ -39,6 +39,13 @@ function createAlert(type, message) { // Breaking up the modals for some reason
     content.innerHTML = htmlcontent + content.innerHTML
 }
 
+function removeAlerts() {
+  content = select('#alertcontainer')
+  counter = 0
+  localStorage.setItem("alertcounter", counter)
+  content.innerHTML = ''
+}
+
 
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({

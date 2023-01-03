@@ -13,6 +13,12 @@ function getOrganizingEventsHandler() {
 
 const getMyEvents = (hasPassed) => {
     sendAjaxRequest('post', `api/myEvents/onMyAgenda`, { 'hasPassed': hasPassed }, getMyEventsHandler);
+
+    removeAlerts()
+    if(hasPassed)
+        createAlert('info', 'Please wait while we load your past events...')
+    else
+        createAlert('info', 'Please wait while we load your future events...')
 }
 
 function getMyEventsHandler() {
@@ -22,4 +28,6 @@ function getMyEventsHandler() {
 
     /* Rerun flowbite's modal code the event listeners are added again*/
     initModal(selectors)
+    removeAlerts()
+    createAlert('success', 'Done! Here are the events you requested!')
 }
