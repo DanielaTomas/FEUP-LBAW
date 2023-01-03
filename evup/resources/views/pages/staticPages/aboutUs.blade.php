@@ -63,7 +63,8 @@
         <div id="accordion-open-body-1" class="hidden" aria-labelledby="accordion-open-heading-1">
             <div class="py-5 font-light border-b border-gray-200 dark:border-gray-700">
             <p class="mb-2 text-gray-800 dark:text-gray-400">Users can request to join events, invite users, manage all events attended or apply for verification to organize them. If they become an attendee, they can view event messages, add comments, upload files, answer polls, view the attendee list and finally leave the event itself. </p>
-            <p class="text-gray-800 dark:text-gray-400">As an event organizer, you can create and manage your owns events (details, participants), create polls for the attendees, answer comments.</p>
+            <p class="text-gray-800 dark:text-gray-400">As an event organizer, you can create and manage your owns events, create polls for the attendees and answer comments.</p>
+            <p class="text-gray-800 dark:text-gray-400">Furthermore, the event organizer has access to an event (for each event) dashboard where you can manage your event details, participants and review join requests.</p>
             </div>
         </div>
         <h2 id="accordion-open-heading-2">
