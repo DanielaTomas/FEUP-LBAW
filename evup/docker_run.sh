@@ -6,6 +6,6 @@ env >> /var/www/.env
 php artisan clear-compiled
 php artisan config:clear
 php artisan storage:link
-php artisan migrate:refresh --seed
+php artisan migrate:refresh
 php-fpm8.1 -D
 nginx -g "daemon off;"
