@@ -526,8 +526,9 @@ CREATE TRIGGER user_search_update
 
 -- upload --
 
-insert into upload (filename) values ('userDefault.png');
-insert into upload (filename) values ('eventDefault.jpeg');
+insert into upload (filename) values ('image-1.png'); /* Default image for users*/
+insert into upload (filename) values ('image-2.png'); /* Default image for events*/
+
 insert into upload (filename) values ('image-3.png');
 insert into upload (filename) values ('image-4.png');
 
