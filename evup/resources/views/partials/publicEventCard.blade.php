@@ -4,7 +4,8 @@
             @if (Auth::check())
                 @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && Auth::user()->usertype !== "Admin" && $event->organizer()->first()->userid !== Auth::user()->userid)
                     <button  data-modal-toggle="staticModal-jr{{$event-> eventid}}" id="requestToJoinButton{{$event->eventid }}"
-                        class="m-3 inline-flex items-center font-bold leading-sm px-3 py-1 focus:bg-blue-700 focus:text-white bg-gray-900 text-white rounded-full">request
+                        title="Request to Join this event"
+                        class="m-3 inline-flex items-center font-bold leading-sm px-4 py-2 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300  text-white rounded-lg">Request
                         to Join</button>
                 @endif
                 @include('partials.join_request_modal',['event'=> $event])

@@ -1,1 +1,1 @@
-<button onclick="filterCategory({{$category->categoryid}})" class="text-gray-700 block  flex self-center px-4 py-2 text-sm  focus:text-gray-900 focus:font-bold" tabindex="-1" id="menu-item-2-{{$category->categoryid}}">{{$category->categoryname}}</button>
+<button onclick="filterCategory({{$category->categoryid}})" class="text-gray-700 block mx-auto w-full hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2 text-sm focus:text-gray-900 focus:font-bold" tabindex="-1" id="menu-item-2-{{$category->categoryid}}">{{$category->categoryname}}</button>

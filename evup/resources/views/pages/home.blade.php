@@ -18,7 +18,7 @@
         </form>
     </div>
 
-    <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="mb-4 text-white bg-gray-900 hover:bg-blue-800  focus:outline-none font-medium rounded-full text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">all. Categories <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="mb-4 text-white bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 focus:outline-none font-medium rounded-full text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Categories <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
         </svg></button>
     <!-- Dropdown menu -->
