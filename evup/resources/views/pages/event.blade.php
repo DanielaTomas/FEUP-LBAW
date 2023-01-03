@@ -89,8 +89,8 @@
                     </div>
                 </div>
 
-                @if (!$event->eventcanceled && Auth::user()->usertype !== "Admin")
                 @auth
+                @if (!$event->eventcanceled && Auth::user()->usertype !== "Admin")
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Invite user</h2>
                 </div>
@@ -102,8 +102,8 @@
                     </div>
                     <div id="userResults" class="flex  flex-col gap-5 max-w-xl"> </div>
                 </div>
-                @endauth
                 @endif
+                @endauth
             </section>
 
             <section class="flex flex-col  p-6 max-w-xl grow">
