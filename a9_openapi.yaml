@@ -159,7 +159,7 @@ paths:
       tags:
         - "M01: Authentication"
 
-      responses:
+    responses:
         "200":
           description: "Ok. Show forget password form"
 
