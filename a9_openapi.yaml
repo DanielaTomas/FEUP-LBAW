@@ -155,7 +155,7 @@ paths:
     get:
       operationId: R106
       summary: "R106: Forgot password Form"
-      description: "Provides the 'forgot my password' form. Access: PUB"
+      description: "Provides the forgot my password form. Access: PUB"
       tags:
         - "M01: Authentication"
 
@@ -186,7 +186,7 @@ paths:
       responses:
         "200":
           description: "Ok. Email sent."
-          
+
 /reset:
     get:
         operationId: R108
