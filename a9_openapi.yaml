@@ -105,10 +105,6 @@ paths:
       tags:
         - "M01: Authentication"
 
-      responses:
-        "200":
-          description: "Ok. Show sign-up form"
-
     post:
       operationId: R105
       summary: "R105: Sign-up action"
@@ -116,7 +112,7 @@ paths:
       tags:
         - "M01: Authentication"
 
-      requestBody:
+    requestBody:
         required: true
         content:
           # since we want to upload binary files (avatar)
@@ -135,8 +131,7 @@ paths:
                 - name
                 - email
                 - password
-
-      responses:
+  responses:
         "302":
           description: "Redirect after processing the new user sign-up form."
           headers:
@@ -151,7 +146,7 @@ paths:
                   description: "Failed registration. Redirect to sign-up form."
                   value: "/signup"
 
-/forgotPassword:
+  /forgotPassword:
     get:
       operationId: R106
       summary: "R106: Forgot password Form"
@@ -163,7 +158,7 @@ paths:
         "200":
           description: "Ok. Show forget password form"
 
-/forgot_password:
+  /forgot_password:
     post:
       operationId: R107
       summary: "R107: Forgot password password action"
@@ -187,7 +182,7 @@ paths:
         "200":
           description: "Ok. Email sent."
 
-/reset:
+  /reset:
     get:
         operationId: R108
         summary: "R108: Reser password Form"
@@ -221,7 +216,7 @@ paths:
         "200":
           description: "Ok. Password Reseted."
 
-/appeal/{id}:
+  /appeal/{id}:
     get:
         operationId: R110
         summary: "R110: Appeal Form"
@@ -275,7 +270,7 @@ paths:
         "200":
           description: "Ok. Appeal sent."
 
-/login/google:
+  /login/google:
     get:
         operationId: R112
         summary: "R112: Login with google"
@@ -283,7 +278,7 @@ paths:
         tags:
           - "M01: Authentication"
 
-/login/google/callback:
+  /login/google/callback:
     get:
         operationId: R113
         summary: "R113: Handle callback"
@@ -294,9 +289,9 @@ paths:
         "200":
           description: "Ok. Redirect to Home Page."
 
-# M02: Profile and User Information
+  # M02: Profile and User Information
 
-/user/{id}:
+  /user/{id}:
     get:
       operationId: R201
       summary: "R201: View your own profile"
@@ -317,7 +312,7 @@ paths:
         "404":
           description: "User not found"
 
-/user/{id}/public:
+  /user/{id}/public:  
       get:
         operationId: R202
         summary: "R202: View public user profile"
@@ -338,7 +333,7 @@ paths:
           "404":
             description: "User not found"
 
-/user/{id}/edit:
+  /user/{id}/edit:
       get:
         operationId: R203
         summary: "R203: User profile edition form"
@@ -402,7 +397,7 @@ paths:
                     description: "Failed profile edition. Redirect to profile form."
                     value: "/user/{id}"
 
-/user/accept/{id}:
+  /user/accept/{id}:
       post:
         operationId: R205
         summary: "R205: Accepts an invite"
@@ -426,8 +421,8 @@ paths:
             description: "Forbidden. Must be owner of the profile"
           "404":
             description: "Invite not found"
-      
-/user/deny/{id}:
+        
+  /user/deny/{id}:
     post:
         operationId: R206
         summary: "R206: Does not accept an invite"
@@ -452,7 +447,7 @@ paths:
           "404":
             description: "Invite not found"
 
-/user/{id}/delete:
+  /user/{id}/delete:
       post:
         operationId: R207
         summary: "R207: Deletes an user"
@@ -477,7 +472,7 @@ paths:
           "404":
             description: "Invite not found"
 
-/user/{id}/organizerRequest:
+  /user/{id}/organizerRequest:
       get:
         operationId: R208
         summary: "R208: Create an organizer request for the user"
@@ -499,8 +494,8 @@ paths:
             description: "User not found"
 
 
-  # M03 : Events
-/event/{id}:
+    # M03 : Events
+  /event/{id}:
       get:
         operationId: R301
         summary: "R301: View event page"
@@ -521,7 +516,7 @@ paths:
           "404":
             description: "Event not found"
 
-/event/{id}/edit:
+  /event/{id}/edit:
       get:
         operationId: R302
         summary: "R302 : Event edition form"
@@ -546,7 +541,7 @@ paths:
           "404":
             description: "Event not found"
 
-/event/{id}/update:
+  /event/{id}/update:
       get:
         operationId: R303
         description: "Updates an event. Access: ORG"
@@ -564,7 +559,7 @@ paths:
           "200":
             description: "OK. Event updated " 
 
-/event/{id}/searchUsers:
+  /event/{id}/searchUsers:
       post:
         operationId: R304
         description: "Show Search Page given a search type and value. Access: ATT"
@@ -593,7 +588,7 @@ paths:
           "200":
             description: "OK. Show the search Page."
 
-/event/{id}/inviteUsers:
+  /event/{id}/inviteUsers:
       post:
         operationId: R305
         description: "Invite users to an event. Access: ATT"
@@ -622,7 +617,7 @@ paths:
           "200":
             description: "OK. Invite sent correctfully"
 
-/api/requestToJoin:
+  /api/requestToJoin:
     post:
         operationId: R306
         description: "Gets all user events that he is going that haven't happened. Access: PUB"
@@ -636,7 +631,7 @@ paths:
             description: "OK. Shows the events"
 
 
-/myEvents:
+  /myEvents:
       get:
           operationId: R307
           description: "Get events user is attending/has attended. Access: ORG"
@@ -646,8 +641,8 @@ paths:
           responses:
             "200":
               description: "OK. Show page Myevents"
-    
-/api/myEvents/createEvent:
+      
+  /api/myEvents/createEvent:
       get:
         operationId: R308
         description: "Get forms to create event. Access: ORG"
@@ -658,7 +653,7 @@ paths:
           "200":
             description: "OK. Shows the event creation form"
 
-/myEvents/createEvent:
+  /myEvents/createEvent:
       post:
           operationId: R309
           description: "Leave event user is attending/has attendend. Access: ORG"
@@ -702,7 +697,7 @@ paths:
             "404":
               description: "Event not found"
 
-/event/{id}/report:
+  /event/{id}/report:
       post:
         operationId: R310
         description: "Reports an event. Access: ATT"
@@ -720,7 +715,7 @@ paths:
           "200":
             description: "OK. Report made correctfully" 
 
-/event/{id}/dashboard:
+  /event/{id}/dashboard:
       post:
         operationId: R311
         description: "Shows the event's dashboard (informations about the event). Access: ATT"
@@ -738,7 +733,7 @@ paths:
           "200":
             description: "OK. " 
 
-/event/{eventid}/join_requests/{id}/deny:
+  /event/{eventid}/join_requests/{id}/deny:
       put:
         operationId: R312
         description: "Denies a user request. Access: ORG"
@@ -761,7 +756,7 @@ paths:
           "200":
             description: "OK. Join request denied"
 
-/event/{eventid}/join_requests/{id}/accept:
+  /event/{eventid}/join_requests/{id}/accept:
       put:
         operationId: R313
         description: "Accept a user request. Access: ORG"
@@ -784,7 +779,7 @@ paths:
           "200":
             description: "OK. Join request accepted"
 
-/event/{id}/public:
+  /event/{id}/public:
       put:
         operationId: R314
         description: "Makes an event public. Access: ORG"
@@ -802,7 +797,7 @@ paths:
           "200":
             description: "OK. Event is public" 
 
-/event/{id}/private:
+  /event/{id}/private:
       put:
         operationId: R315
         description: "Makes an event private. Access: ORG"
@@ -820,7 +815,7 @@ paths:
           "200":
             description: "OK. Event is private" 
 
-/event/{id}/cancel:
+  /event/{id}/cancel:
       put:
         operationId: R316
         description: "Cancels an event. Access: ORG"
@@ -838,7 +833,7 @@ paths:
           "200":
             description: "OK. Event is cancelled" 
 
-/event/{id}/atendees:
+  /event/{id}/atendees:
       get:
         operationId: R317
         description: "Shows an event atendees. Access: ORG"
@@ -856,7 +851,7 @@ paths:
           "200":
             description: "OK. List is showed" 
 
-/event/{id}/adduser:
+  /event/{id}/adduser:
       get:
           operationId: R318
           description: "Get list of users not attending event. Access: ATT"
@@ -874,7 +869,7 @@ paths:
             "200":
               description: "OK. Displays list of users not attending"
 
-/event/{eventid}/adduser/{userid}:
+  /event/{eventid}/adduser/{userid}:
       post:
         operationId: R319
         description: "Adds users to an event. Access: ATT"
@@ -896,8 +891,8 @@ paths:
         responses:
           "200":
             description: "OK. Adds user to event"
-    
-/event/{eventid}/removeuser/{userid}:
+      
+  /event/{eventid}/removeuser/{userid}:
       post:
         operationId: R320
         description: "Removes users of an event. Access: ORG"
@@ -920,8 +915,8 @@ paths:
         responses:
           "200":
             description: "OK. Removes user from event"
-    
-/api/myEvents/leave_event:
+      
+  /api/myEvents/leave_event:
     post:
         operationId: R321
         description: "Leaves the event. Access: ATT"
@@ -936,7 +931,7 @@ paths:
           "200":
             description: "OK. Removed event successfully"
 
-/api/myEvents/organizing:
+  /api/myEvents/organizing:
     get:
         operationId: R322
         description: "Gets all user events that he is organizing. Access: ORG"
@@ -949,7 +944,7 @@ paths:
           "200":
             description: "OK. Shows the events"
 
-/api/myEvents/onMyAgenda:
+  /api/myEvents/onMyAgenda:
     post:
         operationId: R323
         description: "Gets all user events that he is going that haven't happened. Access: USR"
@@ -960,8 +955,8 @@ paths:
           "200":
             description: "OK. Request was successfully accepted"
 
-/api/filter_tag:
-  post:
+  /api/filter_tag:
+    post:
         operationId: R324
         description: "Filter events based on tag. Access: USR"
         tags:
@@ -970,8 +965,8 @@ paths:
         responses:
           "200":
             description: "OK. Shows the events"
-/api/filter_category:
-  post:
+  /api/filter_category:
+    post:
         operationId: R325
         description: "Filter events based on category. Access: USR"
         tags:
@@ -981,7 +976,7 @@ paths:
           "200":
             description: "OK. Shows the events"
 
-/upload:
+  /upload:
     get:
       operationId: R326
       description: "Uploads a file to the datasbase. Access: USR"
@@ -1009,7 +1004,7 @@ paths:
 
   # M04: User Administration
 
-/admin:
+  /admin:
         get:
           operationId: R401
           summary: "R401: Administration Panel"
@@ -1030,7 +1025,7 @@ paths:
               description: "Not found"
 
 
-/admin/reports/{report_id}/close:
+  /admin/reports/{report_id}/close:
       put:
         operationId: R402
         summary: "R402: Close a report"
@@ -1049,7 +1044,7 @@ paths:
           "200":
             description: "Ok. Report closed successfully."
 
-/admin/organizerRequests/{organizerRequests_id}/deny:
+  /admin/organizerRequests/{organizerRequests_id}/deny:
       put:
         operationId: R403
         summary: "R403: Denies an organizer requests"
@@ -1068,7 +1063,7 @@ paths:
           "200":
             description: "Ok. Organizer Request denied successfully."
 
-/admin/organizerRequests/{organizerRequests_id}/accept:
+  /admin/organizerRequests/{organizerRequests_id}/accept:
       put:
         operationId: R404
         summary: "R404: Accepts an organizer requests"
@@ -1087,7 +1082,7 @@ paths:
           "200":
             description: "Ok. Organizer Request accepted successfully."
 
-/admin/users:
+    /admin/users:
       get:
         operationId: R405
         summary: "R405: View users"
@@ -1108,7 +1103,7 @@ paths:
           "404":
             description: "Not found"
 
-/admin/users/search:
+  /admin/users/search:
       get:
         operationId: R406
         summary: "R406 : User search"
@@ -1129,7 +1124,7 @@ paths:
           "200":
             description: "OK. Show a list of users that fit the query."
 
-/admin/users/add:
+  /admin/users/add:
         get:
           operationId: R407
           summary: "R407: Admin Add User Form"
@@ -1189,7 +1184,7 @@ paths:
             "404":
               description: "Not found"
 
-/admin/users/{id}/view:
+  /admin/users/{id}/view:
         get:
           operationId: R409
           summary: "R409: View User Profile"
@@ -1212,7 +1207,7 @@ paths:
             "403":
               description: "Forbidden. No permissions"
 
-/admin/users/{id}/delete:
+  /admin/users/{id}/delete:
         put:
           operationId: R410
           summary: "R410: Deletes an user"
@@ -1235,7 +1230,7 @@ paths:
             "403":
               description: "Forbidden. No permissions"
 
-/admin/users/{id}/ban:
+  /admin/users/{id}/ban:
         put:
           operationId: R411
           summary: "R411: Bans an user"
@@ -1258,7 +1253,7 @@ paths:
             "403":
               description: "Forbidden. No permissions"
 
-/admin/users/{id}/unban:
+  /admin/users/{id}/unban:
         put:
           operationId: R412
           summary: "R412: Unbans an user"
@@ -1281,7 +1276,7 @@ paths:
             "403":
               description: "Forbidden. No permissions"
 
-/admin/events/{id}/delete:
+  /admin/events/{id}/delete:
         put:
           operationId: R413
           summary: "R413: Deletes an event"
@@ -1306,7 +1301,7 @@ paths:
 
 # M05: Static Pages
 
-/aboutUs:
+  /aboutUs:
     get:
       operationId: R501
       summary: "R501: About us page"
@@ -1318,7 +1313,7 @@ paths:
         "200":
           description: "Ok. Shows the about us page"
 
-/contactUs:
+  /contactUs:
     get:
       operationId: R502
       summary: "R502: Contact us page"
@@ -1340,7 +1335,7 @@ paths:
         "200":
           description: "Ok. Form sent correctfully"
 
-/faq:
+  /faq:
     get:
       operationId: R504
       summary: "R504: FAQ page"
@@ -1355,8 +1350,8 @@ paths:
 
 # M06: Notifications
 
-/api/notifications:
-  put:
+  /api/notifications:
+    put:
           operationId: R601
           summary: "R601: Shows the notifications"
           description: "Shows the user notifications. Access: OWN"
@@ -1365,8 +1360,8 @@ paths:
           responses:
             "200":
               description: "Ok. Shows the notifications"
-/notifications:
-  put:
+  /notifications:
+    put:
           operationId: R602
           summary: "R602: Marks all notifications as read"
           description: "Marks all notifications of an user as read. Access: OWN"
@@ -1376,7 +1371,7 @@ paths:
             "200":
               description: "Ok. Successfully marked all notifications as read"
 
-/notifications/{id}:
+  /notifications/{id}:  
       put:
           operationId: R603
           summary: "R603: Marks a notification as read"
@@ -1400,7 +1395,7 @@ paths:
 # M07: Polls
 
 
-/event/{id}/createPoll:
+  /event/{id}/createPoll:
       post:
         operationId: R701
         description: "Creates a poll. Access: PUB"
@@ -1429,7 +1424,7 @@ paths:
           "200":
             description: "OK. Poll created" 
 
-/event/{id}/answerpoll:
+  /event/{id}/answerpoll:
     get:
         operationId: R702
         description: "Answers a poll. Access: PUB"
@@ -1462,7 +1457,7 @@ paths:
 
 # M08: Comments
 
-event/{id}/createComment/{parentid?}:
+  /event/{id}/createComment/{parentid?}:
       post:
         operationId: R801
         description: "Creates a comment. Access: PUB"
@@ -1497,7 +1492,7 @@ event/{id}/createComment/{parentid?}:
           "200":
             description: "OK. Successfully created reply" 
 
-event/{id}/delete/{commentid}:
+  /event/{id}/delete/{commentid}:
       post:
         operationId: R802
         description: "Deletes a comment. Access: OWN"
@@ -1522,7 +1517,7 @@ event/{id}/delete/{commentid}:
           "200":
             description: "OK. Successfully deleted comment" 
 
-event/{id}/editComment/{commentid}:
+  /event/{id}/editComment/{commentid}:
       post:
         operationId: R803
         description: "Edits a comment. Access: OWN"
@@ -1547,7 +1542,7 @@ event/{id}/editComment/{commentid}:
           "200":
             description: "OK. Comment removed successfully" 
 
-/event/{id}/like/{commentid}/voted/{voted}:
+  /event/{id}/like/{commentid}/voted/{voted}:
       post:
         operationId: R804
         description: "Likes a comment. Access: PUB"
@@ -1577,7 +1572,7 @@ event/{id}/editComment/{commentid}:
           "200":
             description: "OK. Liked comment successfully" 
 
-/event/{id}/dislike/{commentid}/voted/{voted}:
+  /event/{id}/dislike/{commentid}/voted/{voted}:
       post:
         operationId: R804
         description: "Deslikes a comment. Access: PUB"
