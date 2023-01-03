@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                @if (!$event->eventcanceled)
+                @if (!$event->eventcanceled && Auth::user()->usertype !== "Admin")
                 @auth
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-800">Invite user</h2>
