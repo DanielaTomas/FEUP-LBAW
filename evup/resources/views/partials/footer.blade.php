@@ -2,7 +2,7 @@
     <div class="max-w-2xl mx-auto text-white py-10">
         <div class="text-center">
             <h3 class="text-3xl mb-3"> Follow us on our socials </h3>
-            <button class="p-3">
+            <button class="p-3" title="Available Soon">
                 <svg id="facebook" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 310 310">
                     <g fill="#a3b4fd">
                     <path d="M81.703,165.106h33.981V305c0,2.762,2.238,5,5,5h57.616c2.762,0,5-2.238,5-5V165.765h39.064
@@ -13,7 +13,7 @@
                     </g>
                 </svg>
             </button>
-            <button class="p-3">
+            <button class="p-3" title="Available Soon">
                 <svg id="twitter" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 512.002 512.002">
                     <g fill="#a3b4fd">
                     <path d="M500.398,94.784c-8.043,3.567-16.313,6.578-24.763,9.023c10.004-11.314,17.631-24.626,22.287-39.193
@@ -31,7 +31,7 @@
                     </g>
                 </svg>
             </button>
-            <button class="p-3">
+            <button class="p-3" title="Available Soon">
                 <svg id="instagram" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 width="30" height="30" viewBox="0 0 169.063 169.063">
                 <g fill="#a3b4fd">
