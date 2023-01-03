@@ -1,5 +1,8 @@
 const getOrganizingEvents = () => {
     sendAjaxRequest('get', `api/myEvents/organizing`, null, getOrganizingEventsHandler);
+
+    removeAlerts()
+    createAlert('info', "Please wait while we load the events you're organizing...")
 }
 
 function getOrganizingEventsHandler() {
@@ -9,6 +12,8 @@ function getOrganizingEventsHandler() {
 
     /* Rerun flowbite's modal code the event listeners are added again*/
     initModal(selectors)
+    removeAlerts()
+    createAlert('success', 'Done! Here are the events you requested!')
 }
 
 const getMyEvents = (hasPassed) => {
