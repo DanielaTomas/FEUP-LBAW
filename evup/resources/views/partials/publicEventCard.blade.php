@@ -2,7 +2,7 @@
     <div class="w-full h-64 bg-top bg-cover rounded-t" style="background-image: url({{ asset('storage/images/image-'.$event->eventphoto.'.png')}})">
         @if (!$event->eventcanceled)
             @if (Auth::check())
-                @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && Auth::user()->usertype !== "Admin" && $event->organizer()->first()->userid !== Auth::user()->userid)
+                @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && !Auth::user()->isAttending($event->eventid) && Auth::user()->usertype !== "Admin" && $event->organizer()->first()->userid !== Auth::user()->userid)
                     <button  data-modal-toggle="staticModal-jr{{$event-> eventid}}" id="requestToJoinButton{{$event->eventid }}"
                         title="Request to Join this event"
                         class="m-3 inline-flex items-center font-bold leading-sm px-4 py-2 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300  text-white rounded-lg">Request
