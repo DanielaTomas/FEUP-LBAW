@@ -1,6 +1,5 @@
 
 const askOrganizer = (userid) => {
-
     sendAjaxRequest('get', `${userid}/organizerRequest`, null, askOrganizerHandler(userid));
 }
 
@@ -10,10 +9,12 @@ function askOrganizerHandler(userid){
     const pending = document.createElement('div')
     pending.className = "block text-white bg-gray-700  font-medium rounded-lg text-sm px-5 py-2.5 text-center"
     pending.id = "pending{{ $user->userid }}"
+    pending.title = "You have already submitted a request be an Organizer"
     pending.innerHTML=`Organizer Request Pending`
     div.append(pending)
     request.remove()
-    
+
+    createAlert('success', 'You have requested to be an organizer! Our administrators will review your request soon.')
 }
 
 const acceptInvite = (inviteid) => {

@@ -31,13 +31,13 @@
         <div class="flex justify-end gap-4">
             @if (Auth::user()->usertype != 'Organizer' && Auth::user()->usertype != 'Admin' && Auth::user()->hasRequest() == false)
             <div id="orgRequest" class="mr-6 transform hover:text-gray-900 transition duration-300">
-                <button id="organizerRequestButton" onclick="askOrganizer({{Auth::id()}})" class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
+                <button id="organizerRequestButton" onclick="askOrganizer({{Auth::id()}})" title="Request to be an Organizer" class="block text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">
                     Request To Be Organizer
                 </button>
             </div>
             @endif
             @if (Auth::user()->usertype != 'Organizer' && Auth::user()->hasRequest() == true)
-            <div id="pending{{ $user->userid }}" class="block text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            <div id="pending{{ $user->userid }}" title="You have already submitted a request be an Organizer" class="block text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Organizer Request Pending
             </div>
             @endif
