@@ -1082,7 +1082,7 @@ paths:
           "200":
             description: "Ok. Organizer Request accepted successfully."
 
-    /admin/users:
+  /admin/users:
       get:
         operationId: R405
         summary: "R405: View users"
