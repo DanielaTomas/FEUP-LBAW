@@ -14,27 +14,27 @@
 
     <div class="flex flex-row items-center p-6">
         <h1 class=" text-4xl font-bold leading-none tracking-tight text-gray-800">{{ $event->eventname }}</h1>
-        @if (Auth::check())
-        @if($event->userid == Auth::id())
-        <a href="{{ route('event_dashboard', ['id' => $event->eventid]) }}" title="Manage event details, view participants and review join requests" class="self-end flex items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
-                <path fill-rule="evenodd" d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.55.092a1.875 1.875 0 00-1.566 1.849v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.092.55c.15.903.932 1.566 1.849 1.566h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.55-.091a1.875 1.875 0 001.566-1.85v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.55a1.875 1.875 0 00-1.85-1.566h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd" />
-            </svg>
-            Event Dashboard</a>
-        @elseif($event->userid != Auth::id() && Auth::user()->isAttending($event->eventid))
-        <a href="{{ route('attendees', ['id' => $event->eventid]) }}" class="self-end text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">View Participants</a>
-        @endif
-        @endif
-        @if (!$event->eventcanceled)
         @auth
-        @if($event->organizer()->first()->usertype == 'Organizer' && $event->organizer()->first()->userid == $user->userid)
-        <a href="{{ route('edit_event', ['id' => $event->eventid]) }}" class="self-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-            </svg>
-        </a>
-        @endif
+            @if($event->userid == Auth::id())
+            <a href="{{ route('event_dashboard', ['id' => $event->eventid]) }}" title="Manage event details, view participants and review join requests" class="self-end flex items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
+                    <path fill-rule="evenodd" d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.55.092a1.875 1.875 0 00-1.566 1.849v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.092.55c.15.903.932 1.566 1.849 1.566h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.55-.091a1.875 1.875 0 001.566-1.85v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.55a1.875 1.875 0 00-1.85-1.566h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd" />
+                </svg>
+                Event Dashboard</a>
+            @elseif($event->userid != Auth::id() && Auth::user()->isAttending($event->eventid))
+            <a href="{{ route('attendees', ['id' => $event->eventid]) }}" class="self-end text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">View Participants</a>
+            @endif
         @endauth
+        @if (!$event->eventcanceled)
+            @auth
+            @if($event->organizer()->first()->usertype == 'Organizer' && $event->organizer()->first()->userid == $user->userid)
+            <a href="{{ route('edit_event', ['id' => $event->eventid]) }}" class="self-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                </svg>
+            </a>
+            @endif
+            @endauth
         @endif
     </div>
 
@@ -62,29 +62,29 @@
                     </section>
 
                     <div class="flex flex-row justify-around">
-                        @if (Auth::check())
-                        @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && !Auth::user()->isAttending($event->eventid) && Auth::user()->usertype !== "Admin")
-                        <!-- Request to Join Event Modal toggle -->
-                        <button id="requestToJoinButton{{ $event->eventid }}" data-modal-toggle="staticModal-jr{{ $event->eventid }}" title="Request to join this event" class="items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Request to join</button>
-                        @include('partials.join_request_modal', ['event' => $event])
-                        @endif
-                        @if (!$event->eventcanceled)
-                        @if (Auth::user()->isAttending($event->eventid))
-                        @if ($event->organizer()->first()->userid !== $user->userid)
-                        <!-- Leave Event Modal toggle -->
-                        <button id="leaveEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-le{{ $event->eventid }}" title="Leave this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
-                        @include('partials.leave_event_modal', ['event' => $event])
-                        @else
-                        <button id="leaveEventButton{{ $event->eventid }}" disabled title="You cannot leave your own event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-600 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
-                        @endif
-                        @endif
-                        @if (Auth::user()->usertype !== "Admin")
-                        <!-- Report Event Modal toggle -->
-                        <button id="reportEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" title="Report this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Report Event</button>
-                        @include('partials.report_event_modal', ['event' => $event])
-                        @endif
-                        @endif
-                        @endif
+                        @auth
+                            @if (Auth::user()->joinRequests()->where('eventid', $event->eventid)->get()->count() == 0 && !Auth::user()->isAttending($event->eventid) && Auth::user()->usertype !== "Admin")
+                            <!-- Request to Join Event Modal toggle -->
+                            <button id="requestToJoinButton{{ $event->eventid }}" data-modal-toggle="staticModal-jr{{ $event->eventid }}" title="Request to join this event" class="items-center text-white m-4 right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Request to join</button>
+                            @include('partials.join_request_modal', ['event' => $event])
+                            @endif
+                            @if (!$event->eventcanceled)
+                                @if (Auth::user()->isAttending($event->eventid))
+                                    @if ($event->organizer()->first()->userid !== $user->userid)
+                                    <!-- Leave Event Modal toggle -->
+                                    <button id="leaveEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-le{{ $event->eventid }}" title="Leave this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
+                                    @include('partials.leave_event_modal', ['event' => $event])
+                                    @else
+                                    <button id="leaveEventButton{{ $event->eventid }}" disabled title="You cannot leave your own event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-600 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Leave Event</button>
+                                    @endif
+                                @endif
+                                @if (Auth::user()->usertype !== "Admin")
+                                <!-- Report Event Modal toggle -->
+                                <button id="reportEventButton{{ $event->eventid }}" data-modal-toggle="staticModal-re{{ $event->eventid }}" title="Report this event" class="items-center text-white right-2.5 bottom-2.5 bg-gray-900 hover:bg-indigo-600 transition ease-in-out duration-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700">Report Event</button>
+                                @include('partials.report_event_modal', ['event' => $event])
+                                @endif
+                            @endif
+                        @endauth
 
                     </div>
                 </div>
