@@ -16,6 +16,8 @@
 
 ![EventPage](docs/eventPage.png)
 
+![Profile](docs/profile.png)
+
 ![MyEvents](docs/myEvents.png)
 ## Installation
 
