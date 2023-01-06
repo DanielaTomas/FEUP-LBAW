@@ -16,7 +16,7 @@
 
 ![EventPage](docs/eventPage.png)
 
-![MyEvents](docs/myevents.png)
+![MyEvents](docs/myEvents.png)
 ## Installation
 
 ```
