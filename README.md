@@ -9,9 +9,37 @@
 * [EAP: Architecture Specification and Prototype](https://github.com/DanielaTomas/LBAW_FEUP/wiki/eap)
 * [PA: Product and Presentation](https://github.com/DanielaTomas/LBAW_FEUP/wiki/pa)
 
-## Artefacts Checklist
+## Screenshots
+![HomePage](docs/homePage.png)
 
-* The artefacts checklist is available at: <https://docs.google.com/spreadsheets/d/1QO5vpsbFnNutA3cs2cPpw5JIUGJn_au_p7XVL3NWLPc/edit#gid=146877560>
+![Login](docs/login.png)
+
+![EventPage](docs/eventPage.png)
+
+![MyEvents](docs/myevents.png)
+## Installation
+
+```
+docker run -it -p 8000:80 --name=lbaw2252 -e DB_DATABASE="lbaw2252" -e DB_SCHEMA="lbaw2252" -e DB_USERNAME="lbaw2252" -e DB_PASSWORD=CFKrQZJB git.fe.up.pt:5050/lbaw/lbaw2223/lbaw2252
+```
+
+## Usage
+
+> URL to the product: https://lbaw2252.lbaw.fe.up.pt/
+
+### Administration Credentials
+
+| Email | Password |
+|-------|----------|
+| admin@evup.com | 1234 |
+
+### User Credentials
+
+| Type | Email | Password |
+|------|-------|----------|
+| basic account | user@evup.com | 1234 |
+| event organizer | organizer@evup.com | 1234 |
+| blocked account | blocked@evup.com | 1234 |
 
 ## Team
 
